@@ -46,17 +46,17 @@ Notation :
 
 ## Phase 3 : US2, parcourir la configuration dans le navigateur — branche `001-validation-globale/us2` (#3)
 
-- [ ] T030 [P] [US2] Tests `src/cli/server.ts` : `/api/snapshot`, fichiers statiques, `405`, `403` (en-tête `Host`), `404`, chemin sortant, en-têtes de sécurité, port suivant si occupé
-- [ ] T031 [US2] `src/cli/server.ts` et commande `serve` (`--port`, `--open`) (R5, R6)
-- [ ] T032 [P] [US2] Test e2e `tests/e2e/us2-navigation.spec.ts` (scénarios 1 à 7) et `playwright.config.ts` (webServer : `node bin/vce.js serve tests/fixtures/config --port 4173`)
-- [ ] T033 [P] [US2] `index.html` (lang `fr`, CSP), `src/ui/main.ts`, `src/ui/vuetify.ts` (repris de tableschema-editor), `src/ui/App.vue` (mise en page R12)
-- [ ] T034 [US2] `src/ui/io/snapshot.ts` (`SnapshotConfigFs`), `src/ui/stores/project.ts`, `src/ui/router.ts` (sélection dans le fragment d'URL)
-- [ ] T035 [US2] `ModelTree.vue` (filtre par nom, modèles abstraits distingués)
-- [ ] T036 [P] [US2] `ModelView.vue` (propriétés, parent, fichiers, codes, liens vers tables et listes)
-- [ ] T037 [P] [US2] `TableView.vue` (colonnes, contraintes, conditions, clés étrangères avec liens)
-- [ ] T038 [P] [US2] `CodeListView.vue`, `GpuView.vue` (surcharges rattachées à leur objet), `SourceView.vue`
-- [ ] T039 [US2] Tests e2e `a11y.spec.ts` (axe, aucune violation sérieuse ou critique) et `no-remote.spec.ts` (aucune requête vers une autre origine)
-- [ ] T040 [US2] README : section `vce serve`
+- [x] T030 [P] [US2] Tests `src/cli/server.ts` : `/api/snapshot`, fichiers statiques, `405`, `403` (en-tête `Host`), `404`, chemin sortant, en-têtes de sécurité, port suivant si occupé
+- [x] T031 [US2] `src/cli/server.ts` et commande `serve` (`--port`, `--open`) (R5, R6)
+- [x] T032 [P] [US2] Test e2e `tests/e2e/us2-navigation.spec.ts` (scénarios 1 à 7) et `playwright.config.ts` (webServer : `node bin/vce.js serve tests/fixtures/config --port 4173`)
+- [x] T033 [P] [US2] `index.html` (lang `fr`, CSP), `src/ui/main.ts`, `src/ui/vuetify.ts` (repris de tableschema-editor), `src/ui/App.vue` (mise en page R12)
+- [x] T034 [US2] `src/ui/io/snapshot.ts` (`SnapshotConfigFs`), `src/ui/stores/project.ts`, `src/ui/router.ts` (sélection dans le fragment d'URL)
+- [x] T035 [US2] `ModelTree.vue` (filtre par nom, modèles abstraits distingués)
+- [x] T036 [P] [US2] `ModelView.vue` (propriétés, parent, fichiers, codes, liens vers tables et listes)
+- [x] T037 [P] [US2] `TableView.vue` (colonnes, contraintes, conditions, clés étrangères avec liens)
+- [x] T038 [P] [US2] `CodeListView.vue`, `GpuView.vue` (surcharges rattachées à leur objet), `SourceView.vue`
+- [x] T039 [US2] Tests e2e `a11y.spec.ts` (axe, aucune violation sérieuse ou critique) et `no-remote.spec.ts` (aucune requête vers une autre origine)
+- [x] T040 [US2] README : section `vce serve`
 
 ## Phase 4 : US3, panneau des problèmes — branche `001-validation-globale/us3` (#4)
 

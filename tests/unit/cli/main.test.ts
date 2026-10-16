@@ -7,12 +7,14 @@ import { NodeConfigFs } from '@cli/fs'
 import { main } from '@cli/main'
 import { FIXTURES } from '../../support/fixtures'
 
-async function run(...argv: string[]) {
+async function runWith(uiDir: string, argv: string[]) {
   const stdout: string[] = []
   const stderr: string[] = []
-  const code = await main(argv, { log: (l) => stdout.push(l), error: (l) => stderr.push(l) })
+  const code = await main(argv, { log: (l) => stdout.push(l), error: (l) => stderr.push(l) }, uiDir)
   return { code, stdout: stdout.join('\n'), stderr: stderr.join('\n') }
 }
+
+const run = (...argv: string[]) => runWith(join(tmp, 'ui'), argv)
 
 let tmp: string
 let config: string
@@ -44,6 +46,10 @@ describe('vce', () => {
     [['check', 'a', '--format'], 'Valeur manquante'],
     [['check', 'a', '--format', 'xml'], 'Format inconnu'],
     [['check', 'a', '--verbeux'], 'Option inconnue'],
+    [['serve'], 'un et un seul dossier'],
+    [['serve', 'a', '--port', 'x'], 'Port invalide'],
+    [['serve', 'a', '--port', '70000'], 'Port invalide'],
+    [['serve', 'a', '--verbeux'], 'Option inconnue'],
   ])('usage incorrect %j : code 2', async (argv, message) => {
     const r = await run(...argv)
     expect(r.code).toBe(2)
@@ -95,6 +101,25 @@ describe('vce check', () => {
     expect(await run('check', join(tmp, 'absent'))).toMatchObject({ code: 2, stderr: expect.stringContaining('Dossier introuvable') })
     mkdirSync(join(tmp, 'vide'))
     expect(await run('check', join(tmp, 'vide'))).toMatchObject({ code: 2, stderr: expect.stringContaining('Aucun modèle') })
+  })
+})
+
+describe('vce serve', () => {
+  it('démarre le serveur et affiche son adresse', async () => {
+    mkdirSync(join(tmp, 'ui'))
+    writeFileSync(join(tmp, 'ui/index.html'), '<!doctype html>')
+    const r = await run('serve', config, '--port', '0')
+    expect(typeof r.code).toBe('object')
+    if (typeof r.code === 'object') {
+      expect(r.stdout).toContain(`Éditeur disponible sur ${r.code.url}`)
+      expect((await fetch(r.code.url)).status).toBe(200)
+      await r.code.close()
+    }
+  })
+
+  it('dossier inexistant ou interface non construite : code 2', async () => {
+    expect(await run('serve', join(tmp, 'absent'))).toMatchObject({ code: 2, stderr: expect.stringContaining('Dossier introuvable') })
+    expect(await run('serve', config)).toMatchObject({ code: 2, stderr: expect.stringContaining('npm run build') })
   })
 })
 

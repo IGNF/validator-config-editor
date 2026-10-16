@@ -59,12 +59,30 @@ produit un document JSON exploitable par un autre outil.
 | 1 | au moins une erreur (ou, avec `--strict`, au moins un avertissement) |
 | 2 | usage incorrect ou dossier sans modèle |
 
+## `vce serve`
+
+```
+vce serve <dossier> [--port <n>] [--open]
+```
+
+Ouvre un éditeur local sur `http://127.0.0.1:5174/` (ou le port libre suivant ; `--port` impose
+le port, `--open` ouvre le navigateur). Il permet de :
+
+- filtrer et parcourir les modèles ;
+- consulter un modèle (propriétés, parent, fichiers, listes de codes), une table (colonnes,
+  contraintes, clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant
+  les liens entre eux ;
+- afficher le contenu exact de chaque fichier (onglet « Source »).
+
+Le serveur n'écoute que sur `127.0.0.1`, en lecture seule, et ne sert que le dossier indiqué.
+
 ## Développement
 
 ```sh
 npm ci
 npm test                 # tests unitaires
 npm run build            # dist/ui (interface) et dist/cli.js (CLI)
+npm run test:e2e         # tests de bout en bout (Chromium, Firefox)
 node bin/vce.js check tests/fixtures/config
 VCE_CONFIG_DIR=~/gpu/validator-config-gpu/config npm test   # + configuration complète
 ```

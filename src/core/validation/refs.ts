@@ -1,4 +1,5 @@
 import type { DocumentModel, GpuFile, LoadedModel, Project, TableModel } from '../model/types'
+import { isUrl, resolvePath, tableModelRef } from '../model/paths'
 import { pointer } from '../pointer'
 import { parseForeignKey } from './foreign-key'
 import { problem, type Problem } from './problems'
@@ -10,21 +11,6 @@ export interface CheckedModel {
   /** Tables conformes, indexées par chemin. */
   tables: Map<string, TableModel>
   gpu?: GpuFile
-}
-
-const isUrl = (ref: string) => /^[a-z][a-z0-9+.-]*:/i.test(ref)
-
-/** Résout un chemin relatif au dossier d'un modèle ; undefined s'il sort de la configuration. */
-export function resolvePath(model: string, ref: string): string | undefined {
-  const segments = [model]
-  for (const s of ref.split('/')) {
-    if (s === '' || s === '.') continue
-    if (s === '..') {
-      if (segments.length === 0) return undefined
-      segments.pop()
-    } else segments.push(s)
-  }
-  return segments.length > 0 ? segments.join('/') : undefined
 }
 
 // Tous les `id` (chaînes) portés par des objets, à toute profondeur.
@@ -97,8 +83,8 @@ class Checker {
       this.out.push(problem('ERR-PARENT-MISSING', name, file, '/parent/name', { name: doc.parent.name }))
     }
     const tableRef = (ref: string | undefined, tableName: string, at: string) => {
-      if (ref !== undefined && (ref.toLowerCase() === 'auto' || isUrl(ref))) return
-      const target = ref ?? `./types/${tableName}.json`
+      const target = tableModelRef(ref, tableName)
+      if (target === undefined) return
       const path = resolvePath(name, target)
       if (path && this.files.has(path)) referenced.add(path)
       else this.out.push(problem('ERR-TABLE-MODEL-MISSING', name, file, ref !== undefined ? `${at}/tableModel` : at, { ref: target }))
