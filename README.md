@@ -1,49 +1,55 @@
-# Modèle de ReadMe
+# validator-config-editor
 
-Ci-dessous une proposition de readme pour tout projet
+Outil de validation et d'édition des configurations
+[IGNF/validator](https://github.com/IGNF/validator), par exemple
+[IGNF/validator-config-gpu](https://github.com/IGNF/validator-config-gpu).
 
+Il travaille sur tout le dossier de configuration à la fois :
 
-## Description/Résumé du projet
+- `vce check <dossier>` valide tous les modèles (`files.json`, `types/*.json`,
+  `codes/*.csv`, `gpu.json`) et leurs références croisées, en local ou en intégration continue ;
+- `vce serve <dossier>` ouvre un éditeur local dans le navigateur.
 
-Dans cette section, on décrit la vision générale du projet ainsi que ses objectifs à destination des futurs utilisateurs et des développeurs.
+> Projet en cours de spécification : voir [specs/](specs/).
 
-Pour ce dépôt : 
+## Utilisation dans un dépôt de configuration
 
-Ce dépôt permet de répertorier les différents éléments essentiels dans un dépôt SIDC :
-* ce ReadMe
-* des modèles de tickets type pour des ajouts de fonctionnalité, réparation de bug, ajout de documentation, maintenance/montée de version...
-* des milestones témoins (ex: backlog, sprint1...)
-* des exemples de github Actions CI/CD (lancement de test, build d'images...)
-* des exemples de label pour les futurs tickets
+```json
+{
+  "private": true,
+  "devDependencies": {
+    "validator-config-editor": "github:IGNF/validator-config-editor#v1.0.0"
+  },
+  "scripts": {
+    "edit": "vce serve config",
+    "check": "vce check config"
+  }
+}
+```
 
+```sh
+npm ci
+npm run check   # valide config/
+npm run edit    # ouvre l'éditeur local
+```
 
-## Installation
-
-La procédure d'installation du projet doit être décrite dans cette section ou dans un fichier complémentaire dont le lien est présent ici.
-
+Les modifications sont ensuite versionnées avec git, comme d'habitude.
 
 ## Documentation développeurs
 
-Lien vers la documentation pour les développeurs, à la fois pour maintenir le projet, le déployer et ajouter de nouvelles fonctionnalités. Schémas UML...
+- [Principes du projet](docs/principes.md)
+- [Workflow spec → issue → PR](docs/developper/workflow.md)
+- [Conventions de commit](docs/developper/Doc_commit.md)
 
+## Arborescence
 
-## L'arborescence du projet
+- `specs/` : spécifications, plans et tâches, une feature par dossier ;
+- `docs/` : principes et documentation développeurs ;
+- `.github/` : modèles d'issues et de PR, workflows ;
+- `tests/` : tests unitaires et de bout en bout.
 
-Exemple d'arborescence de projet :
-
-* `.github/` : dossier contenant les modèles d'issues et github actions ;
-* `.vscode/` : dossier contenant une configuration vscode pour le projet;
-* `doc/` : dossier contenant des fichiers .md de documentation (ex: install.md) ;
-* `tests/`: scripts et explications pour lancer les tests ;
-* `README.md` : ce fichier
-
-## Contacts du projets
-
-Ici on met la liste des personnes qui travaillent sur ce projet et le maintiennent à jour.
-
+## Contacts
 
 |Nom|Prénom|mail|fonction|
 |---|---|---|---|
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
+|Cerizay|Florian|florian.cerizay@ign.fr|   |
