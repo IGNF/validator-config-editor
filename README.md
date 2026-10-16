@@ -35,6 +35,58 @@ npm run edit    # ouvre l'éditeur local
 
 Les modifications sont ensuite versionnées avec git, comme d'habitude.
 
+## `vce check`
+
+```
+vce check <dossier> [--format text|json] [--strict]
+```
+
+Valide tous les modèles du dossier :
+
+- conformité de `files.json`, `types/*.json` et `gpu.json` à leur [JSON Schema](src/core/schemas/) ;
+- lisibilité des CSV de `codes/` (en-tête, nombre de colonnes) ;
+- références croisées : modèle de table de chaque fichier (`tableModel`, ou `./types/<name>.json`
+  par convention), fichiers des listes de codes, clés étrangères, `reference`, modèle parent,
+  unicité des `id`, `id` de `gpu.json`, fichiers non référencés.
+
+Chaque problème est affiché sous la forme `<fichier>:<pointeur JSON> <CODE> <message>` (voir la
+[liste des codes](specs/001-validation-globale/contracts/problem-codes.md)). `--format json`
+produit un document JSON exploitable par un autre outil.
+
+| Code de sortie | Cas |
+|---|---|
+| 0 | aucune erreur (et, avec `--strict`, aucun avertissement) |
+| 1 | au moins une erreur (ou, avec `--strict`, au moins un avertissement) |
+| 2 | usage incorrect ou dossier sans modèle |
+
+## `vce serve`
+
+```
+vce serve <dossier> [--port <n>] [--open]
+```
+
+Ouvre un éditeur local sur `http://127.0.0.1:5174/` (ou le port libre suivant ; `--port` impose
+le port, `--open` ouvre le navigateur). Il permet de :
+
+- filtrer et parcourir les modèles ;
+- consulter un modèle (propriétés, parent, fichiers, listes de codes), une table (colonnes,
+  contraintes, clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant
+  les liens entre eux ;
+- afficher le contenu exact de chaque fichier (onglet « Source »).
+
+Le serveur n'écoute que sur `127.0.0.1`, en lecture seule, et ne sert que le dossier indiqué.
+
+## Développement
+
+```sh
+npm ci
+npm test                 # tests unitaires
+npm run build            # dist/ui (interface) et dist/cli.js (CLI)
+npm run test:e2e         # tests de bout en bout (Chromium, Firefox)
+node bin/vce.js check tests/fixtures/config
+VCE_CONFIG_DIR=~/gpu/validator-config-gpu/config npm test   # + configuration complète
+```
+
 ## Documentation développeurs
 
 - [Principes du projet](docs/principes.md)

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validateurs générés à jour
+        run: npm run schemas && git diff --exit-code src/core/schemas/generated
+      - run: npm run lint
+      - run: npm run test:coverage
+      - name: Build (typecheck, interface, CLI)
+        run: npm run build
+      - name: CLI construite
+        run: node bin/vce.js check tests/fixtures/config
+      - name: Navigateurs Playwright
+        run: npx playwright install --with-deps chromium firefox
+      - name: Tests de bout en bout
+        run: npm run test:e2e

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "table",
+  "title": "Modèle de table IGNF/validator (types/*.json)",
+  "type": "object",
+  "required": ["id", "name", "columns"],
+  "properties": {
+    "id": { "$ref": "document#/definitions/Id" },
+    "name": { "type": "string", "minLength": 1 },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "columns": { "type": "array", "items": { "$ref": "#/definitions/Column" } },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "conditions": { "type": "array", "items": { "type": "string" } },
+        "foreignKeys": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "definitions": {
+    "Column": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": { "$ref": "document#/definitions/Id" },
+        "name": { "type": "string", "minLength": 1 },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "type": {
+          "enum": [
+            "Boolean", "Date", "Double", "Filename", "Geometry", "GeometryCollection", "Integer",
+            "LineString", "MultiLineString", "MultiPoint", "MultiPolygon", "Path", "Point",
+            "Polygon", "String", "Url"
+          ]
+        },
+        "constraints": { "$ref": "#/definitions/ColumnConstraints" }
+      }
+    },
+    "ColumnConstraints": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean" },
+        "presenceRequired": { "type": "boolean" },
+        "unique": { "type": "boolean" },
+        "pattern": { "type": "string" },
+        "minLength": { "type": "integer", "minimum": 0 },
+        "maxLength": { "type": "integer", "minimum": -1, "description": "-1 : pas de limite (ignoré par le validator)" },
+        "enum": { "type": ["array", "null"], "items": { "type": "string" } },
+        "reference": { "type": "string" }
+      }
+    }
+  }
+}

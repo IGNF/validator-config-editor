@@ -1,0 +1,86 @@
+{
+    "id": "8a5b8dd35e3d5037a635aa0b9e8fbf87",
+    "name": "MEC",
+    "title": "MEC",
+    "columns": [
+        {
+            "type": "String",
+            "id": "9b5977865395eb190c0bf82d9eaac265",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom littéral de la MEC",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "type": "String",
+            "id": "a06fd45e92ad1a66f446273f073e7e03",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du document d'urbanisme",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "type": "MultiPolygon",
+            "id": "a0d320cb3d2173606cc9df8a5790c5f6",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Géométrie associée",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": true
+            }
+        },
+        {
+            "type": "Filename",
+            "id": "b4d7249f598514ff355215858e2dc524",
+            "name": "NOMRAPP",
+            "title": "NOMRAPP",
+            "description": "Nom du fichier relatif au rapport de présentation de la MEC",
+            "constraints": {
+                "required": false,
+                "presenceRequired": true,
+                "unique": false,
+                "pattern": "(\\d{9}|(2A|2B|\\d{2})\\d{3})_<YYYMMDD>_rapport_de_presentation_MEC[0-9]+_<YYYMMDD>.pdf",
+                "maxLength": 80
+            }
+        },
+        {
+            "type": "String",
+            "id": "dcfeb75dcc2f683fe53aeee0ffd1aa8f",
+            "name": "DATVALID",
+            "title": "DATVALID",
+            "description": "Date de validation ou de signature de l’arrêté",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "type": "Filename",
+            "id": "ffb5d583d2d2aa66e4c0d72673c8d467",
+            "name": "NOMARR",
+            "title": "NOMARR",
+            "description": "Nom du fichier relatif à l’arrêté de la MEC",
+            "constraints": {
+                "required": false,
+                "presenceRequired": true,
+                "unique": false,
+                "pattern": "(\\d{9}|(2A|2B|\\d{2})\\d{3})_<YYYMMDD>_arrete_MEC[0-9]+_<YYYMMDD>.pdf",
+                "maxLength": 80
+            }
+        }
+    ]
+}
