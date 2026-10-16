@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { mdiAlertCircleOutline, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
 import GpuView from './components/GpuView.vue'
+import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
 import ProblemsPanel from './components/ProblemsPanel.vue'
@@ -13,6 +14,10 @@ import { route } from './router'
 import { useProject } from './stores/project'
 
 const store = useProject()
+// Éditeur en ligne (build « pages ») : pas de serveur, l'utilisateur choisit un dossier.
+const online = import.meta.env.MODE === 'pages'
+const showHome = ref(false)
+watch(() => store.session, () => (showHome.value = false))
 
 // Raccourcis : Ctrl+Z annuler, Ctrl+Maj+Z ou Ctrl+Y rétablir.
 function onKey(e: KeyboardEvent) {
@@ -30,7 +35,7 @@ function onBeforeUnload(e: BeforeUnloadEvent) {
 }
 
 onMounted(() => {
-  store.load()
+  if (!online) store.load()
   window.addEventListener('keydown', onKey)
   window.addEventListener('beforeunload', onBeforeUnload)
 })
@@ -59,17 +64,18 @@ const showProblems = ref(true)
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
-      <v-btn :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
+      <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
+      <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer permanent :width="340">
+    <v-navigation-drawer v-if="store.result" permanent :width="340">
       <ModelTree />
     </v-navigation-drawer>
 
-    <v-navigation-drawer v-model="showProblems" location="end" :width="420" permanent>
+    <v-navigation-drawer v-if="store.result" v-model="showProblems" location="end" :width="420" permanent>
       <ProblemsPanel />
     </v-navigation-drawer>
 
@@ -77,7 +83,8 @@ const showProblems = ref(true)
       <v-container fluid>
         <v-alert v-if="store.error" type="error" class="mb-4">{{ store.error }}</v-alert>
         <v-progress-linear v-if="store.loading && !store.result" indeterminate aria-label="Chargement de la configuration" />
-        <template v-if="store.result">
+        <Home v-if="online && (!store.result || showHome)" />
+        <template v-else-if="store.result">
           <component :is="view" v-if="route.file" :key="route.file" :file="route.file" />
           <section v-else>
             <h1 class="text-h5 mb-2">Configuration</h1>

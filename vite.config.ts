@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
+import type { Plugin } from 'vite'
 import { defineConfig } from 'vitest/config'
 
 const alias = {
@@ -9,12 +10,19 @@ const alias = {
   '@cli': fileURLToPath(new URL('./src/cli', import.meta.url)),
 }
 
-// Interface : site statique servi par `vce serve` depuis dist/ui.
-export default defineConfig({
+// GitHub Pages n'envoie pas d'en-têtes : la CSP est mise en <meta> (plan 002, R10).
+const CSP = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+const cspMeta = (): Plugin => ({
+  name: 'csp-meta',
+  transformIndexHtml: (html) => html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${CSP}" />`),
+})
+
+// Interface : servie par `vce serve` depuis dist/ui, ou publiée sur GitHub Pages (mode « pages »).
+export default defineConfig(({ mode }) => ({
   base: './',
-  plugins: [vue(), vuetify({ autoImport: true })],
+  plugins: [vue(), vuetify({ autoImport: true }), ...(mode === 'pages' ? [cspMeta()] : [])],
   resolve: { alias },
-  build: { outDir: 'dist/ui', emptyOutDir: true },
+  build: { outDir: mode === 'pages' ? 'dist/pages' : 'dist/ui', emptyOutDir: true },
   test: {
     include: ['tests/unit/**/*.test.ts'],
     environment: 'node',
@@ -25,4 +33,4 @@ export default defineConfig({
       thresholds: { lines: 90 },
     },
   },
-})
+}))
