@@ -113,9 +113,3 @@ VCE_CONFIG_DIR=~/gpu/validator-config-gpu/config npm test   # + configuration co
 - `docs/` : principes et documentation développeurs ;
 - `.github/` : modèles d'issues et de PR, workflows ;
 - `tests/` : tests unitaires et de bout en bout.
-
-## Contacts
-
-|Nom|Prénom|mail|fonction|
-|---|---|---|---|
-|Cerizay|Florian|florian.cerizay@ign.fr|   |
