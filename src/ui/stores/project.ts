@@ -1,26 +1,26 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
+import { changedFiles, dataOf, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { countByModel } from '@core/validation/problems'
-import { checkConfig, summarize, type CheckResult } from '@core/validation/validate'
-import { fetchSnapshot, SnapshotConfigFs } from '../io/snapshot'
+import { summarize } from '@core/validation/validate'
+import { ServerSource } from '../io/server'
+import type { ConfigSource } from '../io/source'
 
 export const useProject = defineStore('project', () => {
-  const root = ref('')
-  // Données volumineuses et non modifiées : pas de réactivité profonde.
-  const files = shallowRef(new Map<string, string>())
-  const result = shallowRef<CheckResult>()
+  const source = shallowRef<ConfigSource>()
+  // Session immuable (src/core/edit/session) : remplacée à chaque édition.
+  const session = shallowRef<Session>()
   const loading = ref(false)
   const error = ref<string>()
 
-  async function load() {
+  async function load(next: ConfigSource = source.value ?? new ServerSource()) {
     loading.value = true
     error.value = undefined
     try {
-      const snapshot = await fetchSnapshot()
-      root.value = snapshot.root
-      files.value = snapshot.files
-      result.value = await checkConfig(new SnapshotConfigFs(snapshot.files))
+      const files = await next.load()
+      session.value = await openSession(files)
+      source.value = next
     } catch (e) {
       error.value = e instanceof Error ? e.message : String(e)
     } finally {
@@ -28,13 +28,33 @@ export const useProject = defineStore('project', () => {
     }
   }
 
+  const result = computed(() => session.value?.result)
+  const root = computed(() => source.value?.label ?? '')
+
   const models = computed<LoadedModel[]>(() =>
     result.value ? [...result.value.project.models.values()].sort((a, b) => a.name.localeCompare(b.name)) : [],
   )
-
   const summary = computed(() => (result.value ? summarize(result.value.project, result.value.problems) : undefined))
-
   const countsByModel = computed(() => countByModel(result.value?.problems ?? []))
 
-  return { root, files, result, loading, error, load, models, summary, countsByModel }
+  const has = (path: string | undefined) => path !== undefined && !!session.value?.originals.has(path)
+  const text = (path: string) => (session.value ? textOf(session.value, path) : undefined)
+  const data = (path: string) => (session.value ? dataOf(session.value, path) : undefined)
+
+  /** Applique une édition pure à un fichier JSON ; `key` fusionne les saisies d'un même champ. */
+  function edit<T = unknown>(path: string, update: (data: T) => unknown, key?: string) {
+    if (session.value) session.value = editSession(session.value, path, update, key)
+  }
+  const undo = () => session.value && (session.value = undoEdit(session.value))
+  const redo = () => session.value && (session.value = redoEdit(session.value))
+  const canUndo = computed(() => (session.value?.history.past.length ?? 0) > 0)
+  const canRedo = computed(() => (session.value?.history.future.length ?? 0) > 0)
+  const changed = computed(() => (session.value ? changedFiles(session.value) : new Map<string, string>()))
+  const isEdited = (path: string) => !!session.value?.edited.has(path)
+  const isModelEdited = (model: string) => [...(session.value?.edited.keys() ?? [])].some((p) => p.startsWith(model + '/'))
+
+  return {
+    source, session, loading, error, load, result, root, models, summary, countsByModel,
+    has, text, data, edit, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
+  }
 })

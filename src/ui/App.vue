@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiRefresh } from '@mdi/js'
-import { computed, onMounted, ref } from 'vue'
+import { mdiAlertCircleOutline, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import CodeListView from './components/CodeListView.vue'
 import GpuView from './components/GpuView.vue'
 import ModelTree from './components/ModelTree.vue'
@@ -13,7 +13,36 @@ import { route } from './router'
 import { useProject } from './stores/project'
 
 const store = useProject()
-onMounted(() => store.load())
+
+// Raccourcis : Ctrl+Z annuler, Ctrl+Maj+Z ou Ctrl+Y rétablir.
+function onKey(e: KeyboardEvent) {
+  if (!(e.ctrlKey || e.metaKey)) return
+  const key = e.key.toLowerCase()
+  if (key === 'z' && !e.shiftKey) store.undo()
+  else if ((key === 'z' && e.shiftKey) || key === 'y') store.redo()
+  else return
+  e.preventDefault()
+}
+
+// Avertissement avant de quitter avec des modifications non enregistrées ou non téléchargées.
+function onBeforeUnload(e: BeforeUnloadEvent) {
+  if (store.changed.size > 0) e.preventDefault()
+}
+
+onMounted(() => {
+  store.load()
+  window.addEventListener('keydown', onKey)
+  window.addEventListener('beforeunload', onBeforeUnload)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKey)
+  window.removeEventListener('beforeunload', onBeforeUnload)
+})
+
+function reload() {
+  if (store.changed.size > 0 && !window.confirm(`${store.changed.size} fichier(s) modifié(s) : recharger depuis le disque abandonne ces modifications. Continuer ?`)) return
+  store.load()
+}
 
 const VIEWS = { model: ModelView, table: TableView, codes: CodeListView, gpu: GpuView, other: SourceView }
 const view = computed(() => VIEWS[kindOf(route.value.file)])
@@ -27,7 +56,10 @@ const showProblems = ref(true)
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
       <span class="text-body-2 mr-4 root" :title="store.root">{{ store.root }}</span>
-      <v-btn :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="store.load()">Recharger</v-btn>
+      <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
+      <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
+      <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
+      <v-btn :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>

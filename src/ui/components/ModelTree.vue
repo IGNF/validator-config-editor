@@ -54,7 +54,7 @@ const counts = (m: LoadedModel) => store.countsByModel.get(m.name) ?? { errors: 
       <v-list-group v-for="m in shown" :key="m.name" :value="m.name">
         <template #activator="{ props }">
           <v-list-item v-bind="props" role="button" :aria-selected="null" :aria-expanded="opened.includes(m.name)" :data-testid="`model-${m.name}`">
-            <v-list-item-title>{{ m.name }}</v-list-item-title>
+            <v-list-item-title>{{ store.isModelEdited(m.name) ? '● ' : '' }}{{ m.name }}</v-list-item-title>
             <template #append>
               <v-chip v-if="isAbstract(m)" size="x-small" class="mr-1">abstrait</v-chip>
               <span v-if="counts(m).errors" class="count error" :aria-label="`${counts(m).errors} erreur(s)`" :data-testid="`errors-${m.name}`">{{ counts(m).errors }}</span>
@@ -65,11 +65,11 @@ const counts = (m: LoadedModel) => store.countsByModel.get(m.name) ?? { errors: 
         <v-list-item
           :href="href(m.document?.path ?? `${m.name}/`)"
           :active="route.file === (m.document?.path ?? `${m.name}/`)"
-          :title="m.document ? 'Modèle (files.json)' : 'Modèle abstrait'"
+          :title="(m.document && store.isEdited(m.document.path) ? '● ' : '') + (m.document ? 'Modèle (files.json)' : 'Modèle abstrait')"
         />
         <template v-if="m.tables.size">
           <v-list-subheader>Tables ({{ m.tables.size }})</v-list-subheader>
-          <v-list-item v-for="t in tables(m)" :key="t.path" :href="href(t.path)" :active="route.file === t.path" :title="t.title" />
+          <v-list-item v-for="t in tables(m)" :key="t.path" :href="href(t.path)" :active="route.file === t.path" :title="(store.isEdited(t.path) ? '● ' : '') + t.title" />
         </template>
         <template v-if="m.csvs.size">
           <v-list-subheader>Listes de codes ({{ m.csvs.size }})</v-list-subheader>
