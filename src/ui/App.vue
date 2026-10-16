@@ -114,7 +114,8 @@ const showProblems = ref(true)
 
     <v-main>
       <v-container fluid>
-        <v-alert v-if="store.error" type="error" class="mb-4">{{ store.error }}</v-alert>
+        <!-- L'accueil de l'éditeur en ligne affiche lui-même l'erreur d'ouverture. -->
+        <v-alert v-if="store.error && !(online && (!store.result || showHome))" type="error" class="mb-4">{{ store.error }}</v-alert>
         <v-progress-linear v-if="store.loading && !store.result" indeterminate aria-label="Chargement de la configuration" />
         <Home v-if="online && (!store.result || showHome)" />
         <template v-else-if="store.result">

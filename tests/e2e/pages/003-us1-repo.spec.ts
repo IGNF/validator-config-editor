@@ -27,8 +27,8 @@ test('ouvre un dépôt par son URL : config/ détecté, source affichée, mêmes
   const fake = await mockGitHub(page, REPOS)
   await openRepo(page, 'https://github.com/IGNF/validator-config-test')
   await expect(page.getByTestId('summary')).toContainText('4 modèles, 22 tables, 15 listes de codes')
-  await expect(page.getByTestId('source')).toHaveText('IGNF/validator-config-test · main · config')
-  await expect(page.getByTestId('source')).toHaveAttribute('href', 'https://github.com/IGNF/validator-config-test/tree/commit-main/config')
+  await expect(page.getByTestId('config-source')).toHaveText('IGNF/validator-config-test · main · config')
+  await expect(page.getByTestId('config-source')).toHaveAttribute('href', 'https://github.com/IGNF/validator-config-test/tree/commit-main/config')
   await expect(page.getByTestId('problems-count')).toHaveText('0 problème')
   expect(fake.calls.filter((c) => c.startsWith('https://api.github.com'))).toHaveLength(3)
 })
@@ -36,7 +36,7 @@ test('ouvre un dépôt par son URL : config/ détecté, source affichée, mêmes
 test('ouvre un sous-dossier d\'une branche (/tree/<branche>/<dossier>)', async ({ page }) => {
   await mockGitHub(page, REPOS)
   await openRepo(page, 'https://github.com/IGNF/validator-config-test/tree/dev/autre')
-  await expect(page.getByTestId('source')).toHaveText('IGNF/validator-config-test · dev · autre')
+  await expect(page.getByTestId('config-source')).toHaveText('IGNF/validator-config-test · dev · autre')
   await expect(page.getByTestId('summary')).toContainText('4 modèles')
 })
 
@@ -71,8 +71,8 @@ test('édite et télécharge en ZIP, nommé d\'après le dépôt ; seul GitHub e
     if (![PAGES_URL, 'https://api.github.com/', 'https://raw.githubusercontent.com/', 'data:'].some((o) => url.startsWith(o))) others.push(url)
   })
   await openRepo(page, 'IGNF/validator-config-test')
-  await page.goto('./#/cnig_PLU_2017/types/ZONE_URBA.json')
-  // La navigation par fragment ne recharge pas la page : la configuration reste ouverte.
+  // Changement de fragment seulement : l'adresse garde ?depot=… (pas de rechargement).
+  await page.evaluate(() => (location.hash = '#/cnig_PLU_2017/types/ZONE_URBA.json'))
   await page.getByTestId('column-TYPEZONE').click()
   await page.getByTestId('column-TYPEZONE').getByTestId('column-maxLength').getByRole('spinbutton').fill('5')
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByTestId('download-zip').click()])

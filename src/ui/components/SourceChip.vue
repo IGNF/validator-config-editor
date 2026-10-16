@@ -33,7 +33,7 @@ async function choose(branch: string) {
 
 <template>
   <template v-if="github">
-    <a :href="github.link" target="_blank" rel="noopener" class="text-body-2 mr-2 root" :title="store.root" data-testid="source">{{ store.root }}</a>
+    <a :href="github.link" target="_blank" rel="noopener" class="text-body-2 mr-2 root" :title="store.root" data-testid="config-source">{{ store.root }}</a>
     <v-menu @update:model-value="list">
       <template #activator="{ props }">
         <v-btn v-bind="props" :prepend-icon="mdiSourceBranch" size="small" variant="tonal" class="mr-2" data-testid="branches">
@@ -48,8 +48,8 @@ async function choose(branch: string) {
       </v-list>
     </v-menu>
   </template>
-  <a v-else-if="store.source?.link" :href="store.source.link" target="_blank" rel="noopener" class="text-body-2 mr-4 root" :title="store.root" data-testid="source">{{ store.root }}</a>
-  <span v-else class="text-body-2 mr-4 root" :title="store.root" data-testid="source">{{ store.root }}</span>
+  <a v-else-if="store.source?.link" :href="store.source.link" target="_blank" rel="noopener" class="text-body-2 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</a>
+  <span v-else class="text-body-2 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
 </template>
 
 <style scoped>
