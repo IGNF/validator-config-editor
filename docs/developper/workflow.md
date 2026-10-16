@@ -49,3 +49,10 @@ Le projet suit [Semantic Versioning](https://semver.org/lang/fr/). Chaque versio
 git `vX.Y.Z`, référencé par les dépôts de configuration
 (`github:IGNF/validator-config-editor#vX.Y.Z`). Les changements sont résumés dans
 [CHANGELOG.md](../../CHANGELOG.md).
+
+Publier une version :
+
+1. PR qui incrémente `version` dans `package.json` et complète le CHANGELOG ;
+2. après merge, lancer le workflow **Release** (Actions → Release → Run workflow) ;
+3. le workflow teste et construit `main`, crée un commit détaché contenant `dist/`, pose le tag
+   `vX.Y.Z` sur ce commit et crée la release GitHub. `main` ne contient jamais `dist/`.
