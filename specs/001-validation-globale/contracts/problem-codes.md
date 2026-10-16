@@ -38,16 +38,16 @@ code est un changement de version mineure.
 |---|---|---|---|
 | `WARN-MODEL-NAME` | avertissement | `name` de `files.json` ≠ nom du dossier | `Le nom « cnig_PLU_2016 » diffère du dossier « cnig_PLU_2017 »` |
 | `ERR-PARENT-MISSING` | erreur | `parent.name` ne désigne aucun dossier de la configuration | `Modèle parent « cnig_SUP_XXX_2016 » introuvable` |
-| `ERR-TABLE-MODEL-MISSING` | erreur | `files[].tableModel` désigne un fichier absent | `Modèle de table « ./types/ZONE_URBA.json » introuvable` |
-| `ERR-CODE-DATA-MISSING` | erreur | `codes[].data` désigne un fichier absent | `Liste de codes « ./codes/ListeEtatPLU.csv » introuvable` |
+| `ERR-TABLE-MODEL-MISSING` | erreur | modèle de table absent pour un fichier `table` ou une table de `multi_table` : chemin `tableModel`, ou à défaut `./types/<name>.json` (convention du validator). `auto` et les URL ne sont pas vérifiés | `Modèle de table « ./types/ZONE_URBA.json » introuvable` |
+| `ERR-CODE-DATA-MISSING` | erreur | `codes[].data` désigne un fichier absent (les URL ne sont pas vérifiées) | `Liste de codes « ./codes/ListeEtatPLU.csv » introuvable` |
 | `ERR-FK-SYNTAX` | erreur | clé étrangère illisible ou listes de colonnes de longueurs différentes | `Clé étrangère illisible : « (TYPE) REFERENCE Liste(TYPE) »` |
 | `ERR-FK-SOURCE-COLUMN` | erreur | colonne source absente de la table | `Clé étrangère : colonne « TYPEZONE » absente de la table` |
-| `ERR-FK-TARGET-LIST` | erreur | liste cible non déclarée dans `codes[]` du modèle ni de son parent | `Clé étrangère : liste « ListeTypezonePLU » non déclarée dans files.json` |
-| `ERR-FK-TARGET-COLUMN` | erreur | colonne cible absente de l'en-tête du CSV de la liste | `Clé étrangère : colonne « TYPEZONE » absente de ListeTypezonePLU.csv` |
+| `ERR-FK-TARGET-LIST` | erreur | cible ni déclarée dans `codes[]` du modèle, ni nom d'une table du modèle (le validator ignore `parent`) | `Clé étrangère : liste « ListeTypezonePLU » non déclarée dans files.json` |
+| `ERR-FK-TARGET-COLUMN` | erreur | colonne cible absente de l'en-tête du CSV de la liste (ou des colonnes de la table cible) | `Clé étrangère : colonne « TYPEZONE » absente de ListeTypezonePLU.csv` |
 | `ERR-REFERENCE-TARGET` | erreur | `constraints.reference` `TABLE.COLONNE` non résolue dans le modèle | `Référence « SERVITUDE.IDSUP » : table ou colonne introuvable` |
 | `ERR-ID-DUPLICATE` | erreur | même `id` porté par deux objets du modèle (hors parent embarqué) | `Identifiant 7833f9f8… déjà utilisé par types/ZONE_URBA.json#/` |
 | `WARN-GPU-ORPHAN-ID` | avertissement | clé de section de `gpu.json` absente des `id` connus (plan R10) | `gpu.json : identifiant 1773dd88… sans objet correspondant` |
-| `WARN-UNREFERENCED-FILE` | avertissement | fichier de `types/` ou `codes/` référencé par aucun `tableModel` ni `codes[].data` | `Fichier non référencé par files.json` |
+| `WARN-UNREFERENCED-FILE` | avertissement | fichier `types/**.json` ou `codes/**.csv` qui n'est le modèle de table d'aucun fichier ni le `data` d'aucun code | `Fichier non référencé par files.json` |
 
 ## Tri
 
