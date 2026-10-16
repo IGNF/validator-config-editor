@@ -1,0 +1,32 @@
+code,libelle
+010000,Espaces urbanisés
+010100,Centres urbains
+010200,Espaces urbanisés hors centres urbains
+020000,Espaces non urbanisés
+030000,Espaces spécifiques au type d'aléa étudié
+030100,Espaces spécifiques d'activités
+030101,"Ports, zones d'activités portuaires et d'activités balnéaires"
+030102,Campings et hôtellerie de plein air
+030103,Zones d'activités agricoles spécifiques
+030200,Espaces participants à la limitation des aléas
+030201,Zones d'expansion des crues
+030202,Zones d'atterrissement
+030203,Zones d'interfaces habitat-forêt
+030204,Zones de maintien d'une forêt
+040000,Projets d'aménagement futurs du territoire
+050000,Zone d'habitat
+050100,Zone d'habitat individuel
+050200,Zone d'habitat collectif
+060100,Zone d'activité
+060101,Zone d'industrie
+060102,Service
+060103,Artisanat
+070000,Infrastructures et équipements particuliers
+070100,Etablissements sensibles ou difficilement évacuables
+070200,Equipements stratégiques pour la gestion de crise
+070300,Equipements collectifs de type ERP ou espaces publics ouverts
+070400,Campings et hôtellerie de plein air
+070500,Infrastructures de transport
+070600,Réseaux et équipements sensibles
+080000,"Enjeux patrimoniaux, culturels et environnementaux"
+999999,Autre

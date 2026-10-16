@@ -1,0 +1,70 @@
+{
+  "name": "prefixeppr_zonereglementairefoncier_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzonereglementaire",
+      "description": "Identifiant unique",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15,
+        "unique": true
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "codezonereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "libellezonereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "typereglement",
+      "description": "fk typereglementfoncier",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 2,
+        "enum": [
+          "01",
+          "02"
+        ]
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Géométrie associée",
+      "type": "Polygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

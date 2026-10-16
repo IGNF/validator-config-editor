@@ -3,7 +3,7 @@
   "$id": "table",
   "title": "Modèle de table IGNF/validator (types/*.json)",
   "type": "object",
-  "required": ["id", "name", "columns"],
+  "required": ["name", "columns"],
   "properties": {
     "id": { "$ref": "document#/definitions/Id" },
     "name": { "type": "string", "minLength": 1 },
@@ -21,7 +21,7 @@
   "definitions": {
     "Column": {
       "type": "object",
-      "required": ["id", "name", "type"],
+      "required": ["name", "type"],
       "properties": {
         "id": { "$ref": "document#/definitions/Id" },
         "name": { "type": "string", "minLength": 1 },
@@ -46,7 +46,7 @@
         "pattern": { "type": "string" },
         "minLength": { "type": "integer", "minimum": 0 },
         "maxLength": { "type": "integer", "minimum": -1, "description": "-1 : pas de limite (ignoré par le validator)" },
-        "enum": { "type": ["array", "null"], "items": { "type": "string" } },
+        "enum": { "type": ["array", "null"], "items": { "type": ["string", "number", "boolean"] } },
         "reference": { "type": "string" }
       }
     }

@@ -10,6 +10,7 @@ const read = (name: string) => JSON.parse(readFileSync(new URL(name, dir), 'utf8
 const ajv = new Ajv({
   allErrors: true,
   strict: true,
+  allowUnionTypes: true,
   validateFormats: false,
   code: { source: true, esm: true },
 })

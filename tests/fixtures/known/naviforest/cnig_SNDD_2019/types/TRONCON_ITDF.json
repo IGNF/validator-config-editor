@@ -1,0 +1,474 @@
+{
+    "id": "6678aa8c9f34276fbbc5c6e5836f6d80",
+    "name": "TRONCON_ITDF",
+    "title": "TRONCON_ITDF",
+    "description": "Dessertes forestières",
+    "constraints": {
+        "conditions": [
+            "ITDF NOT LIKE 'Non'"
+        ],
+        "foreignKeys": []
+    },
+    "columns": [
+        {
+            "id": "018b95a0f1108cabbadf0a189f6d50ed",
+            "name": "GESTION",
+            "title": "GESTION",
+            "description": "Gestionnaire du tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Conseil départemental",
+                    "Etat",
+                    "Région",
+                    "Intercommunalité",
+                    "Commune",
+                    "ONF",
+                    "Gestionnaire privé",
+                    "Autre",
+                    "Inconnu"
+                ]
+            }
+        },
+        {
+            "id": "0b4501e803c829ece00b1d5ccb88d2a1",
+            "name": "ITBR",
+            "title": "ITBR",
+            "description": "Tronçon portant une qualification complémentaire spécifique métier liée à la réglementation du transport de bois ronds définie par arrêté préfectoral",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Oui",
+                    "Non"
+                ]
+            }
+        },
+        {
+            "id": "1066efa934056ca177ada137ae128f63",
+            "name": "NUMERO",
+            "title": "NUMERO",
+            "description": "Numéro de la route à laquelle appartient le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[A-Z]{1}[0-9]{1,3}$"
+            }
+        },
+        {
+            "id": "13a3db639bd70b005378b328f5e6b81d",
+            "name": "DATE_MAJ",
+            "title": "DATE_MAJ",
+            "description": "Date de la dernière mise à jour de la donnée du tronçon",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "177b07d731129435f124a808baaeae26",
+            "name": "ID_BDUNI",
+            "title": "ID_BDUNI",
+            "description": "Identifiant unique du tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "1f778964d1ac457813a1c3cb6f3327be",
+            "name": "PTRA_MAX",
+            "title": "PTRA_MAX",
+            "description": "Poids total roulant autorisé maximal sur le tronçon indépendamment du type de transport",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "3,5",
+                    "7,5",
+                    "12",
+                    "Inconnu",
+                    "Non concerné"
+                ]
+            }
+        },
+        {
+            "id": "28707f3f5e3ea4eb902b6c16026e225b",
+            "name": "LARGEUR",
+            "title": "LARGEUR",
+            "description": "Largeur moyenne de la bande roulante du tronçon en mètres",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^([1-9]|1[0-5])$|<3|3-5|>5"
+            }
+        },
+        {
+            "id": "23d885582c05b735654206bf58ffaede",
+            "name": "WKT",
+            "title": "Geometrie",
+            "description": "Géométrie du troncon (MultiLineString)",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "27132b6e76e80978a25e6d3362ce0fa0",
+            "name": "LARG_M_ER",
+            "title": "LARG_MAX_ER",
+            "description": "Largeur maximale autorisée en mètre de l'ensemble routier pour la circulation sur le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[1-4]{1}(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "3cd5d42723afa08ed8fddf1adaedd2c6",
+            "name": "INSEE_COM",
+            "title": "INSEE_COM",
+            "description": "Code INSEE de la commune où se situe le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[AB0-9]{5}$"
+            }
+        },
+        {
+            "id": "2354c17451be33ed5fb890295345f4e8",
+            "name": "RESEAU_TE",
+            "title": "RESEAU_TE",
+            "description": "Réseau permanent de transport exceptionnel auquel appartient le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "42",
+                    "72",
+                    "94",
+                    "120",
+                    "Non concerné",
+                    "Inconnu"
+                ]
+            }
+        },
+        {
+            "id": "4f0c79f68b0766ebde95511fcd4c17ff",
+            "name": "POS_SOL",
+            "title": "POS_SOL",
+            "description": "Position au sol du tronçon",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    0,
+                    1,
+                    -1
+                ]
+            }
+        },
+        {
+            "id": "8097f5e9119e913202f415100434c9ae",
+            "name": "CONTRIB",
+            "title": "CONTRIB",
+            "description": "Nom du producteur de la donnée du tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8157f5a2ac3b21d708eb2c630593e869",
+            "name": "DEPT",
+            "title": "DEPT",
+            "description": "Numéro du département où se situe le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[AB0-9]{2,3}$"
+            }
+        },
+        {
+            "id": "820ef2b7fe9d20c126c39c671cf4cf2a",
+            "name": "RESTR_SAIS",
+            "title": "RESTRICTION_SAISON",
+            "description": "Tronçon pouvant être soumis à une restriction saisonnière (ex : col, dégel)",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Oui",
+                    "Non"
+                ]
+            }
+        },
+        {
+            "id": "81d12f17fc985fff31e3f45fc367029d",
+            "name": "CAT_TE",
+            "title": "CAT_TE",
+            "description": "Catégorie maximale de transport exceptionnel à laquelle appartient le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "CAT1",
+                    "CAT2",
+                    "CAT3",
+                    "Non concerné",
+                    "Inconnu"
+                ]
+            }
+        },
+        {
+            "id": "8abe751102749964af4d0566feb618fa",
+            "name": "SOURCE",
+            "title": "SOURCE",
+            "description": "Fond repérant utilisé pour tracer le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "BD Topo",
+                    "BD Carto",
+                    "BD Ortho",
+                    "GPS",
+                    "Import BD-Privée",
+                    "Inconnue"
+                ]
+            }
+        },
+        {
+            "id": "8f97be54612aa9b1e83c9e15666e3ac2",
+            "name": "HAUT_M_ER",
+            "title": "HAUT_MAX_ER",
+            "description": "Hauteur maximale autorisée en mètre de l'ensemble routier pour la circulation sur le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[2-6]{1}(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "9c74a6c8e3202790c5341db8dac29806",
+            "name": "SENS",
+            "title": "SENS",
+            "description": "Sens de circulation sur le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Double sens",
+                    "Sens direct",
+                    "Sens inverse"
+                ]
+            }
+        },
+        {
+            "id": "9d04e115309fc65f402734903d399c12",
+            "name": "NOM_VOIE",
+            "title": "NOM_VOIE",
+            "description": "Toponyme de la voie à laquelle appartient le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "c654dead1f2baa6dfabe892eb1a7e5d2",
+            "name": "T_ESSIEU_M",
+            "title": "T_ESSIEU_MAX",
+            "description": "Charge maximale à l’essieu autorisée en tonnes",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[6-9]{1}(?:\\,(\\d{1,1}))?$|[0-1][0-3](?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "dd4d166fdbd8e3ca0baaf9edc52a1349",
+            "name": "IMPORTANCE",
+            "title": "IMPORTANCE",
+            "description": "Classe d’importance de la voie en fonction du trafic routier",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            }
+        },
+        {
+            "id": "f1a9691cff6fb4aa0ec89e3c0cb016ef",
+            "name": "ITDF",
+            "title": "ITDF",
+            "description": "Tronçon portant une qualification complémentaire spécifique métier liée à son usage intra massif forestier (tronçon de desserte) Il ne peut être un itinéraire bois ronds",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Oui",
+                    "Non"
+                ]
+            }
+        },
+        {
+            "id": "4e4e6999955733905912c5c8fd1e92a2",
+            "name": "LONGUEUR",
+            "title": "LONGUEUR",
+            "description": "Longueur du tronçon en mètres",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "fd5ecd19f03e114979ae26572c5ddf04",
+            "name": "LONG_M_ER",
+            "title": "LONG_MAX_ER",
+            "description": "Longueur maximale autorisée en mètre de l'ensemble routier pour la circulation sur le tronçon",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^([3-9]|[1-2][0-9]|30)(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "0358239d4a19ba00f17d036d06d73c42",
+            "name": "ITDF_PRAT",
+            "title": "ITDF_PRATICABILITE",
+            "description": "Praticabilité du tronçon dépendant ou non (tout temps) des conditions météorologiques",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Tout temps",
+                    "Temps sec"
+                ]
+            }
+        },
+        {
+            "id": "1c19c67be4fc53cb1b397ef73165d00a",
+            "name": "ITDF_REVET",
+            "title": "ITDF_REVETEMENT",
+            "description": "Type de revêtement du tronçon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Revêtu",
+                    "Empierré",
+                    "Terrain naturel"
+                ]
+            }
+        },
+        {
+            "id": "9ee7421913ecfbd7b427c30d565a941b",
+            "name": "ACCES_FMA",
+            "title": "ITDF_ACCES_FMA",
+            "description": "Tronçon accessible aux fonds mouvants",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Oui",
+                    "Non"
+                ]
+            }
+        },
+        {
+            "id": "ab0a53ef53f1cd725d2b4b7e4f219b5d",
+            "name": "ITDF_DFCI",
+            "title": "ITDF_DFCI",
+            "description": "Tronçon réservé ou non à l’usage pour la DFCI (Défense Forestière Contre les Incendies)",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Usage exclusif DFCI",
+                    "Mixte",
+                    "Inconnu"
+                ]
+            }
+        },
+        {
+            "id": "c67878617d2b2fa03ac0db51ac542a1d",
+            "name": "ITDF_ETAT",
+            "title": "ITDF_ETAT",
+            "description": "Etat général du tronçon (dégradation de la voirie),indépendamment du type de véhicule pouvant y circuler",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Bon",
+                    "Mauvais"
+                ]
+            }
+        },
+        {
+            "id": "d75bd46e41d2efe187119560718525ed",
+            "name": "ITDF_SURB",
+            "title": "ITDF_ACCES_SURBAISSE",
+            "description": "Tronçon accessible aux ensembles routiers surbaissés (ex : porte-char)",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Oui",
+                    "Non"
+                ]
+            }
+        },
+        {
+            "id": "ecd94b733151847fbf92bd4fe7bf1612",
+            "name": "ACCES_GR",
+            "title": "ITDF_ACCES_GRUMIER_SR",
+            "description": "Tronçon accessible aux grumiers et semi-remorques",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Oui",
+                    "Non"
+                ]
+            }
+        }
+    ]
+}

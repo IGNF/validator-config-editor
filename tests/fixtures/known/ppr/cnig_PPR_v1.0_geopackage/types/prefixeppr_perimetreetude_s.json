@@ -1,0 +1,68 @@
+{
+  "name": "prefixeppr_perimetreetude_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idperimetre",
+      "description": "Identifiant unique",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15,
+        "unique": true
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "foreign key procedure",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "etatprocedure",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 10,
+        "enum": [
+          "DEB_PRG",
+          "DEB_MTG",
+          "PRESCRIT",
+          "PAC",
+          "PROROGE",
+          "ANTICIPE",
+          "APPROUVE",
+          "ANNULE",
+          "ABROGE"
+        ]
+      }
+    },
+    {
+      "name": "dateetat",
+      "description": "",
+      "type": "Date",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Geométrie associée",
+      "type": "MultiPolygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

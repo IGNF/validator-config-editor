@@ -1,0 +1,152 @@
+{
+  "name": "prefixeppr_zoneprotegee_codealea_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzoneprotegee",
+      "description": "pk",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "fk procedure",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "typealea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 3,
+        "enum": [
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "121",
+          "122",
+          "123",
+          "124",
+          "125",
+          "126",
+          "127",
+          "13",
+          "14",
+          "15",
+          "16",
+          "171",
+          "172",
+          "174",
+          "175",
+          "176",
+          "18",
+          "211",
+          "212",
+          "213",
+          "214",
+          "22",
+          "23",
+          "24",
+          "25",
+          "311",
+          "312",
+          "313",
+          "314",
+          "315",
+          "316",
+          "317",
+          "321",
+          "322",
+          "33",
+          "34",
+          "999"
+        ]
+      }
+    },
+    {
+      "name": "niveauprotection",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "occurrence",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "description",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "idouvrageprotecteur_s",
+      "description": "fk ouvrageprotecteur_s",
+      "type": "String",
+      "constraints": {
+        "maxLength": 50,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_ouvrageprotecteur_codealea_s.idouvrageprotecteur"
+      }
+    },
+    {
+      "name": "idouvrageprotecteur_l",
+      "description": "fk ouvrageprotecteur_l",
+      "type": "String",
+      "constraints": {
+        "maxLength": 50,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_ouvrageprotecteur_codealea_l.idouvrageprotecteur"
+      }
+    },
+    {
+      "name": "idouvrageprotecteur_p",
+      "description": "fk ouvrageprotecteur_p",
+      "type": "String",
+      "constraints": {
+        "maxLength": 50,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_ouvrageprotecteur_codealea_p.idouvrageprotecteur"
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Géométrie associée",
+      "type": "Polygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

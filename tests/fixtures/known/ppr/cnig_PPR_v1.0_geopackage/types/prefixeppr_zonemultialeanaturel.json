@@ -1,0 +1,82 @@
+{
+  "name": "prefixeppr_zonemultialeanaturel",
+  "description": "",
+  "columns": [
+    {
+      "name": "typealea",
+      "description": "partie 1/2 de pk multiple",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 3,
+        "enum": [
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "121",
+          "122",
+          "123",
+          "124",
+          "125",
+          "126",
+          "127",
+          "13",
+          "14",
+          "15",
+          "16",
+          "171",
+          "172",
+          "174",
+          "175",
+          "176",
+          "18"
+        ]
+      }
+    },
+    {
+      "name": "idzonealea",
+      "description": "partie 2/2 de pk multiple",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15,
+        "reference": "prefixeppr_zonealeanaturelsynthese_s.idzonealea"
+      }
+    },
+    {
+      "name": "niveaualea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 2,
+        "required": false,
+        "presenceRequired": false,
+        "enum": [
+          "00",
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "99"
+        ]
+      }
+    },
+    {
+      "name": "occurrence",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

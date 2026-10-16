@@ -1,0 +1,207 @@
+{
+    "id": "46d189cfe927aa0930cc0fa22f799d3c",
+    "name": "EQUIPEMENTS",
+    "title": "EQUIPEMENTS",
+    "description": "Table équipement",
+    "constraints": {
+        "conditions": [
+            "NOT(NATURE LIKE 'Place de dépôt' AND REVETEMENT IS NULL)",
+            "NOT(NATURE LIKE 'Aire de retournement' AND REVETEMENT IS NULL)",
+            "NOT(NATURE LIKE 'Aire de dépôt - retournement' AND REVETEMENT IS NULL)"
+        ],
+        "foreignKeys": []
+    },
+    "columns": [
+        {
+            "id": "08c64b04b79dd5802d053857f24113c9",
+            "name": "COMMENT",
+            "title": "COMMENTAIRE",
+            "description": "Commentaire précisant des informations sur l’équipement",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "2432eb018c92dd15b58c1ba997ea342c",
+            "name": "PHOTO",
+            "title": "PHOTO",
+            "description": "Photo de l'équipement",
+            "type": "Path",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "24cea90655ab81052d0548bd5fcbab4a",
+            "name": "REVETEMENT",
+            "title": "REVETEMENT",
+            "description": "Revêtement de la place de dépôt ou de l'aire de retournement ou de l'aire de dépôt-retournement",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Revêtu",
+                    "Empierré",
+                    "Terrain naturel"
+                ]
+            }
+        },
+        {
+            "id": "66af76e7c3463c313d14631f5e4ca3bc",
+            "name": "LOCALISANT",
+            "title": "LOCALISATION",
+            "description": "Localisation GPS de l'équipement en WGS84",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[+-][0-9]{2}(?:\\,(\\d{1,4}))?[+-][0-9]{3}(?:\\,(\\d{1,4}))?$"
+            }
+        },
+        {
+            "id": "7f813e2c648ea21e72fc3ab3e84356b1",
+            "name": "LARGEUR",
+            "title": "LARGEUR",
+            "description": "Largeur de l’équipement en mètre",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "< 3 m",
+                    "3 à 6 m",
+                    "6 à 10 m",
+                    "10 à 20 m",
+                    "> 20 m"
+                ]
+            }
+        },
+        {
+            "id": "a334eb5078f154fb38df2334b8de431d",
+            "name": "GESTION",
+            "title": "GESTION",
+            "description": "Gestionnaire de l’équipement",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "ONF",
+                    "Région",
+                    "Gestionnaire privé",
+                    "Commune",
+                    "Intercommunalité",
+                    "Autre",
+                    "Inconnu"
+                ]
+            }
+        },
+        {
+            "id": "a69f04e0a5101f1fb43e518ee7a3af0d",
+            "name": "NATURE",
+            "title": "NATURE",
+            "description": "Nature de l’équipement",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Place de dépôt",
+                    "Aire de retournement",
+                    "Aire de croisement",
+                    "Aire de dépôt - retournement",
+                    "Barrière",
+                    "Point de rencontre des secours en forêt"
+                ]
+            }
+        },
+        {
+            "id": "a863b5019ffe0535e727e1d45e530eaf",
+            "name": "DATE_MAJ",
+            "title": "DATE_MAJ",
+            "description": "Date de la dernière mise à jour de la donnée sur l'équipement",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "ad9b65c27b6f4c8eca66075b8f983c8e",
+            "name": "CONTRIB",
+            "title": "CONTRIBUTEUR",
+            "description": "Nom du producteur/contributeur de la donnée sur l'équipement",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "bec910728f55e6fd8d20efd9dd56483c",
+            "name": "ID",
+            "title": "ID",
+            "description": "Identifiant unique de l’équipement",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "c11d9ae93f613b14721b0c2c92421a86",
+            "name": "WKT",
+            "title": "Geometrie",
+            "description": "Géométrie de équipement (POINT)",
+            "type": "Point",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "c635349e54ac2ca394a1b85d387fcf5f",
+            "name": "NOM",
+            "title": "NOM",
+            "description": "Nom de l’équipement",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "cb4ebf93d4c066b4e7890a4b994c516e",
+            "name": "INSEE_COM",
+            "title": "INSEE_COM",
+            "description": "Code INSEE de la commune où se situe l’équipement",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[AB0-9]{5}$"
+            }
+        },
+        {
+            "id": "f48a537d379d1b1bc3a822da2ce65fcc",
+            "name": "LONGUEUR",
+            "title": "LONGUEUR",
+            "description": "Longueur de l’équipement en mètre",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "< 30 m",
+                    "30 à 50 m",
+                    "50 à 100 m",
+                    "> 100 m"
+                ]
+            }
+        }
+    ]
+}

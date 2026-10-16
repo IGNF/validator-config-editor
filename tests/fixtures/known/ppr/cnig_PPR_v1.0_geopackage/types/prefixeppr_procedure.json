@@ -1,0 +1,41 @@
+{
+  "name": "prefixeppr_procedure",
+  "description": "",
+  "constraints": {
+    "foreignKeys": [
+      "(typeprocedure) REFERENCES typeprocedure(code)"
+    ]
+  },
+  "columns": [
+    {
+      "name": "codeprocedure",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "pattern": "((?:[0-9]{2,3}|2A|2B)(PREF|DDT|DDTM|DREAL|DEAL|DRIEAT)[0-9]{4}[0-9]{4}|(PPRN-I|PPRN-L|PPRN-Mvt|PPRN-Multi|PPRN-S|PPRN-Av|PPRN-Ev|PPRN-Cy|PPRN-RGA|PPRN-IF|PPRT|PPRM|PPR_Hybride)_[0-9]{4}_[0-9]{4})"
+      }
+    },
+    {
+      "name": "libelleprocedure",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "typeprocedure",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 10
+      }
+    }
+  ]
+}

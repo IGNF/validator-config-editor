@@ -1,0 +1,293 @@
+{
+    "id": "2a3579c83a5903fe3c85ecb6eb000dff",
+    "name": "CONTRAINTES",
+    "title": "CONTRAINTES",
+    "description": "Table contraintes de circulation",
+    "columns": [
+        {
+            "id": "00aecb4295e617bb2f2a7fb2d203d596",
+            "name": "DEPT",
+            "title": "DEPT",
+            "description": "Numéro du département où se situe le point de contrainte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[AB0-9]{2,3}$"
+            }
+        },
+        {
+            "id": "07787d02bf54f98bd6cbdf339c48aa06",
+            "name": "LOCALISANT",
+            "title": "LOCALISATION",
+            "description": "Localisation GPS du point contrainte en WGS84",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[+-][0-9]{2}(?:\\,(\\d{1,4}))?[+-][0-9]{3}(?:\\,(\\d{1,4}))?$"
+            }
+        },
+        {
+            "id": "0a0c84886819ada8d713611b36a3c13f",
+            "name": "CONTRIB",
+            "title": "CONTRIBUTEUR",
+            "description": "Nom du dernier producteur/contributeur de la donnée sur le point contrainte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "10980d7cf7eaeca92db5dcdca3ae94d7",
+            "name": "DATE_FIN",
+            "title": "DATE_FIN",
+            "description": "Date de fin de validité pour les points contraintes temporaires",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "1deb41dd4e9ba71466cf650f1df66597",
+            "name": "NUMERO",
+            "title": "NUMERO",
+            "description": "Numéro de la route où se situe le point contrainte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[A-Z]{1}[0-9]{1,3}$"
+            }
+        },
+        {
+            "id": "29cb84f6c33e926fbe48957d90c01b66",
+            "name": "LONG_M_ER",
+            "title": "LONG_MAX_ER",
+            "description": "Longueur maximale possible en mètre de l'ensemble routier pour franchir la contrainte",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^1[0-9]{1}(?:\\,(\\d{1,1}))?$|^2[0-5]{1}(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "3084b344117fb42b017df4638342fea4",
+            "name": "HAUT_M_ER",
+            "title": "HAUT_MAX_ER",
+            "description": "Hauteur maximale possible en mètre de l'ensemble routier pour franchir la contrainte",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[3-5]{1}(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "3243da6657d287b43f00aaa2bbedb4fc",
+            "name": "FRANCHI",
+            "title": "FRANCHISSEMENT",
+            "description": "Voie franchie ou voie portée (passage supérieur) au niveau du point contrainte",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Franchie",
+                    "Portée"
+                ]
+            }
+        },
+        {
+            "id": "4c3de4644fd635ebbae00a724eea63f3",
+            "name": "INSEE_COM",
+            "title": "INSEE_COM",
+            "description": "Code INSEE de la commune où se situe le point contrainte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[AB0-9]{5}$"
+            }
+        },
+        {
+            "id": "633ae03291f3403aaba41b0ecb650de8",
+            "name": "COMMENT",
+            "title": "COMMENTAIRE",
+            "description": "Commentaire permettant d’apporter des précisions supplémentaires aux attributs du standard",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "6631ff17b10dc0d3085c43bfb253dc54",
+            "name": "ID",
+            "title": "ID",
+            "description": "Identifiant unique du point contrainte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "66d41d30f1eb20abd9c15e0b808b7025",
+            "name": "PHOTO",
+            "title": "PHOTO",
+            "description": "Photo du point contrainte",
+            "type": "Path",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "751bf0387bc32465d775a88da1117ca4",
+            "name": "DATE_MAJ",
+            "title": "DATE_MAJ",
+            "description": "Date de la dernière mise à jour de la donnée sur le point contrainte",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "809a9624f8f3f197eb56f7699101fb48",
+            "name": "GESTION",
+            "title": "GESTION",
+            "description": "Référent du point de contrainte (correspond au gestionnaire pour les ouvrages d’art et les passages à niveau)",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Conseil départemental",
+                    "Région",
+                    "SNCF",
+                    "Etat",
+                    "Intercommunalité",
+                    "Commune",
+                    "ONF",
+                    "Gestionnaire privé",
+                    "Autre",
+                    "Inconnu"
+                ]
+            }
+        },
+        {
+            "id": "b0d35f3d6b1474113ba71a7378d7ef00",
+            "name": "LARG_M_ER",
+            "title": "LARG_MAX_ER",
+            "description": "Largeur maximale possible en mètre de l'ensemble routier pour franchir la contrainte",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[1-3]{1}(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "b3dd0d916984f6ee54217ab0ab27afaf",
+            "name": "WKT",
+            "title": "Geometrie",
+            "description": "Géométrie de la contrainte (POINT)",
+            "type": "Point",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "c527775e8c03bae5dc01721b40cad4f2",
+            "name": "RESTR_ITBR",
+            "title": "RESTRICTION_ITBR",
+            "description": "Restriction de circulation liée au tonnage sur le point contrainte défini par l'arrêté préfectoral pour la circulation du transport de bois ronds",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Restriction",
+                    "Interdiction",
+                    "Non concerné"
+                ]
+            }
+        },
+        {
+            "id": "d82ea9322a0f6638e247062d76c65e60",
+            "name": "NOM",
+            "title": "NOM",
+            "description": "Nom du point de contrainte",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "dd7294ccba3e40e934212ab7e6339933",
+            "name": "NATURE",
+            "title": "NATURE",
+            "description": "Nature du point contrainte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Pente forte (>10%)",
+                    "Lacet",
+                    "Tunnel",
+                    "Pont",
+                    "Dégradation (chaussée, accotement)",
+                    "Gué ou radier",
+                    "Passage à niveau",
+                    "Barrière de dégel",
+                    "Obstacle",
+                    "Fermeture temporaire",
+                    "Autre"
+                ]
+            }
+        },
+        {
+            "id": "eb88f47eb3c9d2586d8e9d293e496bc6",
+            "name": "T_ESSIEU_M",
+            "title": "CHARGE_ESSIEU_MAX",
+            "description": "Charge à l’essieu autorisée maximale en tonne",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[6-9]{1}(?:\\,(\\d{1,1}))?$|^1[0-3]{1}(?:\\,(\\d{1,1}))?$"
+            }
+        },
+        {
+            "id": "f5dd7c9b86091454f775d32a3ff6c089",
+            "name": "DATE_DEBUT",
+            "title": "DATE_DEBUT",
+            "description": "Date de début de validité pour les points contraintes temporaires",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "ff75bf1513eb1856947c4dac6a01bf52",
+            "name": "PTRA_MAX",
+            "title": "PTRA_MAX",
+            "description": "Poids total roulant autorisé maximal en t",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[1-5]{1}[0-9]{1}$"
+            }
+        }
+    ]
+}

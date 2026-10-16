@@ -3,7 +3,7 @@
   "$id": "document",
   "title": "Modèle de document IGNF/validator (files.json)",
   "type": "object",
-  "required": ["id", "name", "files"],
+  "required": ["name", "files"],
   "properties": {
     "id": { "$ref": "#/definitions/Id" },
     "name": { "type": "string", "minLength": 1, "title": "Nom technique du modèle" },
@@ -19,12 +19,12 @@
     "Id": {
       "type": "string",
       "pattern": "^[0-9A-Za-z]{32}$",
-      "title": "Identifiant (32 caractères alphanumériques)"
+      "title": "Identifiant (32 caractères alphanumériques), propre au GpU et facultatif pour le validator"
     },
     "ParentModel": {
       "type": "object",
       "title": "Modèle parent abstrait embarqué",
-      "required": ["id", "name", "files"],
+      "required": ["name", "files"],
       "properties": {
         "id": { "$ref": "#/definitions/Id" },
         "name": { "type": "string", "minLength": 1 },
@@ -45,7 +45,7 @@
     },
     "FileModel": {
       "type": "object",
-      "required": ["id", "name", "type", "path"],
+      "required": ["name", "type", "path"],
       "properties": {
         "id": { "$ref": "#/definitions/Id" },
         "name": { "type": "string", "minLength": 1 },
@@ -71,7 +71,7 @@
     },
     "StaticTable": {
       "type": "object",
-      "required": ["id", "name", "data"],
+      "required": ["name", "data"],
       "properties": {
         "id": { "$ref": "#/definitions/Id" },
         "name": { "type": "string", "minLength": 1 },

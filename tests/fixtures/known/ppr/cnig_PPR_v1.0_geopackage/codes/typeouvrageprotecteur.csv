@@ -1,0 +1,11 @@
+code,libelle
+1,Ouvrage ou installation pouvant influencer les inondations
+11,Ouvrage de protection contre les inondations
+111,Ouvrage appartenant à un systeme d'endiguement
+112,Amenagement hydraulique
+119,Autre ouvrage de protection contre les inondations
+12,Ouvrage ou installation influencant les ecoulements sans fonction de protection
+2,Ouvrage ou installation pouvant influencer les mouvements de terrain
+3,Ouvrage ou installation pouvant influencer les chutes de blocs
+4,Ouvrage ou installation pouvant influencer les avalanches
+999,Autre ouvrage ou installation pouvant influencer les aléas

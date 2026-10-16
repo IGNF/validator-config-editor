@@ -1,0 +1,10 @@
+code,libelle
+00,Nul ou négligeable
+01,Faible
+02,Moyen ou Modéré
+03,Moyen plus
+04,Fort
+05,Fort plus
+06,Très fort ou Majeur
+07,Très fort plus ou aggravé
+99,Autre

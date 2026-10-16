@@ -1,0 +1,26 @@
+{
+  "name": "typeprocedure",
+  "description": "",
+  "columns": [
+    {
+      "name": "code",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 10
+      }
+    },
+    {
+      "name": "libelle",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 80
+      }
+    }
+  ]
+}

@@ -9,6 +9,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Prise en charge des configurations dgpr, naviforest et ppr : `id` facultatif, valeurs `enum` numériques (#21).
+
 - Spécification 001 : navigation et validation globale d'une configuration validator.
 - JSON Schema des fichiers `files.json`, `types/*.json` et `gpu.json`.
 - Commande `vce check` : validation de tout un dossier de configuration (#2).

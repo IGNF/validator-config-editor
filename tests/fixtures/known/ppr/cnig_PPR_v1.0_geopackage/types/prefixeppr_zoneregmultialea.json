@@ -1,0 +1,137 @@
+{
+  "name": "prefixeppr_zoneregmultialea",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzoneregmultialea",
+      "description": "Identifiant unique",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "unique": true
+      }
+    },
+    {
+      "name": "typealea",
+      "description": "code aléa",
+      "type": "String",
+      "constraints": {
+        "maxLength": 3,
+        "required": true,
+        "presenceRequired": true,
+        "enum": [
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "121",
+          "122",
+          "123",
+          "124",
+          "125",
+          "126",
+          "127",
+          "13",
+          "14",
+          "15",
+          "16",
+          "171",
+          "172",
+          "174",
+          "175",
+          "176",
+          "18",
+          "19",
+          "211",
+          "212",
+          "213",
+          "214",
+          "22",
+          "23",
+          "24",
+          "25",
+          "311",
+          "312",
+          "313",
+          "314",
+          "315",
+          "316",
+          "311",
+          "321",
+          "322",
+          "33",
+          "34"
+        ]
+      }
+    },
+    {
+      "name": "idzonereglementaire_u_s",
+      "description": "fk zonereglementaireurba_s",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_zonereglementaireurba_s.idzonereglementaire"
+      }
+    },
+    {
+      "name": "idzonereglementaire_u_l",
+      "description": "fk zonereglementaireurba_l",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_zonereglementaireurba_l.idzonereglementaire"
+      }
+    },
+    {
+      "name": "idzonereglementaire_u_p",
+      "description": "fk zonereglementaireurba_p",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_zonereglementaireurba_p.idzonereglementaire"
+      }
+    },
+    {
+      "name": "idzonereglementaire_f_s",
+      "description": "fk zonereglementairefoncier_s",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_zonereglementairefoncier_s.idzonereglementaire"
+      }
+    },
+    {
+      "name": "idzonereglementaire_f_l",
+      "description": "fk zonereglementairefoncier_l",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_zonereglementairefoncier_l.idzonereglementaire"
+      }
+    },
+    {
+      "name": "idzonereglementaire_f_p",
+      "description": "fk zonereglementairefoncier_p",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "required": false,
+        "presenceRequired": false,
+        "reference": "prefixeppr_zonereglementairefoncier_p.idzonereglementaire"
+      }
+    }
+  ]
+}

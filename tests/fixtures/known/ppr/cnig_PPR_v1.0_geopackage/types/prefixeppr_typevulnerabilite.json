@@ -1,0 +1,66 @@
+{
+  "name": "prefixeppr_typevulnerabilite",
+  "description": "",
+  "columns": [
+    {
+      "name": "idenjeu_s",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "reference": "prefixeppr_enjeu_s.idenjeu",
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "idenjeu_l",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "reference": "prefixeppr_enjeu_l.idenjeu",
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "idenjeu_p",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 15,
+        "reference": "prefixeppr_enjeu_p.idenjeu",
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "nom",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "description",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "valeur",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

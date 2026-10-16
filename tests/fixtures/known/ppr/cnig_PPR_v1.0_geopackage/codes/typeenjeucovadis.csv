@@ -1,0 +1,75 @@
+code,libelle
+0100,Espace urbanisé
+0101,Espace urbanisé - habitat dense
+0102,Espace urbanisé - habitat peu dense
+0103,Espace urbanisé - habitat diffus
+0104,Espace urbanisé - projet d'urbanisation future
+0105,Espace urbanisé - réserve foncière
+0200,Établissement recevant du public (ERP) 
+0201c,ERP J : Structures d'accueil pour personnes âgées et handicapées
+0202c,"ERP L : Salles à usage d'audition, de conférences, de réunions, de spectacles"
+0203c,"ERP M : Magasins de vente, centres commerciaux"
+0204c,ERP N : Restaurants et débits de boissons
+0205c,ERP O : Hôtels et pensions de famille
+0206c,ERP P : Salles de danse et salles de jeux
+0207c,"ERP R : Établissements d'enseignement, colonies de vacances"
+0208c,"ERP S : Bibliothèques, centres de documentation et de consultation d'archives"
+0209c,ERP T : Salles d'expositions
+0210c,ERP U : Établissements de soins
+0211c,ERP V : Établissements de culte
+0212c,"ERP W : Administrations, banques, bureaux"
+0213c,ERP X : Établissements sportifs couverts
+0214c,ERP Y : Musées
+0215c,ERP PA : Établissements de plein air
+0216c,"ERP CST : Chapiteaux, tentes et structures"
+0217c,ERP CG : Structures gonflables
+0218c,"ERP OA : Hôtels, restaurants d'altitude"
+0219c,ERP REF : Refuges de montagne
+0220c,ERP PS : Parcs de stationnement couverts
+0221c,ERP GA : Gares accessibles au public
+0222c,ERP EF : Établissements flottants
+0300,Espace économique
+0301,Espace économique - zone d'activité industrielle
+0302,Espace économique - zone d'activité commerciale
+0303,Espace économique - zone d'activité future
+0304,"Espace économique - zone agricole, ostréicole, mytiliculture, élevage, pisciculture"
+0305,"Espace économique - zone de camping, mobil-home"
+0306,"Espace économique - zone aéroportuaire, portuaire"
+0307,"Espace économique - carrière, gravière"
+0308,Établissement employeur
+0400,Espace ouvert recevant du public
+0401,Espace ouvert recevant du public - sport
+0402,Espace ouvert recevant du public - tourisme
+0403,Espace ouvert recevant du public - parking
+0404,"Espace ouvert recevant du public - parc d'exposition, foires, rassemblements divers"
+0405,Espace ouvert recevant du public - cimetière
+0500,Infrastructure de transport de personnes ou de marchandise
+0501,"Infrastructure linéaire - route, voie ferrée, canal"
+0502,Infrastructure linéaire en projet
+0503,Infrastructure linéaire - ligne de bus
+0504,"Infrastructure linéaire - piste cyclable, voie verte"
+0505,Infrastructure linéaire - ligne électrique
+0506,"Infrastructure surfacique - gare, aéroport, aérodrome, port"
+0507,"Infrastructure ponctuelle - gare, arrêt, stationnement TMD"
+0600,Ouvrage ou équipement d'intérêt général
+0601,"Ouvrage ou équipement d'intérêt général - zone, station de captage"
+0602,Ouvrage ou équipement d'intérêt général - station de pompage
+0603,"Ouvrage ou équipement d'intérêt général - réservoir, château d'eau"
+0604,Ouvrage ou équipement d'intérêt général - canalisation eau
+0605,Ouvrage ou équipement d'intérêt général - poste de relèvement
+0606,"Ouvrage ou équipement d'intérêt général - station de traitement, de lagunage"
+0607,"Ouvrage ou équipement d'intérêt général - barrage, vanne, écluse"
+0608,Ouvrage ou équipement d'intérêt général - poste de transformation EDF
+0609,Ouvrage ou équipement d'intérêt général - canalisation matière dangereuse
+0610,"Ouvrage ou équipement d'intérêt général - téléphonique, relai, antenne"
+0611,Ouvrage ou équipement d'intérêt général - caserne de pompier
+0612,Ouvrage ou équipement d'intérêt général - poste de détente gaz
+0613,Ouvrage ou équipement d'intérêt général - station hydrocarbure
+0614,"Ouvrage ou équipement d'intérêt général - décharge, usine d'incinération"
+0700,Enjeu environnemental ou patrimonial
+0701,Zone naturelle protégée
+0702,Monument inscrit ou classé au répertoire des monuments historiques
+0703,"Parc naturel national, régional"
+0704,Zone d'expansion des crues pour les inondations
+0705,Zone naturelle de mouvements de terrain
+9999,Autre enjeu : nature à préciser

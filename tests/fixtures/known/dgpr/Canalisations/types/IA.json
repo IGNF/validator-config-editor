@@ -1,0 +1,165 @@
+{
+    "id": "zfonwybk3jks9in7mmfk22dr0lme5j89",
+    "name": "IA",
+    "description": "Données attributaires des canalisations",
+    "columns": [
+        {
+            "id": "ih90ue0wlq3wx7jb1y1iuqa3bnuv1vya",
+            "name": "nom_transp",
+            "type": "String",
+            "description": "Nom du transporteur",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "70zju47jmlzn5gwxtawfioufk96hokvo",
+            "name": "code_ouv",
+            "type": "String",
+            "description": "Identifiant unique attribué à l’IA par le transporteur.",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "2t3dlz4zr9gs4j5ea1gsi1dhzoinq9so",
+            "name": "desc_ouv",
+            "type": "String",
+            "description": "Désignation donnée à l'IA par le transporteur",
+            "constraints": {
+                "required": false,
+                "presenceRequired": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "mnkil24flv2vmszbrcoy8dp9fiw7hmth",
+            "name": "nat_fluide",
+            "type": "String",
+            "description": "Nature du fluide transporté",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false,
+                "enum": [
+                    "Gaz naturel ou assimilé",
+                    "Produits chimiques",
+                    "Hydrocarbures"
+                ]
+            }
+        },
+        {
+            "id": "n5wgzw9f31bevlvkd1wqnzmw1o608co4",
+            "name": "des_fluide",
+            "type": "String",
+            "description": "Désignation exacte du fluide transporté",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false,
+                "enum": [
+                    "AMMONIAC",
+                    "ARGON",
+                    "AZOTE",
+                    "BENZENE",
+                    "BITUME",
+                    "BUTADIENE",
+                    "BUTANE",
+                    "ISOBUTANE",
+                    "CARBUREACTEUR",
+                    "JET A1",
+                    "KEROSENE",
+                    "SAF",
+                    "CHLORE",
+                    "CHLORURE DE VINYLE MONOMERE",
+                    "DIOXYDE DE CARBONE",
+                    "EMAG",
+                    "EMHV",
+                    "ESSENCE",
+                    "ETBE",
+                    "ETHANOL",
+                    "ETHYLENE",
+                    "FIOUL DOMESTIQUE",
+                    "FIOUL LOURD",
+                    "FUEL GAS",
+                    "GAZ NATUREL OU ASSIMILE",
+                    "GAZOLE",
+                    "HUILES",
+                    "HVO",
+                    "HYDROGENE",
+                    "HYDROGENE SULFURE",
+                    "METHANOL",
+                    "MEROX",
+                    "NAPHTA",
+                    "OXYDE D’ETHYLENE",
+                    "OXYGENE",
+                    "PETROLE BRUT",
+                    "PROPANE",
+                    "PROPYLENE",
+                    "SAUMURE",
+                    "SOUDE",
+                    "TOLUENE",
+                    "XYLENE"
+                ]
+            }
+        },
+        {
+            "id": "hebckouhgo1303ncx88od27eft20qs9r",
+            "name": "sup1",
+            "type": "Integer",
+            "description": "Distance d'effets létaux du phénomène dangereux de référence majorant en m",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "gg8n2x7wspn1myi3piho9h26wst5h96q",
+            "name": "sup2",
+            "type": "Integer",
+            "description": "Distance d'effets létaux du phénomène dangereux de référence réduit en m",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "cmjf8x51uapbla89shcn04dpwterlzua",
+            "name": "sup3",
+            "type": "Integer",
+            "description": "Distance d'effets létaux significatifs du phénomène dangereux de référence réduit en m",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "2hqtjnt7ixbi5porfoo47b0z8jgoccdd",
+            "name": "mcs",
+            "type": "String",
+            "description": "Description des mesures compensatoires",
+            "constraints": {
+                "required": false,
+                "presenceRequired": false,
+                "unique": false
+            }
+        },
+        {
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "presenceRequired": true
+            }
+        }
+    ]
+}

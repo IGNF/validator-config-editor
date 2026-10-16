@@ -1,0 +1,94 @@
+{
+  "name": "gpkg_contents",
+  "description": "Table dictionnaire GeoPackage",
+  "columns": [
+    {
+      "name": "table_name",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "data_type",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "identifier",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "unique": true
+      }
+    },
+    {
+      "name": "description",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "last_change",
+      "description": "",
+      "type": "Date",
+      "required": true,
+      "presenceRequired": true
+    },
+    {
+      "name": "min_x",
+      "description": "",
+      "type": "Double",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "min_y",
+      "description": "",
+      "type": "Double",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "max_x",
+      "description": "",
+      "type": "Double",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "max_y",
+      "description": "",
+      "type": "Double",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "srs_id",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "reference": "gpkg_spatial_ref_sys.srs_id",
+        "required": false,
+        "presenceRequired": false
+      }
+    }
+  ]
+}

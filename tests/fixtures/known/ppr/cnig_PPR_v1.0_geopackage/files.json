@@ -1,0 +1,293 @@
+{
+  "name": "cnig_PPR_v1.0 GeoPackage",
+  "title": "Geostandard Risques PPR v1.0 Format GeoPackage",
+  "description": "Validation du Standard CNIG PPR v1.0 livraison au format GeoPackage : https://cnig.gouv.fr/IMG/pdf/geostandards-risques-ppr-v1_0.pdf",
+  "files": [
+    {
+      "name": "GEOPACKAGE",
+      "type": "multi_table",
+      "path": "[^\\/]*",
+      "mandatory": "ERROR",
+      "tables": [
+        {
+          "name": "gpkg_contents",
+          "mandatory": "ERROR",
+          "tableModel": "./types/gpkg_contents.json"
+        },
+        {
+          "name": "gpkg_spatial_ref_sys",
+          "mandatory": "ERROR",
+          "tableModel": "./types/gpkg_spatial_ref_sys.json"
+        },
+        {
+          "name": "gpkg_geometry_columns",
+          "mandatory": "ERROR",
+          "tableModel": "./types/gpkg_geometry_columns.json"
+        },
+        {
+          "name": "gpkg_metadata",
+          "mandatory": "ERROR",
+          "tableModel": "./types/gpkg_metadata.json"
+        },
+        {
+          "name": "gpkg_metadata_reference",
+          "mandatory": "ERROR",
+          "tableModel": "./types/gpkg_metadata_reference.json"
+        },
+        {
+          "name": "prefixeppr_procedure",
+          "mandatory": "ERROR",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_procedure",
+          "tableModel": "./types/prefixeppr_procedure.json"
+        },
+        {
+          "name": "prefixeppr_revise",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_revise",
+          "tableModel": "./types/prefixeppr_revise.json"
+        },
+        {
+          "name": "prefixeppr_perimetre_s",
+          "mandatory": "ERROR",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_perimetre_s",
+          "tableModel": "./types/prefixeppr_perimetre_s.json"
+        },
+        {
+          "name": "prefixeppr_perimetreetude_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_perimetreetude_s",
+          "tableModel": "./types/prefixeppr_perimetre_s.json"
+        },
+        {
+          "name": "prefixeppr_referenceinternet",
+          "mandatory": "ERROR",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_referenceinternet",
+          "tableModel": "./types/prefixeppr_referenceinternet.json"
+        },
+        {
+          "name": "prefixeppr_zonealeareference_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeareference_[1-3][0-9]{1,2}_s",
+          "tableModel": "./types/prefixeppr_zonealeareference_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonealeaecheance100ans_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeaecheance100ans_[1-3][0-9]{1,2}_s",
+          "tableModel": "./types/prefixeppr_zonealeaecheance100ans_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonealeaexceptionnel_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeaexceptionnel_14_s",
+          "tableModel": "./types/prefixeppr_zonealeaexceptionnel_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonealeanaturelsynthese_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeanaturelsynthese_s",
+          "tableModel": "./types/prefixeppr_zonealeanaturelsynthese_s.json"
+        },
+        {
+          "name": "prefixeppr_zonemultialeanaturel",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonemultialeanaturel",
+          "tableModel": "./types/prefixeppr_zonemultialeanaturel.json"
+        },
+        {
+          "name": "prefixeppr_zonealeatechnorapide_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeatechnorapide_21[1-4]_s",
+          "tableModel": "./types/prefixeppr_zonealeatechnorapide_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonealeatechnolent_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeatechnolent_21[1-4]_s",
+          "tableModel": "./types/prefixeppr_zonealeatechnolent_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonealeatechnoprojection_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeatechnoprojection_21[1-4]_s",
+          "tableModel": "./types/prefixeppr_zonealeatechnoprojection_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonealeatechnosynthese_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonealeatechnosynthese_s",
+          "tableModel": "./types/prefixeppr_zonealeatechnosynthese_s.json"
+        },
+        {
+          "name": "prefixeppr_zonemultialeatechno",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonemultialeatechno",
+          "tableModel": "./types/prefixeppr_zonemultialeatechno.json"
+        },
+        {
+          "name": "prefixeppr_zoneprotegee_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zoneprotegee_[1-3][0-9]{1,2}_s",
+          "tableModel": "./types/prefixeppr_zoneprotegee_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_zonedangerspecifique_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonedangerspecifique_[1-3][0-9]{1,2}_s",
+          "tableModel": "./types/prefixeppr_zonedangerspecifique_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_ouvrageprotecteur_codealea_l",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_ouvrageprotecteur_[1-3][0-9]{1,2}_l",
+          "tableModel": "./types/prefixeppr_ouvrageprotecteur_codealea_l.json"
+        },
+        {
+          "name": "prefixeppr_ouvrageprotecteur_codealea_p",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_ouvrageprotecteur_[1-3][0-9]{1,2}_p",
+          "tableModel": "./types/prefixeppr_ouvrageprotecteur_codealea_p.json"
+        },
+        {
+          "name": "prefixeppr_ouvrageprotecteur_codealea_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_ouvrageprotecteur_[1-3][0-9]{1,2}_s",
+          "tableModel": "./types/prefixeppr_ouvrageprotecteur_codealea_s.json"
+        },
+        {
+          "name": "prefixeppr_originerisque_l",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_originerisque_l",
+          "tableModel": "./types/prefixeppr_originerisque_l.json"
+        },
+        {
+          "name": "prefixeppr_originerisque_p",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_originerisque_p",
+          "tableModel": "./types/prefixeppr_originerisque_p.json"
+        },
+        {
+          "name": "prefixeppr_originerisque_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_originerisque_s",
+          "tableModel": "./types/prefixeppr_originerisque_s.json"
+        },
+        {
+          "name": "prefixeppr_enjeu_l",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_enjeu_l",
+          "tableModel": "./types/prefixeppr_enjeu_l.json"
+        },
+        {
+          "name": "prefixeppr_enjeu_p",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_enjeu_p",
+          "tableModel": "./types/prefixeppr_enjeu_p.json"
+        },
+        {
+          "name": "prefixeppr_enjeu_s",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_enjeu_s",
+          "tableModel": "./types/prefixeppr_enjeu_s.json"
+        },
+        {
+          "name": "prefixeppr_typevulnerabilite",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_typevulnerabilite",
+          "tableModel": "./types/prefixeppr_typevulnerabilite.json"
+        },
+        {
+          "name": "prefixeppr_zonereglementaireurba_l",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonereglementaireurba_l",
+          "tableModel": "./types/prefixeppr_zonereglementaireurba_l.json"
+        },
+        {
+          "name": "prefixeppr_zonereglementaireurba_p",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonereglementaireurba_p",
+          "tableModel": "./types/prefixeppr_zonereglementaireurba_p.json"
+        },
+        {
+          "name": "prefixeppr_zonereglementaireurba_s",
+          "mandatory": "WARN",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonereglementaireurba_s",
+          "tableModel": "./types/prefixeppr_zonereglementaireurba_s.json"
+        },
+        {
+          "name": "prefixeppr_zonereglementairefoncier_l",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonereglementairefoncier_l",
+          "tableModel": "./types/prefixeppr_zonereglementairefoncier_l.json"
+        },
+        {
+          "name": "prefixeppr_zonereglementairefoncier_p",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonereglementairefoncier_p",
+          "tableModel": "./types/prefixeppr_zonereglementairefoncier_p.json"
+        },
+        {
+          "name": "prefixeppr_zonereglementairefoncier_s",
+          "mandatory": "WARN",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zonereglementairefoncier_s",
+          "tableModel": "./types/prefixeppr_zonereglementairefoncier_s.json"
+        },
+        {
+          "name": "prefixeppr_zoneregmultialea",
+          "path": "((pprn|pprt|pprm)_(?:[0-9]{2,3}|2a|2b)(pref|ddt|ddtm|dreal|deal|drieat)[0-9]{4}[0-9]{4}|(pprn_i|pprn_l|pprn_mvt|pprn_multi|pprn_s|pprn_av|pprn_ev|pprn_cy|pprn_rga|pprn_if|pprt|pprm|ppr_hybride)_[0-9]{4}_[0-9]{4})_zoneregmultialea",
+          "tableModel": "./types/prefixeppr_zoneregmultialea.json"
+        }
+      ]
+    }
+  ],
+  "codes": [
+
+    {
+        "name": "typealea",
+        "title": "typealea",
+        "data": "./codes/typealea.csv"
+    },
+    {
+        "name": "typeetatprocedure",
+        "title": "typeetatprocedure",
+        "data": "./codes/typeetatprocedure.csv"
+    },
+    {
+        "name": "typereference",
+        "title": "typereference",
+        "data": "./codes/typereference.csv"
+    },
+    {
+        "name": "typeclasseprobatechno",
+        "title": "typeclasseprobatechno",
+        "data": "./codes/typeclasseprobatechno.csv"
+    },
+    {
+        "name": "typeintensitetechno",
+        "title": "typeintensitetechno",
+        "data": "./codes/typeintensitetechno.csv"
+    },
+    {
+        "name": "typerefexterneouvrage",
+        "title": "typerefexterneouvrage",
+        "data": "./codes/typerefexterneouvrage.csv"
+    },
+    {
+        "name": "typeenjeucovadis",
+        "title": "typeenjeucovadis",
+        "data": "./codes/typeenjeucovadis.csv"
+    },
+    {
+        "name": "typeniveaualea",
+        "title": "typeniveaualea",
+        "data": "./codes/typeniveaualea.csv"
+    },
+    {
+        "name": "typereglementfoncier",
+        "title": "typereglementfoncier",
+        "data": "./codes/typereglementfoncier.csv"
+    },
+    {
+        "name": "typeenjeupprn",
+        "title": "typeenjeupprn",
+        "data": "./codes/typeenjeupprn.csv"
+    },
+    {
+        "name": "typeenjeupprt",
+        "title": "typeenjeupprt",
+        "data": "./codes/typeenjeupprt.csv"
+    },
+    {
+        "name": "typeouvrageprotecteur",
+        "title": "typeouvrageprotecteur",
+        "data": "./codes/typeouvrageprotecteur.csv"
+    },
+    {
+        "name": "typereglementurba",
+        "title": "typereglementurba",
+        "data": "./codes/typereglementurba.csv"
+    },
+    {
+        "name": "typeprocedure",
+        "title": "typeprocedure",
+        "data": "./codes/typeprocedure.csv"
+    },
+    {
+        "name": "typesuralea",
+        "title": "typesuralea",
+        "data": "./codes/typesuralea.csv"
+    }
+  ]
+}

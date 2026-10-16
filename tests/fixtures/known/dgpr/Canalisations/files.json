@@ -1,0 +1,33 @@
+{
+    "id": "mrmuugfhc4g722u6gf7vgoez0urjw5bb",
+    "name": "DREAL_canalTMD_2025",
+    "title": "DREAL_canalTMD_2025",
+    "description": "Canalisations de Matières Dangereuses",
+    "files": [
+        {
+            "type": "table",
+            "mandatory": "ERROR",
+            "tableModel": "./types/CANALISATION.json",
+            "id": "faoces5drgahdt16evh74un9zp4s454s",
+            "name": "CANALISATION",
+            "path": "CANALISATION"
+        },
+        {
+            "type": "table",
+            "mandatory": "OPTIONAL",
+            "tableModel": "./types/IA.json",
+            "id": "75t2wgdew2dvcvy1uquu1uoehp0976l9",
+            "name": "IA",
+            "path": "IA"
+        }
+    ],
+    "codes": [
+        {
+            "data": "./codes/ListeTypesFluides.csv",
+            "id": "3ehcjsc5wz86fjegzocgdenyf2xe3fk4",
+            "name": "ListeTypesFluides"
+        }
+    ],
+    "constraints": {
+    }
+}

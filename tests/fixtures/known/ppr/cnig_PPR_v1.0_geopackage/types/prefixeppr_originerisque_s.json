@@ -1,0 +1,65 @@
+{
+  "name": "prefixeppr_originerisque_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idoriginerisque",
+      "description": "pk",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "fk procedure",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "idrefexterne",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 50,
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "refexterne",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "nom",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Géométrie associée",
+      "type": "MultiPolygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

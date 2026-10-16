@@ -1,0 +1,13 @@
+code,libelle
+PPRN,Plan de Prévention des Risques Naturels
+PPRN-I,Plan de Prévention des Risques Naturels Inondation
+PPRN-L,Plan de Prévention des Risques Naturels Littoral
+PPRN-Mvt,Plan de Prévention des Risques Naturels Mouvement de Terrain
+PPRN-Multi,Plan de Prévention des Risques Naturels Multirisques
+PPRN-S,Plan de Prévention des Risques Naturels Séisme
+PPRN-Av,Plan de Prévention des Risques Naturels Avalanches
+PPRN-Ev,Plan de Prévention des Risques Naturels Eruption volcanique
+PPRN-If,Plan de Prévention des Risques Naturels Incendie de forêt
+PPRN-Cy,Plan de Prévention des Risques Naturels Cyclone
+PPRN-Rad,Plan de Prévention des Risques Naturels Radon
+PPRT,Plan de Prévention des Risques Technologiques
