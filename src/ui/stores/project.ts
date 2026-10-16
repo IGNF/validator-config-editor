@@ -15,6 +15,8 @@ export const useProject = defineStore('project', () => {
   // Session immuable (src/core/edit/session) : remplacée à chaque édition.
   const session = shallowRef<Session>()
   const loading = ref(false)
+  /** Progression de la lecture (fichiers lus / total), pour les sources distantes. */
+  const progress = ref<{ done: number; total: number }>()
   /** Filtre « Modèle » du panneau des problèmes (partagé avec la synthèse du modèle). */
   const problemModel = ref<string | null>(null)
   const error = ref<string>()
@@ -24,7 +26,8 @@ export const useProject = defineStore('project', () => {
     loading.value = true
     error.value = undefined
     try {
-      const opened = await openSession(await next.load())
+      progress.value = undefined
+      const opened = await openSession(await next.load((done, total) => (progress.value = { done, total })))
       if (opened.result.project.models.size === 0) {
         throw new Error('Aucun modèle trouvé : choisissez le dossier qui contient les modèles (ex. config/) ou la racine d\'un dépôt de configuration.')
       }
@@ -34,6 +37,7 @@ export const useProject = defineStore('project', () => {
       error.value = e instanceof Error ? e.message : String(e)
     } finally {
       loading.value = false
+      progress.value = undefined
     }
   }
 
@@ -90,7 +94,7 @@ export const useProject = defineStore('project', () => {
   /** Télécharge toute la configuration en ZIP (contrat source-et-ecriture). */
   async function downloadZip(): Promise<{ name: string; errors: number; reformatted: string[] }> {
     const s = session.value!
-    const name = (source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config'
+    const name = source.value?.archiveName ?? ((source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config')
     const encoder = new TextEncoder()
     const entries = await Promise.all(
       [...allFiles(s)].map(async ([path, text]) => ({
@@ -125,7 +129,7 @@ export const useProject = defineStore('project', () => {
 
   return {
     pending, downloadZip, canSave, save, fixes, applyFix, canFixAll, fixAll,
-    source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
+    source, session, loading, progress, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
 })

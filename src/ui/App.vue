@@ -7,6 +7,7 @@ import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
 import ProblemsPanel from './components/ProblemsPanel.vue'
+import RepoDialog from './components/RepoDialog.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
 import { kindOf } from './files'
@@ -79,14 +80,16 @@ const showProblems = ref(true)
       <v-app-bar-title>
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
-      <span class="text-body-2 mr-4 root" :title="store.root">{{ store.root }}</span>
+      <a v-if="store.source?.link" :href="store.source.link" target="_blank" rel="noopener" class="text-body-2 mr-4 root" :title="store.root" data-testid="source">{{ store.root }}</a>
+      <span v-else class="text-body-2 mr-4 root" :title="store.root" data-testid="source">{{ store.root }}</span>
+      <RepoDialog />
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="downloadZip">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
-      <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
+      <v-btn v-if="!online && store.source?.kind === 'server'" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>

@@ -4,11 +4,11 @@
 
 ## Phase 1 : US1, ouvrir un dépôt par son URL — branche `003-ouverture-depot/us1` (#23)
 
-- [ ] T001 [P] Tests `parseRepoUrl`, `splitRef`, `selectRepoRoot` (formes d'URL, branche avec « / », `config/`, dossier demandé, dossiers cachés)
-- [ ] T002 [P] Tests `GitHubSource` avec `fetch` simulé : branche par défaut (3 requêtes), branche donnée (2), lecture au commit, progression, erreurs (404 dépôt, 404 branche, limite de requêtes avec heure, arbre tronqué, réseau)
-- [ ] T003 [US1] `src/core/github.ts`, `src/ui/io/github.ts`
-- [ ] T004 [US1] CSP `connect-src` (serveur et build `pages`) ; `RepoDialog` (URL), affichage de la source, progression ; ZIP nommé d'après le dépôt
-- [ ] T005 [US1] Support e2e `github-mock` (`page.route`) ; e2e : ouverture, `config/`, sous-dossier, erreurs, édition et ZIP, aucune autre origine que GitHub
+- [x] T001 [P] Tests `parseRepoUrl`, `splitRef`, `selectRepoRoot` (formes d'URL, branche avec « / », `config/`, dossier demandé, dossiers cachés)
+- [x] T002 [P] Tests `GitHubSource` avec `fetch` simulé : branche par défaut (3 requêtes), branche donnée (2), lecture au commit, progression, erreurs (404 dépôt, 404 branche, limite de requêtes avec heure, arbre tronqué, réseau)
+- [x] T003 [US1] `src/core/github.ts`, `src/ui/io/github.ts`
+- [x] T004 [US1] CSP `connect-src` (serveur et build `pages`) ; `RepoDialog` (URL), affichage de la source, progression ; ZIP nommé d'après le dépôt
+- [x] T005 [US1] Support e2e `github-mock` (`page.route`) ; e2e : ouverture, `config/`, sous-dossier, erreurs, édition et ZIP, aucune autre origine que GitHub
 
 ## Phase 2 : US2, choisir une branche — branche `003-ouverture-depot/us2` (#24)
 
