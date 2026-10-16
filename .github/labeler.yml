@@ -9,7 +9,10 @@ tooling:
 
 
 documentation:
-  - docs/*
+  - docs/**/*
+  - specs/**/*
+  - README.md
+  - CHANGELOG.md
 
 enhancement:
   - src/**/*
