@@ -2,6 +2,7 @@
 import { mdiFolderOpen } from '@mdi/js'
 import { useTemplateRef } from 'vue'
 import { canPickFolder, FolderSource } from '../io/folder'
+import KnownConfigs from './KnownConfigs.vue'
 import RepoDialog from './RepoDialog.vue'
 import { useProject } from '../stores/project'
 
@@ -49,6 +50,13 @@ defineExpose({ choose })
           <v-btn v-bind="props" variant="tonal" data-testid="home-open-repo">Ouvrir un dépôt GitHub</v-btn>
         </template>
       </RepoDialog>
+    </div>
+    <div class="mt-6">
+      <h2 class="text-h6">Configurations connues</h2>
+      <KnownConfigs />
+      <v-progress-linear v-if="store.loading" :model-value="store.progress ? (100 * store.progress.done) / store.progress.total : undefined"
+        :indeterminate="!store.progress" aria-label="Lecture du dépôt" />
+      <v-alert v-if="store.error && !store.loading" type="error" variant="tonal" class="mt-2">{{ store.error }}</v-alert>
     </div>
     <v-alert v-if="!supported" type="warning" variant="tonal" class="mt-4">
       Ce navigateur ne permet pas de choisir un dossier : utilisez une version récente de Firefox, Chrome, Edge ou Safari.

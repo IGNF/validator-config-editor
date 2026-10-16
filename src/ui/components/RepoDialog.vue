@@ -3,6 +3,7 @@ import { mdiSourceRepository } from '@mdi/js'
 import { computed, ref } from 'vue'
 import { parseRepoUrl } from '@core/github'
 import { GitHubSource } from '../io/github'
+import KnownConfigs from './KnownConfigs.vue'
 import { useProject } from '../stores/project'
 
 // Ouvrir la configuration d'un dépôt GitHub public par son URL (feature 003).
@@ -40,6 +41,8 @@ async function submit() {
         <v-text-field v-model="url" label="URL du dépôt" placeholder="https://github.com/IGNF/validator-config-dgpr" variant="outlined"
           :error-messages="invalid ? 'Formes acceptées : https://github.com/<org>/<dépôt>[/tree/<branche>[/<dossier>]] ou <org>/<dépôt>' : undefined"
           data-testid="repo-url" autofocus @keyup.enter="submit" />
+        <p class="text-body-2 mb-1">Ou choisir une configuration connue :</p>
+        <KnownConfigs class="mb-2" @opened="open = false" />
         <v-progress-linear v-if="store.loading" :model-value="store.progress ? (100 * store.progress.done) / store.progress.total : undefined"
           :indeterminate="!store.progress" aria-label="Lecture du dépôt" />
         <p v-if="store.progress" class="text-body-2 mt-1" data-testid="repo-progress">{{ store.progress.done }} / {{ store.progress.total }} fichiers lus</p>
