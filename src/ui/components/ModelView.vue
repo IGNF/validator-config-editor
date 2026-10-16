@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
+import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { addCode, addFile, codeName, moveItem, removeItem, setOrRemove, type DocumentList } from '@core/edit/operations'
 import { setAt } from '@core/edit/pointer'
 import { resolvePath, tableModelRef } from '@core/model/paths'
@@ -10,6 +11,8 @@ import { modelOf } from '../files'
 import { href, route } from '../router'
 import { useProject } from '../stores/project'
 import FileFrame from './FileFrame.vue'
+import ModelSummary from './ModelSummary.vue'
+import ProblemBadge from './ProblemBadge.vue'
 import NotConformant from './NotConformant.vue'
 
 const props = defineProps<{ file: string }>()
@@ -27,13 +30,8 @@ const doc = computed(() => {
   return d && typeof d === 'object' && Array.isArray(d.files) ? d : undefined
 })
 
-const MANDATORY = [
-  { title: 'Obligatoire (ERROR)', value: 'ERROR' },
-  { title: 'Recommandé (WARN)', value: 'WARN' },
-  { title: 'Facultatif (OPTIONAL)', value: 'OPTIONAL' },
-]
-const MANDATORY_LABEL: Record<string, string> = { ERROR: 'obligatoire', WARN: 'recommandé', OPTIONAL: 'facultatif' }
-const FILE_TYPES = ['table', 'multi_table', 'pdf', 'metadata', 'directory']
+const MANDATORY = Object.entries(MANDATORY_LABELS).map(([value, label]) => ({ title: `${label} (${value})`, value }))
+const FILE_TYPES = Object.entries(FILE_TYPE_LABELS).map(([value, label]) => ({ title: `${label} (${value})`, value }))
 
 type Update = (d: DocumentModel) => unknown
 const edit = (update: Update, key?: string) => store.edit<DocumentModel>(path.value!, update, key)
@@ -99,6 +97,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
     <NotConformant v-else-if="!doc" />
 
     <template v-else>
+      <ModelSummary :name="name" :doc="doc" />
       <section data-pointer="">
         <div class="d-flex flex-wrap ga-4">
           <v-text-field label="Nom" :model-value="doc.name" density="compact" variant="outlined" class="field" data-testid="model-name"
@@ -131,8 +130,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
           <v-expansion-panel-title>
             <div class="d-flex flex-wrap align-center ga-2">
               <strong>{{ f.name }}</strong>
-              <span class="text-medium-emphasis">{{ f.type }}</span>
-              <span class="tag">{{ MANDATORY_LABEL[f.mandatory ?? 'WARN'] }}</span>
+              <ProblemBadge :file="path!" :pointer="`/files/${i}`" />
+              <span class="text-medium-emphasis">{{ fileTypeLabel(f.type) }}</span>
+              <span class="tag">{{ mandatoryLabel(f.mandatory) }}</span>
               <code class="path">{{ f.path }}</code>
             </div>
           </v-expansion-panel-title>
@@ -181,6 +181,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <v-select :label="`Fichier de la liste ${i + 1}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details class="field"
           @update:model-value="(v: string) => setProp(pointer('codes', i, 'data'), v, true)" />
         <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir</a>
+        <ProblemBadge :file="path!" :pointer="`/codes/${i}`" />
         <v-btn :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
       </div>
     </template>

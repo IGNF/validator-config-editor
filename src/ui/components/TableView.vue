@@ -5,6 +5,7 @@ import { setAt } from '@core/edit/pointer'
 import {
   addColumn, addListItem, moveColumn, parseEnum, removeColumn, removeListItem, setConstraint, setListItem, setOrRemove, type TableList,
 } from '@core/edit/operations'
+import { columnTypeFamily } from '@core/labels'
 import { resolvePath } from '@core/model/paths'
 import type { ColumnConstraints, TableModel } from '@core/model/types'
 import { pointer } from '@core/pointer'
@@ -13,6 +14,7 @@ import { baseName, modelOf } from '../files'
 import { href, route } from '../router'
 import { useProject } from '../stores/project'
 import FileFrame from './FileFrame.vue'
+import ProblemBadge from './ProblemBadge.vue'
 import NotConformant from './NotConformant.vue'
 
 const props = defineProps<{ file: string }>()
@@ -30,7 +32,7 @@ const table = computed(() => {
 const TYPES = [
   'String', 'Integer', 'Double', 'Boolean', 'Date', 'Url', 'Filename', 'Path',
   'Point', 'LineString', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon', 'Geometry', 'GeometryCollection',
-]
+].map((value) => ({ title: `${value} (${columnTypeFamily(value)})`, value }))
 
 type Update = (t: TableModel) => unknown
 const edit = (update: Update, key?: string) => store.edit<TableModel>(props.file, update, key)
@@ -109,7 +111,8 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
           <v-expansion-panel-title>
             <div class="d-flex flex-wrap align-center ga-2">
               <strong>{{ c.name }}</strong>
-              <span class="text-medium-emphasis">{{ c.type }}</span>
+              <ProblemBadge :file="file" :pointer="`/columns/${i}`" />
+              <span class="text-medium-emphasis">{{ c.type }}<template v-if="columnTypeFamily(c.type)"> · {{ columnTypeFamily(c.type) }}</template></span>
               <span v-for="text in constraints(c.constraints)" :key="text" class="constraint">{{ text }}</span>
             </div>
           </v-expansion-panel-title>

@@ -3,8 +3,7 @@ import { computed, ref, shallowRef } from 'vue'
 import { allFiles, allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from '@core/fixes/catalog'
-import { countByModel, type Problem } from '@core/validation/problems'
-import { countProblems } from '@core/validation/problems'
+import { countByModel, countProblems, type Problem } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
@@ -16,6 +15,8 @@ export const useProject = defineStore('project', () => {
   // Session immuable (src/core/edit/session) : remplacée à chaque édition.
   const session = shallowRef<Session>()
   const loading = ref(false)
+  /** Filtre « Modèle » du panneau des problèmes (partagé avec la synthèse du modèle). */
+  const problemModel = ref<string | null>(null)
   const error = ref<string>()
 
   /** Charge une source ; en cas d'échec, la configuration courante est conservée. */
@@ -44,6 +45,14 @@ export const useProject = defineStore('project', () => {
   )
   const summary = computed(() => (result.value ? summarize(result.value.project, result.value.problems) : undefined))
   const countsByModel = computed(() => countByModel(result.value?.problems ?? []))
+  const countsByFile = computed(() => {
+    const byFile = new Map<string, Problem[]>()
+    for (const p of result.value?.problems ?? []) byFile.set(p.file, [...(byFile.get(p.file) ?? []), p])
+    return new Map([...byFile].map(([file, problems]) => [file, countProblems(problems)]))
+  })
+  /** Problèmes d'un élément : fichier, et pointeur égal ou intérieur à `pointer`. */
+  const problemsUnder = (file: string, ptr: string) =>
+    (result.value?.problems ?? []).filter((p) => p.file === file && p.pointer !== undefined && (p.pointer === ptr || p.pointer.startsWith(ptr + '/')))
 
   const has = (path: string | undefined) => path !== undefined && !!session.value?.originals.has(path)
   const text = (path: string) => (session.value ? textOf(session.value, path) : undefined)
@@ -116,7 +125,7 @@ export const useProject = defineStore('project', () => {
 
   return {
     pending, downloadZip, canSave, save, fixes, applyFix, canFixAll, fixAll,
-    source, session, loading, error, load, result, root, models, summary, countsByModel,
+    source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
 })

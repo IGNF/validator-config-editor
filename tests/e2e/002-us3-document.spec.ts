@@ -25,7 +25,7 @@ test('passe un fichier de facultatif à obligatoire et ajoute un PDF sans erreur
   const habillage = page.getByTestId('file-HABILLAGE_TXT')
   await habillage.click()
   await choose(page, habillage.getByTestId('file-mandatory'), 'Obligatoire (ERROR)')
-  await expect(habillage).toContainText('obligatoire')
+  await expect(habillage).toContainText('Obligatoire')
 
   await page.getByTestId('add-file').click()
   const added = page.getByTestId('file-NOUVEAU_FICHIER')
