@@ -104,7 +104,10 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - afficher le contenu exact de chaque fichier (onglet « Source ») ;
 - consulter les problèmes (les mêmes que `vce check`), les filtrer par sévérité, code ou modèle,
   et aller d'un clic à l'élément concerné ;
-- relire la configuration après une modification faite dans un autre outil (« Recharger »).
+- relire la configuration après une modification faite dans un autre outil (« Recharger ») ;
+- corriger d'un clic les problèmes courants (« Corriger » dans le panneau des problèmes) :
+  surcharge GpU orpheline, liste non déclarée ou à copier depuis un autre modèle, identifiant en
+  double, nom mal saisi, valeur CSV contenant une virgule…
 
 - modifier tables et modèles de document (annuler/rétablir), puis enregistrer les fichiers
   modifiés (« Enregistrer » ou Ctrl+S) : seuls ces fichiers sont réécrits, dans leur mise en forme

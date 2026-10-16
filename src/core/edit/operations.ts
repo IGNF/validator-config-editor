@@ -111,3 +111,9 @@ export const moveItem = <T>(doc: T, list: DocumentList, from: number, to: number
 
 /** Nom d'une liste de codes d'après son fichier : ./codes/ListeEtatPLU.csv → ListeEtatPLU. */
 export const codeName = (data: string) => data.slice(data.lastIndexOf('/') + 1).replace(/\.csv$/i, '')
+
+/** Ajoute un fichier `table` qui utilise un modèle de table (chemin à compléter). */
+export function addTableFile<T>(doc: T, existingIds: ReadonlySet<string>, name: string, tableModel: string, random?: RandomBytes): T {
+  const file: Raw = { type: 'table', path: '', mandatory: 'ERROR', tableModel, ...(usesIds(doc, 'files') && { id: newId(existingIds, random) }), name, title: name }
+  return insertAt(doc, '/files', file)
+}

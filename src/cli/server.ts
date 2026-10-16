@@ -68,10 +68,24 @@ function readBody(req: IncomingMessage): Promise<string | undefined> {
 /** PUT /api/file (contrat source-et-ecriture, plan 002 R8). */
 async function writeFileRequest(options: ServeOptions, url: URL, req: IncomingMessage, res: ServerResponse) {
   const path = url.searchParams.get('path')
+  const create = req.headers['if-none-match'] === '*'
   const expected = /^"?([0-9a-f]{64})"?$/.exec(req.headers['if-match'] ?? '')?.[1]
-  if (!path || !expected) return send(res, 400, 'Paramètre path ou en-tête If-Match manquant')
+  if (!path || (!expected && !create)) return send(res, 400, 'Paramètre path ou en-tête If-Match (ou If-None-Match: *) manquant')
   if (!/\.(json|csv)$/i.test(path) || path.split('/').some((s) => s === '..' || s === '' || s.startsWith('.'))) {
     return send(res, 403, 'Fichier non modifiable')
+  }
+  if (create) {
+    if ((await options.fs.readText(path).catch(() => undefined)) !== undefined) return send(res, 412, 'Le fichier existe déjà')
+    const body = await readBody(req)
+    if (body === undefined) return send(res, 413, 'Fichier trop volumineux')
+    try {
+      await options.fs.createText(path, body)
+    } catch (e) {
+      const exists = (e as NodeJS.ErrnoException).code === 'EEXIST'
+      return send(res, exists ? 412 : 403, exists ? 'Le fichier existe déjà' : 'Création non autorisée')
+    }
+    res.writeHead(201, { ...SECURITY_HEADERS })
+    return res.end()
   }
   const current = await options.fs.readText(path).catch(() => undefined)
   if (current === undefined) return send(res, 403, 'Fichier inexistant ou hors de la configuration')

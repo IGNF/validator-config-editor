@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { describeLocation } from '@core/validation/location'
 import { countProblems, filterProblems, type Problem, type Severity } from '@core/validation/problems'
 import { useProject } from '../stores/project'
+import FixMenu from './FixMenu.vue'
 import ProblemItem from './ProblemItem.vue'
 
 const store = useProject()
@@ -67,7 +68,9 @@ const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
           </div>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-          <ProblemItem v-for="(p, i) in g.problems" :key="i" :problem="p" />
+          <ProblemItem v-for="(p, i) in g.problems" :key="`${p.code}${p.pointer}${i}`" :problem="p">
+            <FixMenu :problem="p" />
+          </ProblemItem>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>

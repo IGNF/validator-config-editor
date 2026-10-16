@@ -28,6 +28,10 @@ type SaveResult = { path: string; ok: true } | { path: string; ok: false; reason
 | `409` | le fichier sur disque a changé depuis sa lecture (empreinte différente) ; corps : message |
 | `413` | corps de plus de 10 Mo |
 
+**Création (feature 004)** : avec `If-None-Match: *` au lieu de `If-Match`, le fichier est créé
+s'il n'existe pas, seulement sous `<modèle>/codes/` ou `<modèle>/types/` d'un modèle existant
+(sous-dossier créé si besoin) : `201` créé, `412` s'il existe déjà, `403` ailleurs.
+
 `GET /api/snapshot` est inchangé. La méthode `PUT` n'est acceptée que sur `/api/file`.
 
 ## Sérialisation d'un fichier JSON modifié

@@ -23,14 +23,17 @@ export class ServerSource implements ConfigSource {
     const results: SaveResult[] = []
     for (const [path, text] of changes) {
       try {
+        // Fichier créé (correction, feature 004) : If-None-Match ; sinon empreinte du texte lu.
+        const original = originals.get(path)
+        const precondition: Record<string, string> = original === undefined ? { 'If-None-Match': '*' } : { 'If-Match': `"${await sha256(original)}"` }
         const response = await fetch(`api/file?path=${encodeURIComponent(path)}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'If-Match': `"${await sha256(originals.get(path) ?? '')}"` },
+          headers: { 'Content-Type': 'text/plain; charset=utf-8', ...precondition },
           body: text,
         })
-        if (response.status === 204) results.push({ path, ok: true })
+        if (response.status === 204 || response.status === 201) results.push({ path, ok: true })
         else {
-          const reason = response.status === 409 ? 'conflict' : response.status === 403 ? 'forbidden' : 'error'
+          const reason = response.status === 409 || response.status === 412 ? 'conflict' : response.status === 403 ? 'forbidden' : 'error'
           results.push({ path, ok: false, reason, message: await response.text() })
         }
       } catch (e) {

@@ -1,4 +1,4 @@
-import type { JsonFile, LoadedModel, Project } from '../model/types'
+import type { Csv, JsonFile, LoadedModel, Project } from '../model/types'
 import { problem, type Problem } from '../validation/problems'
 import { parseCsv } from './csv'
 import type { ConfigFs } from './fs'
@@ -8,6 +8,13 @@ export interface LoadResult {
   project: Project
   /** Problèmes de lecture : JSON ou CSV illisible. */
   problems: Problem[]
+}
+
+/** Lit une liste de codes : entrée du modèle (CSV absent si illisible) et problèmes de lecture. */
+export function readCsv(model: string, path: string, text: string): { entry: { path: string; csv?: Csv }; problems: Problem[] } {
+  const r = parseCsv(text)
+  if (r.ok) return { entry: { path, csv: r.csv }, problems: [] }
+  return { entry: { path }, problems: r.errors.map((e) => problem(e.code, model, path, `/${e.line}`, { line: e.line, ...e.params })) }
 }
 
 function emptyModel(name: string): LoadedModel {
@@ -33,12 +40,9 @@ export async function loadProject(fs: ConfigFs): Promise<LoadResult> {
     model.files.push(path)
 
     if (path.endsWith('.csv')) {
-      const r = parseCsv(text)
-      if (r.ok) model.csvs.set(path, { path, csv: r.csv })
-      else {
-        model.csvs.set(path, { path })
-        problems.push(problem(r.code, name, path, `/${r.line}`, { line: r.line, ...r.params }))
-      }
+      const r = readCsv(name, path, text)
+      model.csvs.set(path, r.entry)
+      problems.push(...r.problems)
       return
     }
 

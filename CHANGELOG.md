@@ -9,6 +9,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Corrections proposées en un clic pour les problèmes (surcharge orpheline, liste non déclarée ou copiée depuis un autre modèle, nouvel identifiant, nom du modèle, noms proches, valeur CSV entre guillemets), annulables (#37).
+
 - Panneau des problèmes lisible : groupes par fichier, titres et conseils en clair, localisation par noms, sévérité par icône (#39).
 
 - Éditeur en ligne publié sur GitHub Pages : ouverture d'un dossier local, édition, téléchargement ZIP (#11, #14, #16).
