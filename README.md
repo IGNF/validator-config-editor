@@ -25,7 +25,7 @@ le navigateur, rien n'est envoyé sur le réseau.
 |---|---|---|
 | Installation | aucune | Node.js ≥ 22, dépendance du dépôt de configuration |
 | Ouverture | dossier choisi dans le navigateur | dossier passé en argument |
-| Enregistrement | téléchargement ZIP de toute la configuration | écriture directe des fichiers modifiés |
+| Enregistrement | téléchargement ZIP de toute la configuration | écriture directe des fichiers modifiés (Ctrl+S) |
 | Validation, navigation, édition | identiques | identiques |
 
 Le site est publié par le workflow `pages.yml` à chaque merge sur `main`.
@@ -106,7 +106,12 @@ le port, `--open` ouvre le navigateur). Il permet de :
   et aller d'un clic à l'élément concerné ;
 - relire la configuration après une modification faite dans un autre outil (« Recharger »).
 
-Le serveur n'écoute que sur `127.0.0.1`, en lecture seule, et ne sert que le dossier indiqué.
+- modifier tables et modèles de document (annuler/rétablir), puis enregistrer les fichiers
+  modifiés (« Enregistrer » ou Ctrl+S) : seuls ces fichiers sont réécrits, dans leur mise en forme
+  d'origine, et un fichier modifié sur disque entre-temps n'est pas écrasé.
+
+Le serveur n'écoute que sur `127.0.0.1` et ne sert que le dossier indiqué ; il n'écrit que des
+fichiers `*.json` et `*.csv` existants de ce dossier.
 
 ## Développement
 
