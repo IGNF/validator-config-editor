@@ -141,9 +141,10 @@ que l'éditeur.
 2. **Given** l'archive, **When** on la compare au dossier d'origine, **Then** les fichiers non
    modifiés sont identiques octet pour octet.
 3. **Given** un fichier modifié, **When** il est écrit dans l'archive, **Then** il conserve
-   l'ordre des propriétés, les propriétés inconnues et la mise en forme des fichiers existants
-   (indentation de 4 espaces, sans saut de ligne final), si bien que `git diff` ne montre que
-   les lignes réellement changées.
+   l'ordre des propriétés, les propriétés inconnues et le style du fichier d'origine
+   (indentation de 2 ou 4 espaces, fins de ligne LF ou CRLF, saut de ligne final ou non), si bien
+   que `git diff` ne montre que les lignes réellement changées. Un fichier mis en forme à la main
+   (non reproductible) est signalé avant d'être réindenté.
 4. **Given** des modifications non téléchargées, **When** l'utilisateur ferme l'onglet ou ouvre
    un autre dossier, **Then** il est averti et peut annuler.
 5. **Given** une configuration qui contient des erreurs, **When** l'utilisateur télécharge,
@@ -233,8 +234,9 @@ l'outil sans installation.
 - **FR-006** : les nouveaux objets DOIVENT recevoir un `id` de 32 caractères hexadécimaux
   aléatoire, unique dans la configuration.
 - **FR-007** : l'enregistrement d'un fichier modifié DOIT conserver l'ordre des propriétés, les
-  propriétés inconnues et la mise en forme des fichiers existants (JSON indenté de 4 espaces,
-  sans saut de ligne final). Un fichier non modifié NE DOIT jamais être réécrit.
+  propriétés inconnues et le style du fichier d'origine (indentation, fins de ligne, saut de
+  ligne final). Un fichier non modifié NE DOIT jamais être réécrit. Un fichier dont la mise en
+  forme n'est pas reproductible DOIT être signalé avant d'être réindenté.
 - **FR-008** : l'éditeur en ligne DOIT produire un ZIP de toute la configuration (fichiers
   `*.json` et `*.csv`, chemins d'origine), sans dépendance externe.
 - **FR-009** : `vce serve` DOIT accepter l'écriture d'un fichier `*.json` ou `*.csv` existant
