@@ -62,7 +62,12 @@ build à l'installation, aucune dépendance d'exécution.
    }
    ```
 
-2. Installer (Node.js ≥ 22), ce qui crée `package-lock.json`, puis ignorer `node_modules/` :
+   Indiquer un **tag** (`#vX.Y.Z`), pas une branche : seuls les tags contiennent l'outil construit
+   (`dist/`) ; avec `#main`, `vce` ne fonctionne pas.
+
+2. Installer (Node.js ≥ 22) avec `npm install` — `npm ci` exige un `package-lock.json` existant et
+   ne sert qu'ensuite (CI, autres postes). L'installation crée `package-lock.json` ; ignorer
+   `node_modules/` :
 
    ```sh
    npm install
