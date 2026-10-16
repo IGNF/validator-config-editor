@@ -82,3 +82,32 @@ export function setListItem<T>(table: T, list: TableList, index: number, value: 
 export function removeListItem<T>(table: T, list: TableList, index: number): T {
   return removeAt(table, pointer('constraints', list, index))
 }
+
+// --- Modèle de document (files.json) ---------------------------------------------------------
+
+export type DocumentList = 'files' | 'codes'
+
+const items = (doc: Json, list: DocumentList): Raw[] => (Array.isArray(getAt(doc, `/${list}`)) ? (getAt(doc, `/${list}`) as Raw[]) : [])
+
+// Un nouvel objet reçoit un `id` si le modèle en utilise (racine ou objets de la liste).
+const usesIds = (doc: Json, list: DocumentList) =>
+  typeof getAt(doc, '/id') === 'string' || items(doc, list).some((x) => typeof x.id === 'string')
+
+/** Ajoute un fichier attendu (ordre des clés des configurations : type, path, mandatory, id, name, title). */
+export function addFile<T>(doc: T, existingIds: ReadonlySet<string>, type = 'pdf', random?: RandomBytes): T {
+  const name = freeName('NOUVEAU_FICHIER', items(doc, 'files').map((f) => String(f.name)))
+  const file: Raw = { type, path: '', mandatory: 'ERROR', ...(usesIds(doc, 'files') && { id: newId(existingIds, random) }), name, title: name }
+  return insertAt(doc, '/files', file)
+}
+
+/** Déclare une liste de codes (ordre des clés : data, id, name, title). */
+export function addCode<T>(doc: T, existingIds: ReadonlySet<string>, data: string, name: string, random?: RandomBytes): T {
+  const code: Raw = { data, ...(usesIds(doc, 'codes') && { id: newId(existingIds, random) }), name, title: name }
+  return insertAt(doc, '/codes', code)
+}
+
+export const removeItem = <T>(doc: T, list: DocumentList, index: number): T => removeAt(doc, pointer(list, index))
+export const moveItem = <T>(doc: T, list: DocumentList, from: number, to: number): T => moveAt(doc, `/${list}`, from, to)
+
+/** Nom d'une liste de codes d'après son fichier : ./codes/ListeEtatPLU.csv → ListeEtatPLU. */
+export const codeName = (data: string) => data.slice(data.lastIndexOf('/') + 1).replace(/\.csv$/i, '')
