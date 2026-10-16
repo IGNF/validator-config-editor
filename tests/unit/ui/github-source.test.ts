@@ -75,3 +75,15 @@ describe('GitHubSource', () => {
     expect(await new GitHubSource({ owner: 'IGNF', repo: 'validator-config-test' }, fakeFetch(fakeGitHub(repo()))).branches()).toEqual(['main', 'feat/x'])
   })
 })
+
+describe('branche introuvable', () => {
+  it('propose la branche par défaut', async () => {
+    const source = new GitHubSource({ owner: 'IGNF', repo: 'validator-config-test', branch: 'absente', path: 'config' }, fakeFetch(fakeGitHub(repo())))
+    const error = await source.load().catch((e: unknown) => e)
+    expect(error).toBeInstanceOf(GitHubError)
+    expect((error as GitHubError).suggestion).toEqual({
+      label: 'Ouvrir la branche par défaut (main)',
+      spec: { owner: 'IGNF', repo: 'validator-config-test', branch: 'main', path: 'config' },
+    })
+  })
+})

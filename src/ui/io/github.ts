@@ -5,8 +5,17 @@ const API = 'https://api.github.com'
 const RAW = 'https://raw.githubusercontent.com'
 const PARALLEL = 16
 
-/** Erreur d'accès à GitHub, avec un message en français pour l'utilisateur. */
-export class GitHubError extends Error {}
+/** Erreur d'accès à GitHub, avec un message en français et, éventuellement, une autre source à proposer. */
+export class GitHubError extends Error {
+  constructor(
+    message: string,
+    readonly suggestion?: { label: string; spec: RepoSpec },
+    /** Code HTTP de GitHub, s'il y en a un. */
+    readonly status?: number,
+  ) {
+    super(message)
+  }
+}
 
 export interface RepoSpec {
   owner: string
@@ -60,7 +69,7 @@ export class GitHubSource implements ConfigSource {
       const at = reset ? ` Réessayer après ${hhmm(new Date(reset * 1000))}.` : ''
       throw new GitHubError(`Limite de requêtes anonymes à GitHub atteinte (60 par heure).${at}`)
     }
-    if (response.status === 404) throw new GitHubError(notFound)
+    if (response.status === 404) throw new GitHubError(notFound, undefined, 404)
     throw new GitHubError(`GitHub a répondu ${response.status} pour ${this.name}.`)
   }
 
@@ -78,14 +87,27 @@ export class GitHubSource implements ConfigSource {
     return (await this.api<{ default_branch: string }>('', `Dépôt ${this.name} introuvable ou privé.`)).default_branch
   }
 
+  // Branche (commit et arbre) ; si elle n'existe pas, propose la branche par défaut.
+  private async branch_(branch: string, path?: string) {
+    try {
+      return await this.api<{ commit: { sha: string; commit: { tree: { sha: string } } } }>(
+        `/branches/${encodeURIComponent(branch)}`,
+        `Branche « ${branch} » introuvable dans ${this.name}.`,
+      )
+    } catch (e) {
+      if (!(e instanceof GitHubError) || e.status !== 404) throw e
+      // Le dépôt peut aussi être introuvable : defaultBranch() le signalera.
+      const fallback = await this.defaultBranch()
+      const { owner, repo } = this.spec
+      throw new GitHubError(e.message, { label: `Ouvrir la branche par défaut (${fallback})`, spec: { owner, repo, branch: fallback, ...(path && { path }) } })
+    }
+  }
+
   async load(onProgress?: (done: number, total: number) => void): Promise<Map<string, string>> {
     let { branch, path } = this.spec
     if (!branch && this.spec.rest) ({ branch, path } = splitRef(this.spec.rest, this.spec.rest.includes('/') ? await this.branches() : undefined))
     branch ??= await this.defaultBranch()
-    const b = await this.api<{ commit: { sha: string; commit: { tree: { sha: string } } } }>(
-      `/branches/${encodeURIComponent(branch)}`,
-      `Branche « ${branch} » introuvable dans ${this.name} (dépôt introuvable, privé, ou branche inexistante).`,
-    )
+    const b = await this.branch_(branch, path)
     const tree = await this.api<{ truncated: boolean; tree: { path: string; type: string }[] }>(
       `/git/trees/${b.commit.commit.tree.sha}?recursive=1`,
       `Arbre du dépôt ${this.name} introuvable.`,

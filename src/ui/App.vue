@@ -8,6 +8,7 @@ import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
 import ProblemsPanel from './components/ProblemsPanel.vue'
 import RepoDialog from './components/RepoDialog.vue'
+import SourceChip from './components/SourceChip.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
 import { kindOf } from './files'
@@ -47,6 +48,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', onBeforeUnload)
 })
 
+const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
 const notice = ref<string>()
 async function save() {
   const results = await store.save()
@@ -80,8 +82,7 @@ const showProblems = ref(true)
       <v-app-bar-title>
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
-      <a v-if="store.source?.link" :href="store.source.link" target="_blank" rel="noopener" class="text-body-2 mr-4 root" :title="store.root" data-testid="source">{{ store.root }}</a>
-      <span v-else class="text-body-2 mr-4 root" :title="store.root" data-testid="source">{{ store.root }}</span>
+      <SourceChip />
       <RepoDialog />
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
@@ -117,8 +118,8 @@ const showProblems = ref(true)
           <section v-else>
             <h1 class="text-h5 mb-2">Configuration</h1>
             <p v-if="store.summary" data-testid="summary">
-              {{ store.summary.models }} modèles, {{ store.summary.tables }} tables, {{ store.summary.codeLists }} listes de codes —
-              {{ store.summary.errors }} erreur(s), {{ store.summary.warnings }} avertissement(s).
+              {{ plural(store.summary.models, 'modèle') }}, {{ plural(store.summary.tables, 'table') }}, {{ plural(store.summary.codeLists, 'liste') }} de codes —
+              {{ plural(store.summary.errors, 'erreur') }}, {{ plural(store.summary.warnings, 'avertissement') }}.
             </p>
             <p class="mt-2">Choisissez un modèle dans la liste.</p>
           </section>
@@ -132,11 +133,5 @@ const showProblems = ref(true)
 .home {
   color: inherit;
   text-decoration: none;
-}
-.root {
-  max-width: 40vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 </style>

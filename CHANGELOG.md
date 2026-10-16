@@ -10,6 +10,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Ouverture de la configuration d'un dépôt GitHub public par son URL (branche, sous-dossier), éditable et téléchargeable en ZIP (#23).
+- Choix de la branche d'un dépôt ouvert ; branche inexistante : branche par défaut proposée (#24).
 
 ## [0.1.0] - 2026-10-16
 

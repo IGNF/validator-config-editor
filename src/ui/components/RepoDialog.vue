@@ -12,6 +12,11 @@ const url = ref('')
 const parsed = computed(() => parseRepoUrl(url.value))
 const invalid = computed(() => url.value.trim() !== '' && !parsed.value)
 
+async function openSuggestion() {
+  await store.load(store.suggestion!.source)
+  if (!store.error) open.value = false
+}
+
 async function submit() {
   if (!parsed.value) return
   if (store.pending && !window.confirm(`${store.changed.size} fichier(s) modifié(s) non téléchargé(s) : ouvrir un autre dépôt abandonne ces modifications. Continuer ?`)) return
@@ -38,7 +43,12 @@ async function submit() {
         <v-progress-linear v-if="store.loading" :model-value="store.progress ? (100 * store.progress.done) / store.progress.total : undefined"
           :indeterminate="!store.progress" aria-label="Lecture du dépôt" />
         <p v-if="store.progress" class="text-body-2 mt-1" data-testid="repo-progress">{{ store.progress.done }} / {{ store.progress.total }} fichiers lus</p>
-        <v-alert v-if="store.error && !store.loading" type="error" variant="tonal" class="mt-2" data-testid="repo-error">{{ store.error }}</v-alert>
+        <v-alert v-if="store.error && !store.loading" type="error" variant="tonal" class="mt-2" data-testid="repo-error">
+          {{ store.error }}
+          <div v-if="store.suggestion" class="mt-2">
+            <v-btn size="small" variant="flat" data-testid="repo-suggestion" @click="openSuggestion">{{ store.suggestion.label }}</v-btn>
+          </div>
+        </v-alert>
       </v-card-text>
       <v-card-actions>
         <v-spacer />

@@ -12,7 +12,7 @@
 
 ## Phase 2 : US2, choisir une branche — branche `003-ouverture-depot/us2` (#24)
 
-- [ ] T006 [US2] Liste des branches (une requête, à la demande), menu de branches dans la barre, confirmation s'il y a des modifications, branche inexistante → message et branche par défaut proposée ; e2e
+- [x] T006 [US2] Liste des branches (une requête, à la demande), menu de branches dans la barre, confirmation s'il y a des modifications, branche inexistante → message et branche par défaut proposée ; e2e
 
 ## Phase 3 : US3, configurations connues — branche `003-ouverture-depot/us3` (#25)
 

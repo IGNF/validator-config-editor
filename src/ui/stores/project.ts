@@ -7,6 +7,7 @@ import { countByModel, countProblems, type Problem } from '@core/validation/prob
 import { summarize } from '@core/validation/validate'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
+import { GitHubError, GitHubSource } from '../io/github'
 import { ServerSource } from '../io/server'
 import type { ConfigSource, SaveResult } from '../io/source'
 
@@ -20,11 +21,14 @@ export const useProject = defineStore('project', () => {
   /** Filtre « Modèle » du panneau des problèmes (partagé avec la synthèse du modèle). */
   const problemModel = ref<string | null>(null)
   const error = ref<string>()
+  /** Autre source proposée après une erreur (ex. branche par défaut d'un dépôt). */
+  const suggestion = shallowRef<{ label: string; source: ConfigSource }>()
 
   /** Charge une source ; en cas d'échec, la configuration courante est conservée. */
   async function load(next: ConfigSource = source.value ?? new ServerSource()) {
     loading.value = true
     error.value = undefined
+    suggestion.value = undefined
     try {
       progress.value = undefined
       const opened = await openSession(await next.load((done, total) => (progress.value = { done, total })))
@@ -35,6 +39,7 @@ export const useProject = defineStore('project', () => {
       source.value = next
     } catch (e) {
       error.value = e instanceof Error ? e.message : String(e)
+      if (e instanceof GitHubError && e.suggestion) suggestion.value = { label: e.suggestion.label, source: new GitHubSource(e.suggestion.spec) }
     } finally {
       loading.value = false
       progress.value = undefined
@@ -129,7 +134,7 @@ export const useProject = defineStore('project', () => {
 
   return {
     pending, downloadZip, canSave, save, fixes, applyFix, canFixAll, fixAll,
-    source, session, loading, progress, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
+    source, session, loading, progress, problemModel, error, suggestion, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
 })
