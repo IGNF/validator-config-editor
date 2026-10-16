@@ -1,0 +1,129 @@
+import { V0Error, isArray, isObject } from "../../../utilities/index.mjs";
+import { Color, Theme } from "@adobe/leonardo-contrast-colors";
+//#region src/palettes/leonardo/generate/index.ts
+const DEFAULT_RATIOS = [
+	1.25,
+	1.5,
+	2,
+	3,
+	4.5,
+	7,
+	11
+];
+const HEX_RE = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
+function extractColors(entries) {
+	const colors = {};
+	for (const entry of entries) if (/* @__PURE__ */ isObject(entry) && "values" in entry && /* @__PURE__ */ isArray(entry.values)) {
+		const e = entry;
+		for (const v of e.values) colors[v.contrast] = v.value;
+	}
+	return colors;
+}
+function mapSemanticColors(colors, ratios) {
+	function at(ratio) {
+		if (colors[ratio]) return colors[ratio];
+		let closest = ratios[0];
+		let delta = Math.abs(ratio - closest);
+		for (const r of ratios) {
+			const d = Math.abs(ratio - r);
+			if (d < delta) {
+				closest = r;
+				delta = d;
+			}
+		}
+		/* v8 ignore next -- defensive fallbacks for when ratio table or colors map is empty */
+		return colors[closest] ?? Object.values(colors)[0] ?? "#000000";
+	}
+	const low1 = at(1.25);
+	const low2 = at(1.5);
+	const low3 = at(2);
+	const mid1 = at(3);
+	const mid2 = at(4.5);
+	const high1 = at(7);
+	const high2 = at(11);
+	return {
+		"primary": mid2,
+		"on-primary": high2,
+		"primary-container": low1,
+		"on-primary-container": high1,
+		"secondary": mid2,
+		"on-secondary": high2,
+		"secondary-container": low2,
+		"on-secondary-container": high1,
+		"tertiary": mid2,
+		"on-tertiary": high2,
+		"tertiary-container": low3,
+		"on-tertiary-container": high1,
+		"surface": low1,
+		"on-surface": high1,
+		"surface-variant": low1,
+		"on-surface-variant": high1,
+		"outline": mid1,
+		"outline-variant": low2
+	};
+}
+/* #__NO_SIDE_EFFECTS__ */
+function leonardo(seed, options = {}) {
+	if (!HEX_RE.test(seed)) throw new V0Error(`[@vuetify/v0] Invalid seed color: "${seed}". Expected a hex string (e.g., "#0ea5e9").`, {
+		code: "V0_PALETTE_INVALID_SEED",
+		palette: "leonardo",
+		seed
+	});
+	const { ratios = DEFAULT_RATIOS, colorSpace = "OKLCH" } = options;
+	const color = new Color({
+		name: "primary",
+		colorKeys: [seed],
+		ratios,
+		colorSpace
+	});
+	const light = new Theme({
+		colors: [color],
+		backgroundColor: "#ffffff",
+		lightness: 100
+	});
+	const dark = new Theme({
+		colors: [color],
+		backgroundColor: "#121212",
+		lightness: 8
+	});
+	const lightColors = extractColors(light.contrastColors);
+	const darkColors = extractColors(dark.contrastColors);
+	const lightSemantic = mapSemanticColors(lightColors, ratios);
+	const darkSemantic = mapSemanticColors(darkColors, ratios);
+	return {
+		palette: {
+			primary: lightColors,
+			primaryDark: darkColors
+		},
+		themes: {
+			light: {
+				dark: false,
+				colors: {
+					...lightSemantic,
+					"error": "#ba1a1a",
+					"on-error": "#ffffff",
+					"error-container": "#ffdad6",
+					"on-error-container": "#410002",
+					"background": "#ffffff",
+					/* v8 ignore next -- defensive fallback when lightSemantic lacks on-surface */
+					"on-background": lightSemantic["on-surface"] ?? "#000000"
+				}
+			},
+			dark: {
+				dark: true,
+				colors: {
+					...darkSemantic,
+					"error": "#ffb4ab",
+					"on-error": "#690005",
+					"error-container": "#93000a",
+					"on-error-container": "#ffdad6",
+					"background": "#121212",
+					/* v8 ignore next -- defensive fallback when darkSemantic lacks on-surface */
+					"on-background": darkSemantic["on-surface"] ?? "#ffffff"
+				}
+			}
+		}
+	};
+}
+//#endregion
+export { leonardo };

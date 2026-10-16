@@ -1,0 +1,916 @@
+{
+  "components": {
+    "AlertDescription": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertTitle": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogAction": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogCancel": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogClose": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogDescription": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialogTitle": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AspectRatio": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Atom": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AvatarFallback": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AvatarGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AvatarImage": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AvatarIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AvatarRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsDivider": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsEllipsis": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsLink": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsList": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsPage": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "BreadcrumbsRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ButtonContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ButtonGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ButtonHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ButtonIcon": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ButtonLoading": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ButtonRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselLiveRegion": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselNext": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselPrevious": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselProgress": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CarouselViewport": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CheckboxGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CheckboxHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CheckboxIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CheckboxRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CheckboxSelectAll": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CollapsibleActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CollapsibleContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CollapsibleCue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "CollapsibleRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxControl": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxCue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxDescription": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxEmpty": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxError": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ComboboxRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridBody": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridCell": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridColumn": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridEmpty": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridHandle": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridHeader": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridRow": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGridTable": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableBody": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableCell": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableColumn": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableEmpty": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableHeader": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableRow": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTableTable": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DialogActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DialogClose": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DialogContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DialogDescription": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DialogRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DialogTitle": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanelActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanelContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanelCue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanelGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanelHeader": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanelRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Form": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "GroupItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "GroupRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ImageFallback": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ImageImg": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ImagePlaceholder": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ImageRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "InputControl": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "InputDescription": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "InputError": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "InputRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Locale": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldControl": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldDecrement": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldDescription": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldError": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldIncrement": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberFieldScrub": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "OverflowIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "OverflowItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "OverflowRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationEllipsis": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationFirst": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationLast": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationNext": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationPrev": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PaginationStatus": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PopoverActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PopoverContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "PopoverRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Portal": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Presence": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressBuffer": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressFill": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressLabel": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressTrack": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ProgressValue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RadioGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RadioHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RadioIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RadioRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RatingHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RatingItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "RatingRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Scrim": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectCue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectPlaceholder": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectValue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectionItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SelectionRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SingleItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SingleRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SliderHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SliderRange": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SliderRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SliderThumb": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SliderTrack": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SnackbarAnnouncer": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SnackbarClose": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SnackbarContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SnackbarPortal": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SnackbarQueue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SnackbarRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SplitterHandle": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SplitterPanel": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SplitterRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "StepItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "StepRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SwitchGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SwitchHiddenInput": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SwitchRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SwitchSelectAll": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SwitchThumb": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "SwitchTrack": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TabsItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TabsList": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TabsPanel": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TabsRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Theme": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ToggleGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ToggleIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ToggleRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TooltipActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TooltipContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TooltipRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewActivator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewCheckbox": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewContent": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewCue": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewGroup": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewIndicator": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewItem": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewList": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewRoot": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "TreeviewSelectAll": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Alert": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "AlertDialog": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Avatar": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Breadcrumbs": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Button": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Carousel": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Checkbox": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Collapsible": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Combobox": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataGrid": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "DataTable": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Dialog": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "ExpansionPanel": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Group": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Image": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Input": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "NumberField": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Overflow": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Pagination": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Popover": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Progress": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Radio": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Rating": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Select": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Selection": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Single": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Slider": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Snackbar": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Splitter": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Step": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Switch": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Tabs": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Toggle": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Tooltip": {
+      "from": "@vuetify/v0",
+      "styles": []
+    },
+    "Treeview": {
+      "from": "@vuetify/v0",
+      "styles": []
+    }
+  }
+}

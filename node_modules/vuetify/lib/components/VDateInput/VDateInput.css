@@ -1,0 +1,26 @@
+@layer vuetify-components {
+  .v-date-input input {
+    direction: ltr;
+  }
+  .v-locale--is-rtl.v-date-input input, .v-locale--is-rtl .v-date-input input {
+    text-align: right;
+  }
+  .v-date-input__format-hint {
+    align-items: center;
+    direction: ltr;
+    display: flex;
+    inset: 0;
+    opacity: var(--v-disabled-opacity);
+    padding: inherit;
+    pointer-events: none;
+    position: absolute;
+    user-select: none;
+    white-space: pre;
+  }
+  .v-locale--is-rtl.v-date-input__format-hint, .v-locale--is-rtl .v-date-input__format-hint {
+    justify-content: flex-end;
+  }
+  .v-date-input__format-hint > span {
+    opacity: 0;
+  }
+}

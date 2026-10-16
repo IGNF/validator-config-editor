@@ -1,0 +1,7 @@
+@use 'sass:map';
+@use '../../styles/settings';
+@use '../../styles/tools';
+
+// VSelectionControl
+$selection-control-density: ('default': 0, 'comfortable': -1, 'compact': -3) !default;
+$selection-control-size: 40px !default;

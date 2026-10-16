@@ -1,0 +1,2070 @@
+{
+  "alert-description": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDescription component"
+  },
+  "alert-root": {
+    "attributes": [
+      "role",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertRoot component"
+  },
+  "alert-title": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertTitle component"
+  },
+  "alert-dialog-action": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogAction component"
+  },
+  "alert-dialog-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogActivator component"
+  },
+  "alert-dialog-cancel": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogCancel component"
+  },
+  "alert-dialog-close": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogClose component"
+  },
+  "alert-dialog-content": {
+    "attributes": [
+      "namespace",
+      "closeOnClickOutside",
+      "closeOnEscape",
+      "blocking",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogContent component"
+  },
+  "alert-dialog-description": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogDescription component"
+  },
+  "alert-dialog-root": {
+    "attributes": [
+      "namespace",
+      "id",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 AlertDialogRoot component"
+  },
+  "alert-dialog-title": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AlertDialogTitle component"
+  },
+  "aspect-ratio": {
+    "attributes": [],
+    "description": "Vuetify 0 AspectRatio component"
+  },
+  "atom": {
+    "attributes": [],
+    "description": "Vuetify 0 Atom component"
+  },
+  "avatar-fallback": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AvatarFallback component"
+  },
+  "avatar-group": {
+    "attributes": [
+      "namespace",
+      "max",
+      "responsive",
+      "priority",
+      "gap",
+      "label",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AvatarGroup component"
+  },
+  "avatar-image": {
+    "attributes": [
+      "src",
+      "alt",
+      "priority",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AvatarImage component"
+  },
+  "avatar-indicator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AvatarIndicator component"
+  },
+  "avatar-root": {
+    "attributes": [
+      "namespace",
+      "value",
+      "disabled",
+      "groupNamespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 AvatarRoot component"
+  },
+  "breadcrumbs-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsActivator component"
+  },
+  "breadcrumbs-divider": {
+    "attributes": [
+      "namespace",
+      "id",
+      "divider",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsDivider component"
+  },
+  "breadcrumbs-ellipsis": {
+    "attributes": [
+      "namespace",
+      "id",
+      "ellipsis",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsEllipsis component"
+  },
+  "breadcrumbs-item": {
+    "attributes": [
+      "namespace",
+      "id",
+      "value",
+      "text",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsItem component"
+  },
+  "breadcrumbs-link": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsLink component"
+  },
+  "breadcrumbs-list": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsList component"
+  },
+  "breadcrumbs-page": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsPage component"
+  },
+  "breadcrumbs-root": {
+    "attributes": [
+      "namespace",
+      "divider",
+      "ellipsis",
+      "gap",
+      "label",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 BreadcrumbsRoot component"
+  },
+  "button-content": {
+    "attributes": [
+      "id",
+      "namespace"
+    ],
+    "description": "Vuetify 0 ButtonContent component"
+  },
+  "button-group": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "multiple",
+      "mandatory",
+      "label",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 ButtonGroup component"
+  },
+  "button-hidden-input": {
+    "attributes": [
+      "namespace",
+      "name",
+      "value",
+      "form"
+    ],
+    "description": "Vuetify 0 ButtonHiddenInput component"
+  },
+  "button-icon": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ButtonIcon component"
+  },
+  "button-loading": {
+    "attributes": [
+      "id",
+      "namespace"
+    ],
+    "description": "Vuetify 0 ButtonLoading component"
+  },
+  "button-root": {
+    "attributes": [
+      "disabled",
+      "readonly",
+      "passive",
+      "loading",
+      "grace",
+      "value",
+      "namespace",
+      "groupNamespace",
+      "name",
+      "form",
+      "ariaLabel",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ButtonRoot component"
+  },
+  "carousel-indicator": {
+    "attributes": [
+      "label",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselIndicator component"
+  },
+  "carousel-item": {
+    "attributes": [
+      "id",
+      "value",
+      "disabled",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselItem component"
+  },
+  "carousel-live-region": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselLiveRegion component"
+  },
+  "carousel-next": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselNext component"
+  },
+  "carousel-previous": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselPrevious component"
+  },
+  "carousel-progress": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselProgress component"
+  },
+  "carousel-root": {
+    "attributes": [
+      "id",
+      "label",
+      "namespace",
+      "disabled",
+      "circular",
+      "orientation",
+      "perView",
+      "autoplay",
+      "behavior",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 CarouselRoot component"
+  },
+  "carousel-viewport": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CarouselViewport component"
+  },
+  "checkbox-group": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "label",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 CheckboxGroup component"
+  },
+  "checkbox-hidden-input": {
+    "attributes": [
+      "namespace",
+      "name",
+      "value",
+      "form"
+    ],
+    "description": "Vuetify 0 CheckboxHiddenInput component"
+  },
+  "checkbox-indicator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CheckboxIndicator component"
+  },
+  "checkbox-root": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "name",
+      "form",
+      "disabled",
+      "indeterminate",
+      "namespace",
+      "groupNamespace",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "ariaInvalid",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 CheckboxRoot component"
+  },
+  "checkbox-select-all": {
+    "attributes": [
+      "label",
+      "disabled",
+      "namespace",
+      "groupNamespace",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CheckboxSelectAll component"
+  },
+  "collapsible-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CollapsibleActivator component"
+  },
+  "collapsible-content": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CollapsibleContent component"
+  },
+  "collapsible-cue": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 CollapsibleCue component"
+  },
+  "collapsible-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 CollapsibleRoot component"
+  },
+  "combobox-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxActivator component"
+  },
+  "combobox-content": {
+    "attributes": [
+      "namespace",
+      "eager",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxContent component"
+  },
+  "combobox-control": {
+    "attributes": [
+      "namespace",
+      "openOn",
+      "placeholder",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxControl component"
+  },
+  "combobox-cue": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxCue component"
+  },
+  "combobox-description": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxDescription component"
+  },
+  "combobox-empty": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxEmpty component"
+  },
+  "combobox-error": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxError component"
+  },
+  "combobox-hidden-input": {
+    "attributes": [
+      "namespace"
+    ],
+    "description": "Vuetify 0 ComboboxHiddenInput component"
+  },
+  "combobox-item": {
+    "attributes": [
+      "namespace",
+      "id",
+      "value",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ComboboxItem component"
+  },
+  "combobox-root": {
+    "attributes": [
+      "namespace",
+      "id",
+      "name",
+      "form",
+      "disabled",
+      "multiple",
+      "mandatory",
+      "strict",
+      "error",
+      "errorMessages",
+      "adapter",
+      "positionAdapter",
+      "displayValue",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 ComboboxRoot component"
+  },
+  "data-grid-body": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridBody component"
+  },
+  "data-grid-cell": {
+    "attributes": [
+      "namespace",
+      "column",
+      "colspan",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridCell component"
+  },
+  "data-grid-column": {
+    "attributes": [
+      "namespace",
+      "id",
+      "sortable",
+      "filterable",
+      "size",
+      "minSize",
+      "maxSize",
+      "pinned",
+      "resizable",
+      "editable",
+      "validate",
+      "colspan",
+      "rowspan",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridColumn component"
+  },
+  "data-grid-empty": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridEmpty component"
+  },
+  "data-grid-handle": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "label",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridHandle component"
+  },
+  "data-grid-header": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridHeader component"
+  },
+  "data-grid-root": {
+    "attributes": [
+      "namespace",
+      "editing",
+      "preserveRowOrder",
+      "rowSpanning",
+      "filter",
+      "pagination",
+      "sortMultiple",
+      "mandate",
+      "firstSortOrder",
+      "selectStrategy",
+      "itemSelectable",
+      "groupBy",
+      "openAll",
+      "expandMultiple",
+      "locale",
+      "adapter",
+      "search"
+    ],
+    "description": "Vuetify 0 DataGridRoot component"
+  },
+  "data-grid-row": {
+    "attributes": [
+      "namespace",
+      "id",
+      "value",
+      "index",
+      "selectable",
+      "resizable",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridRow component"
+  },
+  "data-grid-table": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataGridTable component"
+  },
+  "data-table-body": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableBody component"
+  },
+  "data-table-cell": {
+    "attributes": [
+      "colspan",
+      "rowspan",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableCell component"
+  },
+  "data-table-column": {
+    "attributes": [
+      "namespace",
+      "id",
+      "sortable",
+      "filterable",
+      "colspan",
+      "rowspan",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableColumn component"
+  },
+  "data-table-empty": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableEmpty component"
+  },
+  "data-table-header": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableHeader component"
+  },
+  "data-table-root": {
+    "attributes": [
+      "namespace",
+      "filter",
+      "pagination",
+      "sortMultiple",
+      "mandate",
+      "firstSortOrder",
+      "selectStrategy",
+      "itemSelectable",
+      "groupBy",
+      "openAll",
+      "expandMultiple",
+      "locale",
+      "adapter",
+      "search"
+    ],
+    "description": "Vuetify 0 DataTableRoot component"
+  },
+  "data-table-row": {
+    "attributes": [
+      "namespace",
+      "id",
+      "value",
+      "index",
+      "selectable",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableRow component"
+  },
+  "data-table-table": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DataTableTable component"
+  },
+  "dialog-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DialogActivator component"
+  },
+  "dialog-close": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DialogClose component"
+  },
+  "dialog-content": {
+    "attributes": [
+      "namespace",
+      "closeOnClickOutside",
+      "blocking",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DialogContent component"
+  },
+  "dialog-description": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DialogDescription component"
+  },
+  "dialog-root": {
+    "attributes": [
+      "namespace",
+      "id",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 DialogRoot component"
+  },
+  "dialog-title": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 DialogTitle component"
+  },
+  "expansion-panel-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ExpansionPanelActivator component"
+  },
+  "expansion-panel-content": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ExpansionPanelContent component"
+  },
+  "expansion-panel-cue": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ExpansionPanelCue component"
+  },
+  "expansion-panel-group": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "multiple",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 ExpansionPanelGroup component"
+  },
+  "expansion-panel-header": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ExpansionPanelHeader component"
+  },
+  "expansion-panel-root": {
+    "attributes": [
+      "id",
+      "value",
+      "disabled",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ExpansionPanelRoot component"
+  },
+  "form": {
+    "attributes": [],
+    "description": "Vuetify 0 Form component"
+  },
+  "group-item": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "disabled",
+      "indeterminate",
+      "namespace"
+    ],
+    "description": "Vuetify 0 GroupItem component"
+  },
+  "group-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 GroupRoot component"
+  },
+  "image-fallback": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ImageFallback component"
+  },
+  "image-img": {
+    "attributes": [
+      "alt",
+      "srcset",
+      "sizes",
+      "width",
+      "height",
+      "crossorigin",
+      "referrerpolicy",
+      "decoding",
+      "loading",
+      "fetchpriority",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ImageImg component"
+  },
+  "image-placeholder": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ImagePlaceholder component"
+  },
+  "image-root": {
+    "attributes": [
+      "src",
+      "lazy",
+      "rootMargin",
+      "threshold",
+      "root",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ImageRoot component"
+  },
+  "input-control": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 InputControl component"
+  },
+  "input-description": {
+    "attributes": [
+      "id",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 InputDescription component"
+  },
+  "input-error": {
+    "attributes": [
+      "id",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 InputError component"
+  },
+  "input-root": {
+    "attributes": [
+      "id",
+      "label",
+      "name",
+      "type",
+      "form",
+      "disabled",
+      "readonly",
+      "required",
+      "rules",
+      "validateOn",
+      "error",
+      "errorMessages",
+      "namespace",
+      "formNamespace",
+      "as",
+      "renderless",
+      "modelValue",
+      "focused"
+    ],
+    "description": "Vuetify 0 InputRoot component"
+  },
+  "locale": {
+    "attributes": [],
+    "description": "Vuetify 0 Locale component"
+  },
+  "number-field-control": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 NumberFieldControl component"
+  },
+  "number-field-decrement": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 NumberFieldDecrement component"
+  },
+  "number-field-description": {
+    "attributes": [
+      "id",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 NumberFieldDescription component"
+  },
+  "number-field-error": {
+    "attributes": [
+      "id",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 NumberFieldError component"
+  },
+  "number-field-increment": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 NumberFieldIncrement component"
+  },
+  "number-field-root": {
+    "attributes": [
+      "id",
+      "label",
+      "ariaLabelledby",
+      "name",
+      "form",
+      "required",
+      "disabled",
+      "readonly",
+      "min",
+      "max",
+      "step",
+      "leap",
+      "wrap",
+      "locale",
+      "format",
+      "clamp",
+      "commitOn",
+      "rules",
+      "validateOn",
+      "error",
+      "errorMessages",
+      "spinDelay",
+      "spinRate",
+      "wheel",
+      "namespace",
+      "formNamespace",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 NumberFieldRoot component"
+  },
+  "number-field-scrub": {
+    "attributes": [
+      "namespace",
+      "sensitivity",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 NumberFieldScrub component"
+  },
+  "overflow-indicator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 OverflowIndicator component"
+  },
+  "overflow-item": {
+    "attributes": [
+      "namespace",
+      "value",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 OverflowItem component"
+  },
+  "overflow-root": {
+    "attributes": [
+      "namespace",
+      "gap",
+      "priority",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 OverflowRoot component"
+  },
+  "pagination-ellipsis": {
+    "attributes": [
+      "namespace",
+      "ellipsis",
+      "id",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationEllipsis component"
+  },
+  "pagination-first": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "id",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationFirst component"
+  },
+  "pagination-item": {
+    "attributes": [
+      "namespace",
+      "value",
+      "disabled",
+      "id",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationItem component"
+  },
+  "pagination-last": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "id",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationLast component"
+  },
+  "pagination-next": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "id",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationNext component"
+  },
+  "pagination-prev": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "id",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationPrev component"
+  },
+  "pagination-root": {
+    "attributes": [
+      "namespace",
+      "size",
+      "totalVisible",
+      "itemsPerPage",
+      "ellipsis",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 PaginationRoot component"
+  },
+  "pagination-status": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PaginationStatus component"
+  },
+  "popover-activator": {
+    "attributes": [
+      "target",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PopoverActivator component"
+  },
+  "popover-content": {
+    "attributes": [
+      "id",
+      "positionArea",
+      "positionTry",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 PopoverContent component"
+  },
+  "popover-root": {
+    "attributes": [
+      "id",
+      "positionArea",
+      "positionTry",
+      "adapter",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 PopoverRoot component"
+  },
+  "portal": {
+    "attributes": [],
+    "description": "Vuetify 0 Portal component"
+  },
+  "presence": {
+    "attributes": [],
+    "description": "Vuetify 0 Presence component"
+  },
+  "progress-buffer": {
+    "attributes": [
+      "value",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ProgressBuffer component"
+  },
+  "progress-fill": {
+    "attributes": [
+      "value",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ProgressFill component"
+  },
+  "progress-hidden-input": {
+    "attributes": [
+      "namespace"
+    ],
+    "description": "Vuetify 0 ProgressHiddenInput component"
+  },
+  "progress-label": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ProgressLabel component"
+  },
+  "progress-root": {
+    "attributes": [
+      "id",
+      "ariaLabel",
+      "modelValue",
+      "min",
+      "max",
+      "name",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ProgressRoot component"
+  },
+  "progress-track": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ProgressTrack component"
+  },
+  "progress-value": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ProgressValue component"
+  },
+  "radio-group": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "mandatory",
+      "label",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "ariaRequired",
+      "name",
+      "activation",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 RadioGroup component"
+  },
+  "radio-hidden-input": {
+    "attributes": [
+      "namespace",
+      "name",
+      "value",
+      "form"
+    ],
+    "description": "Vuetify 0 RadioHiddenInput component"
+  },
+  "radio-indicator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 RadioIndicator component"
+  },
+  "radio-root": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "name",
+      "form",
+      "disabled",
+      "namespace",
+      "groupNamespace",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "ariaInvalid",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 RadioRoot component"
+  },
+  "rating-hidden-input": {
+    "attributes": [
+      "namespace"
+    ],
+    "description": "Vuetify 0 RatingHiddenInput component"
+  },
+  "rating-item": {
+    "attributes": [
+      "index",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 RatingItem component"
+  },
+  "rating-root": {
+    "attributes": [
+      "modelValue",
+      "size",
+      "half",
+      "disabled",
+      "readonly",
+      "ariaLabel",
+      "ariaLabelledby",
+      "name",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 RatingRoot component"
+  },
+  "scrim": {
+    "attributes": [],
+    "description": "Vuetify 0 Scrim component"
+  },
+  "select-activator": {
+    "attributes": [
+      "namespace",
+      "label",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SelectActivator component"
+  },
+  "select-content": {
+    "attributes": [
+      "namespace",
+      "eager",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SelectContent component"
+  },
+  "select-cue": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SelectCue component"
+  },
+  "select-hidden-input": {
+    "attributes": [
+      "namespace"
+    ],
+    "description": "Vuetify 0 SelectHiddenInput component"
+  },
+  "select-item": {
+    "attributes": [
+      "namespace",
+      "id",
+      "value",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SelectItem component"
+  },
+  "select-placeholder": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SelectPlaceholder component"
+  },
+  "select-root": {
+    "attributes": [
+      "namespace",
+      "id",
+      "name",
+      "form",
+      "disabled",
+      "multiple",
+      "mandatory",
+      "adapter",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 SelectRoot component"
+  },
+  "select-value": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SelectValue component"
+  },
+  "selection-item": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "disabled",
+      "namespace"
+    ],
+    "description": "Vuetify 0 SelectionItem component"
+  },
+  "selection-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "multiple",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 SelectionRoot component"
+  },
+  "single-item": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "disabled",
+      "namespace"
+    ],
+    "description": "Vuetify 0 SingleItem component"
+  },
+  "single-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 SingleRoot component"
+  },
+  "slider-hidden-input": {
+    "attributes": [
+      "namespace",
+      "index"
+    ],
+    "description": "Vuetify 0 SliderHiddenInput component"
+  },
+  "slider-range": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SliderRange component"
+  },
+  "slider-root": {
+    "attributes": [
+      "id",
+      "min",
+      "max",
+      "step",
+      "disabled",
+      "readonly",
+      "orientation",
+      "inverted",
+      "minStepsBetweenThumbs",
+      "crossover",
+      "name",
+      "form",
+      "label",
+      "ariaLabelledby",
+      "namespace",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 SliderRoot component"
+  },
+  "slider-thumb": {
+    "attributes": [
+      "namespace",
+      "ariaLabel",
+      "ariaLabelledby",
+      "ariaValuetext",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SliderThumb component"
+  },
+  "slider-track": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SliderTrack component"
+  },
+  "snackbar-announcer": {
+    "attributes": [
+      "namespace"
+    ],
+    "description": "Vuetify 0 SnackbarAnnouncer component"
+  },
+  "snackbar-close": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SnackbarClose component"
+  },
+  "snackbar-content": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SnackbarContent component"
+  },
+  "snackbar-portal": {
+    "attributes": [
+      "announcer",
+      "namespace",
+      "teleport",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SnackbarPortal component"
+  },
+  "snackbar-queue": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SnackbarQueue component"
+  },
+  "snackbar-root": {
+    "attributes": [
+      "namespace",
+      "id",
+      "urgent",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SnackbarRoot component"
+  },
+  "splitter-handle": {
+    "attributes": [
+      "disabled",
+      "label",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SplitterHandle component"
+  },
+  "splitter-panel": {
+    "attributes": [
+      "defaultSize",
+      "minSize",
+      "maxSize",
+      "collapsible",
+      "collapsedSize",
+      "as",
+      "renderless",
+      "collapsed"
+    ],
+    "description": "Vuetify 0 SplitterPanel component"
+  },
+  "splitter-root": {
+    "attributes": [
+      "orientation",
+      "disabled",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SplitterRoot component"
+  },
+  "step-item": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "disabled",
+      "namespace"
+    ],
+    "description": "Vuetify 0 StepItem component"
+  },
+  "step-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 StepRoot component"
+  },
+  "switch-group": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "label",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 SwitchGroup component"
+  },
+  "switch-hidden-input": {
+    "attributes": [
+      "namespace",
+      "name",
+      "value",
+      "form"
+    ],
+    "description": "Vuetify 0 SwitchHiddenInput component"
+  },
+  "switch-root": {
+    "attributes": [
+      "id",
+      "label",
+      "value",
+      "name",
+      "form",
+      "disabled",
+      "indeterminate",
+      "namespace",
+      "groupNamespace",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "ariaInvalid",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 SwitchRoot component"
+  },
+  "switch-select-all": {
+    "attributes": [
+      "label",
+      "disabled",
+      "namespace",
+      "groupNamespace",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SwitchSelectAll component"
+  },
+  "switch-thumb": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SwitchThumb component"
+  },
+  "switch-track": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 SwitchTrack component"
+  },
+  "tabs-item": {
+    "attributes": [
+      "id",
+      "value",
+      "disabled",
+      "namespace",
+      "ariaLabel",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "el",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TabsItem component"
+  },
+  "tabs-list": {
+    "attributes": [
+      "label",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TabsList component"
+  },
+  "tabs-panel": {
+    "attributes": [
+      "value",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TabsPanel component"
+  },
+  "tabs-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "circular",
+      "orientation",
+      "activation",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 TabsRoot component"
+  },
+  "theme": {
+    "attributes": [],
+    "description": "Vuetify 0 Theme component"
+  },
+  "toggle-group": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "multiple",
+      "mandatory",
+      "orientation",
+      "label",
+      "ariaLabelledby",
+      "ariaDescribedby",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 ToggleGroup component"
+  },
+  "toggle-indicator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 ToggleIndicator component"
+  },
+  "toggle-root": {
+    "attributes": [
+      "id",
+      "value",
+      "disabled",
+      "namespace",
+      "groupNamespace",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 ToggleRoot component"
+  },
+  "tooltip-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TooltipActivator component"
+  },
+  "tooltip-content": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TooltipContent component"
+  },
+  "tooltip-root": {
+    "attributes": [
+      "openDelay",
+      "closeDelay",
+      "disabled",
+      "interactive",
+      "positionArea",
+      "positionTry",
+      "namespace",
+      "adapter",
+      "as",
+      "renderless",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 TooltipRoot component"
+  },
+  "treeview-activator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewActivator component"
+  },
+  "treeview-checkbox": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewCheckbox component"
+  },
+  "treeview-content": {
+    "attributes": [
+      "namespace"
+    ],
+    "description": "Vuetify 0 TreeviewContent component"
+  },
+  "treeview-cue": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewCue component"
+  },
+  "treeview-group": {
+    "attributes": [
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewGroup component"
+  },
+  "treeview-indicator": {
+    "attributes": [
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewIndicator component"
+  },
+  "treeview-item": {
+    "attributes": [
+      "id",
+      "value",
+      "disabled",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewItem component"
+  },
+  "treeview-list": {
+    "attributes": [
+      "namespace",
+      "multiselectable",
+      "label",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewList component"
+  },
+  "treeview-root": {
+    "attributes": [
+      "namespace",
+      "disabled",
+      "enroll",
+      "mandatory",
+      "multiple",
+      "open",
+      "openAll",
+      "reveal",
+      "selection",
+      "active",
+      "modelValue"
+    ],
+    "description": "Vuetify 0 TreeviewRoot component"
+  },
+  "treeview-select-all": {
+    "attributes": [
+      "label",
+      "disabled",
+      "namespace",
+      "as",
+      "renderless"
+    ],
+    "description": "Vuetify 0 TreeviewSelectAll component"
+  },
+  "alert": {
+    "attributes": [],
+    "description": "Vuetify 0 Alert component"
+  },
+  "alert-dialog": {
+    "attributes": [],
+    "description": "Vuetify 0 AlertDialog component"
+  },
+  "avatar": {
+    "attributes": [],
+    "description": "Vuetify 0 Avatar component"
+  },
+  "breadcrumbs": {
+    "attributes": [],
+    "description": "Vuetify 0 Breadcrumbs component"
+  },
+  "button": {
+    "attributes": [],
+    "description": "Vuetify 0 Button component"
+  },
+  "carousel": {
+    "attributes": [],
+    "description": "Vuetify 0 Carousel component"
+  },
+  "checkbox": {
+    "attributes": [],
+    "description": "Vuetify 0 Checkbox component"
+  },
+  "collapsible": {
+    "attributes": [],
+    "description": "Vuetify 0 Collapsible component"
+  },
+  "combobox": {
+    "attributes": [],
+    "description": "Vuetify 0 Combobox component"
+  },
+  "data-grid": {
+    "attributes": [],
+    "description": "Vuetify 0 DataGrid component"
+  },
+  "data-table": {
+    "attributes": [],
+    "description": "Vuetify 0 DataTable component"
+  },
+  "dialog": {
+    "attributes": [],
+    "description": "Vuetify 0 Dialog component"
+  },
+  "expansion-panel": {
+    "attributes": [],
+    "description": "Vuetify 0 ExpansionPanel component"
+  },
+  "group": {
+    "attributes": [],
+    "description": "Vuetify 0 Group component"
+  },
+  "image": {
+    "attributes": [],
+    "description": "Vuetify 0 Image component"
+  },
+  "input": {
+    "attributes": [],
+    "description": "Vuetify 0 Input component"
+  },
+  "number-field": {
+    "attributes": [],
+    "description": "Vuetify 0 NumberField component"
+  },
+  "overflow": {
+    "attributes": [],
+    "description": "Vuetify 0 Overflow component"
+  },
+  "pagination": {
+    "attributes": [],
+    "description": "Vuetify 0 Pagination component"
+  },
+  "popover": {
+    "attributes": [],
+    "description": "Vuetify 0 Popover component"
+  },
+  "progress": {
+    "attributes": [],
+    "description": "Vuetify 0 Progress component"
+  },
+  "radio": {
+    "attributes": [],
+    "description": "Vuetify 0 Radio component"
+  },
+  "rating": {
+    "attributes": [],
+    "description": "Vuetify 0 Rating component"
+  },
+  "select": {
+    "attributes": [],
+    "description": "Vuetify 0 Select component"
+  },
+  "selection": {
+    "attributes": [],
+    "description": "Vuetify 0 Selection component"
+  },
+  "single": {
+    "attributes": [],
+    "description": "Vuetify 0 Single component"
+  },
+  "slider": {
+    "attributes": [],
+    "description": "Vuetify 0 Slider component"
+  },
+  "snackbar": {
+    "attributes": [],
+    "description": "Vuetify 0 Snackbar component"
+  },
+  "splitter": {
+    "attributes": [],
+    "description": "Vuetify 0 Splitter component"
+  },
+  "step": {
+    "attributes": [],
+    "description": "Vuetify 0 Step component"
+  },
+  "switch": {
+    "attributes": [],
+    "description": "Vuetify 0 Switch component"
+  },
+  "tabs": {
+    "attributes": [],
+    "description": "Vuetify 0 Tabs component"
+  },
+  "toggle": {
+    "attributes": [],
+    "description": "Vuetify 0 Toggle component"
+  },
+  "tooltip": {
+    "attributes": [],
+    "description": "Vuetify 0 Tooltip component"
+  },
+  "treeview": {
+    "attributes": [],
+    "description": "Vuetify 0 Treeview component"
+  }
+}

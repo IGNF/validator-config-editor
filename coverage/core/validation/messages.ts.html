@@ -1,0 +1,181 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for core/validation/messages.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">core/validation</a> messages.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>21/21</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">75% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>3/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>19/19</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>20/20</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">151x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">90x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Catalogue des codes de problème (contrat specs/001-validation-globale/contracts/problem-codes.md).
+import type { Params, Severity } from './problems'
+&nbsp;
+interface Entry {
+  severity: Severity
+  message: (p: Params) =&gt; string
+}
+&nbsp;
+const s = (p: Params, k: string) =&gt; String(p[k] ?? <span class="branch-1 cbranch-no" title="branch not covered" >'')</span>
+&nbsp;
+export const CATALOG = {
+  'ERR-JSON-SYNTAX': { severity: 'error', message: (p) =&gt; `JSON invalide ligne ${s(p, 'line')}, colonne ${s(p, 'column')} : ${s(p, 'detail')}` },
+  'ERR-CSV-SYNTAX': { severity: 'error', message: (p) =&gt; `CSV invalide ligne ${s(p, 'line')} : guillemet non fermé` },
+  'ERR-CSV-HEADER': { severity: 'error', message: (p) =&gt; `En-tête CSV invalide : ${s(p, 'reason')}` },
+  'ERR-CSV-ROW-LENGTH': { severity: 'error', message: (p) =&gt; `Ligne ${s(p, 'line')} : ${s(p, 'count')} valeurs pour ${s(p, 'expected')} colonnes` },
+  'WARN-MODEL-NO-DOCUMENT': { severity: 'warning', message: () =&gt; 'Dossier sans files.json et non utilisé comme modèle parent' },
+  'ERR-SCHEMA': { severity: 'error', message: (p) =&gt; `${s(p, 'at') || '/'} : ${s(p, 'detail')}` },
+  'WARN-MODEL-NAME': { severity: 'warning', message: (p) =&gt; `Le nom « ${s(p, 'name')} » diffère du dossier « ${s(p, 'folder')} »` },
+  'ERR-PARENT-MISSING': { severity: 'error', message: (p) =&gt; `Modèle parent « ${s(p, 'name')} » introuvable` },
+  'ERR-TABLE-MODEL-MISSING': { severity: 'error', message: (p) =&gt; `Modèle de table « ${s(p, 'ref')} » introuvable` },
+  'ERR-CODE-DATA-MISSING': { severity: 'error', message: (p) =&gt; `Liste de codes « ${s(p, 'ref')} » introuvable` },
+  'ERR-FK-SYNTAX': { severity: 'error', message: (p) =&gt; `Clé étrangère illisible : « ${s(p, 'fk')} »` },
+  'ERR-FK-SOURCE-COLUMN': { severity: 'error', message: (p) =&gt; `Clé étrangère : colonne « ${s(p, 'column')} » absente de la table` },
+  'ERR-FK-TARGET-LIST': { severity: 'error', message: (p) =&gt; `Clé étrangère : liste « ${s(p, 'list')} » non déclarée dans files.json` },
+  'ERR-FK-TARGET-COLUMN': { severity: 'error', message: (p) =&gt; `Clé étrangère : colonne « ${s(p, 'column')} » absente de ${s(p, 'list')}` },
+  'ERR-REFERENCE-TARGET': { severity: 'error', message: (p) =&gt; `Référence « ${s(p, 'ref')} » : table ou colonne introuvable` },
+  'ERR-ID-DUPLICATE': { severity: 'error', message: (p) =&gt; `Identifiant ${s(p, 'id')} déjà utilisé par ${s(p, 'first')}` },
+  'WARN-GPU-ORPHAN-ID': { severity: 'warning', message: (p) =&gt; `gpu.json : identifiant ${s(p, 'id')} sans objet correspondant` },
+  'WARN-UNREFERENCED-FILE': { severity: 'warning', message: () =&gt; 'Fichier non référencé par files.json' },
+} satisfies Record&lt;string, Entry&gt;
+&nbsp;
+export type ProblemCode = keyof typeof CATALOG
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-10-16T09:35:33.968Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -1,0 +1,181 @@
+{
+  "name": "@vuetify/v0",
+  "version": "1.2.3",
+  "description": "Headless, unstyled, accessible Vue 3 primitives and composables — a meta UI framework for building applications, component libraries, and design systems",
+  "keywords": [
+    "vue",
+    "vue3",
+    "headless",
+    "headless-ui",
+    "unstyled",
+    "composables",
+    "primitives",
+    "accessible",
+    "accessibility",
+    "a11y",
+    "wai-aria",
+    "design-system",
+    "component-library",
+    "ui",
+    "vuetify"
+  ],
+  "homepage": "https://0.vuetifyjs.com",
+  "bugs": {
+    "url": "https://issues.vuetifyjs.com/?repo=vuetify0&type=bug"
+  },
+  "license": "MIT",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/johnleider"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/vuetify"
+    }
+  ],
+  "types": "./dist/index.d.mts",
+  "type": "module",
+  "sideEffects": false,
+  "web-types": "./dist/json/web-types.json",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuetifyjs/0.git",
+    "directory": "packages/0"
+  },
+  "peerDependencies": {
+    "@adobe/leonardo-contrast-colors": ">=1.0.0",
+    "@ant-design/colors": ">=7.0.0",
+    "@flagsmith/flagsmith": ">=11.0.0",
+    "@floating-ui/dom": ">=1.8.0",
+    "@js-temporal/polyfill": ">=0.5.0",
+    "@material/material-color-utilities": ">=0.3.0",
+    "launchdarkly-js-client-sdk": "^3.0.0",
+    "posthog-js": "^1.0.0",
+    "vue": ">=3.5.0 || >=3.6.0-0",
+    "vue-i18n": ">=10.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@flagsmith/flagsmith": {
+      "optional": true
+    },
+    "@floating-ui/dom": {
+      "optional": true
+    },
+    "@js-temporal/polyfill": {
+      "optional": true
+    },
+    "launchdarkly-js-client-sdk": {
+      "optional": true
+    },
+    "posthog-js": {
+      "optional": true
+    },
+    "@material/material-color-utilities": {
+      "optional": true
+    },
+    "@ant-design/colors": {
+      "optional": true
+    },
+    "@adobe/leonardo-contrast-colors": {
+      "optional": true
+    },
+    "vue-i18n": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@adobe/leonardo-contrast-colors": "^1.1.0",
+    "@ant-design/colors": "^8.0.1",
+    "@flagsmith/flagsmith": "^11.0.0",
+    "@floating-ui/dom": "^1.8.0",
+    "@js-temporal/polyfill": "0.5.1",
+    "@material/material-color-utilities": "^0.4.0",
+    "@testing-library/vue": "^8.1.0",
+    "@vitest/browser-playwright": "4.1.11",
+    "@vue/compiler-dom": "^3.5.42",
+    "@vue/test-utils": "^2.5.0",
+    "axe-core": "^4.13.0",
+    "launchdarkly-js-client-sdk": "^3.9.5",
+    "posthog-js": "^1.418.5",
+    "tsdown": "^0.22.14",
+    "typescript": "6.0.3",
+    "unplugin-vue": "^7.2.0",
+    "vue": "3.5.42",
+    "vue-component-meta": "3.2.7",
+    "vue-i18n": "^11.4.8"
+  },
+  "imports": {
+    "#v0/*": {
+      "development": "./src/*",
+      "default": "./dist/*"
+    }
+  },
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./components": "./dist/components/index.mjs",
+    "./composables": "./dist/composables/index.mjs",
+    "./constants": "./dist/constants/index.mjs",
+    "./data-table": "./dist/data-table/index.mjs",
+    "./data-table/adapters": "./dist/data-table/adapters/index.mjs",
+    "./data-table/adapters/client": "./dist/data-table/adapters/client/index.mjs",
+    "./data-table/adapters/server": "./dist/data-table/adapters/server/index.mjs",
+    "./data-table/adapters/virtual": "./dist/data-table/adapters/virtual/index.mjs",
+    "./date": "./dist/date/index.mjs",
+    "./features": "./dist/features/index.mjs",
+    "./features/adapters/flagsmith": "./dist/features/adapters/flagsmith/index.mjs",
+    "./features/adapters/launchdarkly": "./dist/features/adapters/launchdarkly/index.mjs",
+    "./features/adapters/posthog": "./dist/features/adapters/posthog/index.mjs",
+    "./locale": "./dist/locale/index.mjs",
+    "./locale/adapters": "./dist/locale/adapters/index.mjs",
+    "./locale/adapters/v0": "./dist/locale/adapters/v0/index.mjs",
+    "./locale/adapters/vue-i18n": "./dist/locale/adapters/vue-i18n/index.mjs",
+    "./locale/messages/en": "./dist/locale/messages/en/index.mjs",
+    "./logger": "./dist/logger/index.mjs",
+    "./logger/adapters": "./dist/logger/adapters/index.mjs",
+    "./logger/adapters/consola": "./dist/logger/adapters/consola/index.mjs",
+    "./logger/adapters/pino": "./dist/logger/adapters/pino/index.mjs",
+    "./logger/adapters/v0": "./dist/logger/adapters/v0/index.mjs",
+    "./notifications": "./dist/notifications/index.mjs",
+    "./palettes": "./dist/palettes/index.mjs",
+    "./palettes/ant": "./dist/palettes/ant/index.mjs",
+    "./palettes/ant/generate": "./dist/palettes/ant/generate/index.mjs",
+    "./palettes/leonardo/generate": "./dist/palettes/leonardo/generate/index.mjs",
+    "./palettes/material": "./dist/palettes/material/index.mjs",
+    "./palettes/material/generate": "./dist/palettes/material/generate/index.mjs",
+    "./palettes/md1": "./dist/palettes/md1/index.mjs",
+    "./palettes/md2": "./dist/palettes/md2/index.mjs",
+    "./palettes/radix": "./dist/palettes/radix/index.mjs",
+    "./palettes/tailwind": "./dist/palettes/tailwind/index.mjs",
+    "./permissions": "./dist/permissions/index.mjs",
+    "./permissions/adapters": "./dist/permissions/adapters/index.mjs",
+    "./permissions/adapters/v0": "./dist/permissions/adapters/v0/index.mjs",
+    "./popover": "./dist/popover/index.mjs",
+    "./popover/adapters/floating-ui": "./dist/popover/adapters/floating-ui/index.mjs",
+    "./rules": "./dist/rules/index.mjs",
+    "./storage": "./dist/storage/index.mjs",
+    "./storage/adapters": "./dist/storage/adapters/index.mjs",
+    "./storage/adapters/memory": "./dist/storage/adapters/memory/index.mjs",
+    "./theme": "./dist/theme/index.mjs",
+    "./theme/adapters": "./dist/theme/adapters/index.mjs",
+    "./theme/adapters/unhead": "./dist/theme/adapters/unhead/index.mjs",
+    "./theme/adapters/v0": "./dist/theme/adapters/v0/index.mjs",
+    "./types": "./dist/types/index.mjs",
+    "./utilities": "./dist/utilities/index.mjs",
+    "./package.json": "./package.json",
+    "./browser": "./dist/browser/index.js"
+  },
+  "scripts": {
+    "build": "pnpm build:tsdown && pnpm build:web-types",
+    "build:tsdown": "tsdown",
+    "build:web-types": "node scripts/generate-web-types.ts",
+    "generate:web-types": "node scripts/generate-web-types.ts",
+    "typecheck": "vue-tsc --noEmit --incremental",
+    "test:unit": "vitest --project v0:unit",
+    "test:browser": "vitest --project v0:browser",
+    "test:open": "TEST_BAIL=1 vitest --project v0:browser -w"
+  }
+}

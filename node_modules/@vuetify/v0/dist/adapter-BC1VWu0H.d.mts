@@ -1,0 +1,102 @@
+import { Temporal } from "@js-temporal/polyfill";
+//#region src/composables/useDate/adapters/adapter.d.ts
+declare abstract class DateAdapter<T = Temporal.PlainDateTime> {
+  /** Current locale for formatting */
+  abstract get locale(): string;
+  /** First day of week. 0=Sunday, 1=Monday, ... 6=Saturday. Managed by the plugin. */
+  abstract get firstDayOfWeek(): number;
+  abstract set locale(value: string);
+  abstract set firstDayOfWeek(value: number);
+  /** Create a date from various input types */
+  abstract date(value?: unknown): T | null;
+  /** Convert to JavaScript Date object */
+  abstract toJsDate(value: T): Date;
+  /** Parse ISO 8601 string */
+  abstract parseISO(date: string): T;
+  /** Convert to ISO 8601 string */
+  abstract toISO(date: T): string;
+  /** Parse date string with custom format */
+  abstract parse(value: string, format: string): T | null;
+  /** Check if value is a valid date (type predicate for narrowing) */
+  abstract isValid(date: unknown): date is T;
+  /** Check if value is null (type predicate for narrowing) */
+  abstract isNullish(value: T | null): value is null;
+  /** Get current locale code */
+  abstract getCurrentLocaleCode(): string;
+  /** Check if current locale uses 12-hour cycle */
+  abstract is12HourCycleInCurrentLocale(): boolean;
+  /** Format date using preset format key */
+  abstract format(date: T, formatString: string): string;
+  /** Format date using custom format string */
+  abstract formatByString(date: T, formatString: string): string;
+  /** Get helper text for format string (e.g., "mm/dd/yyyy") */
+  abstract getFormatHelperText(format: string): string;
+  /** Format number according to locale */
+  abstract formatNumber(numberToFormat: string): string;
+  /** Get meridiem text (AM/PM) for locale */
+  abstract getMeridiemText(ampm: 'am' | 'pm'): string;
+  abstract startOfDay(date: T): T;
+  abstract endOfDay(date: T): T;
+  abstract startOfWeek(date: T): T;
+  abstract endOfWeek(date: T): T;
+  abstract startOfMonth(date: T): T;
+  abstract endOfMonth(date: T): T;
+  abstract startOfYear(date: T): T;
+  abstract endOfYear(date: T): T;
+  abstract addSeconds(date: T, amount: number): T;
+  abstract addMinutes(date: T, amount: number): T;
+  abstract addHours(date: T, amount: number): T;
+  abstract addDays(date: T, amount: number): T;
+  abstract addWeeks(date: T, amount: number): T;
+  abstract addMonths(date: T, amount: number): T;
+  abstract addYears(date: T, amount: number): T;
+  abstract isAfter(date: T, comparing: T): boolean;
+  abstract isAfterDay(date: T, comparing: T): boolean;
+  abstract isAfterMonth(date: T, comparing: T): boolean;
+  abstract isAfterYear(date: T, comparing: T): boolean;
+  abstract isBefore(date: T, comparing: T): boolean;
+  abstract isBeforeDay(date: T, comparing: T): boolean;
+  abstract isBeforeMonth(date: T, comparing: T): boolean;
+  abstract isBeforeYear(date: T, comparing: T): boolean;
+  abstract isEqual(date: T, comparing: T): boolean;
+  abstract isSameDay(date: T, comparing: T): boolean;
+  abstract isSameMonth(date: T, comparing: T): boolean;
+  abstract isSameYear(date: T, comparing: T): boolean;
+  abstract isSameHour(date: T, comparing: T): boolean;
+  abstract isWithinRange(date: T, range: [T, T]): boolean;
+  abstract getYear(date: T): number;
+  abstract getMonth(date: T): number;
+  abstract getDate(date: T): number;
+  abstract getHours(date: T): number;
+  abstract getMinutes(date: T): number;
+  abstract getSeconds(date: T): number;
+  /** @param comparing - Can be T or ISO string */
+  abstract getDiff(date: T, comparing: T | string, unit?: string): number;
+  /** @param minimalDays - Minimum days in first week for it to count as week 1 */
+  abstract getWeek(date: T, minimalDays?: number): number;
+  /** Get number of days in the month */
+  abstract getDaysInMonth(date: T): number;
+  abstract setYear(date: T, year: number): T;
+  abstract setMonth(date: T, month: number): T;
+  abstract setDate(date: T, day: number): T;
+  abstract setHours(date: T, hours: number): T;
+  abstract setMinutes(date: T, minutes: number): T;
+  abstract setSeconds(date: T, seconds: number): T;
+  abstract getWeekdays(weekdayFormat?: 'long' | 'short' | 'narrow'): string[];
+  /**
+   * Weeks-of-7 matrix for the month containing `date`, spilling into adjacent
+   * months at the edges. With `fixedWeeks`, trailing weeks pad the matrix to a
+   * constant 6 rows (42 cells) so calendar grids keep a stable height.
+   */
+  abstract getWeekArray(date: T, fixedWeeks?: boolean): T[][];
+  /** Get array of months in a year (12 dates, one for each month) */
+  abstract getMonthArray(date: T): T[];
+  /** Get array of years between start and end dates */
+  abstract getYearRange(start: T, end: T): T[];
+  abstract getNextMonth(date: T): T;
+  abstract getPreviousMonth(date: T): T;
+  /** Merge date from one value with time from another */
+  abstract mergeDateAndTime(date: T, time: T): T;
+}
+//#endregion
+export { DateAdapter as t };

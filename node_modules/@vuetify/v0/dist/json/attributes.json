@@ -1,0 +1,4010 @@
+{
+  "alert-description/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-description/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-root/role": {
+    "type": "\"alert\" | \"status\" | undefined",
+    "description": "ARIA live-region role.\n- `'alert'`  — assertive: AT interrupts to announce the message immediately.\n- `'status'` — polite: AT waits for the current speech to finish."
+  },
+  "alert-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-title/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-title/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-action/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-action/disabled": {
+    "type": "boolean | undefined",
+    "description": "Whether the action button is disabled"
+  },
+  "alert-dialog-action/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-action/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-activator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-cancel/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-cancel/disabled": {
+    "type": "boolean | undefined",
+    "description": "Whether the cancel button is disabled"
+  },
+  "alert-dialog-cancel/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-cancel/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-close/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-close/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-close/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-content/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-content/closeOnClickOutside": {
+    "type": "boolean | undefined",
+    "description": "Close dialog when clicking outside content"
+  },
+  "alert-dialog-content/closeOnEscape": {
+    "type": "boolean | undefined",
+    "description": "Close dialog when pressing Escape"
+  },
+  "alert-dialog-content/blocking": {
+    "type": "boolean | undefined",
+    "description": "Whether this dialog blocks scrim dismissal"
+  },
+  "alert-dialog-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-description/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-description/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-description/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for the alert dialog (auto-generated if not provided)"
+  },
+  "alert-dialog-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "alert-dialog-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "alert-dialog-title/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "alert-dialog-title/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "alert-dialog-title/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "aspect-ratio/ratio": {
+    "type": "string | number | undefined",
+    "description": "The aspect ratio as `width / height`. Accepts a number (`16 / 9`) or a\nCSS `aspect-ratio` string (`'16 / 9'`, `'1.777'`)."
+  },
+  "aspect-ratio/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "aspect-ratio/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "atom/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "atom/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "avatar-fallback/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for retrieving avatar context"
+  },
+  "avatar-fallback/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "avatar-fallback/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "avatar-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match Avatar.Root groupNamespace)"
+  },
+  "avatar-group/max": {
+    "type": "number | undefined",
+    "description": "Upper bound on visible count; default Infinity"
+  },
+  "avatar-group/responsive": {
+    "type": "boolean | undefined",
+    "description": "Opt-in width-responsive truncation via createOverflow"
+  },
+  "avatar-group/priority": {
+    "type": "AvatarGroupPriority | undefined",
+    "description": "Which side keeps items when truncated"
+  },
+  "avatar-group/gap": {
+    "type": "number | undefined",
+    "description": "Pixel gap between items; only meaningful when responsive"
+  },
+  "avatar-group/label": {
+    "type": "string | undefined",
+    "description": "Accessible name for the group"
+  },
+  "avatar-group/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "avatar-group/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this group"
+  },
+  "avatar-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "avatar-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "avatar-image/src": {
+    "type": "string | undefined",
+    "description": "Image source URL"
+  },
+  "avatar-image/alt": {
+    "type": "string | undefined",
+    "description": "Accessible alt text."
+  },
+  "avatar-image/priority": {
+    "type": "number | undefined",
+    "description": "Priority for display order (higher = more preferred)"
+  },
+  "avatar-image/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for retrieving avatar context"
+  },
+  "avatar-image/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "avatar-image/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "avatar-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace of the parent Avatar.Group context"
+  },
+  "avatar-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "avatar-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "avatar-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "avatar-root/value": {
+    "type": "unknown",
+    "description": "Identifier when used inside Avatar.Group; harmless when standalone"
+  },
+  "avatar-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables this avatar's contribution to group capacity math"
+  },
+  "avatar-root/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace of the parent Avatar.Group context"
+  },
+  "avatar-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "avatar-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-activator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "breadcrumbs-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-divider/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "breadcrumbs-divider/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "breadcrumbs-divider/divider": {
+    "type": "string | undefined",
+    "description": "Override divider character (uses global from Root if not provided)"
+  },
+  "breadcrumbs-divider/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-divider/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-ellipsis/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "breadcrumbs-ellipsis/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "breadcrumbs-ellipsis/ellipsis": {
+    "type": "string | undefined",
+    "description": "Override ellipsis character (uses global from Root if not provided)"
+  },
+  "breadcrumbs-ellipsis/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-ellipsis/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "breadcrumbs-item/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "breadcrumbs-item/value": {
+    "type": "unknown",
+    "description": "Value associated with this item"
+  },
+  "breadcrumbs-item/text": {
+    "type": "string | undefined",
+    "description": "Display text for the breadcrumb (used by composable model)"
+  },
+  "breadcrumbs-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-link/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-link/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-list/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-list/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-page/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-page/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "breadcrumbs-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "breadcrumbs-root/divider": {
+    "type": "string | undefined",
+    "description": "Default divider character/text"
+  },
+  "breadcrumbs-root/ellipsis": {
+    "type": "string | undefined",
+    "description": "Default ellipsis character/text"
+  },
+  "breadcrumbs-root/gap": {
+    "type": "number | undefined",
+    "description": "Gap between items in pixels."
+  },
+  "breadcrumbs-root/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the navigation landmark"
+  },
+  "breadcrumbs-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "breadcrumbs-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "button-content/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier for ticket registration"
+  },
+  "button-content/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Button.Root"
+  },
+  "button-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "button-group/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire button group"
+  },
+  "button-group/multiple": {
+    "type": "boolean | undefined",
+    "description": "Single (default) or multi-select"
+  },
+  "button-group/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory selection behavior:\n- false (default): No mandatory enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item on registration"
+  },
+  "button-group/label": {
+    "type": "string | undefined",
+    "description": "Accessible name for the group"
+  },
+  "button-group/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "button-group/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this group"
+  },
+  "button-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "button-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "button-group/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "button-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Button.Root"
+  },
+  "button-hidden-input/name": {
+    "type": "string | undefined",
+    "description": "Form field name"
+  },
+  "button-hidden-input/value": {
+    "type": "string | undefined",
+    "description": "Submitted value (defaults to 'on')"
+  },
+  "button-hidden-input/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "button-icon/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Button.Root"
+  },
+  "button-icon/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "button-icon/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "button-loading/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier for ticket registration"
+  },
+  "button-loading/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Button.Root"
+  },
+  "button-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the button — fully non-interactive, removed from tab order"
+  },
+  "button-root/readonly": {
+    "type": "boolean | undefined",
+    "description": "Non-clickable but looks normal, remains focusable/hoverable"
+  },
+  "button-root/passive": {
+    "type": "boolean | undefined",
+    "description": "Non-clickable, looks disabled via [data-passive], remains focusable/hoverable"
+  },
+  "button-root/loading": {
+    "type": "boolean | undefined",
+    "description": "Triggers loading state with grace period before visual indicator"
+  },
+  "button-root/grace": {
+    "type": "number | undefined",
+    "description": "Duration in ms before loading UI appears (0 to show immediately)"
+  },
+  "button-root/value": {
+    "type": "V | undefined",
+    "description": "Value for use inside Button.Group"
+  },
+  "button-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children"
+  },
+  "button-root/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Button.Group"
+  },
+  "button-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name — auto-renders HiddenInput when set"
+  },
+  "button-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "button-root/ariaLabel": {
+    "type": "string | undefined",
+    "description": "Accessible label for the button"
+  },
+  "button-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "button-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-indicator/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the indicator group"
+  },
+  "carousel-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Carousel.Root"
+  },
+  "carousel-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-item/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "carousel-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this slide"
+  },
+  "carousel-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific slide"
+  },
+  "carousel-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "carousel-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-live-region/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Carousel.Root"
+  },
+  "carousel-live-region/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-live-region/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-next/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Carousel.Root"
+  },
+  "carousel-next/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-next/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-previous/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Carousel.Root"
+  },
+  "carousel-previous/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-previous/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-progress/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Carousel.Root"
+  },
+  "carousel-progress/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-progress/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for the carousel"
+  },
+  "carousel-root/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the carousel region"
+  },
+  "carousel-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match child namespace)"
+  },
+  "carousel-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire carousel"
+  },
+  "carousel-root/circular": {
+    "type": "boolean | undefined",
+    "description": "Whether navigation wraps around from last to first"
+  },
+  "carousel-root/orientation": {
+    "type": "CarouselOrientation | undefined",
+    "description": "Carousel orientation"
+  },
+  "carousel-root/perView": {
+    "type": "number | undefined",
+    "description": "Number of slides visible at once"
+  },
+  "carousel-root/autoplay": {
+    "type": "number | undefined",
+    "description": "Autoplay interval in milliseconds. 0 disables autoplay."
+  },
+  "carousel-root/behavior": {
+    "type": "ScrollBehavior | undefined",
+    "description": "Scroll behavior for programmatic navigation"
+  },
+  "carousel-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "carousel-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "carousel-viewport/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Carousel.Root"
+  },
+  "carousel-viewport/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "carousel-viewport/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "checkbox-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "checkbox-group/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire checkbox group"
+  },
+  "checkbox-group/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "checkbox-group/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory checkbox behavior:\n- false (default): No mandatory enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item on registration"
+  },
+  "checkbox-group/label": {
+    "type": "string | undefined",
+    "description": "Accessible name for the group"
+  },
+  "checkbox-group/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "checkbox-group/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this group"
+  },
+  "checkbox-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "checkbox-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "checkbox-group/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "checkbox-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Checkbox.Root"
+  },
+  "checkbox-hidden-input/name": {
+    "type": "string | undefined",
+    "description": "Form field name (defaults to context value)"
+  },
+  "checkbox-hidden-input/value": {
+    "type": "string | undefined",
+    "description": "Submitted value when checked (defaults to context value or 'on')"
+  },
+  "checkbox-hidden-input/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID (defaults to context value)"
+  },
+  "checkbox-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Checkbox.Root"
+  },
+  "checkbox-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "checkbox-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "checkbox-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "checkbox-root/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot)"
+  },
+  "checkbox-root/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this checkbox (used in group mode and form submission)"
+  },
+  "checkbox-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name - triggers auto hidden input when provided"
+  },
+  "checkbox-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "checkbox-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this checkbox"
+  },
+  "checkbox-root/indeterminate": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Sets the indeterminate state"
+  },
+  "checkbox-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children (Indicator, HiddenInput)"
+  },
+  "checkbox-root/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Checkbox.Group"
+  },
+  "checkbox-root/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this checkbox"
+  },
+  "checkbox-root/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this checkbox"
+  },
+  "checkbox-root/ariaInvalid": {
+    "type": "boolean | undefined",
+    "description": "Whether the checkbox has an invalid value"
+  },
+  "checkbox-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "checkbox-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "checkbox-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "checkbox-select-all/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot and aria-label)"
+  },
+  "checkbox-select-all/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables this checkbox"
+  },
+  "checkbox-select-all/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children (Indicator)"
+  },
+  "checkbox-select-all/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Checkbox.Group"
+  },
+  "checkbox-select-all/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this checkbox"
+  },
+  "checkbox-select-all/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this checkbox"
+  },
+  "checkbox-select-all/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "checkbox-select-all/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "collapsible-activator/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "collapsible-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "collapsible-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "collapsible-content/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "collapsible-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "collapsible-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "collapsible-cue/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "collapsible-cue/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "collapsible-cue/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "collapsible-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "collapsible-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Whether the collapsible is disabled"
+  },
+  "collapsible-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "collapsible-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "collapsible-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "combobox-activator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "combobox-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-content/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "combobox-content/eager": {
+    "type": "boolean | undefined",
+    "description": "Render content immediately without waiting for first open"
+  },
+  "combobox-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-control/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "combobox-control/openOn": {
+    "type": "\"focus\" | \"input\" | undefined",
+    "description": "When to open the dropdown"
+  },
+  "combobox-control/placeholder": {
+    "type": "string | undefined",
+    "description": "Placeholder text"
+  },
+  "combobox-control/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-control/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-cue/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "combobox-cue/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-cue/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-description/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Combobox.Root"
+  },
+  "combobox-description/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-description/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-empty/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "combobox-empty/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-empty/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-error/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Combobox.Root"
+  },
+  "combobox-error/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-error/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "combobox-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "combobox-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "combobox-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this option"
+  },
+  "combobox-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific option"
+  },
+  "combobox-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "combobox-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "combobox-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name — auto-renders hidden input when provided"
+  },
+  "combobox-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with a form by ID"
+  },
+  "combobox-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire combobox"
+  },
+  "combobox-root/multiple": {
+    "type": "boolean | undefined",
+    "description": "Enable multi-selection mode"
+  },
+  "combobox-root/mandatory": {
+    "type": "boolean | undefined",
+    "description": "Controls mandatory selection behavior:\n- false (default): No mandatory selection enforcement\n- true: Prevents deselecting the last selected item"
+  },
+  "combobox-root/strict": {
+    "type": "boolean | undefined",
+    "description": "Strict mode: reverts query to selected value on close if no match"
+  },
+  "combobox-root/error": {
+    "type": "boolean | undefined",
+    "description": "Manual error state override — forces invalid regardless of error messages"
+  },
+  "combobox-root/errorMessages": {
+    "type": "MaybeArray<string> | undefined",
+    "description": "Manual error messages"
+  },
+  "combobox-root/adapter": {
+    "type": "ComboboxAdapter | undefined",
+    "description": "Filtering/loading adapter (client-side or server-side)"
+  },
+  "combobox-root/positionAdapter": {
+    "type": "PopoverAdapter | undefined",
+    "description": "Positioning engine for the dropdown."
+  },
+  "combobox-root/displayValue": {
+    "type": "((value: unknown) => string) | undefined",
+    "description": "Maps selected value to input display text. Defaults to String(value)."
+  },
+  "combobox-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "combobox-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "combobox-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "data-grid-body/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-body/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-body/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-cell/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-cell/column": {
+    "type": "string | undefined",
+    "description": "Column identifier for editing and span lookup"
+  },
+  "data-grid-cell/colspan": {
+    "type": "number | undefined",
+    "description": "Number of columns this cell spans. Row spanning owns `rowspan`."
+  },
+  "data-grid-cell/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-cell/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-column/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-column/id": {
+    "type": "string | undefined",
+    "description": "Column id — registers this header with the grid when set"
+  },
+  "data-grid-column/sortable": {
+    "type": "boolean | undefined",
+    "description": "Participate in the sort pipeline"
+  },
+  "data-grid-column/filterable": {
+    "type": "boolean | undefined",
+    "description": "Participate in the filter pipeline"
+  },
+  "data-grid-column/size": {
+    "type": "number | undefined",
+    "description": "Width as a percentage (0–100)"
+  },
+  "data-grid-column/minSize": {
+    "type": "number | undefined",
+    "description": "Minimum width as a percentage"
+  },
+  "data-grid-column/maxSize": {
+    "type": "number | undefined",
+    "description": "Maximum width as a percentage"
+  },
+  "data-grid-column/pinned": {
+    "type": "PinPosition | undefined",
+    "description": "Pin position"
+  },
+  "data-grid-column/resizable": {
+    "type": "boolean | undefined",
+    "description": "Allow resizing"
+  },
+  "data-grid-column/editable": {
+    "type": "boolean | undefined",
+    "description": "Whether cells in this column can be edited"
+  },
+  "data-grid-column/validate": {
+    "type": "((value: unknown) => string | true) | undefined",
+    "description": "Validate a committed edit. Return `true` or an error string."
+  },
+  "data-grid-column/colspan": {
+    "type": "number | undefined",
+    "description": "Number of columns this cell spans"
+  },
+  "data-grid-column/rowspan": {
+    "type": "number | undefined",
+    "description": "Number of rows this cell spans"
+  },
+  "data-grid-column/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-column/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-empty/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-empty/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-empty/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-handle/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-handle/disabled": {
+    "type": "boolean | undefined",
+    "description": "Whether the handle is disabled"
+  },
+  "data-grid-handle/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the resize handle"
+  },
+  "data-grid-handle/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-handle/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-header/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-header/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-header/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-root/editing": {
+    "type": "{ onEdit?: ((row: ID, column: string, value: unknown, item: T) => void) | undefined; } | undefined",
+    "description": ""
+  },
+  "data-grid-root/preserveRowOrder": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": ""
+  },
+  "data-grid-root/rowSpanning": {
+    "type": "((item: T, column: string) => number) | undefined",
+    "description": ""
+  },
+  "data-grid-root/filter": {
+    "type": "Omit<FilterOptions, \"keys\"> | undefined",
+    "description": "Filter options (keys derived from columns)"
+  },
+  "data-grid-root/pagination": {
+    "type": "Omit<PaginationOptions, \"size\"> | undefined",
+    "description": "Pagination options (size derived from pipeline)"
+  },
+  "data-grid-root/sortMultiple": {
+    "type": "boolean | undefined",
+    "description": "Enable multi-column sort."
+  },
+  "data-grid-root/mandate": {
+    "type": "boolean | undefined",
+    "description": "Prevent clearing sort (asc → desc → asc cycle)."
+  },
+  "data-grid-root/firstSortOrder": {
+    "type": "\"asc\" | \"desc\" | undefined",
+    "description": "Direction for first sort click."
+  },
+  "data-grid-root/selectStrategy": {
+    "type": "SelectStrategy | undefined",
+    "description": "Selection strategy: 'single' selects one row, 'page' operates on visible items, 'all' operates on all filtered items."
+  },
+  "data-grid-root/itemSelectable": {
+    "type": "(keyof T & string) | undefined",
+    "description": "Property that controls per-row selectability"
+  },
+  "data-grid-root/groupBy": {
+    "type": "(keyof T & string) | undefined",
+    "description": "Column id to group rows by"
+  },
+  "data-grid-root/openAll": {
+    "type": "boolean | undefined",
+    "description": "Auto-open all groups on creation."
+  },
+  "data-grid-root/expandMultiple": {
+    "type": "boolean | undefined",
+    "description": "Allow multiple rows expanded simultaneously."
+  },
+  "data-grid-root/locale": {
+    "type": "string | undefined",
+    "description": "Locale for sorting. When set, wins over useLocale; otherwise useLocale or the browser default."
+  },
+  "data-grid-root/adapter": {
+    "type": "DataTableAdapter<T> | undefined",
+    "description": "Pipeline adapter."
+  },
+  "data-grid-root/search": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "data-grid-row/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-row/id": {
+    "type": "ID | undefined",
+    "description": "Row identifier. Registers a data ticket when set with `value`."
+  },
+  "data-grid-row/value": {
+    "type": "object | undefined",
+    "description": "Row value to register. Omit on header rows."
+  },
+  "data-grid-row/index": {
+    "type": "number | undefined",
+    "description": "1-based aria-rowindex. Defaults to the row's position in orderedItems."
+  },
+  "data-grid-row/selectable": {
+    "type": "boolean | undefined",
+    "description": "Emit aria-selected."
+  },
+  "data-grid-row/resizable": {
+    "type": "boolean | undefined",
+    "description": "Enable column resizing via Splitter composition.\nWhen true, the row renders as Splitter.Root and child columns\nregister as Splitter.Panel. Place DataGrid.Handle inside Column\n(not as a sibling of Column) so the row's owned children stay\ncolumnheaders. Requires the `as=\"div\"` chain — native table tags\ncannot host Splitter."
+  },
+  "data-grid-row/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-row/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-grid-table/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-grid-table/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-grid-table/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-body/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-body/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-body/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-cell/colspan": {
+    "type": "number | undefined",
+    "description": "Number of columns this cell spans"
+  },
+  "data-table-cell/rowspan": {
+    "type": "number | undefined",
+    "description": "Number of rows this cell spans"
+  },
+  "data-table-cell/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-cell/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-column/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-column/id": {
+    "type": "string | undefined",
+    "description": "Column id — registers this header with the table when set"
+  },
+  "data-table-column/sortable": {
+    "type": "boolean | undefined",
+    "description": "Participate in the sort pipeline"
+  },
+  "data-table-column/filterable": {
+    "type": "boolean | undefined",
+    "description": "Participate in the filter pipeline"
+  },
+  "data-table-column/colspan": {
+    "type": "number | undefined",
+    "description": "Number of columns this cell spans"
+  },
+  "data-table-column/rowspan": {
+    "type": "number | undefined",
+    "description": "Number of rows this cell spans"
+  },
+  "data-table-column/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-column/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-empty/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-empty/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-empty/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-header/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-header/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-header/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-root/filter": {
+    "type": "Omit<FilterOptions, \"keys\"> | undefined",
+    "description": "Filter options (keys derived from columns)"
+  },
+  "data-table-root/pagination": {
+    "type": "Omit<PaginationOptions, \"size\"> | undefined",
+    "description": "Pagination options (size derived from pipeline)"
+  },
+  "data-table-root/sortMultiple": {
+    "type": "boolean | undefined",
+    "description": "Enable multi-column sort."
+  },
+  "data-table-root/mandate": {
+    "type": "boolean | undefined",
+    "description": "Prevent clearing sort (asc → desc → asc cycle)."
+  },
+  "data-table-root/firstSortOrder": {
+    "type": "\"asc\" | \"desc\" | undefined",
+    "description": "Direction for first sort click."
+  },
+  "data-table-root/selectStrategy": {
+    "type": "SelectStrategy | undefined",
+    "description": "Selection strategy: 'single' selects one row, 'page' operates on visible items, 'all' operates on all filtered items."
+  },
+  "data-table-root/itemSelectable": {
+    "type": "(keyof T & string) | undefined",
+    "description": "Property that controls per-row selectability"
+  },
+  "data-table-root/groupBy": {
+    "type": "(keyof T & string) | undefined",
+    "description": "Column id to group rows by"
+  },
+  "data-table-root/openAll": {
+    "type": "boolean | undefined",
+    "description": "Auto-open all groups on creation."
+  },
+  "data-table-root/expandMultiple": {
+    "type": "boolean | undefined",
+    "description": "Allow multiple rows expanded simultaneously."
+  },
+  "data-table-root/locale": {
+    "type": "string | undefined",
+    "description": "Locale for sorting. When set, wins over useLocale; otherwise useLocale or the browser default."
+  },
+  "data-table-root/adapter": {
+    "type": "DataTableAdapter<T> | undefined",
+    "description": "Pipeline adapter."
+  },
+  "data-table-root/search": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "data-table-row/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-row/id": {
+    "type": "ID | undefined",
+    "description": "Row identifier. Registers a data ticket when set with `value`."
+  },
+  "data-table-row/value": {
+    "type": "object | undefined",
+    "description": "Row value to register. Omit on header rows."
+  },
+  "data-table-row/index": {
+    "type": "number | undefined",
+    "description": "1-based aria-rowindex. Defaults to the row's position in sortedItems."
+  },
+  "data-table-row/selectable": {
+    "type": "boolean | undefined",
+    "description": "Emit aria-selected."
+  },
+  "data-table-row/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-row/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "data-table-table/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "data-table-table/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "data-table-table/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "dialog-activator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "dialog-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "dialog-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "dialog-close/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "dialog-close/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "dialog-close/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "dialog-content/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "dialog-content/closeOnClickOutside": {
+    "type": "boolean | undefined",
+    "description": "Close dialog when clicking outside content"
+  },
+  "dialog-content/blocking": {
+    "type": "boolean | undefined",
+    "description": "Whether this dialog blocks scrim dismissal"
+  },
+  "dialog-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "dialog-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "dialog-description/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "dialog-description/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "dialog-description/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "dialog-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "dialog-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for the dialog (auto-generated if not provided)"
+  },
+  "dialog-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "dialog-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "dialog-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "dialog-title/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "dialog-title/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "dialog-title/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "expansion-panel-activator/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "expansion-panel-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "expansion-panel-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "expansion-panel-content/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "expansion-panel-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "expansion-panel-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "expansion-panel-cue/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "expansion-panel-cue/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "expansion-panel-cue/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "expansion-panel-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (default: 'v0:expansion-panel')"
+  },
+  "expansion-panel-group/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire expansion panel instance and all items"
+  },
+  "expansion-panel-group/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-expand non-disabled items when registered"
+  },
+  "expansion-panel-group/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Mandatory expansion behavior:\n- false (default): All panels can be collapsed\n- true: Prevents collapsing the last expanded panel\n- 'force': Automatically expands the first non-disabled panel"
+  },
+  "expansion-panel-group/multiple": {
+    "type": "boolean | undefined",
+    "description": "Enable multi-expansion mode\n- false (default): Single panel expanded at a time (accordion mode)\n- true: Multiple panels can be expanded simultaneously\nNote: Changes v-model type from T to T[]"
+  },
+  "expansion-panel-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "expansion-panel-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "expansion-panel-group/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "expansion-panel-header/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for retrieving the parent ExpansionPanelRoot context (default: 'v0:expansion-panel')"
+  },
+  "expansion-panel-header/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "expansion-panel-header/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "expansion-panel-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for the panel item (auto-generated if not provided)"
+  },
+  "expansion-panel-root/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this panel item for v-model binding"
+  },
+  "expansion-panel-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific panel item"
+  },
+  "expansion-panel-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace to retrieve the parent ExpansionPanelGroup context (default: 'v0:expansion-panel')"
+  },
+  "expansion-panel-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "expansion-panel-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "form/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "form/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables all registered fields"
+  },
+  "form/readonly": {
+    "type": "boolean | undefined",
+    "description": "Sets all registered fields to readonly"
+  },
+  "form/novalidate": {
+    "type": "boolean | undefined",
+    "description": "Suppress native constraint validation (default: true) — set false to restore browser validation UI"
+  },
+  "form/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "form/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "form/modelValue": {
+    "type": "boolean | null | undefined",
+    "description": ""
+  },
+  "group-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "group-item/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot, not used in registration)"
+  },
+  "group-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this item"
+  },
+  "group-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific item"
+  },
+  "group-item/indeterminate": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Sets the indeterminate state (for checkboxes)"
+  },
+  "group-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "group-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match GroupItem namespace)"
+  },
+  "group-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire group instance"
+  },
+  "group-root/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "group-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory group behavior:\n- false (default): No mandatory group enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item on registration"
+  },
+  "group-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "image-fallback/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for retrieving the Image context."
+  },
+  "image-fallback/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "image-fallback/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "image-img/alt": {
+    "type": "string | undefined",
+    "description": "Accessible alt text."
+  },
+  "image-img/srcset": {
+    "type": "string | undefined",
+    "description": "Responsive image candidates."
+  },
+  "image-img/sizes": {
+    "type": "string | undefined",
+    "description": "Image sizes hint for responsive selection."
+  },
+  "image-img/width": {
+    "type": "string | number | undefined",
+    "description": "Intrinsic image width — set to prevent layout shift."
+  },
+  "image-img/height": {
+    "type": "string | number | undefined",
+    "description": "Intrinsic image height — set to prevent layout shift."
+  },
+  "image-img/crossorigin": {
+    "type": "\"\" | \"anonymous\" | \"use-credentials\" | undefined",
+    "description": "CORS request mode."
+  },
+  "image-img/referrerpolicy": {
+    "type": "string | undefined",
+    "description": "Referrer policy for the request."
+  },
+  "image-img/decoding": {
+    "type": "\"auto\" | \"sync\" | \"async\" | undefined",
+    "description": "How the browser should decode the image."
+  },
+  "image-img/loading": {
+    "type": "\"eager\" | \"lazy\" | undefined",
+    "description": "Native browser-managed lazy loading hint."
+  },
+  "image-img/fetchpriority": {
+    "type": "\"auto\" | \"high\" | \"low\" | undefined",
+    "description": "Resource priority hint."
+  },
+  "image-img/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for retrieving the Image context."
+  },
+  "image-img/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "image-img/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "image-placeholder/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for retrieving the Image context."
+  },
+  "image-placeholder/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "image-placeholder/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "image-root/src": {
+    "type": "string | undefined",
+    "description": "Image source URL. Forwarded to Image.Img via context."
+  },
+  "image-root/lazy": {
+    "type": "boolean | undefined",
+    "description": "Defer loading until the root element intersects the viewport."
+  },
+  "image-root/rootMargin": {
+    "type": "string | undefined",
+    "description": "IntersectionObserver root margin. Only used when lazy is true."
+  },
+  "image-root/threshold": {
+    "type": "number | number[] | undefined",
+    "description": "IntersectionObserver threshold(s). A number or array of numbers\nbetween 0.0 and 1.0 indicating the percentage of the target's\nvisibility required to trigger the observer. Only used when lazy is true."
+  },
+  "image-root/root": {
+    "type": "Element | null | undefined",
+    "description": "IntersectionObserver root element. If omitted, the viewport is used.\nPass a scroll container to observe intersections relative to it instead.\nOnly used when lazy is true."
+  },
+  "image-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "image-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "image-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "input-control/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "input-control/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "input-control/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "input-description/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "input-description/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Input.Root"
+  },
+  "input-description/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "input-description/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "input-error/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "input-error/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Input.Root"
+  },
+  "input-error/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "input-error/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "input-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "input-root/label": {
+    "type": "string | undefined",
+    "description": "Optional display label"
+  },
+  "input-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name"
+  },
+  "input-root/type": {
+    "type": "string | undefined",
+    "description": "Input type"
+  },
+  "input-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "input-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this input"
+  },
+  "input-root/readonly": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Makes this input readonly"
+  },
+  "input-root/required": {
+    "type": "boolean | undefined",
+    "description": "Whether this input is required"
+  },
+  "input-root/rules": {
+    "type": "(string | FormValidationRule | StandardSchemaV1)[] | undefined",
+    "description": "Validation rules"
+  },
+  "input-root/validateOn": {
+    "type": "ValidateOn | undefined",
+    "description": "When to trigger validation"
+  },
+  "input-root/error": {
+    "type": "boolean | undefined",
+    "description": "Manual error state override — forces invalid regardless of validation"
+  },
+  "input-root/errorMessages": {
+    "type": "MaybeArray<string> | undefined",
+    "description": "Manual error messages — merged with rule-based errors"
+  },
+  "input-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children"
+  },
+  "input-root/formNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Form. Must match Form's namespace."
+  },
+  "input-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "input-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "input-root/modelValue": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "input-root/focused": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "locale/locale": {
+    "type": "string",
+    "description": "Locale ID to scope to"
+  },
+  "locale/renderless": {
+    "type": "boolean | undefined",
+    "description": "Skip wrapper element, pass attrs via slot"
+  },
+  "locale/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | undefined",
+    "description": "Wrapper element tag"
+  },
+  "number-field-control/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent NumberField.Root"
+  },
+  "number-field-control/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-control/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "number-field-decrement/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent NumberField.Root"
+  },
+  "number-field-decrement/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-decrement/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "number-field-description/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "number-field-description/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent NumberField.Root"
+  },
+  "number-field-description/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-description/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "number-field-error/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "number-field-error/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent NumberField.Root"
+  },
+  "number-field-error/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-error/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "number-field-increment/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent NumberField.Root"
+  },
+  "number-field-increment/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-increment/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "number-field-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "number-field-root/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (rendered as aria-label on the spinbutton)"
+  },
+  "number-field-root/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this spinbutton"
+  },
+  "number-field-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name"
+  },
+  "number-field-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "number-field-root/required": {
+    "type": "boolean | undefined",
+    "description": "Whether this field is required"
+  },
+  "number-field-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this field"
+  },
+  "number-field-root/readonly": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Makes this field readonly"
+  },
+  "number-field-root/min": {
+    "type": "number | undefined",
+    "description": "Minimum value"
+  },
+  "number-field-root/max": {
+    "type": "number | undefined",
+    "description": "Maximum value"
+  },
+  "number-field-root/step": {
+    "type": "number | undefined",
+    "description": "Step increment (default: 1)"
+  },
+  "number-field-root/leap": {
+    "type": "number | undefined",
+    "description": "Leap increment for PageUp/PageDown"
+  },
+  "number-field-root/wrap": {
+    "type": "boolean | undefined",
+    "description": "Wrap around at boundaries"
+  },
+  "number-field-root/locale": {
+    "type": "string | undefined",
+    "description": "BCP 47 locale tag (default: 'en-US')"
+  },
+  "number-field-root/format": {
+    "type": "Intl.NumberFormatOptions | undefined",
+    "description": "Intl.NumberFormat options"
+  },
+  "number-field-root/clamp": {
+    "type": "boolean | undefined",
+    "description": "Whether commit() clamps to min/max (default: true)"
+  },
+  "number-field-root/commitOn": {
+    "type": "\"change\" | \"input\" | undefined",
+    "description": "When typed input is written into the model (default: 'change')"
+  },
+  "number-field-root/rules": {
+    "type": "(string | FormValidationRule | StandardSchemaV1)[] | undefined",
+    "description": "Validation rules"
+  },
+  "number-field-root/validateOn": {
+    "type": "ValidateOn | undefined",
+    "description": "When to trigger validation"
+  },
+  "number-field-root/error": {
+    "type": "boolean | undefined",
+    "description": "Manual error state override — forces invalid"
+  },
+  "number-field-root/errorMessages": {
+    "type": "MaybeArray<string> | undefined",
+    "description": "Manual error messages — merged with rule-based errors"
+  },
+  "number-field-root/spinDelay": {
+    "type": "number | undefined",
+    "description": "Delay in ms before spin-on-hold starts (default: 400)"
+  },
+  "number-field-root/spinRate": {
+    "type": "number | undefined",
+    "description": "Interval in ms for repeated spin (default: 60)"
+  },
+  "number-field-root/wheel": {
+    "type": "boolean | undefined",
+    "description": "Whether mouse wheel adjusts value (default: false)"
+  },
+  "number-field-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision"
+  },
+  "number-field-root/formNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Form. Must match Form's namespace."
+  },
+  "number-field-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "number-field-root/modelValue": {
+    "type": "number | null | undefined",
+    "description": ""
+  },
+  "number-field-scrub/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent NumberField.Root"
+  },
+  "number-field-scrub/sensitivity": {
+    "type": "number | undefined",
+    "description": "Pixels of movement per step (default: 1)"
+  },
+  "number-field-scrub/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "number-field-scrub/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "overflow-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "overflow-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "overflow-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "overflow-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "overflow-item/value": {
+    "type": "unknown",
+    "description": "Value associated with this ticket (defaults to index)"
+  },
+  "overflow-item/disabled": {
+    "type": "boolean | undefined",
+    "description": "Skip from capacity calculation; always rendered visibly"
+  },
+  "overflow-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "overflow-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "overflow-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "overflow-root/gap": {
+    "type": "number | undefined",
+    "description": "Pixel gap between items (mirror of CSS gap)"
+  },
+  "overflow-root/priority": {
+    "type": "OverflowPriority | undefined",
+    "description": "Side that keeps items when overflow occurs"
+  },
+  "overflow-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disable truncation; render everything"
+  },
+  "overflow-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "overflow-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-ellipsis/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-ellipsis/ellipsis": {
+    "type": "string | undefined",
+    "description": "Ellipsis character to display (overrides context)"
+  },
+  "pagination-ellipsis/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for registration"
+  },
+  "pagination-ellipsis/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-ellipsis/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-first/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-first/disabled": {
+    "type": "boolean | undefined",
+    "description": "Override disabled state"
+  },
+  "pagination-first/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for registration"
+  },
+  "pagination-first/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-first/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-item/value": {
+    "type": "number",
+    "description": "Page number this item represents"
+  },
+  "pagination-item/disabled": {
+    "type": "boolean | undefined",
+    "description": "Override disabled state"
+  },
+  "pagination-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for registration"
+  },
+  "pagination-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-last/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-last/disabled": {
+    "type": "boolean | undefined",
+    "description": "Override disabled state"
+  },
+  "pagination-last/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for registration"
+  },
+  "pagination-last/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-last/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-next/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-next/disabled": {
+    "type": "boolean | undefined",
+    "description": "Override disabled state"
+  },
+  "pagination-next/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for registration"
+  },
+  "pagination-next/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-next/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-prev/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-prev/disabled": {
+    "type": "boolean | undefined",
+    "description": "Override disabled state"
+  },
+  "pagination-prev/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for registration"
+  },
+  "pagination-prev/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-prev/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-root/size": {
+    "type": "number | undefined",
+    "description": "Total number of items"
+  },
+  "pagination-root/totalVisible": {
+    "type": "number | undefined",
+    "description": "Number of visible page buttons.\nIf undefined, auto-calculates based on container width."
+  },
+  "pagination-root/itemsPerPage": {
+    "type": "number | undefined",
+    "description": "Number of items per page"
+  },
+  "pagination-root/ellipsis": {
+    "type": "string | false | undefined",
+    "description": "Ellipsis character"
+  },
+  "pagination-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "pagination-root/modelValue": {
+    "type": "number | undefined",
+    "description": ""
+  },
+  "pagination-status/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "pagination-status/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "pagination-status/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "popover-activator/target": {
+    "type": "string | undefined",
+    "description": "Target popover ID (defaults to parent PopoverRoot id)"
+  },
+  "popover-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "popover-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "popover-content/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (defaults to parent PopoverRoot id)"
+  },
+  "popover-content/positionArea": {
+    "type": "string | undefined",
+    "description": "CSS position-area value for anchor positioning"
+  },
+  "popover-content/positionTry": {
+    "type": "string | undefined",
+    "description": "CSS position-try value for fallback positioning"
+  },
+  "popover-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "popover-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "popover-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier for the popover (auto-generated if not provided)"
+  },
+  "popover-root/positionArea": {
+    "type": "string | undefined",
+    "description": "CSS position-area value for anchor positioning"
+  },
+  "popover-root/positionTry": {
+    "type": "string | undefined",
+    "description": "CSS position-try-fallbacks value for overflow"
+  },
+  "popover-root/adapter": {
+    "type": "PopoverAdapter | undefined",
+    "description": "Positioning engine."
+  },
+  "popover-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "popover-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "popover-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "portal/to": {
+    "type": "Extensible<\"top-layer\"> | HTMLElement | undefined",
+    "description": "Teleport target. `'top-layer'` mounts into the topmost open modal."
+  },
+  "portal/disabled": {
+    "type": "boolean | undefined",
+    "description": "Render inline instead of teleporting."
+  },
+  "portal/blocking": {
+    "type": "boolean | undefined",
+    "description": "Block scrim close."
+  },
+  "portal/scrim": {
+    "type": "boolean | undefined",
+    "description": "Whether a scrim/backdrop should back this portal."
+  },
+  "presence/lazy": {
+    "type": "boolean | undefined",
+    "description": "Delay first mount until present is first true."
+  },
+  "presence/immediate": {
+    "type": "boolean | undefined",
+    "description": "Auto-resolve LEAVING state next tick if done() not called."
+  },
+  "presence/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "progress-buffer/value": {
+    "type": "number | undefined",
+    "description": "Buffer value"
+  },
+  "progress-buffer/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Progress.Root"
+  },
+  "progress-buffer/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "progress-buffer/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "progress-fill/value": {
+    "type": "number | undefined",
+    "description": ""
+  },
+  "progress-fill/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "progress-fill/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "progress-fill/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "progress-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Progress.Root"
+  },
+  "progress-label/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "progress-label/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "progress-label/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "progress-root/id": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "progress-root/ariaLabel": {
+    "type": "string | undefined",
+    "description": "Accessible label when no visible Progress.Label is used"
+  },
+  "progress-root/modelValue": {
+    "type": "number | number[] | undefined",
+    "description": ""
+  },
+  "progress-root/min": {
+    "type": "number | undefined",
+    "description": ""
+  },
+  "progress-root/max": {
+    "type": "number | undefined",
+    "description": ""
+  },
+  "progress-root/name": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "progress-root/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "progress-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "progress-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "progress-track/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Progress.Root"
+  },
+  "progress-track/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "progress-track/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "progress-value/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Progress.Root"
+  },
+  "progress-value/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "progress-value/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "radio-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "radio-group/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire radio group"
+  },
+  "radio-group/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Auto-selects the first non-disabled item on mount.\nRadio groups are inherently mandatory (selection can only be changed, not cleared),\nso `mandatory=\"force\"` is the only meaningful option."
+  },
+  "radio-group/label": {
+    "type": "string | undefined",
+    "description": "Accessible name for the group"
+  },
+  "radio-group/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "radio-group/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this group"
+  },
+  "radio-group/ariaRequired": {
+    "type": "boolean | undefined",
+    "description": "Whether a selection is required before form submission"
+  },
+  "radio-group/name": {
+    "type": "string | undefined",
+    "description": "Form field name - enables native form submission for all radios in group"
+  },
+  "radio-group/activation": {
+    "type": "Activation | undefined",
+    "description": "Activation mode controlling when selection occurs:\n- `automatic` (default): Selection follows focus (arrow keys select)\n- `manual`: Selection requires explicit Enter/Space key press\n\nPer WAI-ARIA APG, radio groups should have selection follow focus by default.\nUse `manual` for toolbar radio groups or when deliberate selection is preferred."
+  },
+  "radio-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "radio-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "radio-group/modelValue": {
+    "type": "T | undefined",
+    "description": ""
+  },
+  "radio-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Radio.Root"
+  },
+  "radio-hidden-input/name": {
+    "type": "string | undefined",
+    "description": "Form field name (defaults to context value from Radio.Group)"
+  },
+  "radio-hidden-input/value": {
+    "type": "string | undefined",
+    "description": "Submitted value when checked (defaults to context value or 'on').\nUse to override the Radio.Root value for form submission."
+  },
+  "radio-hidden-input/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID (for inputs outside the form element)"
+  },
+  "radio-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Radio.Root"
+  },
+  "radio-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "radio-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "radio-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "radio-root/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot)"
+  },
+  "radio-root/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this radio for group selection and form submission"
+  },
+  "radio-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name - triggers auto hidden input when provided"
+  },
+  "radio-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with a form by ID (for radios outside the form element)"
+  },
+  "radio-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this radio (prevents selection and keyboard focus)"
+  },
+  "radio-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children (Indicator, HiddenInput)"
+  },
+  "radio-root/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Radio.Group"
+  },
+  "radio-root/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this radio"
+  },
+  "radio-root/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this radio"
+  },
+  "radio-root/ariaInvalid": {
+    "type": "boolean | undefined",
+    "description": "Marks the radio as invalid for form validation"
+  },
+  "radio-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "radio-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "rating-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Rating.Root"
+  },
+  "rating-item/index": {
+    "type": "number",
+    "description": "1-based position"
+  },
+  "rating-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Rating.Root"
+  },
+  "rating-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "rating-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "rating-root/modelValue": {
+    "type": "number | undefined",
+    "description": "Current rating"
+  },
+  "rating-root/size": {
+    "type": "number | undefined",
+    "description": "Total items (default: 5)"
+  },
+  "rating-root/half": {
+    "type": "boolean | undefined",
+    "description": "Enable 0.5 increments"
+  },
+  "rating-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disable interaction"
+  },
+  "rating-root/readonly": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Show value, prevent changes"
+  },
+  "rating-root/ariaLabel": {
+    "type": "string | undefined",
+    "description": "Accessible name for the slider"
+  },
+  "rating-root/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this slider"
+  },
+  "rating-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name — triggers hidden input"
+  },
+  "rating-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision"
+  },
+  "rating-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "rating-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "scrim/transition": {
+    "type": "string | undefined",
+    "description": "Transition name for enter/leave animations"
+  },
+  "scrim/teleport": {
+    "type": "boolean | undefined",
+    "description": "Whether to teleport the scrim to the body element"
+  },
+  "scrim/teleportTo": {
+    "type": "string | HTMLElement | undefined",
+    "description": "Target selector or element for teleport"
+  },
+  "scrim/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "scrim/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-activator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "select-activator/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the activator when no visible label is present"
+  },
+  "select-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-content/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "select-content/eager": {
+    "type": "boolean | undefined",
+    "description": "Render content immediately without waiting for first open"
+  },
+  "select-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-cue/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "select-cue/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-cue/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "select-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "select-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "select-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this option"
+  },
+  "select-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific option"
+  },
+  "select-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-placeholder/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "select-placeholder/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-placeholder/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "select-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "select-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name — auto-renders hidden input when provided"
+  },
+  "select-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with a form by ID"
+  },
+  "select-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire select"
+  },
+  "select-root/multiple": {
+    "type": "boolean | undefined",
+    "description": "Enable multi-selection mode"
+  },
+  "select-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory selection behavior:\n- false (default): No mandatory selection enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item"
+  },
+  "select-root/adapter": {
+    "type": "PopoverAdapter | undefined",
+    "description": "Positioning engine."
+  },
+  "select-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "select-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "select-value/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "select-value/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "select-value/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "selection-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "selection-item/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot, not used in registration)"
+  },
+  "selection-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this item"
+  },
+  "selection-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific item"
+  },
+  "selection-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "selection-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match SelectionItem namespace)"
+  },
+  "selection-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire selection instance"
+  },
+  "selection-root/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "selection-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory selection behavior:\n- false (default): No mandatory selection enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item on registration"
+  },
+  "selection-root/multiple": {
+    "type": "boolean | undefined",
+    "description": "Enable multi-selection mode (array v-model)"
+  },
+  "selection-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "single-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "single-item/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot, not used in registration)"
+  },
+  "single-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this item"
+  },
+  "single-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific item"
+  },
+  "single-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "single-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match SingleItem namespace)"
+  },
+  "single-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire single instance"
+  },
+  "single-root/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "single-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory single behavior:\n- false (default): No mandatory single enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item on registration"
+  },
+  "single-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "slider-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Slider.Root"
+  },
+  "slider-hidden-input/index": {
+    "type": "number | undefined",
+    "description": "Thumb index to read value from"
+  },
+  "slider-range/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Slider.Root"
+  },
+  "slider-range/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "slider-range/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "slider-root/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "slider-root/min": {
+    "type": "number | undefined",
+    "description": "Minimum value (default: 0)"
+  },
+  "slider-root/max": {
+    "type": "number | undefined",
+    "description": "Maximum value (default: 100)"
+  },
+  "slider-root/step": {
+    "type": "number | undefined",
+    "description": "Step increment (default: 1)"
+  },
+  "slider-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables the slider"
+  },
+  "slider-root/readonly": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Readonly — focusable but not editable"
+  },
+  "slider-root/orientation": {
+    "type": "\"horizontal\" | \"vertical\" | undefined",
+    "description": "Slider orientation"
+  },
+  "slider-root/inverted": {
+    "type": "boolean | undefined",
+    "description": "Flip the percent axis"
+  },
+  "slider-root/minStepsBetweenThumbs": {
+    "type": "number | undefined",
+    "description": "Minimum steps between adjacent thumbs (default: 0)"
+  },
+  "slider-root/crossover": {
+    "type": "boolean | undefined",
+    "description": "Allow thumbs to pass through each other (default: false)"
+  },
+  "slider-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name — triggers hidden inputs"
+  },
+  "slider-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "slider-root/label": {
+    "type": "string | undefined",
+    "description": "Accessible name for the group"
+  },
+  "slider-root/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "slider-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision"
+  },
+  "slider-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "slider-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "slider-root/modelValue": {
+    "type": "number | number[] | undefined",
+    "description": ""
+  },
+  "slider-thumb/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Slider.Root"
+  },
+  "slider-thumb/ariaLabel": {
+    "type": "string | undefined",
+    "description": "Accessible label for this thumb"
+  },
+  "slider-thumb/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element labelling this thumb"
+  },
+  "slider-thumb/ariaValuetext": {
+    "type": "string | undefined",
+    "description": "Custom aria-valuetext (for formatted display)"
+  },
+  "slider-thumb/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "slider-thumb/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "slider-track/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Slider.Root"
+  },
+  "slider-track/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "slider-track/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "snackbar-announcer/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Snackbar.Portal."
+  },
+  "snackbar-close/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "snackbar-close/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "snackbar-close/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "snackbar-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "snackbar-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "snackbar-portal/announcer": {
+    "type": "boolean | undefined",
+    "description": "Auto-render the Snackbar.Announcer live-region pair. Set false to omit it or place `<Snackbar.Announcer>` yourself."
+  },
+  "snackbar-portal/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "snackbar-portal/teleport": {
+    "type": "false | (string & {}) | \"top-layer\" | undefined",
+    "description": "Teleport target. `'top-layer'` mounts into the topmost open modal; `false` renders inline."
+  },
+  "snackbar-portal/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "snackbar-portal/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "snackbar-queue/namespace": {
+    "type": "string | undefined",
+    "description": "Which notifications instance to connect to."
+  },
+  "snackbar-queue/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "snackbar-queue/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "snackbar-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection."
+  },
+  "snackbar-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier. Auto-generated if not provided."
+  },
+  "snackbar-root/urgent": {
+    "type": "boolean | undefined",
+    "description": "When true, sets role=\"alert\" for urgent messages; otherwise role=\"status\"."
+  },
+  "snackbar-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "snackbar-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "splitter-handle/disabled": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "splitter-handle/label": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "splitter-handle/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "splitter-handle/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "splitter-panel/defaultSize": {
+    "type": "SplitterPanelSize",
+    "description": ""
+  },
+  "splitter-panel/minSize": {
+    "type": "SplitterPanelSize | undefined",
+    "description": ""
+  },
+  "splitter-panel/maxSize": {
+    "type": "SplitterPanelSize | undefined",
+    "description": ""
+  },
+  "splitter-panel/collapsible": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "splitter-panel/collapsedSize": {
+    "type": "SplitterPanelSize | undefined",
+    "description": ""
+  },
+  "splitter-panel/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "splitter-panel/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "splitter-panel/collapsed": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "splitter-root/orientation": {
+    "type": "SplitterOrientation | undefined",
+    "description": ""
+  },
+  "splitter-root/disabled": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "splitter-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "splitter-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "step-item/id": {
+    "type": "string | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "step-item/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot, not used in registration)"
+  },
+  "step-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this item"
+  },
+  "step-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific item"
+  },
+  "step-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "step-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match StepItem namespace)"
+  },
+  "step-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire step instance"
+  },
+  "step-root/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "step-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory step behavior:\n- false (default): No mandatory step enforcement\n- true: Prevents deselecting the last selected item\n- `force`: Automatically selects the first non-disabled item on registration"
+  },
+  "step-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "switch-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children"
+  },
+  "switch-group/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables all switches in the group"
+  },
+  "switch-group/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select items on registration"
+  },
+  "switch-group/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Require at least one switch to be on. `'force'` prevents deselecting the last item"
+  },
+  "switch-group/label": {
+    "type": "string | undefined",
+    "description": "Accessible group label"
+  },
+  "switch-group/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "switch-group/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this group"
+  },
+  "switch-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "switch-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "switch-group/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "switch-hidden-input/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Switch.Root"
+  },
+  "switch-hidden-input/name": {
+    "type": "string | undefined",
+    "description": "Form field name (overrides Root's name)"
+  },
+  "switch-hidden-input/value": {
+    "type": "string | undefined",
+    "description": "Form field value (overrides Root's value, defaults to 'on')"
+  },
+  "switch-hidden-input/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID (overrides Root's form)"
+  },
+  "switch-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "switch-root/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot)"
+  },
+  "switch-root/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this switch (used in group mode and form submission)"
+  },
+  "switch-root/name": {
+    "type": "string | undefined",
+    "description": "Form field name - triggers auto hidden input when provided"
+  },
+  "switch-root/form": {
+    "type": "string | undefined",
+    "description": "Associate with form by ID"
+  },
+  "switch-root/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this switch"
+  },
+  "switch-root/indeterminate": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Sets the indeterminate state"
+  },
+  "switch-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children (Track, Thumb, HiddenInput)"
+  },
+  "switch-root/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Switch.Group"
+  },
+  "switch-root/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this switch"
+  },
+  "switch-root/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this switch"
+  },
+  "switch-root/ariaInvalid": {
+    "type": "boolean | undefined",
+    "description": "Whether the switch has an invalid value"
+  },
+  "switch-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "switch-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "switch-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "switch-select-all/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the select-all toggle"
+  },
+  "switch-select-all/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables this toggle"
+  },
+  "switch-select-all/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children (Track, Thumb)"
+  },
+  "switch-select-all/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Switch.Group"
+  },
+  "switch-select-all/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this toggle"
+  },
+  "switch-select-all/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this toggle"
+  },
+  "switch-select-all/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "switch-select-all/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "switch-thumb/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Switch.Root"
+  },
+  "switch-thumb/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "switch-thumb/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "switch-track/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Switch.Root"
+  },
+  "switch-track/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "switch-track/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tabs-item/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "tabs-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this tab (used to match with TabsPanel)"
+  },
+  "tabs-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this specific tab"
+  },
+  "tabs-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "tabs-item/ariaLabel": {
+    "type": "string | undefined",
+    "description": "Accessible label for this tab"
+  },
+  "tabs-item/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this tab"
+  },
+  "tabs-item/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this tab"
+  },
+  "tabs-item/el": {
+    "type": "MaybeRefOrGetter<Element | null | undefined>",
+    "description": "Focus target when renderless / `:as=\"null\"`. Defaults to the Atom host."
+  },
+  "tabs-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "tabs-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tabs-list/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the tablist"
+  },
+  "tabs-list/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "tabs-list/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "tabs-list/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tabs-panel/value": {
+    "type": "V",
+    "description": "Value to match with corresponding TabsItem"
+  },
+  "tabs-panel/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "tabs-panel/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "tabs-panel/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tabs-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection (must match child namespace)"
+  },
+  "tabs-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire tabs instance"
+  },
+  "tabs-root/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "tabs-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Controls mandatory tab behavior:\n- false: No mandatory tab enforcement\n- true: Prevents deselecting the last selected item\n- `force` (default): Automatically selects the first non-disabled tab"
+  },
+  "tabs-root/circular": {
+    "type": "boolean | undefined",
+    "description": "Whether arrow key navigation wraps around"
+  },
+  "tabs-root/orientation": {
+    "type": "TabsOrientation | undefined",
+    "description": "Tab orientation for keyboard navigation"
+  },
+  "tabs-root/activation": {
+    "type": "Activation | undefined",
+    "description": "Activation mode:\n- `automatic`: Tab activates on focus (arrow keys)\n- `manual`: Tab activates on Enter/Space only"
+  },
+  "tabs-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "theme/theme": {
+    "type": "ID | undefined",
+    "description": ""
+  },
+  "theme/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "theme/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "theme/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "toggle-group/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "toggle-group/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire toggle group"
+  },
+  "toggle-group/multiple": {
+    "type": "boolean | undefined",
+    "description": "Allow multiple toggles active at once"
+  },
+  "toggle-group/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Prevent deselecting the last active toggle"
+  },
+  "toggle-group/orientation": {
+    "type": "ToggleOrientation | undefined",
+    "description": "Layout direction for ARIA"
+  },
+  "toggle-group/label": {
+    "type": "string | undefined",
+    "description": "Accessible name for the group"
+  },
+  "toggle-group/ariaLabelledby": {
+    "type": "string | undefined",
+    "description": "ID of element that labels this group"
+  },
+  "toggle-group/ariaDescribedby": {
+    "type": "string | undefined",
+    "description": "ID of element that describes this group"
+  },
+  "toggle-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "toggle-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "toggle-group/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "toggle-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context injection from parent Toggle.Root"
+  },
+  "toggle-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "toggle-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "toggle-root/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "toggle-root/value": {
+    "type": "V | undefined",
+    "description": "Selection key when inside a Toggle.Group"
+  },
+  "toggle-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables this toggle"
+  },
+  "toggle-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for context provision to children (Indicator)"
+  },
+  "toggle-root/groupNamespace": {
+    "type": "string | undefined",
+    "description": "Namespace for connecting to parent Toggle.Group"
+  },
+  "toggle-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "toggle-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "toggle-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "tooltip-activator/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "tooltip-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "tooltip-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tooltip-content/namespace": {
+    "type": "string | undefined",
+    "description": ""
+  },
+  "tooltip-content/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "tooltip-content/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tooltip-root/openDelay": {
+    "type": "number | undefined",
+    "description": "Delay in ms before opening; falls back to the region delay when omitted"
+  },
+  "tooltip-root/closeDelay": {
+    "type": "number | undefined",
+    "description": "Delay in ms before closing; falls back to the region delay when omitted"
+  },
+  "tooltip-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Whether the tooltip is disabled (also disabled when the region is)"
+  },
+  "tooltip-root/interactive": {
+    "type": "boolean | undefined",
+    "description": "Whether the content stays open while hovered, allowing pointer interaction"
+  },
+  "tooltip-root/positionArea": {
+    "type": "string | undefined",
+    "description": "CSS anchor-positioning `position-area` for the content (default `top`)"
+  },
+  "tooltip-root/positionTry": {
+    "type": "string | undefined",
+    "description": "CSS anchor-positioning `position-try` fallbacks (default `most-height top`)"
+  },
+  "tooltip-root/namespace": {
+    "type": "string | undefined",
+    "description": "Dependency-injection namespace (default `v0:tooltip`)"
+  },
+  "tooltip-root/adapter": {
+    "type": "PopoverAdapter | undefined",
+    "description": "Positioning engine."
+  },
+  "tooltip-root/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "tooltip-root/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "tooltip-root/modelValue": {
+    "type": "boolean | undefined",
+    "description": ""
+  },
+  "treeview-activator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-activator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-activator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-checkbox/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-checkbox/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-checkbox/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-content/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-cue/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-cue/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-cue/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-group/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-group/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-indicator/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-indicator/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-indicator/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-item/id": {
+    "type": "ID | undefined",
+    "description": "Unique identifier (auto-generated if not provided)"
+  },
+  "treeview-item/value": {
+    "type": "V | undefined",
+    "description": "Value associated with this item"
+  },
+  "treeview-item/disabled": {
+    "type": "MaybeRefOrGetter<boolean> | undefined",
+    "description": "Disables this item"
+  },
+  "treeview-item/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-item/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-item/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-list/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-list/multiselectable": {
+    "type": "boolean | undefined",
+    "description": "Whether multiple items can be selected (sets aria-multiselectable)"
+  },
+  "treeview-list/label": {
+    "type": "string | undefined",
+    "description": "Accessible label for the tree"
+  },
+  "treeview-list/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-list/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  },
+  "treeview-root/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-root/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables the entire tree"
+  },
+  "treeview-root/enroll": {
+    "type": "boolean | undefined",
+    "description": "Auto-select non-disabled items on registration"
+  },
+  "treeview-root/mandatory": {
+    "type": "boolean | \"force\" | undefined",
+    "description": "Prevents deselecting the last selected item"
+  },
+  "treeview-root/multiple": {
+    "type": "boolean | undefined",
+    "description": "Allows selecting multiple items"
+  },
+  "treeview-root/open": {
+    "type": "NestedOpenMode | undefined",
+    "description": "Controls how nodes expand: 'multiple' (default) or 'single' (accordion)"
+  },
+  "treeview-root/openAll": {
+    "type": "boolean | undefined",
+    "description": "Auto-expand all nodes on registration"
+  },
+  "treeview-root/reveal": {
+    "type": "boolean | undefined",
+    "description": "Opening a node also opens all its ancestors"
+  },
+  "treeview-root/selection": {
+    "type": "NestedSelectionMode | undefined",
+    "description": "Controls how selection cascades: 'cascade' (default), 'independent', or 'leaf'"
+  },
+  "treeview-root/active": {
+    "type": "NestedActiveMode | undefined",
+    "description": "Controls active/highlight mode: 'single' (default) or 'multiple'"
+  },
+  "treeview-root/modelValue": {
+    "type": "T | T[] | undefined",
+    "description": ""
+  },
+  "treeview-select-all/label": {
+    "type": "string | undefined",
+    "description": "Optional display label (passed through to slot and aria-label)"
+  },
+  "treeview-select-all/disabled": {
+    "type": "boolean | undefined",
+    "description": "Disables this checkbox"
+  },
+  "treeview-select-all/namespace": {
+    "type": "string | undefined",
+    "description": "Namespace for dependency injection"
+  },
+  "treeview-select-all/as": {
+    "type": "string | Component<unknown, any, any, ComputedOptions, MethodOptions, {}, any> | null | undefined",
+    "description": "The HTML element to render as, or null for renderless mode"
+  },
+  "treeview-select-all/renderless": {
+    "type": "boolean | undefined",
+    "description": "When true, renders slot content directly without a wrapper element"
+  }
+}
