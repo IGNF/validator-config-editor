@@ -66,11 +66,12 @@ Notation :
 - [x] T044 [US3] Mise en évidence de l'élément ciblé dans `TableView`, `ModelView`, `CodeListView`, `GpuView`
 - [x] T045 [US3] Compteurs dans `ModelTree.vue` ; bouton « Recharger » (nouvel instantané, revalidation, sélection conservée si elle existe encore)
 
-## Phase 5 : US4, intégration au dépôt de configuration — branche `001-validation-globale/us4` (#5), puis PR sur `IGNF/validator-config-gpu`
+## Phase 5 : US4, intégration au dépôt de configuration (#5)
 
-- [ ] T046 [US4] Publier `v0.1.0` avec `release.yml` ; vérifier que `npm i github:IGNF/validator-config-editor#v0.1.0` dans un dossier vide fournit `vce` sans installer de dépendance (SC-005)
-- [ ] T047 [US4] Dépôt de configuration (branche depuis `json-source`) : `package.json` (`private`, devDependency sur le tag, scripts `edit` et `check`), `package-lock.json`, `.gitignore` (`node_modules/`)
-- [ ] T048 [US4] Dépôt de configuration : `.github/workflows/check.yml` (`npm ci && npm run check` sur PR et push) et `.github/dependabot.yml` (écosystème npm)
-- [ ] T049 [US4] Dépôt de configuration : README, section « Éditer et valider la configuration »
-- [ ] T050 [US4] Vérifier : workflow vert sur la PR du dépôt de configuration ; workflow rouge sur un commit de test qui casse un `tableModel` (commit ensuite retiré)
-- [ ] T051 [US4] Éditeur : `docs/utilisation.md` (installation, mise à jour de version, usage en CI) ; CHANGELOG `0.1.0`
+Périmètre précisé le 2026-10-16 : l'éditeur ne modifie aucun dépôt de configuration. Leurs
+mainteneurs y ajoutent l'outil en suivant le README.
+
+- [x] T046 [US4] Publier `v0.1.0` avec `release.yml` ; vérifier que `npm install github:IGNF/validator-config-editor#v0.1.0` dans un dossier vide fournit `vce` sans installer de dépendance (SC-005)
+- [x] T047 [US4] README : installation pas à pas dans un dépôt de configuration (`package.json` à la racine, `npm install`, tag obligatoire, `.gitignore`)
+- [x] T048 [US4] README : workflow de validation des PR du dépôt de configuration (`npm ci && npm run check`) et mise à jour de version
+- [x] T049 [US4] CHANGELOG `0.1.0`
