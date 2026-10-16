@@ -5,6 +5,7 @@ import type { ConfigSource } from './source'
 export class FolderSource implements ConfigSource {
   readonly kind = 'folder'
   label = ''
+  private byConfigPath = new Map<string, File>()
 
   constructor(private readonly files: readonly File[]) {}
 
@@ -12,6 +13,7 @@ export class FolderSource implements ConfigSource {
     const byPath = new Map(this.files.map((f) => [f.webkitRelativePath || f.name, f]))
     const selection = selectFolder([...byPath.keys()])
     this.label = selection.root.replace(/\/$/, '')
+    this.byConfigPath = new Map([...selection.files].map(([source, path]) => [path, byPath.get(source)!]))
     let done = 0
     const entries = await Promise.all(
       [...selection.files].map(async ([source, path]) => {
@@ -21,6 +23,11 @@ export class FolderSource implements ConfigSource {
       }),
     )
     return new Map(entries)
+  }
+
+  async raw(path: string): Promise<Uint8Array | undefined> {
+    const file = this.byConfigPath.get(path)
+    return file ? new Uint8Array(await file.arrayBuffer()) : undefined
   }
 }
 
