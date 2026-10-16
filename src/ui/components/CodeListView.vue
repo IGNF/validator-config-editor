@@ -20,6 +20,8 @@ const name = computed(
     <NotConformant v-if="!csv" />
     <template v-else>
       <p class="mb-2">{{ csv.rows.length }} valeur{{ csv.rows.length > 1 ? 's' : '' }}</p>
+      <!-- Tableau large : région défilante accessible au clavier. -->
+      <div class="scroll" tabindex="0" role="region" :aria-label="`Valeurs de ${name ?? baseName(file)}`">
       <v-table density="compact">
         <thead>
           <tr><th v-for="h in csv.header" :key="h">{{ h }}</th></tr>
@@ -31,6 +33,16 @@ const name = computed(
           </tr>
         </tbody>
       </v-table>
+      </div>
     </template>
   </FileFrame>
 </template>
+
+<style scoped>
+.scroll {
+  overflow-x: auto;
+}
+.scroll :deep(.v-table__wrapper) {
+  overflow: visible;
+}
+</style>

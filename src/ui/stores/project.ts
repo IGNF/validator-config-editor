@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
 import type { LoadedModel } from '@core/model/types'
-import { countProblems, type Problem, type ProblemCounts } from '@core/validation/problems'
+import { countByModel } from '@core/validation/problems'
 import { checkConfig, summarize, type CheckResult } from '@core/validation/validate'
 import { fetchSnapshot, SnapshotConfigFs } from '../io/snapshot'
 
@@ -34,11 +34,7 @@ export const useProject = defineStore('project', () => {
 
   const summary = computed(() => (result.value ? summarize(result.value.project, result.value.problems) : undefined))
 
-  const countsByModel = computed(() => {
-    const byModel = new Map<string, Problem[]>()
-    for (const p of result.value?.problems ?? []) byModel.set(p.model ?? '', [...(byModel.get(p.model ?? '') ?? []), p])
-    return new Map<string, ProblemCounts>([...byModel].map(([model, problems]) => [model, countProblems(problems)]))
-  })
+  const countsByModel = computed(() => countByModel(result.value?.problems ?? []))
 
   return { root, files, result, loading, error, load, models, summary, countsByModel }
 })

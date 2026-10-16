@@ -32,6 +32,7 @@ const tables = (m: LoadedModel) =>
   })
 const codeLists = (m: LoadedModel) => [...m.csvs.keys()].map((path) => ({ path, title: baseName(path).replace(/\.csv$/, '') }))
 const isAbstract = (m: LoadedModel) => !m.document
+const counts = (m: LoadedModel) => store.countsByModel.get(m.name) ?? { errors: 0, warnings: 0 }
 </script>
 
 <template>
@@ -56,6 +57,8 @@ const isAbstract = (m: LoadedModel) => !m.document
             <v-list-item-title>{{ m.name }}</v-list-item-title>
             <template #append>
               <v-chip v-if="isAbstract(m)" size="x-small" class="mr-1">abstrait</v-chip>
+              <span v-if="counts(m).errors" class="count error" :aria-label="`${counts(m).errors} erreur(s)`" :data-testid="`errors-${m.name}`">{{ counts(m).errors }}</span>
+              <span v-if="counts(m).warnings" class="count warning" :aria-label="`${counts(m).warnings} avertissement(s)`">{{ counts(m).warnings }}</span>
             </template>
           </v-list-item>
         </template>
@@ -77,3 +80,21 @@ const isAbstract = (m: LoadedModel) => !m.document
     </v-list>
   </nav>
 </template>
+
+<style scoped>
+.count {
+  min-width: 1.5rem;
+  margin-left: 2px;
+  padding: 0 4px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #fff;
+}
+.count.error {
+  background: #b00020;
+}
+.count.warning {
+  background: #8a5300;
+}
+</style>

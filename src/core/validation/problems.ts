@@ -43,3 +43,40 @@ export function countProblems(problems: readonly Problem[]): ProblemCounts {
   for (const p of problems) if (p.severity === 'error') errors++
   return { errors, warnings: problems.length - errors }
 }
+
+export interface ProblemFilter {
+  severity?: Severity
+  code?: string
+  model?: string
+}
+
+export function filterProblems(problems: readonly Problem[], filter: ProblemFilter): Problem[] {
+  return problems.filter(
+    (p) =>
+      (!filter.severity || p.severity === filter.severity) &&
+      (!filter.code || p.code === filter.code) &&
+      (filter.model === undefined || p.model === filter.model),
+  )
+}
+
+/** Problèmes groupés par modèle (null → ''), avec leurs nombres d'erreurs et d'avertissements. */
+export function countByModel(problems: readonly Problem[]): Map<string, ProblemCounts> {
+  const counts = new Map<string, ProblemCounts>()
+  for (const p of problems) {
+    const c = counts.get(p.model ?? '') ?? { errors: 0, warnings: 0 }
+    if (p.severity === 'error') c.errors++
+    else c.warnings++
+    counts.set(p.model ?? '', c)
+  }
+  return counts
+}
+
+/** Plus long préfixe de `pointer` parmi `candidates` (segment par segment), ou undefined. */
+export function closestPointer(pointer: string, candidates: Iterable<string>): string | undefined {
+  let best: string | undefined
+  for (const c of candidates) {
+    const isPrefix = c === '' || pointer === c || pointer.startsWith(c + '/')
+    if (isPrefix && (best === undefined || c.length > best.length)) best = c
+  }
+  return best
+}
