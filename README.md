@@ -72,7 +72,10 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - consulter un modèle (propriétés, parent, fichiers, listes de codes), une table (colonnes,
   contraintes, clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant
   les liens entre eux ;
-- afficher le contenu exact de chaque fichier (onglet « Source »).
+- afficher le contenu exact de chaque fichier (onglet « Source ») ;
+- consulter les problèmes (les mêmes que `vce check`), les filtrer par sévérité, code ou modèle,
+  et aller d'un clic à l'élément concerné ;
+- relire la configuration après une modification faite dans un autre outil (« Recharger »).
 
 Le serveur n'écoute que sur `127.0.0.1`, en lecture seule, et ne sert que le dossier indiqué.
 

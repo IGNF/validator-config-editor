@@ -60,11 +60,11 @@ Notation :
 
 ## Phase 4 : US3, panneau des problèmes — branche `001-validation-globale/us3` (#4)
 
-- [ ] T041 [P] [US3] Test e2e `tests/e2e/us3-problems.spec.ts` (scénarios 1 à 5, sur une copie temporaire des fixtures avec erreur, modifiée sur disque pendant le test)
-- [ ] T042 [P] [US3] Test unitaire : filtrage et décompte des problèmes par modèle (fonctions pures dans `src/core/validation/problems.ts`)
-- [ ] T043 [US3] `ProblemsPanel.vue` (filtres sévérité, code, modèle ; compteurs ; navigation vers `file` + `pointer`)
-- [ ] T044 [US3] Mise en évidence de l'élément ciblé dans `TableView`, `ModelView`, `CodeListView`, `GpuView`
-- [ ] T045 [US3] Compteurs dans `ModelTree.vue` ; bouton « Recharger » (nouvel instantané, revalidation, sélection conservée si elle existe encore)
+- [x] T041 [P] [US3] Test e2e `tests/e2e/us3-problems.spec.ts` (scénarios 1 à 5, sur une copie temporaire des fixtures avec erreur, modifiée sur disque pendant le test)
+- [x] T042 [P] [US3] Test unitaire : filtrage et décompte des problèmes par modèle (fonctions pures dans `src/core/validation/problems.ts`)
+- [x] T043 [US3] `ProblemsPanel.vue` (filtres sévérité, code, modèle ; compteurs ; navigation vers `file` + `pointer`)
+- [x] T044 [US3] Mise en évidence de l'élément ciblé dans `TableView`, `ModelView`, `CodeListView`, `GpuView`
+- [x] T045 [US3] Compteurs dans `ModelTree.vue` ; bouton « Recharger » (nouvel instantané, revalidation, sélection conservée si elle existe encore)
 
 ## Phase 5 : US4, intégration au dépôt de configuration — branche `001-validation-globale/us4` (#5), puis PR sur `IGNF/validator-config-gpu`
 
