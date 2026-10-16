@@ -10,7 +10,7 @@ import ProblemItem from './ProblemItem.vue'
 const store = useProject()
 const severity = ref<Severity | null>(null)
 const code = ref<string | null>(null)
-const model = ref<string | null>(null)
+const model = computed({ get: () => store.problemModel, set: (v: string | null) => (store.problemModel = v) })
 
 const LIMIT = 500
 const all = computed(() => store.result?.problems ?? [])

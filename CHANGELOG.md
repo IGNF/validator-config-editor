@@ -9,6 +9,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Navigation lisible : modèles groupés par famille, icônes et compteurs de problèmes, synthèse du modèle, libellés métier, indicateurs de problèmes sur les éléments (#40).
+
 - Correction groupée : tous les problèmes d'un même code corrigés en une étape annulable (#38).
 
 - Corrections proposées en un clic pour les problèmes (surcharge orpheline, liste non déclarée ou copiée depuis un autre modèle, nouvel identifiant, nom du modèle, noms proches, valeur CSV entre guillemets), annulables (#37).
