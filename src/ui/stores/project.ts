@@ -14,12 +14,16 @@ export const useProject = defineStore('project', () => {
   const loading = ref(false)
   const error = ref<string>()
 
+  /** Charge une source ; en cas d'échec, la configuration courante est conservée. */
   async function load(next: ConfigSource = source.value ?? new ServerSource()) {
     loading.value = true
     error.value = undefined
     try {
-      const files = await next.load()
-      session.value = await openSession(files)
+      const opened = await openSession(await next.load())
+      if (opened.result.project.models.size === 0) {
+        throw new Error('Aucun modèle trouvé : choisissez le dossier qui contient les modèles (ex. config/) ou la racine d\'un dépôt de configuration.')
+      }
+      session.value = opened
       source.value = next
     } catch (e) {
       error.value = e instanceof Error ? e.message : String(e)
