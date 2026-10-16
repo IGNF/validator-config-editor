@@ -16,7 +16,7 @@
 
 ## Phase 3 : US3, configurations connues — branche `003-ouverture-depot/us3` (#25)
 
-- [ ] T007 [US3] `KNOWN_CONFIGS` sur l'accueil et dans `RepoDialog` ; e2e
+- [x] T007 [US3] `KNOWN_CONFIGS` sur l'accueil et dans `RepoDialog` ; e2e
 
 ## Phase 4 : US4, lien partageable — branche `003-ouverture-depot/us4` (#26)
 
