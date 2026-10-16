@@ -34,7 +34,7 @@ function target(text: string): { label: string; path?: string } {
   if (!fk) return { label: text }
   const code = checked.value?.document?.codes?.find((c) => c.name === fk.target)
   const codePath = code && resolvePath(model.value, code.data)
-  if (codePath && store.files.has(codePath)) return { label: fk.target, path: codePath }
+  if (store.has(codePath)) return { label: fk.target, path: codePath }
   const tablePath = [...(checked.value?.tables ?? [])].find(([, t]) => t.name === fk.target)?.[0]
   return { label: fk.target, ...(tablePath && { path: tablePath }) }
 }

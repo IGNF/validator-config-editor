@@ -4,7 +4,7 @@ import { useProject } from '../stores/project'
 
 const props = defineProps<{ file: string }>()
 const store = useProject()
-const text = computed(() => store.files.get(props.file))
+const text = computed(() => store.text(props.file))
 </script>
 
 <template>

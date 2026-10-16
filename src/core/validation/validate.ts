@@ -1,6 +1,6 @@
 import type { ConfigFs } from '../load/fs'
-import { loadProject } from '../load/project'
-import type { DocumentModel, GpuFile, JsonFile, Project, TableModel } from '../model/types'
+import { loadProject, type LoadResult } from '../load/project'
+import type { DocumentModel, GpuFile, JsonFile, LoadedModel, Project, TableModel } from '../model/types'
 import { validateDocument, validateGpu, validateTable, type SchemaValidator } from '../schemas/generated/validate.js'
 import { compareProblems, countProblems, type Problem } from './problems'
 import { crossReferences, type CheckedModel } from './refs'
@@ -42,11 +42,32 @@ export interface CheckResult {
   problems: Problem[]
 }
 
-/** Charge et valide une configuration ; problèmes triés (contrat problem-codes). */
-export async function checkConfig(fs: ConfigFs): Promise<CheckResult> {
-  const loaded = await loadProject(fs)
+/** Valide une configuration déjà chargée ; problèmes triés (contrat problem-codes). */
+export function checkLoaded(loaded: LoadResult): CheckResult {
   const { checked, problems } = validateProject(loaded.project)
   return { project: loaded.project, checked, problems: [...loaded.problems, ...problems].sort(compareProblems) }
+}
+
+/** Charge et valide une configuration. */
+export async function checkConfig(fs: ConfigFs): Promise<CheckResult> {
+  return checkLoaded(await loadProject(fs))
+}
+
+/**
+ * Configuration dont le fichier JSON `path` a pour donnée `data` (édition, plan 002 R2) : seuls
+ * le modèle et le fichier concernés sont recopiés, rien n'est relu.
+ */
+export function withData(project: Project, path: string, data: unknown): Project {
+  const name = path.slice(0, path.indexOf('/'))
+  const model = project.models.get(name)
+  if (!model) throw new Error(`Modèle inconnu : ${name}`)
+  const file = { path, data }
+  const copy: LoadedModel = { ...model }
+  if (model.document?.path === path) copy.document = file
+  else if (model.gpu?.path === path) copy.gpu = file
+  else if (model.tables.has(path)) copy.tables = new Map(model.tables).set(path, file)
+  else throw new Error(`Fichier JSON inconnu : ${path}`)
+  return { models: new Map(project.models).set(name, copy) }
 }
 
 export interface Summary {

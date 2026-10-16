@@ -2,12 +2,14 @@
 import { nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { closestPointer } from '@core/validation/problems'
 import { route } from '../router'
+import { useProject } from '../stores/project'
 import SourceView from './SourceView.vue'
 
 // Cadre commun des vues : titre, chemin du fichier, onglets « Vue » et « Source », et mise en
 // évidence de l'élément désigné par le pointeur de l'URL.
 defineProps<{ title: string; file: string; source?: string }>()
 const tab = ref<'view' | 'source'>('view')
+const store = useProject()
 const root = useTemplateRef<HTMLElement>('root')
 
 async function highlight() {
@@ -37,6 +39,7 @@ watch(tab, highlight)
   <section ref="root">
     <div class="d-flex align-center flex-wrap ga-2">
       <h1 class="text-h5">{{ title }}</h1>
+      <v-chip v-if="source && store.isEdited(source)" size="small" color="warning" data-testid="edited">● modifié</v-chip>
       <slot name="chips" />
     </div>
     <p class="text-body-2 text-medium-emphasis mb-2"><code>{{ file }}</code></p>

@@ -13,7 +13,7 @@ const store = useProject()
 const name = computed(() => modelOf(props.file))
 const loaded = computed(() => store.result!.project.models.get(name.value))
 const doc = computed(() => store.result!.checked.get(name.value)?.document)
-const exists = (path: string | undefined) => path !== undefined && store.files.has(path)
+const exists = (path: string | undefined) => store.has(path)
 const children = computed(() =>
   [...store.result!.checked.values()].filter((c) => c.document?.parent?.name === name.value).map((c) => c.model.name),
 )
