@@ -7,6 +7,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-16
+
 ### Added
 
 - Navigation lisible : modèles groupés par famille, icônes et compteurs de problèmes, synthèse du modèle, libellés métier, indicateurs de problèmes sur les éléments (#40).

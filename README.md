@@ -43,26 +43,60 @@ Chacune est testée sur un extrait réel (`tests/fixtures/`).
 
 ## Utilisation dans un dépôt de configuration
 
-```json
-{
-  "private": true,
-  "devDependencies": {
-    "validator-config-editor": "github:IGNF/validator-config-editor#v1.0.0"
-  },
-  "scripts": {
-    "edit": "vce serve config",
-    "check": "vce check config"
-  }
-}
-```
+L'outil s'installe comme **dépendance de développement** du dépôt de configuration (ex.
+`validator-config-gpu`), depuis un tag de version de ce dépôt : aucune publication npm, aucun
+build à l'installation, aucune dépendance d'exécution.
 
-```sh
-npm ci
-npm run check   # valide config/
-npm run edit    # ouvre l'éditeur local
-```
+1. À la racine du dépôt de configuration (à côté du dossier `config/`), créer `package.json` :
 
-Les modifications sont ensuite versionnées avec git, comme d'habitude.
+   ```json
+   {
+     "private": true,
+     "devDependencies": {
+       "validator-config-editor": "github:IGNF/validator-config-editor#v0.1.0"
+     },
+     "scripts": {
+       "edit": "vce serve config",
+       "check": "vce check config"
+     }
+   }
+   ```
+
+2. Installer (Node.js ≥ 22), ce qui crée `package-lock.json`, puis ignorer `node_modules/` :
+
+   ```sh
+   npm install
+   echo node_modules/ >> .gitignore
+   git add package.json package-lock.json .gitignore
+   ```
+
+3. Utiliser :
+
+   ```sh
+   npm run check   # valide config/ (code de sortie 1 en cas d'erreur)
+   npm run edit    # ouvre l'éditeur local sur http://127.0.0.1:5174/
+   ```
+
+4. (Facultatif) Valider chaque PR du dépôt de configuration, dans `.github/workflows/check.yml` :
+
+   ```yaml
+   name: Validation de la configuration
+   on: [pull_request, push]
+   jobs:
+     check:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - uses: actions/setup-node@v4
+           with:
+             node-version: 22
+         - run: npm ci
+         - run: npm run check
+   ```
+
+Pour passer à une nouvelle version : `npm install github:IGNF/validator-config-editor#vX.Y.Z`
+(ou laisser Dependabot proposer la mise à jour). Les versions publiées sont les
+[tags du dépôt](https://github.com/IGNF/validator-config-editor/tags).
 
 ## `vce check`
 

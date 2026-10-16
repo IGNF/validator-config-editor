@@ -1,6 +1,6 @@
 {
   "name": "validator-config-editor",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Validation et édition des configurations IGNF/validator (CLI vce)",
   "license": "AGPL-3.0-or-later",
   "repository": "github:IGNF/validator-config-editor",
