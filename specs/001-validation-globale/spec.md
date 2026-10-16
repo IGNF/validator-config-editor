@@ -277,6 +277,7 @@ passe. Une PR qui casse une référence fait échouer le workflow.
 - **002-edition-en-ligne** : édition de `files.json` et `types/*.json` (formulaires,
   annuler/rétablir, enregistrement sans perte), éditeur en ligne sur GitHub Pages avec
   téléchargement ZIP.
-- **003-listes-codes** : édition des listes de codes CSV.
-- **004-gpu-heritage** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…) et
+- **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL.
+- **004-listes-codes** : édition des listes de codes CSV.
+- **005-gpu-heritage** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…) et
   gestion de l'héritage des modèles SUP.
