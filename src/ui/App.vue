@@ -12,7 +12,8 @@ import SourceChip from './components/SourceChip.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
 import { kindOf } from './files'
-import { route } from './router'
+import { GitHubSource } from './io/github'
+import { readRepoParams, route } from './router'
 import { useProject } from './stores/project'
 
 const store = useProject()
@@ -39,7 +40,10 @@ function onBeforeUnload(e: BeforeUnloadEvent) {
 }
 
 onMounted(() => {
-  if (!online) store.load()
+  // Lien partageable : ?depot=… ouvre ce dépôt, dans les deux modes ; sinon le serveur local.
+  const repo = readRepoParams()
+  if (repo) store.load(new GitHubSource(repo))
+  else if (!online) store.load()
   window.addEventListener('keydown', onKey)
   window.addEventListener('beforeunload', onBeforeUnload)
 })

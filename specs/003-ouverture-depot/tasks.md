@@ -20,5 +20,5 @@
 
 ## Phase 4 : US4, lien partageable — branche `003-ouverture-depot/us4` (#26)
 
-- [ ] T008 [US4] Paramètres `depot`, `branche`, `dossier` lus au démarrage et écrits à l'ouverture (`history.replaceState`) ; confirmation s'il y a des modifications ; e2e (rechargement de la page sur la même vue)
-- [ ] T009 [US4] README : éditeur en ligne et liens vers les configurations connues ; CHANGELOG
+- [x] T008 [US4] Paramètres `depot`, `branche`, `dossier` lus au démarrage et écrits à l'ouverture (`history.replaceState`) ; confirmation s'il y a des modifications ; e2e (rechargement de la page sur la même vue)
+- [x] T009 [US4] README : éditeur en ligne et liens vers les configurations connues ; CHANGELOG

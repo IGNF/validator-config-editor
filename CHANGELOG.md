@@ -12,6 +12,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 - Ouverture de la configuration d'un dépôt GitHub public par son URL (branche, sous-dossier), éditable et téléchargeable en ZIP (#23).
 - Choix de la branche d'un dépôt ouvert ; branche inexistante : branche par défaut proposée (#24).
 - Configurations connues (gpu, dgpr, naviforest, ppr) ouvertes en un clic depuis l'accueil (#25).
+- Adresse partageable : le dépôt, la branche, le dossier et l'élément affiché (#26).
 
 ## [0.1.0] - 2026-10-16
 

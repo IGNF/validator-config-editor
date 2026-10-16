@@ -28,6 +28,19 @@ le navigateur, rien n'est envoyé sur le réseau.
 | Enregistrement | téléchargement ZIP de toute la configuration | écriture directe des fichiers modifiés (Ctrl+S) |
 | Validation, navigation, édition | identiques | identiques |
 
+On peut aussi y **ouvrir un dépôt GitHub public** sans le cloner (« Ouvrir un dépôt » : URL du
+dépôt, d'une branche `…/tree/<branche>` ou d'un sous-dossier), choisir une branche, puis éditer et
+télécharger le ZIP ; le dépôt n'est jamais modifié. L'adresse de la page se partage : elle rouvre
+le même dépôt, la même branche et le même élément. Liens directs vers les configurations connues :
+
+- [validator-config-gpu (json-source)](https://ignf.github.io/validator-config-editor/?depot=IGNF/validator-config-gpu&branche=json-source)
+- [validator-config-dgpr](https://ignf.github.io/validator-config-editor/?depot=IGNF/validator-config-dgpr)
+- [validator-config-naviforest](https://ignf.github.io/validator-config-editor/?depot=IGNF/validator-config-naviforest)
+- [validator-config-ppr](https://ignf.github.io/validator-config-editor/?depot=IGNF/validator-config-ppr)
+
+GitHub limite les requêtes anonymes à 60 par heure et par adresse IP (une ouverture de dépôt en
+consomme 2 ou 3).
+
 Le site est publié par le workflow `pages.yml` à chaque merge sur `main`.
 
 ## Configurations connues
