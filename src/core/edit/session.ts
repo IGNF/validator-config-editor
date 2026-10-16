@@ -44,10 +44,18 @@ export function dataOf(session: Session, path: string): unknown {
   return session.edited.has(path) ? session.edited.get(path) : originalData(session, path)
 }
 
-// Remplace la donnée d'un fichier ; revenir à la donnée d'origine annule la modification.
+// Vrai si `data` redonne exactement le fichier d'origine (même donnée, ou même texte une fois
+// sérialisé : ex. colonne ajoutée puis supprimée).
+function isOriginal(session: Session, path: string, data: unknown): boolean {
+  if (data === originalData(session, path)) return true
+  const original = session.originals.get(path)
+  return original !== undefined && serialize(data, detectStyle(original)) === original
+}
+
+// Remplace la donnée d'un fichier ; revenir à l'état d'origine annule la modification.
 function withFile(session: Session, path: string, data: unknown, history: History): Session {
   const edited = new Map(session.edited)
-  if (data === originalData(session, path)) edited.delete(path)
+  if (isOriginal(session, path, data)) edited.delete(path)
   else edited.set(path, data)
   let project = session.loaded.project
   for (const [p, d] of edited) project = withData(project, p, d)
@@ -93,4 +101,25 @@ export function reformatted(session: Session): string[] {
 /** Tous les fichiers, avec leur texte courant (téléchargement ZIP). */
 export function allFiles(session: Session): Map<string, string> {
   return new Map([...session.originals.keys()].map((p) => [p, textOf(session, p)!]))
+}
+
+function collectIds(data: unknown, into: Set<string>): void {
+  if (Array.isArray(data)) for (const v of data) collectIds(v, into)
+  else if (data !== null && typeof data === 'object') {
+    for (const [k, v] of Object.entries(data)) {
+      if (k === 'id' && typeof v === 'string') into.add(v)
+      else collectIds(v, into)
+    }
+  }
+}
+
+/** Tous les `id` de la configuration courante (pour en créer de nouveaux, uniques). */
+export function allIds(session: Session): Set<string> {
+  const ids = new Set<string>()
+  for (const model of session.result.project.models.values()) {
+    collectIds(model.document?.data, ids)
+    collectIds(model.gpu?.data, ids)
+    for (const t of model.tables.values()) collectIds(t.data, ids)
+  }
+  return ids
 }

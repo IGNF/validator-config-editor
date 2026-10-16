@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { changedFiles, dataOf, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
+import { allIds, changedFiles, dataOf, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { countByModel } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
@@ -50,11 +50,12 @@ export const useProject = defineStore('project', () => {
   const canUndo = computed(() => (session.value?.history.past.length ?? 0) > 0)
   const canRedo = computed(() => (session.value?.history.future.length ?? 0) > 0)
   const changed = computed(() => (session.value ? changedFiles(session.value) : new Map<string, string>()))
+  const ids = () => (session.value ? allIds(session.value) : new Set<string>())
   const isEdited = (path: string) => !!session.value?.edited.has(path)
   const isModelEdited = (model: string) => [...(session.value?.edited.keys() ?? [])].some((p) => p.startsWith(model + '/'))
 
   return {
     source, session, loading, error, load, result, root, models, summary, countsByModel,
-    has, text, data, edit, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
+    has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
 })
