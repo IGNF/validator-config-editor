@@ -9,6 +9,7 @@ import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
 import { GitHubError, GitHubSource } from '../io/github'
 import { ServerSource } from '../io/server'
+import { writeRepoParams } from '../router'
 import type { ConfigSource, SaveResult } from '../io/source'
 
 export const useProject = defineStore('project', () => {
@@ -37,6 +38,12 @@ export const useProject = defineStore('project', () => {
       }
       session.value = opened
       source.value = next
+      // Adresse partageable (003, US4) : le dépôt ouvert, ou rien pour une autre source.
+      writeRepoParams(
+        next instanceof GitHubSource && next.branch
+          ? { owner: next.spec.owner, repo: next.spec.repo, branch: next.branch, ...(next.path && { path: next.path }) }
+          : undefined,
+      )
     } catch (e) {
       error.value = e instanceof Error ? e.message : String(e)
       if (e instanceof GitHubError && e.suggestion) suggestion.value = { label: e.suggestion.label, source: new GitHubSource(e.suggestion.spec) }
