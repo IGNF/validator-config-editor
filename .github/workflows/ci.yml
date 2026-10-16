@@ -25,4 +25,8 @@ jobs:
       - name: Build (typecheck, interface, CLI)
         run: npm run build
       - name: CLI construite
-        run: node bin/vce.js --version
+        run: node bin/vce.js check tests/fixtures/config
+      - name: Navigateurs Playwright
+        run: npx playwright install --with-deps chromium firefox
+      - name: Tests de bout en bout
+        run: npm run test:e2e
