@@ -1,8 +1,15 @@
 import type { Csv } from '../model/types'
 
-export type CsvParseResult =
-  | { ok: true; csv: Csv }
-  | { ok: false; code: 'ERR-CSV-SYNTAX' | 'ERR-CSV-HEADER' | 'ERR-CSV-ROW-LENGTH'; line: number; params: Record<string, string | number> }
+export interface CsvError {
+  code: 'ERR-CSV-SYNTAX' | 'ERR-CSV-HEADER' | 'ERR-CSV-ROW-LENGTH'
+  line: number
+  params: Record<string, string | number>
+}
+
+/** Échec : toutes les lignes de longueur incorrecte sont signalées (004, R6). */
+export type CsvParseResult = { ok: true; csv: Csv } | { ok: false; errors: CsvError[] }
+
+const fail = (error: CsvError): CsvParseResult => ({ ok: false, errors: [error] })
 
 // Découpe un CSV RFC 4180 (séparateur virgule) en enregistrements, avec la ligne de début de
 // chaque enregistrement. Gère guillemets, guillemets doublés, sauts de ligne entre guillemets,
@@ -15,7 +22,7 @@ function records(text: string): { fields: string[]; line: number }[] | { unclose
   let line = 1
   let start = 1
   let quoteStart = 0
-  const src = text.startsWith('﻿') ? text.slice(1) : text
+  const src = text.startsWith('\uFEFF') ? text.slice(1) : text
   for (let i = 0; i < src.length; i++) {
     const c = src[i]!
     if (quoted) {
@@ -54,22 +61,20 @@ function records(text: string): { fields: string[]; line: number }[] | { unclose
 
 export function parseCsv(text: string): CsvParseResult {
   const recs = records(text)
-  if (!Array.isArray(recs)) return { ok: false, code: 'ERR-CSV-SYNTAX', line: recs.unclosedAt, params: {} }
+  if (!Array.isArray(recs)) return fail({ code: 'ERR-CSV-SYNTAX', line: recs.unclosedAt, params: {} })
   // Les lignes entièrement vides (ex. en fin de fichier) sont ignorées.
   const nonEmpty = recs.filter((r) => !(r.fields.length === 1 && r.fields[0] === ''))
   const [first, ...rest] = nonEmpty
-  if (!first) return { ok: false, code: 'ERR-CSV-HEADER', line: 1, params: { reason: 'en-tête absent' } }
+  if (!first) return fail({ code: 'ERR-CSV-HEADER', line: 1, params: { reason: 'en-tête absent' } })
   const header = first.fields
   const seen = new Set<string>()
   for (const name of header) {
-    if (name.trim() === '') return { ok: false, code: 'ERR-CSV-HEADER', line: first.line, params: { reason: 'nom de colonne vide' } }
-    if (seen.has(name)) return { ok: false, code: 'ERR-CSV-HEADER', line: first.line, params: { reason: `colonne « ${name} » dupliquée` } }
+    if (name.trim() === '') return fail({ code: 'ERR-CSV-HEADER', line: first.line, params: { reason: 'nom de colonne vide' } })
+    if (seen.has(name)) return fail({ code: 'ERR-CSV-HEADER', line: first.line, params: { reason: `colonne « ${name} » dupliquée` } })
     seen.add(name)
   }
-  for (const r of rest) {
-    if (r.fields.length !== header.length) {
-      return { ok: false, code: 'ERR-CSV-ROW-LENGTH', line: r.line, params: { count: r.fields.length, expected: header.length } }
-    }
-  }
-  return { ok: true, csv: { header, rows: rest.map((r) => r.fields) } }
+  const errors: CsvError[] = rest
+    .filter((r) => r.fields.length !== header.length)
+    .map((r) => ({ code: 'ERR-CSV-ROW-LENGTH', line: r.line, params: { count: r.fields.length, expected: header.length } }))
+  return errors.length ? { ok: false, errors } : { ok: true, csv: { header, rows: rest.map((r) => r.fields) } }
 }

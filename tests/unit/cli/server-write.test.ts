@@ -12,11 +12,12 @@ let config: string
 let server: RunningServer
 const FILE = 'cnig_PLU_2017/types/ZONE_URBA.json'
 
-function put(path: string | null, body: string, { ifMatch, host }: { ifMatch?: string | null; host?: string } = {}) {
+function put(path: string | null, body: string, { ifMatch, host, noneMatch }: { ifMatch?: string | null; host?: string; noneMatch?: boolean } = {}) {
   const original = readFileSync(join(config, FILE), 'utf8')
   const headers: Record<string, string> = { host: host ?? `127.0.0.1:${server.port}`, 'content-type': 'text/plain; charset=utf-8' }
   const match = ifMatch === undefined ? `"${sha256(original)}"` : ifMatch
   if (match !== null) headers['if-match'] = match
+  if (noneMatch) headers['if-none-match'] = '*'
   const query = path === null ? '' : `?path=${encodeURIComponent(path)}`
   return new Promise<{ status: number; body: string }>((resolve, reject) => {
     const req = request({ host: '127.0.0.1', port: server.port, path: `/api/file${query}`, method: 'PUT', headers }, (res) => {
@@ -88,5 +89,32 @@ describe('PUT /api/file', () => {
 
   it('refuse un corps de plus de 10 Mo (413)', async () => {
     expect((await put(FILE, 'x'.repeat(10 * 1024 * 1024 + 1))).status).toBe(413)
+  })
+})
+
+describe('PUT /api/file en création (If-None-Match: *)', () => {
+  const create = (path: string, body = 'A\n1\n') => put(path, body, { ifMatch: null, noneMatch: true })
+
+  it('crée une liste de codes dans un modèle existant (201)', async () => {
+    expect((await create('cnig_PLU_2017/codes/Nouvelle.csv')).status).toBe(201)
+    expect(readFileSync(join(config, 'cnig_PLU_2017/codes/Nouvelle.csv'), 'utf8')).toBe('A\n1\n')
+  })
+
+  it('crée le dossier codes/ s\'il manque', async () => {
+    rmSync(join(config, 'GPU_MEC_2025/codes'), { recursive: true })
+    expect((await create('GPU_MEC_2025/codes/L.csv')).status).toBe(201)
+  })
+
+  it('refuse si le fichier existe (412)', async () => {
+    expect((await create('cnig_PLU_2017/codes/ListeEtatPLU.csv')).status).toBe(412)
+  })
+
+  it.each([
+    ['hors codes/ et types/', 'cnig_PLU_2017/autre/x.csv'],
+    ['modèle inexistant', 'inconnu/codes/x.csv'],
+    ['à la racine du modèle', 'cnig_PLU_2017/x.json'],
+    ['hors du dossier', '../codes/x.csv'],
+  ])('refuse (403) : %s', async (_label, path) => {
+    expect((await create(path)).status).toBe(403)
   })
 })

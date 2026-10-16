@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { allIds, changedFiles, dataOf, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
+import { allFiles, allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
-import { countByModel } from '@core/validation/problems'
+import { fixesFor, type Fix } from '@core/fixes/catalog'
+import { countByModel, type Problem } from '@core/validation/problems'
 import { countProblems } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
 import { zip } from '@core/zip'
@@ -58,8 +59,14 @@ export const useProject = defineStore('project', () => {
   const canRedo = computed(() => (session.value?.history.future.length ?? 0) > 0)
   const changed = computed(() => (session.value ? changedFiles(session.value) : new Map<string, string>()))
   const ids = () => (session.value ? allIds(session.value) : new Set<string>())
-  const isEdited = (path: string) => !!session.value?.edited.has(path)
-  const isModelEdited = (model: string) => [...(session.value?.edited.keys() ?? [])].some((p) => p.startsWith(model + '/'))
+  const isEdited = (path: string) => !!session.value && isChanged(session.value, path)
+  const isModelEdited = (model: string) => [...changed.value.keys()].some((p) => p.startsWith(model + '/'))
+
+  /** Corrections proposées pour un problème, dans l'état courant (feature 004). */
+  const fixes = (problem: Problem) => (session.value ? fixesFor(session.value, problem) : [])
+  function applyFix(fix: Fix) {
+    if (session.value) session.value = applyChanges(session.value, fix.changes)
+  }
 
   // Modifications déjà téléchargées (ou enregistrées) : plus d'avertissement avant de quitter.
   const exported = shallowRef<ReadonlyMap<string, unknown>>()
@@ -71,9 +78,9 @@ export const useProject = defineStore('project', () => {
     const name = (source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config'
     const encoder = new TextEncoder()
     const entries = await Promise.all(
-      [...s.originals.keys()].sort().map(async (path) => ({
+      [...allFiles(s)].map(async ([path, text]) => ({
         path: `${name}/${path}`,
-        data: s.edited.has(path) ? encoder.encode(textOf(s, path)!) : ((await source.value?.raw?.(path)) ?? encoder.encode(s.originals.get(path)!)),
+        data: isChanged(s, path) ? encoder.encode(text) : ((await source.value?.raw?.(path)) ?? encoder.encode(text)),
       })),
     )
     offer(zip(entries) as BlobPart, `${name}.zip`, 'application/zip')
@@ -102,7 +109,7 @@ export const useProject = defineStore('project', () => {
   }
 
   return {
-    pending, downloadZip, canSave, save,
+    pending, downloadZip, canSave, save, fixes, applyFix,
     source, session, loading, error, load, result, root, models, summary, countsByModel,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

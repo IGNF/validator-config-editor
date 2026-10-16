@@ -1,4 +1,4 @@
-import { readdir, readFile, realpath, rename, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, realpath, rename, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, sep } from 'node:path'
 import type { ConfigFs } from '@core/load/fs'
 
@@ -47,6 +47,20 @@ export class NodeConfigFs implements ConfigFs {
 
   async readText(path: string): Promise<string> {
     return readFile(await this.resolve(path), 'utf8')
+  }
+
+  /**
+   * Crée un fichier `<modèle>/codes/…` ou `<modèle>/types/…` dans un modèle existant (004, R3) ;
+   * échoue si le fichier existe déjà.
+   */
+  async createText(path: string, text: string): Promise<void> {
+    const [model, folder, ...rest] = path.split('/')
+    if (!model || (folder !== 'codes' && folder !== 'types') || rest.length !== 1) throw new Error(`Création non autorisée : ${path}`)
+    const modelDir = await this.resolve(model)
+    const dir = join(modelDir, folder)
+    await mkdir(dir, { recursive: true })
+    if (!isInside(this.root, await realpath(dir))) throw new Error(`Chemin hors de la configuration : ${path}`)
+    await writeFile(join(dir, rest[0]!), text, { encoding: 'utf8', flag: 'wx' })
   }
 
   /** Remplace un fichier existant, de façon atomique (fichier temporaire puis renommage). */
