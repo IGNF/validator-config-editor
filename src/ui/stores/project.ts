@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { allIds, changedFiles, dataOf, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
+import { allIds, changedFiles, dataOf, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { countByModel } from '@core/validation/problems'
+import { countProblems } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
+import { zip } from '@core/zip'
+import { download as offer } from '../io/download'
 import { ServerSource } from '../io/server'
 import type { ConfigSource } from '../io/source'
 
@@ -58,7 +61,28 @@ export const useProject = defineStore('project', () => {
   const isEdited = (path: string) => !!session.value?.edited.has(path)
   const isModelEdited = (model: string) => [...(session.value?.edited.keys() ?? [])].some((p) => p.startsWith(model + '/'))
 
+  // Modifications déjà téléchargées (ou enregistrées) : plus d'avertissement avant de quitter.
+  const exported = shallowRef<ReadonlyMap<string, unknown>>()
+  const pending = computed(() => changed.value.size > 0 && session.value?.edited !== exported.value)
+
+  /** Télécharge toute la configuration en ZIP (contrat source-et-ecriture). */
+  async function downloadZip(): Promise<{ name: string; errors: number; reformatted: string[] }> {
+    const s = session.value!
+    const name = (source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config'
+    const encoder = new TextEncoder()
+    const entries = await Promise.all(
+      [...s.originals.keys()].sort().map(async (path) => ({
+        path: `${name}/${path}`,
+        data: s.edited.has(path) ? encoder.encode(textOf(s, path)!) : ((await source.value?.raw?.(path)) ?? encoder.encode(s.originals.get(path)!)),
+      })),
+    )
+    offer(zip(entries) as BlobPart, `${name}.zip`, 'application/zip')
+    exported.value = s.edited
+    return { name: `${name}.zip`, errors: countProblems(s.result.problems).errors, reformatted: reformatted(s) }
+  }
+
   return {
+    pending, downloadZip,
     source, session, loading, error, load, result, root, models, summary, countsByModel,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

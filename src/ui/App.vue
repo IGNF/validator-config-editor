@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiDownload, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
 import GpuView from './components/GpuView.vue'
@@ -31,7 +31,7 @@ function onKey(e: KeyboardEvent) {
 
 // Avertissement avant de quitter avec des modifications non enregistrées ou non téléchargées.
 function onBeforeUnload(e: BeforeUnloadEvent) {
-  if (store.changed.size > 0) e.preventDefault()
+  if (store.pending) e.preventDefault()
 }
 
 onMounted(() => {
@@ -43,6 +43,15 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
   window.removeEventListener('beforeunload', onBeforeUnload)
 })
+
+const notice = ref<string>()
+async function downloadZip() {
+  const r = await store.downloadZip()
+  notice.value =
+    `Configuration téléchargée : ${r.name}` +
+    (r.errors ? ` (${r.errors} erreur${r.errors > 1 ? 's' : ''} restante${r.errors > 1 ? 's' : ''})` : '') +
+    (r.reformatted.length ? `. Fichiers réindentés : ${r.reformatted.join(', ')}` : '')
+}
 
 function reload() {
   if (store.changed.size > 0 && !window.confirm(`${store.changed.size} fichier(s) modifié(s) : recharger depuis le disque abandonne ces modifications. Continuer ?`)) return
@@ -64,6 +73,7 @@ const showProblems = ref(true)
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
+      <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="downloadZip">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
@@ -78,6 +88,10 @@ const showProblems = ref(true)
     <v-navigation-drawer v-if="store.result" v-model="showProblems" location="end" :width="420" permanent>
       <ProblemsPanel />
     </v-navigation-drawer>
+
+    <v-snackbar :model-value="!!notice" timeout="8000" data-testid="notice" @update:model-value="(v: boolean) => !v && (notice = undefined)">
+      {{ notice }}
+    </v-snackbar>
 
     <v-main>
       <v-container fluid>
