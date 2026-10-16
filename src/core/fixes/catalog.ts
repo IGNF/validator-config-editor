@@ -1,6 +1,6 @@
 // Corrections proposées pour un problème (004, R1, R4) : calculées sur l'état courant de la
 // session, appliquées par `applyChanges` en un seul pas d'historique.
-import { allIds, dataOf, textOf, type FileChange, type Session } from '../edit/session'
+import { allIds, applyInOneStep, dataOf, textOf, type FileChange, type Session } from '../edit/session'
 import { addCode, addTableFile, codeName } from '../edit/operations'
 import { getAt, removeAt, setAt } from '../edit/pointer'
 import { newId } from '../edit/ids'
@@ -215,4 +215,25 @@ export function fixesFor(session: Session, problem: Problem): Fix[] {
     // Donnée inattendue (fichier non conforme) : pas de correction proposée.
     return []
   }
+}
+
+/** Chaque problème a exactement une correction, et elle est sûre : correction groupée possible. */
+export function canFixAll(session: Session, problems: readonly Problem[]): boolean {
+  return problems.length > 1 && problems.every((p) => {
+    const fixes = fixesFor(session, p)
+    return fixes.length === 1 && fixes[0]!.safe
+  })
+}
+
+/** Applique la correction de chaque problème en un seul pas (004 US2) ; undefined si impossible. */
+export function fixAll(session: Session, problems: readonly Problem[], now = Date.now()): Session | undefined {
+  if (!canFixAll(session, problems)) return undefined
+  return applyInOneStep(
+    session,
+    problems.map((p) => (s: Session) => {
+      const fixes = fixesFor(s, p)
+      return fixes.length === 1 && fixes[0]!.safe ? fixes[0]!.changes : undefined
+    }),
+    now,
+  )
 }

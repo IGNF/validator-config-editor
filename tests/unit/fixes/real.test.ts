@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { applyChanges, openSession } from '@core/edit/session'
-import { fixesFor } from '@core/fixes/catalog'
+import { canFixAll, fixAll, fixesFor } from '@core/fixes/catalog'
 import { countProblems } from '@core/validation/problems'
 import { readConfig } from '../../support/fixtures'
 
@@ -20,4 +20,16 @@ describe.skipIf(!process.env.VCE_CONFIG_DIR)('corrections sur la configuration c
     }
     expect(countProblems(session.result.problems).errors).toBe(0)
   }, 120_000)
+})
+
+describe.skipIf(!process.env.VCE_CONFIG_DIR)('corrections groupées sur la configuration complète', () => {
+  it('corrige en une fois chaque code dont les corrections sont sûres, en moins de 5 s', async () => {
+    let session = await openSession(readConfig(process.env.VCE_CONFIG_DIR))
+    const start = performance.now()
+    for (const code of new Set(session.result.problems.map((p) => p.code))) {
+      const problems = session.result.problems.filter((p) => p.code === code)
+      if (canFixAll(session, problems)) session = fixAll(session, problems)!
+    }
+    expect(performance.now() - start).toBeLessThan(5000)
+  }, 60_000)
 })
