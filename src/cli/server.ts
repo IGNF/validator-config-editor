@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import { extname, join, normalize, sep } from 'node:path'
@@ -46,6 +47,42 @@ export async function snapshot(fs: NodeConfigFs): Promise<{ root: string; files:
   return { root: fs.root, files: Object.fromEntries(paths.map((p, i) => [p, texts[i]!])) }
 }
 
+const MAX_BODY = 10 * 1024 * 1024
+
+export const sha256 = (text: string) => createHash('sha256').update(text, 'utf8').digest('hex')
+
+function readBody(req: IncomingMessage): Promise<string | undefined> {
+  return new Promise((resolve, reject) => {
+    // Au-delà de la limite, la suite est lue sans être gardée, pour pouvoir répondre 413.
+    const chunks: Buffer[] = []
+    let size = 0
+    req.on('data', (c: Buffer) => {
+      size += c.length
+      if (size <= MAX_BODY) chunks.push(c)
+    })
+    req.on('end', () => resolve(size > MAX_BODY ? undefined : Buffer.concat(chunks).toString('utf8')))
+    req.on('error', reject)
+  })
+}
+
+/** PUT /api/file (contrat source-et-ecriture, plan 002 R8). */
+async function writeFileRequest(options: ServeOptions, url: URL, req: IncomingMessage, res: ServerResponse) {
+  const path = url.searchParams.get('path')
+  const expected = /^"?([0-9a-f]{64})"?$/.exec(req.headers['if-match'] ?? '')?.[1]
+  if (!path || !expected) return send(res, 400, 'Paramètre path ou en-tête If-Match manquant')
+  if (!/\.(json|csv)$/i.test(path) || path.split('/').some((s) => s === '..' || s === '' || s.startsWith('.'))) {
+    return send(res, 403, 'Fichier non modifiable')
+  }
+  const current = await options.fs.readText(path).catch(() => undefined)
+  if (current === undefined) return send(res, 403, 'Fichier inexistant ou hors de la configuration')
+  if (sha256(current) !== expected) return send(res, 409, 'Le fichier a été modifié sur disque depuis sa lecture')
+  const body = await readBody(req)
+  if (body === undefined) return send(res, 413, 'Fichier trop volumineux')
+  await options.fs.writeText(path, body)
+  res.writeHead(204, { ...SECURITY_HEADERS })
+  res.end()
+}
+
 function handler(options: ServeOptions, port: () => number) {
   const uiRoot = normalize(options.uiDir + sep)
   return async (req: IncomingMessage, res: ServerResponse) => {
@@ -53,8 +90,10 @@ function handler(options: ServeOptions, port: () => number) {
       // Anti DNS rebinding : seul l'hôte local est accepté (plan R6).
       const host = req.headers.host
       if (host !== `127.0.0.1:${port()}` && host !== `localhost:${port()}`) return send(res, 403, 'Hôte refusé')
+      const url = new URL(req.url ?? '/', 'http://localhost')
+      const path = decodeURIComponent(url.pathname)
+      if (req.method === 'PUT' && path === '/api/file') return await writeFileRequest(options, url, req, res)
       if (req.method !== 'GET' && req.method !== 'HEAD') return send(res, 405, 'Méthode non autorisée', undefined, { Allow: 'GET, HEAD' })
-      const path = decodeURIComponent(new URL(req.url ?? '/', 'http://localhost').pathname)
       if (path === '/api/snapshot') {
         return send(res, 200, JSON.stringify(await snapshot(options.fs)), TYPES['.json'], { 'Cache-Control': 'no-store' })
       }

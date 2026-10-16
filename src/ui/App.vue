@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiDownload, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
 import GpuView from './components/GpuView.vue'
@@ -23,7 +23,9 @@ watch(() => store.session, () => (showHome.value = false))
 function onKey(e: KeyboardEvent) {
   if (!(e.ctrlKey || e.metaKey)) return
   const key = e.key.toLowerCase()
-  if (key === 'z' && !e.shiftKey) store.undo()
+  if (key === 's') {
+    if (store.canSave) save()
+  } else if (key === 'z' && !e.shiftKey) store.undo()
   else if ((key === 'z' && e.shiftKey) || key === 'y') store.redo()
   else return
   e.preventDefault()
@@ -45,6 +47,14 @@ onBeforeUnmount(() => {
 })
 
 const notice = ref<string>()
+async function save() {
+  const results = await store.save()
+  const failed = results.filter((r) => !r.ok)
+  const saved = results.length - failed.length
+  notice.value =
+    (saved ? `${saved} fichier${saved > 1 ? 's' : ''} enregistré${saved > 1 ? 's' : ''}.` : '') +
+    failed.map((r) => ` Non enregistré : ${r.path} (${r.ok ? '' : r.message}).`).join('')
+}
 async function downloadZip() {
   const r = await store.downloadZip()
   notice.value =
@@ -73,6 +83,7 @@ const showProblems = ref(true)
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
+      <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="downloadZip">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>

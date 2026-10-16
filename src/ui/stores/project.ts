@@ -8,7 +8,7 @@ import { summarize } from '@core/validation/validate'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
 import { ServerSource } from '../io/server'
-import type { ConfigSource } from '../io/source'
+import type { ConfigSource, SaveResult } from '../io/source'
 
 export const useProject = defineStore('project', () => {
   const source = shallowRef<ConfigSource>()
@@ -81,8 +81,28 @@ export const useProject = defineStore('project', () => {
     return { name: `${name}.zip`, errors: countProblems(s.result.problems).errors, reformatted: reformatted(s) }
   }
 
+  const canSave = computed(() => !!source.value?.save)
+
+  /**
+   * Enregistre les fichiers modifiés (vce serve). Les fichiers écrits deviennent la nouvelle
+   * origine ; ceux refusés (conflit…) restent modifiés. L'historique repart de zéro.
+   */
+  async function save(): Promise<SaveResult[]> {
+    const s = session.value
+    if (!s || !source.value?.save || changed.value.size === 0) return []
+    const changes = changed.value
+    const results = await source.value.save(changes, s.originals)
+    const originals = new Map(s.originals)
+    for (const r of results) if (r.ok) originals.set(r.path, changes.get(r.path)!)
+    let next = await openSession(originals)
+    for (const r of results) if (!r.ok) next = editSession(next, r.path, () => dataOf(s, r.path))
+    session.value = next
+    exported.value = next.edited
+    return results
+  }
+
   return {
-    pending, downloadZip,
+    pending, downloadZip, canSave, save,
     source, session, loading, error, load, result, root, models, summary, countsByModel,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

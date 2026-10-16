@@ -1,5 +1,5 @@
-import { readdir, readFile, realpath } from 'node:fs/promises'
-import { join, relative, sep } from 'node:path'
+import { readdir, readFile, realpath, rename, writeFile } from 'node:fs/promises'
+import { basename, dirname, join, relative, sep } from 'node:path'
 import type { ConfigFs } from '@core/load/fs'
 
 const isInside = (root: string, path: string) => path === root || path.startsWith(root + sep)
@@ -38,9 +38,22 @@ export class NodeConfigFs implements ConfigFs {
     return out.sort()
   }
 
-  async readText(path: string): Promise<string> {
+  /** Chemin réel d'un fichier existant de la configuration ; erreur s'il en sort. */
+  private async resolve(path: string): Promise<string> {
     const full = await realpath(join(this.root, ...path.split('/')))
     if (!isInside(this.root, full)) throw new Error(`Chemin hors de la configuration : ${path}`)
-    return readFile(full, 'utf8')
+    return full
+  }
+
+  async readText(path: string): Promise<string> {
+    return readFile(await this.resolve(path), 'utf8')
+  }
+
+  /** Remplace un fichier existant, de façon atomique (fichier temporaire puis renommage). */
+  async writeText(path: string, text: string): Promise<void> {
+    const full = await this.resolve(path)
+    const tmp = join(dirname(full), `.${basename(full)}.vce-${process.pid}.tmp`)
+    await writeFile(tmp, text, 'utf8')
+    await rename(tmp, full)
   }
 }
