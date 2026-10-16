@@ -1,0 +1,26 @@
+{
+  "name": "typeenjeupprt",
+  "description": "",
+  "columns": [
+    {
+      "name": "code",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 6
+      }
+    },
+    {
+      "name": "libelle",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 100
+      }
+    }
+  ]
+}

@@ -109,7 +109,8 @@ class Checker {
     const name = c.model.name
     const unique = () => {
       const seen = new Map<string, string>()
-      return (id: string, file: string, at: string) => {
+      return (id: string | undefined, file: string, at: string) => {
+        if (id === undefined) return
         const first = seen.get(id)
         if (first) this.out.push(problem('ERR-ID-DUPLICATE', name, file, at, { id, first }))
         else seen.set(id, `${file.slice(name.length + 1)}#${at}`)

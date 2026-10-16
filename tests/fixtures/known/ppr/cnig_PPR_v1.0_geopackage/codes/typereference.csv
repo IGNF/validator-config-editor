@@ -1,0 +1,8 @@
+code,libelle
+01,Règlement non approuvé
+02,Règlement approuvé
+03,Zonage réglementaire non approuvé
+04,Zonage réglementaire approuvé
+05,Cartes approuvées
+06,Autres cartes
+99,Autres

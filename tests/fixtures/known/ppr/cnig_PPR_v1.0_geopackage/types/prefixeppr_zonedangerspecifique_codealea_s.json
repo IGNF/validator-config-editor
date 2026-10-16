@@ -1,0 +1,134 @@
+{
+  "name": "prefixeppr_zonedangerspecifique_codealea_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzonedanger",
+      "description": "pk",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "fk procedure",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "typealea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 3,
+        "enum": [
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "999"
+        ]
+      }
+    },
+    {
+      "name": "niveaualea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 2,
+        "enum": [
+          "00",
+          "01",
+          "02",
+          "04",
+          "06",
+          "07",
+          "99"
+        ]
+      }
+    },
+    {
+      "name": "typesuralea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 2,
+        "enum": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "99"
+        ]
+      }
+    },
+    {
+      "name": "description",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "idouvrageprotecteur_s",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false,
+        "maxLength": 50,
+        "reference": "prefixeppr_ouvrageprotecteur_codealea_s.idouvrageprotecteur"
+      }
+    },
+    {
+      "name": "idouvrageprotecteur_l",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false,
+        "maxLength": 50,
+        "reference": "prefixeppr_ouvrageprotecteur_codealea_l.idouvrageprotecteur"
+      }
+    },
+    {
+      "name": "idouvrageprotecteur_p",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false,
+        "maxLength": 50,
+        "reference": "prefixeppr_ouvrageprotecteur_codealea_p.idouvrageprotecteur"
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Géométrie associée",
+      "type": "Polygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

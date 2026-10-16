@@ -1,0 +1,56 @@
+{
+    "id": "5bdd23b2fe5de31d6e54df6482425f9c",
+    "name": "cnig_SNDD_2019",
+    "title": "cnig_SNDD_2019",
+    "description": "Standard National de données dessertes pour le transport de bois",
+    "constraints": {},
+    "files": [
+        {
+            "id": "4de3e95678ae7e4194845ffd719ca05f",
+            "name": "CONTRAINTES",
+            "title": "CONTRAINTES",
+            "path": "CONTRAINTES",
+            "type": "table",
+            "mandatory": "WARN",
+            "tableModel": "./types/CONTRAINTES.json"
+        },
+        {
+            "id": "7443e6adac6548ca826fbbad3eb80d79",
+            "name": "EQUIPEMENTS",
+            "title": "EQUIPEMENTS",
+            "description": "Classe des équipements liés au stockage et au transport de bois en forêt.",
+            "path": "EQUIPEMENTS",
+            "type": "table",
+            "mandatory": "WARN",
+            "tableModel": "./types/EQUIPEMENTS.json"
+        },
+        {
+            "id": "00438c830bee0b934a4b785daf7e1ed5",
+            "name": "TRONCON_ITBR",
+            "title": "TRONCON_ITBR",
+            "path": "TRONCON_ITBR",
+            "type": "table",
+            "mandatory": "WARN",
+            "tableModel": "./types/TRONCON_ITBR.json"
+        },
+        {
+            "id": "30d1100a50dd5cdd2e0a8206836b1513",
+            "name": "TRONCON_ITDF",
+            "title": "TRONCON_ITDF",
+            "path": "TRONCON_ITDF",
+            "type": "table",
+            "mandatory": "WARN",
+            "tableModel": "./types/TRONCON_ITDF.json"
+        },
+        {
+            "id": "9e842fa2b71015c28e737b10b60a8013",
+            "name": "TRONCON_ROUTE",
+            "title": "TRONCON_ROUTE",
+            "path": "TRONCON_ROUTE",
+            "type": "table",
+            "mandatory": "WARN",
+            "tableModel": "./types/TRONCON_ROUTE.json"
+        }
+    ],
+    "codes": []
+}

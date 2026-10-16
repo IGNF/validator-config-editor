@@ -1,0 +1,60 @@
+{
+  "name": "gpkg_spatial_ref_sys",
+  "description": "",
+  "columns": [
+    {
+      "name": "srs_name",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "srs_id",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "organization",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "organization_coordsys_id",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "definition",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "description",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "prefixeppr_zonereglementaireurba_l",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzonereglementaire",
+      "description": "Identifiant unique",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "unique": true,
+        "maxLength": 15
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "fk procedure",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "codezonereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "libellezonereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "typereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 2,
+        "enum": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07"
+        ]
+      }
+    },
+    {
+      "name": "existemesuresobligatoires",
+      "description": "",
+      "type": "Boolean",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Geométrie associée",
+      "type": "LineString",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

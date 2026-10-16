@@ -1,0 +1,26 @@
+{
+  "name": "typealea",
+  "description": "",
+  "columns": [
+    {
+      "name": "code",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 3
+      }
+    },
+    {
+      "name": "libelle",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 150
+      }
+    }
+  ]
+}

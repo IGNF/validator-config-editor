@@ -1,0 +1,41 @@
+code,libelle
+010000,Urbanisation existante
+010100,Habitats
+010200,Activités
+010300,Etablissements à l'origine du risque
+010400,Espaces non urbanisés
+010500,Espaces agricoles
+020000,Etablissements recevant du public (ERP)
+020100,Services de secours
+020200,Bâtiments d'enseignement
+020300,Bâtiments de services publics
+020400,Bâtiments et équipements de loisirs
+020500,Bâtiments de soins
+020600,Grands centres commerciaux
+020700,Petits commerces et services aux particuliers
+020800,Bâtiments religieux
+030000,Infrastructures de transports
+030100,Routes
+030101,Grandes voies structurantes
+030102,Autres voies structurantes
+030103,Voies de dessertes
+030200,Voies ferrées
+030300,Voies navigables 
+030400,Itinéraires et stationnements de TMD (Transport de Matières Dangereuses)
+030500,Aéroports
+030600,"Gares (routières, ferroviaires, portuaires)"
+030700,"Modes doux de déplacement (piétons, vélos) "
+030800,"Transports collectifs (bus, métros, etc.) "
+040000,Espaces publics ouverts
+040100,Espaces à usage permanent
+040200,Espaces à usage périodique ou occasionnel
+050000,Ouvrages et équipements d'intérêt général
+050100,Poste EDF
+050200,Central téléphonique
+050300,Poste de détente GDF
+050400,Antenne de téléphonie mobile
+050500,Point de captage d’eau
+050600,"Château d'eau, réservoir"
+060000,Projets de développement de la commune
+070000,Enjeux environnementaux et patrimoniaux
+999999,Autre

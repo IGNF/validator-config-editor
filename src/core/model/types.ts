@@ -5,7 +5,8 @@ export type FileType = 'table' | 'multi_table' | 'pdf' | 'metadata' | 'directory
 export type Mandatory = 'ERROR' | 'WARN' | 'OPTIONAL'
 
 export interface FileModel {
-  id: string
+  /** Propre au GpU : facultatif pour le validator. */
+  id?: string
   name: string
   title?: string
   description?: string
@@ -17,7 +18,7 @@ export interface FileModel {
 }
 
 export interface StaticTable {
-  id: string
+  id?: string
   name: string
   title?: string
   data: string
@@ -29,7 +30,7 @@ export interface DocumentConstraints {
 }
 
 export interface DocumentModel {
-  id: string
+  id?: string
   name: string
   title?: string
   description?: string
@@ -47,12 +48,12 @@ export interface ColumnConstraints {
   pattern?: string
   minLength?: number
   maxLength?: number
-  enum?: string[] | null
+  enum?: (string | number | boolean)[] | null
   reference?: string
 }
 
 export interface Column {
-  id: string
+  id?: string
   name: string
   title?: string
   description?: string
@@ -61,7 +62,7 @@ export interface Column {
 }
 
 export interface TableModel {
-  id: string
+  id?: string
   name: string
   title?: string
   description?: string

@@ -1,0 +1,69 @@
+{
+  "name": "gpkg_metadata_reference",
+  "description": "",
+  "columns": [
+    {
+      "name": "reference_scope",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "table_name",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "column_name",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "row_id_value",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "timestamp",
+      "description": "",
+      "type": "Date",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "md_file_id",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "md_parent_id",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    }
+  ]
+}

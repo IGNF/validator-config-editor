@@ -57,6 +57,12 @@ describe('JSON Schema', () => {
     expect(validateTable({ ...table, columns: [{ ...column, constraints: { maxLength: -1 } }] })).toBe(true)
   })
 
+  it('acceptent l\'absence d\'id et des valeurs enum numériques (configurations ppr, naviforest)', () => {
+    const { id: _id, ...noId } = column
+    expect(validateTable({ name: 'T', columns: [{ ...noId, constraints: { enum: [0, 1, -1] } }] })).toBe(true)
+    expect(validateDocument({ name: 'D', files: [{ name: 'F', type: 'pdf', path: 'x' }], codes: [{ name: 'L', data: './codes/L.csv' }] })).toBe(true)
+  })
+
   it('acceptent les propriétés inconnues (principe II)', () => {
     expect(validateDocument({ ...document, extension: 1 })).toBe(true)
     expect(validateTable({ ...table, columns: [{ ...column, extension: true }] })).toBe(true)
@@ -66,11 +72,13 @@ describe('JSON Schema', () => {
     ['type de colonne inconnu', validateTable, { ...table, columns: [{ ...column, type: 'Texte' }] }, '/columns/0/type'],
     ['type URL du schéma historique', validateTable, { ...table, columns: [{ ...column, type: 'URL' }] }, '/columns/0/type'],
     ['columns absent', validateTable, { id, name: 'T' }, ''],
+    ['enum objet', validateTable, { ...table, columns: [{ ...column, constraints: { enum: [{}] } }] }, '/columns/0/constraints/enum/0'],
     ['maxLength inférieur à -1', validateTable, { ...table, columns: [{ ...column, constraints: { maxLength: -2 } }] }, '/columns/0/constraints/maxLength'],
     ['mandatory inconnu', validateDocument, { ...document, files: [{ ...file, mandatory: 'YES' }] }, '/files/0/mandatory'],
     ['type de fichier inconnu', validateDocument, { ...document, files: [{ ...file, type: 'zip' }] }, '/files/0/type'],
     ['id mal formé', validateDocument, { ...document, id: 'abc' }, '/id'],
     ['code sans data', validateDocument, { ...document, codes: [{ id, name: 'Liste' }] }, '/codes/0'],
+    ['fichier sans chemin', validateDocument, { ...document, files: [{ name: 'F', type: 'pdf' }] }, '/files/0'],
     ['section gpu.json inconnue', validateGpu, { validator_inconnu: {} }, ''],
     ['clé gpu.json mal formée', validateGpu, { validator_file_model: { 'pas-un-id': {} } }, '/validator_file_model'],
     ['valeur gpu.json non textuelle', validateGpu, { validator_file_model: { [id]: { path: 1 } } }, `/validator_file_model/${id}/path`],

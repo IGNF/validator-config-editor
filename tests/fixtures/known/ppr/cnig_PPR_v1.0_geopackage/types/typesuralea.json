@@ -1,0 +1,26 @@
+{
+  "name": "typesuralea",
+  "description": "",
+  "columns": [
+    {
+      "name": "code",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 2
+      }
+    },
+    {
+      "name": "libelle",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 50
+      }
+    }
+  ]
+}

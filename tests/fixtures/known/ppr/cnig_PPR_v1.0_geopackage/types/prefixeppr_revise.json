@@ -1,0 +1,28 @@
+{
+  "name": "prefixeppr_revise",
+  "description": "",
+  "columns": [
+    {
+      "name": "codeprocrevisante",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "codeprocrevisee",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    }
+  ]
+}

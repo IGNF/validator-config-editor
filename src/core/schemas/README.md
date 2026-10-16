@@ -13,6 +13,10 @@ Ces schémas (draft-07) décrivent le format **réel** des configurations IGNF/v
 - inventaire des clés et valeurs de `IGNF/validator-config-gpu` (branche `json-source`) ;
 - `doc/document_model.md` et le modèle Java `fr.ign.validator.model` du dépôt `IGNF/validator`.
 
+Les `id` sont propres au Géoportail de l'Urbanisme : le validator ne les lit pas, ils sont donc
+facultatifs (absents de `validator-config-ppr`). Les valeurs `enum` peuvent être numériques
+(`validator-config-naviforest`) : le validator les convertit en texte.
+
 Les objets restent ouverts : une propriété inconnue n'est pas une erreur (principe II).
 Le code de validation est généré dans `generated/` par `npm run schemas` : ne pas le modifier
 à la main.

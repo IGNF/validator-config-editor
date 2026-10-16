@@ -1,0 +1,98 @@
+{
+  "name": "prefixeppr_ouvrageprotecteur_codealea_l",
+  "description": "",
+  "columns": [
+    {
+      "name": "idouvrageprotecteur",
+      "description": "pk",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15
+      }
+    },
+    {
+      "name": "idrefexterne",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false,
+        "maxLength": 50
+      }
+    },
+    {
+      "name": "refexterne",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 2,
+        "enum": [
+          "01",
+          "02",
+          "99"
+        ]
+      }
+    },
+    {
+      "name": "refexterneautre",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "typeouvrageprotecteur",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 2,
+        "enum": [
+          "1",
+          "11",
+          "111",
+          "112",
+          "119",
+          "12",
+          "2",
+          "3",
+          "4",
+          "999"
+        ]
+      }
+    },
+    {
+      "name": "roleprotection",
+      "description": "",
+      "type": "Boolean",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "occurrence",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Géométrie associée",
+      "type": "MultiLineString",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}

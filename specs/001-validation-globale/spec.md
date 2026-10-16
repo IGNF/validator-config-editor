@@ -246,9 +246,10 @@ passe. Une PR qui casse une référence fait échouer le workflow.
 
 - **SC-001** : `vce check` sur `validator-config-gpu/config` (branche `json-source`, 151 modèles)
   s'exécute en moins de 5 secondes sur un poste de développement.
-- **SC-002** : chaque erreur que l'outil signale sur `validator-config-gpu/config` est soit
-  corrigée dans le dépôt de configuration, soit reconnue comme un faux positif et corrigée dans
-  l'outil. Objectif : 0 faux positif.
+- **SC-002** : chaque erreur que l'outil signale sur les configurations connues
+  (`validator-config-gpu`, `validator-config-dgpr`, `validator-config-naviforest`,
+  `validator-config-ppr`) est soit corrigée dans le dépôt de configuration, soit reconnue comme
+  un faux positif et corrigée dans l'outil. Objectif : 0 faux positif.
 - **SC-003** : chaque code de problème est couvert par au moins un cas de test dédié.
 - **SC-004** : un utilisateur trouve une colonne donnée d'une table donnée en 3 clics au plus
   depuis l'ouverture de l'éditeur (après filtrage par nom du modèle).
@@ -261,7 +262,12 @@ passe. Une PR qui casse une référence fait échouer le workflow.
 - Les utilisateurs sont des mainteneurs de configuration, à l'aise avec git, Node.js (≥ 22) et
   un terminal. Le versionnement, les branches et les PR restent faits avec git, hors de l'outil.
 - Le format de référence est celui de la branche `json-source` de `validator-config-gpu`. Les
-  autres dépôts de configuration au même format sont pris en charge sans adaptation.
+  autres configurations connues ([dgpr](https://github.com/IGNF/validator-config-dgpr),
+  [naviforest](https://github.com/IGNF/validator-config-naviforest),
+  [ppr](https://github.com/IGNF/validator-config-ppr)) utilisent le même format, sans `id` pour
+  certaines (propres au GpU) et avec des valeurs `enum` numériques : elles sont prises en charge
+  et testées sur des extraits réels.
+- L'intégration (US4) concerne les quatre dépôts de configuration connus.
 - Les fichiers `config-backup/` du dépôt de configuration sont hors périmètre.
 - Les JSON Schema de l'éditeur pourront être proposés plus tard au dépôt du validator, mais
   cette feature n'en dépend pas.

@@ -12,6 +12,17 @@ Il travaille sur tout le dossier de configuration à la fois :
 
 > Projet en cours de spécification : voir [specs/](specs/).
 
+## Configurations connues
+
+| Dépôt | Modèles |
+|---|---|
+| [IGNF/validator-config-gpu](https://github.com/IGNF/validator-config-gpu) | standards CNIG du Géoportail de l'Urbanisme (PLU, CC, PSMV, SCoT, SUP…) |
+| [IGNF/validator-config-dgpr](https://github.com/IGNF/validator-config-dgpr) | directive inondation, COVADIS, canalisations |
+| [IGNF/validator-config-naviforest](https://github.com/IGNF/validator-config-naviforest) | dessertes forestières (SNDD) |
+| [IGNF/validator-config-ppr](https://github.com/IGNF/validator-config-ppr) | plans de prévention des risques (PPR) |
+
+Chacune est testée sur un extrait réel (`tests/fixtures/`).
+
 ## Utilisation dans un dépôt de configuration
 
 ```json

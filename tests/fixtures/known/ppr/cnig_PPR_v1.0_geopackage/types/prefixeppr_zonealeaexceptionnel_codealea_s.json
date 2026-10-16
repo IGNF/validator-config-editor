@@ -1,0 +1,88 @@
+{
+  "name": "prefixeppr_zonealeaexceptionnel_codealea_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzonealea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 15
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "fk table procédure",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 22,
+        "reference": "prefixeppr_procedure.codeprocedure"
+      }
+    },
+    {
+      "name": "typealea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "maxLength": 3,
+        "enum": [
+          "14",
+          "999"
+        ]
+      }
+    },
+    {
+      "name": "niveaualea",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false,
+        "maxLength": 2,
+        "enum": [
+          "00",
+          "01",
+          "02",
+          "04",
+          "06",
+          "07",
+          "99"
+        ]
+      }
+    },
+    {
+      "name": "occurrence",
+      "description": "",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    },
+    {
+      "name": "description",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "presenceRequired": false
+      }
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Géométrie associée",
+      "type": "Polygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true
+      }
+    }
+  ]
+}
