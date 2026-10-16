@@ -1,0 +1,55 @@
+# Contrat : codes de problème
+
+Un problème a la forme suivante :
+
+```ts
+interface Problem {
+  code: string                        // stable, voir tableau
+  severity: 'error' | 'warning'
+  model: string | null                // nom du dossier du modèle, null si global
+  file: string                        // chemin relatif au dossier de configuration, séparateur '/'
+  pointer?: string                    // pointeur JSON (RFC 6901) dans le fichier, ou '/<ligne>' pour un CSV
+  message: string                     // français
+}
+```
+
+**Stabilité des codes** : un code n'est jamais renommé ni réutilisé. Changer la sévérité d'un
+code est un changement de version mineure.
+
+## Chargement
+
+| Code | Sévérité | Déclencheur | Message (exemple) |
+|---|---|---|---|
+| `ERR-JSON-SYNTAX` | erreur | JSON illisible | `JSON invalide ligne 12, colonne 5 : virgule manquante` |
+| `ERR-CSV-SYNTAX` | erreur | guillemet non fermé | `CSV invalide ligne 8 : guillemet non fermé` |
+| `ERR-CSV-HEADER` | erreur | en-tête vide ou nom de colonne vide ou dupliqué | `En-tête CSV invalide : colonne « TYPEZONE » dupliquée` |
+| `ERR-CSV-ROW-LENGTH` | erreur | ligne dont le nombre de colonnes diffère de l'en-tête | `Ligne 14 : 3 valeurs pour 5 colonnes` |
+| `WARN-MODEL-NO-DOCUMENT` | avertissement | dossier sans `files.json`, non désigné comme parent | `Dossier sans files.json et non utilisé comme modèle parent` |
+
+## Schémas
+
+| Code | Sévérité | Déclencheur | Message (exemple) |
+|---|---|---|---|
+| `ERR-SCHEMA` | erreur | non-conformité de `files.json`, `types/*.json` ou `gpu.json` à son JSON Schema | `/columns/3/type : valeur « Texte » non autorisée (attendu : String, Integer, …)` |
+
+## Références croisées
+
+| Code | Sévérité | Déclencheur | Message (exemple) |
+|---|---|---|---|
+| `WARN-MODEL-NAME` | avertissement | `name` de `files.json` ≠ nom du dossier | `Le nom « cnig_PLU_2016 » diffère du dossier « cnig_PLU_2017 »` |
+| `ERR-PARENT-MISSING` | erreur | `parent.name` ne désigne aucun dossier de la configuration | `Modèle parent « cnig_SUP_XXX_2016 » introuvable` |
+| `ERR-TABLE-MODEL-MISSING` | erreur | `files[].tableModel` désigne un fichier absent | `Modèle de table « ./types/ZONE_URBA.json » introuvable` |
+| `ERR-CODE-DATA-MISSING` | erreur | `codes[].data` désigne un fichier absent | `Liste de codes « ./codes/ListeEtatPLU.csv » introuvable` |
+| `ERR-FK-SYNTAX` | erreur | clé étrangère illisible ou listes de colonnes de longueurs différentes | `Clé étrangère illisible : « (TYPE) REFERENCE Liste(TYPE) »` |
+| `ERR-FK-SOURCE-COLUMN` | erreur | colonne source absente de la table | `Clé étrangère : colonne « TYPEZONE » absente de la table` |
+| `ERR-FK-TARGET-LIST` | erreur | liste cible non déclarée dans `codes[]` du modèle ni de son parent | `Clé étrangère : liste « ListeTypezonePLU » non déclarée dans files.json` |
+| `ERR-FK-TARGET-COLUMN` | erreur | colonne cible absente de l'en-tête du CSV de la liste | `Clé étrangère : colonne « TYPEZONE » absente de ListeTypezonePLU.csv` |
+| `ERR-REFERENCE-TARGET` | erreur | `constraints.reference` `TABLE.COLONNE` non résolue dans le modèle | `Référence « SERVITUDE.IDSUP » : table ou colonne introuvable` |
+| `ERR-ID-DUPLICATE` | erreur | même `id` porté par deux objets du modèle (hors parent embarqué) | `Identifiant 7833f9f8… déjà utilisé par types/ZONE_URBA.json#/` |
+| `WARN-GPU-ORPHAN-ID` | avertissement | clé de section de `gpu.json` absente des `id` connus (plan R10) | `gpu.json : identifiant 1773dd88… sans objet correspondant` |
+| `WARN-UNREFERENCED-FILE` | avertissement | fichier de `types/` ou `codes/` référencé par aucun `tableModel` ni `codes[].data` | `Fichier non référencé par files.json` |
+
+## Tri
+
+Les problèmes sont triés par modèle, puis par fichier, puis par pointeur (ordre naturel des
+segments numériques), puis par code.
