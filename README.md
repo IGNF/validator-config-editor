@@ -12,6 +12,24 @@ Il travaille sur tout le dossier de configuration à la fois :
 
 > Projet en cours de spécification : voir [specs/](specs/).
 
+## Éditeur en ligne
+
+**https://ignf.github.io/validator-config-editor/**
+
+Sans installation : ouvrez le dossier `config/` (ou la racine d'un clone de dépôt de
+configuration), parcourez et validez les modèles, modifiez tables et modèles de document, puis
+téléchargez toute la configuration en ZIP. Les fichiers restent sur votre poste : ils sont lus par
+le navigateur, rien n'est envoyé sur le réseau.
+
+| | Éditeur en ligne | `vce serve` (éditeur local) |
+|---|---|---|
+| Installation | aucune | Node.js ≥ 22, dépendance du dépôt de configuration |
+| Ouverture | dossier choisi dans le navigateur | dossier passé en argument |
+| Enregistrement | téléchargement ZIP de toute la configuration | écriture directe des fichiers modifiés |
+| Validation, navigation, édition | identiques | identiques |
+
+Le site est publié par le workflow `pages.yml` à chaque merge sur `main`.
+
 ## Configurations connues
 
 | Dépôt | Modèles |
