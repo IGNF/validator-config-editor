@@ -2,6 +2,7 @@
 import { mdiFolderOpen } from '@mdi/js'
 import { useTemplateRef } from 'vue'
 import { canPickFolder, FolderSource } from '../io/folder'
+import RepoDialog from './RepoDialog.vue'
 import { useProject } from '../stores/project'
 
 const store = useProject()
@@ -41,7 +42,15 @@ defineExpose({ choose })
       <p class="text-body-2 mt-2">Choisissez le dossier <code>config/</code> ou la racine d'un dépôt de configuration (ex. un clone de validator-config-gpu).</p>
       <input ref="input" type="file" webkitdirectory multiple hidden data-testid="folder-input" @change="picked" />
     </template>
-    <v-alert v-else type="warning" variant="tonal">
+    <div class="mt-6">
+      <p class="mb-2">Ou lire la configuration d'un dépôt GitHub public, sans clone :</p>
+      <RepoDialog>
+        <template #activator="{ props }">
+          <v-btn v-bind="props" variant="tonal" data-testid="home-open-repo">Ouvrir un dépôt GitHub</v-btn>
+        </template>
+      </RepoDialog>
+    </div>
+    <v-alert v-if="!supported" type="warning" variant="tonal" class="mt-4">
       Ce navigateur ne permet pas de choisir un dossier : utilisez une version récente de Firefox, Chrome, Edge ou Safari.
     </v-alert>
     <p class="text-body-2 mt-8">

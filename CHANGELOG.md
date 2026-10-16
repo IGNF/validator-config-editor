@@ -7,6 +7,10 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Ouverture de la configuration d'un dépôt GitHub public par son URL (branche, sous-dossier), éditable et téléchargeable en ZIP (#23).
+
 ## [0.1.0] - 2026-10-16
 
 ### Added

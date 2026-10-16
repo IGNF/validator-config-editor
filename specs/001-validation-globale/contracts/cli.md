@@ -58,7 +58,7 @@ Le pointeur est omis (`<fichier> CODE message`) quand il ne s'applique pas.
 | En-tête `Host` différent de `127.0.0.1:<port>` ou `localhost:<port>` | `403` |
 | Chemin statique inconnu, ou chemin sortant de `dist/ui/` | `404` |
 
-En-têtes de toutes les réponses : `Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:`,
+En-têtes de toutes les réponses : `Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com` (lecture de dépôts GitHub, feature 003),
 `X-Content-Type-Options: nosniff`, `Cache-Control: no-store` pour `/api/*`.
 
 L'API est en lecture seule dans cette feature. L'écriture (`PUT /api/file`) est prévue en 002.
