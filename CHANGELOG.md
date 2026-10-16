@@ -9,6 +9,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Panneau des problèmes lisible : groupes par fichier, titres et conseils en clair, localisation par noms, sévérité par icône (#39).
+
 - Éditeur en ligne publié sur GitHub Pages : ouverture d'un dossier local, édition, téléchargement ZIP (#11, #14, #16).
 - Édition des tables et des modèles de document, avec annuler/rétablir et validation en direct (#12, #13).
 
