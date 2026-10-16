@@ -9,6 +9,9 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Éditeur en ligne publié sur GitHub Pages : ouverture d'un dossier local, édition, téléchargement ZIP (#11, #14, #16).
+- Édition des tables et des modèles de document, avec annuler/rétablir et validation en direct (#12, #13).
+
 - Prise en charge des configurations dgpr, naviforest et ppr : `id` facultatif, valeurs `enum` numériques (#21).
 
 - Spécification 001 : navigation et validation globale d'une configuration validator.
