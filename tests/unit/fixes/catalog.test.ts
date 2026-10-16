@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { applyChanges, openSession, undoEdit, type Session } from '@core/edit/session'
-import { fixesFor } from '@core/fixes/catalog'
+import { canFixAll, fixAll, fixesFor } from '@core/fixes/catalog'
 import { distance, similar } from '@core/fixes/similar'
 import { editJson, readConfig } from '../../support/fixtures'
 
@@ -144,5 +144,41 @@ describe('corrections', () => {
   it('aucune correction pour un problème sans correction connue', async () => {
     const s = await broken((f) => f.set(ZONE_URBA, '{'))
     expect(fixesFor(s, s.result.problems.find((p) => p.code === 'ERR-JSON-SYNTAX')!)).toEqual([])
+  })
+})
+
+describe('corrections groupées', () => {
+  const ORPHANS = ['0123456789abcdef0123456789abcde1', '0123456789abcdef0123456789abcde2', '0123456789abcdef0123456789abcde3']
+
+  it('corrige tous les problèmes d\'un code en un pas, défait par une annulation', async () => {
+    const s = await broken((f) => editJson(f, `${PLU}/gpu.json`, (d) => { for (const id of ORPHANS) d.validator_file_model[id] = { path: 'x' } }))
+    const problems = s.result.problems.filter((p) => p.code === 'WARN-GPU-ORPHAN-ID')
+    expect(problems).toHaveLength(3)
+    expect(canFixAll(s, problems)).toBe(true)
+    const after = fixAll(s, problems)!
+    expect(codes(after)).toEqual([])
+    expect(after.history.past).toHaveLength(1)
+    expect(codes(undoEdit(after))).toEqual(['WARN-GPU-ORPHAN-ID', 'WARN-GPU-ORPHAN-ID', 'WARN-GPU-ORPHAN-ID'])
+  })
+
+  it('enchaîne les corrections d\'un même texte (lignes CSV successives)', async () => {
+    const LIST = `${PLU}/codes/InformationUrbaType.csv`
+    const s = await broken((f) => f.set(LIST, f.get(LIST)!.replace(/\n?$/, '\n') + '42,00,Secteurs a, b,,\n43,00,Secteurs c, d,,\n'))
+    const problems = s.result.problems.filter((p) => p.code === 'ERR-CSV-ROW-LENGTH')
+    expect(problems).toHaveLength(2)
+    const after = fixAll(s, problems)!
+    expect(codes(after)).toEqual([])
+    expect(after.texts.get(LIST)!.endsWith('42,00,"Secteurs a, b",,\n43,00,"Secteurs c, d",,\n')).toBe(true)
+  })
+
+  it('refuse les corrections à choix multiple', async () => {
+    const s = await broken((f) => editJson(f, ZONE_URBA, (d) => {
+      d.columns[0].constraints.reference = 'DOC_URBA.IDURB'
+      d.columns[1].constraints = { ...d.columns[1].constraints, reference: 'DOC_URBA.IDURB' }
+    }))
+    const problems = s.result.problems.filter((p) => p.code === 'ERR-REFERENCE-TARGET')
+    expect(problems).toHaveLength(2)
+    expect(canFixAll(s, problems)).toBe(false)
+    expect(fixAll(s, problems)).toBeUndefined()
   })
 })

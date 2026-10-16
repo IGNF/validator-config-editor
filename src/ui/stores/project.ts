@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
 import { allFiles, allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
-import { fixesFor, type Fix } from '@core/fixes/catalog'
+import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from '@core/fixes/catalog'
 import { countByModel, type Problem } from '@core/validation/problems'
 import { countProblems } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
@@ -67,6 +67,12 @@ export const useProject = defineStore('project', () => {
   function applyFix(fix: Fix) {
     if (session.value) session.value = applyChanges(session.value, fix.changes)
   }
+  /** Correction groupée (004 US2) : possible si chaque problème a une seule correction sûre. */
+  const canFixAll = (problems: readonly Problem[]) => !!session.value && canFixAllIn(session.value, problems)
+  function fixAll(problems: readonly Problem[]) {
+    const next = session.value && fixAllIn(session.value, problems)
+    if (next) session.value = next
+  }
 
   // Modifications déjà téléchargées (ou enregistrées) : plus d'avertissement avant de quitter.
   const exported = shallowRef<ReadonlyMap<string, unknown>>()
@@ -109,7 +115,7 @@ export const useProject = defineStore('project', () => {
   }
 
   return {
-    pending, downloadZip, canSave, save, fixes, applyFix,
+    pending, downloadZip, canSave, save, fixes, applyFix, canFixAll, fixAll,
     source, session, loading, error, load, result, root, models, summary, countsByModel,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

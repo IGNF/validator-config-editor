@@ -74,7 +74,7 @@ function withText(project: Project, path: string, text: string): { project: Proj
 }
 
 // Session avec ces modifications : les fichiers revenus à l'état d'origine ne sont plus modifiés.
-function rebuild(session: Session, edited: Map<string, unknown>, texts: Map<string, string>, history: History): Session {
+function rebuild(session: Session, edited: Map<string, unknown>, texts: Map<string, string>, history: History, validate = true): Session {
   for (const [path, data] of edited) {
     const original = session.originals.get(path)
     if (data === originalData(session, path) || (original !== undefined && serialize(data, detectStyle(original)) === original)) edited.delete(path)
@@ -89,11 +89,14 @@ function rebuild(session: Session, edited: Map<string, unknown>, texts: Map<stri
     project = r.project
     problems = [...problems, ...r.problems]
   }
-  return { ...session, edited, texts, history, result: checkLoaded({ project, problems }) }
+  // Sans validation (étapes intermédiaires d'une correction groupée), le résultat garde la
+  // configuration à jour mais pas les problèmes.
+  const result = validate ? checkLoaded({ project, problems }) : { ...session.result, project }
+  return { ...session, edited, texts, history, result }
 }
 
 // Applique l'état `after` (ou `before`) de chaque modification.
-function applyStates(session: Session, changes: readonly Change[], side: 'before' | 'after', history: History): Session {
+function applyStates(session: Session, changes: readonly Change[], side: 'before' | 'after', history: History, validate = true): Session {
   const edited = new Map(session.edited)
   const texts = new Map(session.texts)
   for (const c of changes) {
@@ -102,14 +105,14 @@ function applyStates(session: Session, changes: readonly Change[], side: 'before
     else if (value === undefined) texts.delete(c.path)
     else texts.set(c.path, value as string)
   }
-  return rebuild(session, edited, texts, history)
+  return rebuild(session, edited, texts, history, validate)
 }
 
 /**
  * Applique des modifications de fichiers en un seul pas d'historique (correction, éventuellement
  * sur plusieurs fichiers). `key` fusionne les saisies successives d'un même champ.
  */
-export function applyChanges(session: Session, requested: readonly FileChange[], key?: string, now = Date.now()): Session {
+export function applyChanges(session: Session, requested: readonly FileChange[], key?: string, now = Date.now(), validate = true): Session {
   const changes: Change[] = []
   const current = new Map<string, unknown>()
   for (const r of requested) {
@@ -127,7 +130,31 @@ export function applyChanges(session: Session, requested: readonly FileChange[],
   }
   const effective = changes.filter((c) => c.before !== c.after)
   if (effective.length === 0) return session
-  return applyStates(session, effective, 'after', record(session.history, { changes: effective, at: now, ...(key !== undefined && { key }) }))
+  return applyStates(session, effective, 'after', record(session.history, { changes: effective, at: now, ...(key !== undefined && { key }) }), validate)
+}
+
+/**
+ * Applique des modifications successives, chacune calculée sur l'état laissé par la précédente,
+ * en un seul pas d'historique et une seule validation (correction groupée, 004 US2).
+ * Renvoie undefined si l'une d'elles n'est pas applicable.
+ */
+export function applyInOneStep(session: Session, producers: readonly ((s: Session) => FileChange[] | undefined)[], now = Date.now()): Session | undefined {
+  let current = session
+  for (const produce of producers) {
+    const changes = produce(current)
+    if (!changes) return undefined
+    current = applyChanges(current, changes, undefined, now, false)
+  }
+  // Un seul pas : état de départ et état final de chaque fichier touché.
+  const steps = current.history.past.slice(session.history.past.length)
+  const merged = new Map<string, Change>()
+  for (const c of steps.flatMap((step) => step.changes)) {
+    const first = merged.get(c.path)
+    merged.set(c.path, first ? { ...first, after: c.after } : { ...c })
+  }
+  const changes = [...merged.values()].filter((c) => c.before !== c.after)
+  if (changes.length === 0) return session
+  return applyStates(session, changes, 'after', record(session.history, { changes, at: now }))
 }
 
 /** Applique une édition pure à la donnée du fichier JSON `path`. */

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiAutoFix } from '@mdi/js'
 import { computed, ref } from 'vue'
 import { describeLocation } from '@core/validation/location'
 import { countProblems, filterProblems, type Problem, type Severity } from '@core/validation/problems'
@@ -40,6 +41,9 @@ const openedGroups = computed({
   get: () => opened.value ?? groups.value.map((g) => g.file),
   set: (v: string[]) => (opened.value = v),
 })
+// Correction groupée : seulement quand on regarde un code précis.
+const bulk = computed(() => (code.value && store.canFixAll(shown.value) ? shown.value : undefined))
+const bulkFiles = computed(() => new Set(bulk.value?.map((p) => p.file)).size)
 const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
 </script>
 
@@ -54,6 +58,12 @@ const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
     <p class="text-body-2 px-2" aria-live="polite" data-testid="problems-count">
       {{ shown.length }} problème{{ shown.length > 1 ? 's' : '' }}<template v-if="shown.length !== all.length"> sur {{ all.length }}</template>
     </p>
+    <div v-if="bulk" class="px-2">
+      <v-btn :prepend-icon="mdiAutoFix" color="primary" block data-testid="fix-all" @click="store.fixAll(bulk)">
+        Corriger les {{ bulk.length }} problèmes
+      </v-btn>
+      <p class="text-caption mt-1">{{ plural(bulkFiles, 'fichier') }} modifié{{ bulkFiles > 1 ? 's' : '' }}, en une seule étape annulable.</p>
+    </div>
     <v-expansion-panels v-model="openedGroups" multiple variant="accordion" class="mt-2">
       <v-expansion-panel v-for="g in groups" :key="g.file" :value="g.file" :data-testid="`group-${g.file}`">
         <v-expansion-panel-title class="py-2">
