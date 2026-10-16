@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "document",
+  "title": "Modèle de document IGNF/validator (files.json)",
+  "type": "object",
+  "required": ["id", "name", "files"],
+  "properties": {
+    "id": { "$ref": "#/definitions/Id" },
+    "name": { "type": "string", "minLength": 1, "title": "Nom technique du modèle" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "abstract": { "type": "boolean" },
+    "parent": { "$ref": "#/definitions/ParentModel" },
+    "files": { "type": "array", "items": { "$ref": "#/definitions/FileModel" } },
+    "codes": { "type": "array", "items": { "$ref": "#/definitions/StaticTable" } },
+    "constraints": { "$ref": "#/definitions/DocumentConstraints" }
+  },
+  "definitions": {
+    "Id": {
+      "type": "string",
+      "pattern": "^[0-9A-Za-z]{32}$",
+      "title": "Identifiant (32 caractères alphanumériques)"
+    },
+    "ParentModel": {
+      "type": "object",
+      "title": "Modèle parent abstrait embarqué",
+      "required": ["id", "name", "files"],
+      "properties": {
+        "id": { "$ref": "#/definitions/Id" },
+        "name": { "type": "string", "minLength": 1 },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "abstract": { "type": "boolean" },
+        "files": { "type": "array", "items": { "$ref": "#/definitions/FileModel" } },
+        "codes": { "type": "array", "items": { "$ref": "#/definitions/StaticTable" } },
+        "constraints": { "$ref": "#/definitions/DocumentConstraints" }
+      }
+    },
+    "DocumentConstraints": {
+      "type": "object",
+      "properties": {
+        "folderName": { "type": "string", "title": "Expression régulière du nom du dossier" },
+        "metadataSpecification": { "type": "string" }
+      }
+    },
+    "FileModel": {
+      "type": "object",
+      "required": ["id", "name", "type", "path"],
+      "properties": {
+        "id": { "$ref": "#/definitions/Id" },
+        "name": { "type": "string", "minLength": 1 },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "enum": ["table", "multi_table", "pdf", "metadata", "directory"] },
+        "path": { "type": "string" },
+        "mandatory": { "enum": ["ERROR", "WARN", "OPTIONAL"] },
+        "tableModel": { "type": "string", "minLength": 1 },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "path": { "type": "string" },
+              "tableModel": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "StaticTable": {
+      "type": "object",
+      "required": ["id", "name", "data"],
+      "properties": {
+        "id": { "$ref": "#/definitions/Id" },
+        "name": { "type": "string", "minLength": 1 },
+        "title": { "type": "string" },
+        "data": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -11,18 +11,18 @@ Notation :
 
 ## Phase 1 : socle — branche `001-validation-globale/socle` (#6)
 
-- [ ] T001 `package.json` : nom `validator-config-editor`, `type: module`, `bin: { vce: bin/vce.js }`, `engines.node >= 22`, `files: [bin, dist]`, `dependencies` vide, `devDependencies` figées et alignées sur tableschema-editor (ajv, vue, vuetify, pinia, @mdi/js, vite, @vitejs/plugin-vue, vite-plugin-vuetify, vue-tsc, typescript, tsx, vitest, @vitest/coverage-v8, @playwright/test, @axe-core/playwright, eslint, typescript-eslint, @types/node). Scripts : `dev`, `build`, `build:ui`, `build:cli`, `schemas`, `typecheck`, `lint`, `test`, `test:coverage`, `test:e2e`
-- [ ] T002 [P] `tsconfig.json` strict (`noUncheckedIndexedAccess`), alias `@core`, `@ui`, `@cli` ; `.gitignore` (node_modules, dist, coverage, test-results, playwright-report)
-- [ ] T003 [P] `eslint.config.js` : `src/core` ne peut importer ni `node:*`, ni `vue`, `vuetify`, `pinia`, `@ui`, `@cli` (principe III)
-- [ ] T004 [P] `vite.config.ts` (interface → `dist/ui`, `base: './'`, configuration Vitest et couverture ≥ 90 % sur `src/core`, hors `generated`) et `vite.cli.config.ts` (`src/cli/main.ts` → `dist/cli.js`, ssr, cible node22, tout embarqué)
-- [ ] T005 [P] `bin/vce.js` : shebang, import de `../dist/cli.js`
-- [ ] T006 Fixtures réelles `tests/fixtures/config/` : copier `cnig_PLU_2017`, `cnig_SUP_XXX_2016`, `cnig_SUP_A1_2016`, `GPU_MEC_2025` depuis `validator-config-gpu` (branche `json-source`), avec `tests/fixtures/README.md` (origine et commit)
-- [ ] T007 Test : les schémas acceptent tous les fichiers des fixtures réelles, et refusent des cas minimaux invalides (type de colonne inconnu, `mandatory` inconnu, `id` mal formé, `columns` absent, section `gpu.json` inconnue)
-- [ ] T008 `src/core/schemas/document.json`, `table.json`, `gpu.json` (draft-07, plan R2) et `README.md` (origine, écarts avec les schémas du validator)
-- [ ] T009 `scripts/compile-schemas.ts` → `src/core/schemas/generated/validate.{js,d.ts}` (plan R3, adapté de `tableschema-editor/scripts/compile-profiles.ts`)
-- [ ] T010 [P] Test optionnel sur données complètes : si `VCE_CONFIG_DIR` est défini, tous les `files.json`, `types/*.json` et `gpu.json` sont conformes aux schémas
-- [ ] T011 `.github/workflows/ci.yml` : sur PR et push `main`, Node 22, `npm ci`, `npm run schemas` + `git diff --exit-code`, typecheck, lint, `test:coverage`, build, `test:e2e` (Chromium, Firefox)
-- [ ] T012 `.github/workflows/release.yml` : déclenchement manuel (version `X.Y.Z`), tests et build, commit détaché ajoutant `dist/`, tag `vX.Y.Z`, release GitHub (plan R1) ; documenter la procédure dans `docs/developper/workflow.md`
+- [x] T001 `package.json` : nom `validator-config-editor`, `type: module`, `bin: { vce: bin/vce.js }`, `engines.node >= 22`, `files: [bin, dist]`, `dependencies` vide, `devDependencies` figées et alignées sur tableschema-editor (ajv, vue, vuetify, pinia, @mdi/js, vite, @vitejs/plugin-vue, vite-plugin-vuetify, vue-tsc, typescript, tsx, vitest, @vitest/coverage-v8, @playwright/test, @axe-core/playwright, eslint, typescript-eslint, @types/node). Scripts : `dev`, `build`, `build:ui`, `build:cli`, `schemas`, `typecheck`, `lint`, `test`, `test:coverage`, `test:e2e`
+- [x] T002 [P] `tsconfig.json` strict (`noUncheckedIndexedAccess`), alias `@core`, `@ui`, `@cli` ; `.gitignore` (node_modules, dist, coverage, test-results, playwright-report)
+- [x] T003 [P] `eslint.config.js` : `src/core` ne peut importer ni `node:*`, ni `vue`, `vuetify`, `pinia`, `@ui`, `@cli` (principe III)
+- [x] T004 [P] `vite.config.ts` (interface → `dist/ui`, `base: './'`, configuration Vitest et couverture ≥ 90 % sur `src/core`, hors `generated`) et `vite.cli.config.ts` (`src/cli/main.ts` → `dist/cli.js`, ssr, cible node22, tout embarqué)
+- [x] T005 [P] `bin/vce.js` : shebang, import de `../dist/cli.js`
+- [x] T006 Fixtures réelles `tests/fixtures/config/` : copier `cnig_PLU_2017`, `cnig_SUP_XXX_2016`, `cnig_SUP_A1_2016`, `GPU_MEC_2025` depuis `validator-config-gpu` (branche `json-source`), avec `tests/fixtures/README.md` (origine et commit)
+- [x] T007 Test : les schémas acceptent tous les fichiers des fixtures réelles, et refusent des cas minimaux invalides (type de colonne inconnu, `mandatory` inconnu, `id` mal formé, `columns` absent, section `gpu.json` inconnue)
+- [x] T008 `src/core/schemas/document.json`, `table.json`, `gpu.json` (draft-07, plan R2) et `README.md` (origine, écarts avec les schémas du validator)
+- [x] T009 `scripts/compile-schemas.ts` → `src/core/schemas/generated/validate.{js,d.ts}` (plan R3, adapté de `tableschema-editor/scripts/compile-profiles.ts`)
+- [x] T010 [P] Test optionnel sur données complètes : si `VCE_CONFIG_DIR` est défini, tous les `files.json`, `types/*.json` et `gpu.json` sont conformes aux schémas
+- [x] T011 `.github/workflows/ci.yml` : sur PR et push `main`, Node 22, `npm ci`, `npm run schemas` + `git diff --exit-code`, typecheck, lint, `test:coverage`, build, `test:e2e` (Chromium, Firefox)
+- [x] T012 `.github/workflows/release.yml` : déclenchement manuel (version `X.Y.Z`), tests et build, commit détaché ajoutant `dist/`, tag `vX.Y.Z`, release GitHub (plan R1) ; documenter la procédure dans `docs/developper/workflow.md`
 
 ## Phase 2 : US1, valider toute la configuration en ligne de commande — branche `001-validation-globale/us1` (#2)
 

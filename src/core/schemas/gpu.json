@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "gpu",
+  "title": "Surcharges Géoportail de l'Urbanisme (gpu.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "validator_document_model": { "$ref": "#/definitions/Section" },
+    "validator_file_model": { "$ref": "#/definitions/Section" },
+    "validator_feature_type": { "$ref": "#/definitions/Section" },
+    "validator_attribute_type": { "$ref": "#/definitions/Section" },
+    "validator_static_table": { "$ref": "#/definitions/Section" }
+  },
+  "definitions": {
+    "Section": {
+      "type": "object",
+      "title": "Surcharges d'une table de la base GpU, indexées par identifiant d'objet",
+      "propertyNames": { "$ref": "document#/definitions/Id" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
