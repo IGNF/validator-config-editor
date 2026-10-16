@@ -35,6 +35,11 @@ Le serveur n'écoute que sur `127.0.0.1` et ne sert que le dossier passé en arg
 L'interface ne charge aucune ressource distante (CSP stricte). Le versionnement est laissé à
 git.
 
+Seule exception : à la demande explicite de l'utilisateur (URL d'un dépôt saisie ou lien
+partagé), l'interface lit une configuration publique sur GitHub, en lecture seule, uniquement
+auprès de `api.github.com` et `raw.githubusercontent.com` (CSP `connect-src`). Aucun contenu
+n'est envoyé, et aucun jeton n'est demandé (feature 003).
+
 ## VI. Simplicité et dépendances minimales
 
 Le paquet publié n'a aucune dépendance d'exécution : la CLI n'utilise que la bibliothèque

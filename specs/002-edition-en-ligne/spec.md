@@ -26,7 +26,7 @@ Cette feature apporte deux choses :
 Dans l'éditeur local `vce serve`, les modifications sont enregistrées directement sur disque.
 
 Les listes de codes (CSV) et `gpu.json` restent en lecture. Leur édition fait l'objet des
-features 003 et 004.
+features 004 et 005.
 
 ## Scénarios utilisateur et tests
 
@@ -277,6 +277,7 @@ l'outil sans installation.
 ## Hors périmètre
 
 - Création et suppression de modèles, de tables (fichiers) et de listes de codes (fichiers).
-- **003-listes-codes** : édition des listes de codes CSV.
-- **004-gpu-heritage** : édition de `gpu.json` et de l'héritage des modèles SUP.
-- Ouverture d'une archive ZIP ou d'un dépôt distant dans l'éditeur en ligne.
+- **004-listes-codes** : édition des listes de codes CSV.
+- **005-gpu-heritage** : édition de `gpu.json` et de l'héritage des modèles SUP.
+- Ouverture d'une archive ZIP dans l'éditeur en ligne.
+- **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL.
