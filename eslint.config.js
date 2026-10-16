@@ -9,13 +9,19 @@ export default tseslint.config(
     },
   },
   {
+    // Les tests modifient librement des fixtures JSON.
+    files: ['tests/**/*.ts'],
+    rules: { '@typescript-eslint/no-explicit-any': 'off' },
+  },
+  {
     // Principe III : le cœur reste du TypeScript pur, sans dépendance à l'UI ni à Node.
     files: ['src/core/**/*.ts'],
     rules: {
       'no-restricted-imports': ['error', {
+        paths: ['fs', 'fs/promises', 'path', 'http', 'url', 'os', 'child_process'].map((name) => ({ name, message: 'src/core ne doit pas dépendre de Node (principe III).' })),
         patterns: [
           { group: ['vue', 'vue/*', 'vuetify', 'vuetify/*', 'pinia', '@ui/*', '**/ui/**', '@cli/*', '**/cli/**'], message: 'src/core ne doit dépendre ni de l\'UI ni de la CLI (principe III).' },
-          { group: ['node:*', 'fs', 'path', 'http', 'url', 'os'], message: 'src/core ne doit pas dépendre de Node (principe III).' },
+          { group: ['node:*'], message: 'src/core ne doit pas dépendre de Node (principe III).' },
         ],
       }],
     },

@@ -26,23 +26,23 @@ Notation :
 
 ## Phase 2 : US1, valider toute la configuration en ligne de commande — branche `001-validation-globale/us1` (#2)
 
-- [ ] T013 [P] [US1] `tests/support/memory-fs.ts` (`MemoryConfigFs`) et `tests/support/fixtures.ts` (chargement d'un dossier de fixtures en mémoire)
-- [ ] T014 [P] [US1] Tests `load/json.ts` : JSON valide, erreur avec ligne et colonne (formats de message V8)
-- [ ] T015 [P] [US1] Tests `load/csv.ts` : simple, multi-colonnes, guillemets avec virgules et sauts de ligne, `\r\n`, BOM, guillemet non fermé, en-tête vide ou dupliqué, ligne de longueur différente
-- [ ] T016 [P] [US1] Tests `validation/foreign-key.ts` : clé simple, clé multi-colonnes avec espaces, `REFERENCE` mal écrit, listes de longueurs différentes
-- [ ] T017 [US1] Fixtures `tests/fixtures/invalid/<CODE>/` : une mini-configuration par code du [contrat](contracts/problem-codes.md)
-- [ ] T018 [US1] Tests `load/project.ts` : modèles, tables, listes de codes et gpu des fixtures réelles ; modèle abstrait reconnu (R9) ; `WARN-MODEL-NO-DOCUMENT`
-- [ ] T019 [US1] Tests `validation/validate.ts` : fixtures réelles → 0 erreur ; chaque `invalid/<CODE>` produit exactement ce code au bon fichier et au bon pointeur ; ordre de tri du contrat
-- [ ] T020 [P] [US1] `src/core/model/types.ts`, `src/core/load/fs.ts`, `src/core/pointer.ts`
-- [ ] T021 [P] [US1] `src/core/load/json.ts`, `src/core/load/csv.ts` (R7)
-- [ ] T022 [P] [US1] `src/core/validation/foreign-key.ts` (R8)
-- [ ] T023 [US1] `src/core/load/project.ts` (R9)
-- [ ] T024 [US1] `src/core/validation/{problems,messages,schema,refs,validate}.ts` (R10, R11)
-- [ ] T025 [US1] Tests CLI (`tests/unit/cli/*.test.ts`) : `NodeConfigFs` (lien symbolique sortant ignoré), sortie texte, sortie JSON, codes de sortie 0, 1 et 2, `--strict`, `--help`
-- [ ] T026 [US1] `src/cli/fs.ts`, `src/cli/check.ts`, `src/cli/main.ts` (contrat [cli.md](contracts/cli.md))
-- [ ] T027 [US1] Test de performance : `check` sur `VCE_CONFIG_DIR` en moins de 5 s (SC-001)
-- [ ] T028 [US1] Lancer `vce check` sur `validator-config-gpu/config` et analyser chaque problème (SC-002) : corriger les faux positifs dans l'outil, lister les vraies anomalies dans la PR (pour une PR sur le dépôt de configuration)
-- [ ] T029 [US1] README : section `vce check`
+- [x] T013 [P] [US1] `tests/support/memory-fs.ts` (`MemoryConfigFs`) et `tests/support/fixtures.ts` (chargement d'un dossier de fixtures en mémoire)
+- [x] T014 [P] [US1] Tests `load/json.ts` : JSON valide, erreur avec ligne et colonne (formats de message V8)
+- [x] T015 [P] [US1] Tests `load/csv.ts` : simple, multi-colonnes, guillemets avec virgules et sauts de ligne, `\r\n`, BOM, guillemet non fermé, en-tête vide ou dupliqué, ligne de longueur différente
+- [x] T016 [P] [US1] Tests `validation/foreign-key.ts` : clé simple, clé multi-colonnes avec espaces, `REFERENCE` mal écrit, listes de longueurs différentes
+- [x] T017 [US1] Un cas par code du [contrat](contracts/problem-codes.md), construit en mémoire en modifiant les fixtures réelles (plus lisible que des copies de dossiers), et un test qui vérifie que tout le catalogue est couvert
+- [x] T018 [US1] Tests `load/project.ts` : modèles, tables, listes de codes et gpu des fixtures réelles ; modèle abstrait reconnu (R9) ; `WARN-MODEL-NO-DOCUMENT`
+- [x] T019 [US1] Tests `validation/validate.ts` : fixtures réelles → 0 erreur ; chaque `invalid/<CODE>` produit exactement ce code au bon fichier et au bon pointeur ; ordre de tri du contrat
+- [x] T020 [P] [US1] `src/core/model/types.ts`, `src/core/load/fs.ts`, `src/core/pointer.ts`
+- [x] T021 [P] [US1] `src/core/load/json.ts`, `src/core/load/csv.ts` (R7)
+- [x] T022 [P] [US1] `src/core/validation/foreign-key.ts` (R8)
+- [x] T023 [US1] `src/core/load/project.ts` (R9)
+- [x] T024 [US1] `src/core/validation/{problems,messages,schema,refs,validate}.ts` (R10, R11)
+- [x] T025 [US1] Tests CLI (`tests/unit/cli/*.test.ts`) : `NodeConfigFs` (lien symbolique sortant ignoré), sortie texte, sortie JSON, codes de sortie 0, 1 et 2, `--strict`, `--help`
+- [x] T026 [US1] `src/cli/fs.ts`, `src/cli/check.ts`, `src/cli/main.ts` (contrat [cli.md](contracts/cli.md))
+- [x] T027 [US1] Test de performance : `check` sur `VCE_CONFIG_DIR` en moins de 5 s (SC-001)
+- [x] T028 [US1] Lancer `vce check` sur `validator-config-gpu/config` et analyser chaque problème (SC-002) : corriger les faux positifs dans l'outil, lister les vraies anomalies dans la PR (pour une PR sur le dépôt de configuration)
+- [x] T029 [US1] README : section `vce check`
 
 ## Phase 3 : US2, parcourir la configuration dans le navigateur — branche `001-validation-globale/us2` (#3)
 

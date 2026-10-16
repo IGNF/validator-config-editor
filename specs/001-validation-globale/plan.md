@@ -105,12 +105,16 @@ bien que l'installation ne compile rien et n'installe aucune dépendance.
     `^\(\w+(,\w+)*\)REFERENCES *\w+\(\w+(,\w+)*\)$`, avec des listes de même longueur.
   - Les clés multi-colonnes sont prises en charge, par exemple
     `(TYPEINF, STYPEINF) REFERENCES InformationUrbaType(TYPEINF, STYPEINF)`.
-  - La liste cible est cherchée dans `codes[]` du modèle, puis du parent embarqué.
+  - La cible est cherchée dans `codes[]` du modèle, puis parmi les tables du modèle, comme le
+    validator (qui ignore `parent`).
+  - Modèle de table d'un fichier : `tableModel`, sinon `./types/<name>.json`
+    (`AbstractModelReader.resolveFeatureTypeUrl`). `auto` et les URL ne sont pas vérifiés.
 - **R9 – Modèles abstraits et héritage SUP.**
   - Un dossier sans `files.json` est un modèle abstrait s'il est désigné comme `parent.name`
     par au moins un modèle. Sinon, on émet l'avertissement `WARN-MODEL-NO-DOCUMENT`.
-  - Les objets du `parent` embarqué servent à résoudre les références, mais ne sont pas comptés
-    dans l'unicité des `id` du modèle enfant.
+  - Le `parent` embarqué est propre au GpU : le validator l'ignore. Il ne sert ni à résoudre les
+    références ni à l'unicité des `id`. Seuls ses `id` alimentent les `id` connus de `gpu.json`
+    (R10).
 - **R10 – Ensemble des `id` connus pour `gpu.json`.** Une clé de section est connue si elle
   figure dans l'un de ces ensembles :
   - les `id` des objets du modèle (`files.json` avec son parent embarqué, et `types/*.json`) ;
