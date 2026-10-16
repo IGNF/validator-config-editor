@@ -279,5 +279,6 @@ passe. Une PR qui casse une référence fait échouer le workflow.
   téléchargement ZIP.
 - **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL.
 - **005-listes-codes** : édition des listes de codes CSV.
-- **006-gpu-heritage** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…) et
-  gestion de l'héritage des modèles SUP.
+- **006-edition-en-serie** : même modification appliquée aux éléments équivalents de plusieurs modèles
+  (l'héritage des modèles SUP reste en lecture seule).
+- **007-gpu** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…).

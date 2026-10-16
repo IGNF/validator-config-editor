@@ -225,7 +225,7 @@ métier.
 
 - Les corrections portent sur les fichiers éditables (`files.json`, `types/*.json`, `gpu.json`
   et, pour `ERR-CSV-ROW-LENGTH`, la ligne CSV concernée). L'édition libre des CSV et de
-  `gpu.json` reste dans les features 005 et 006.
+  `gpu.json` reste dans les features 005 et 007.
 - Un fichier non référencé de `types/` peut aussi être volontaire (ex. ppr : modèles de table des
   listes de codes, inutilisés par le validator). La correction proposée est une option, pas une
   obligation.
