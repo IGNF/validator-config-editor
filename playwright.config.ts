@@ -21,13 +21,15 @@ export default defineConfig({
     {
       command: 'npm run build && node bin/vce.js serve tests/fixtures/config --port 4173',
       url: BASE_URL,
-      reuseExistingServer: !process.env.CI,
+      // Jamais de serveur réutilisé : un serveur resté ouvert servirait une ancienne version de l'interface.
+      reuseExistingServer: false,
       timeout: 180_000,
     },
     {
       command: 'npm run build:pages && npx vite preview --mode pages --host 127.0.0.1 --port 4174 --strictPort',
       url: PAGES_URL,
-      reuseExistingServer: !process.env.CI,
+      // Jamais de serveur réutilisé : un serveur resté ouvert servirait une ancienne version de l'interface.
+      reuseExistingServer: false,
       timeout: 180_000,
     },
   ],

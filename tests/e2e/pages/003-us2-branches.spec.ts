@@ -29,7 +29,8 @@ test('ouvre la branche donnée par /tree/<branche>', async ({ page }) => {
 test('change de branche depuis la barre, avec confirmation s\'il y a des modifications', async ({ page }) => {
   await openRepo(page, 'IGNF/validator-config-test')
   await expect(page.getByTestId('summary')).toContainText('4 modèles')
-  await page.goto('./#/cnig_PLU_2017/types/ZONE_URBA.json')
+  // Changement de fragment seulement : l'adresse garde ?depot=… (pas de rechargement).
+  await page.evaluate(() => (location.hash = '#/cnig_PLU_2017/types/ZONE_URBA.json'))
   await page.getByTestId('table-name').getByRole('textbox').fill('ZONE')
   await page.getByTestId('branches').click()
   await expect(page.getByTestId('branch-option')).toHaveText(['main', 'json-source'])
