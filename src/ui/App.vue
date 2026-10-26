@@ -47,21 +47,13 @@ onBeforeUnmount(() => {
 })
 
 const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
-const notice = ref<string>()
 async function save() {
   const results = await store.save()
   const failed = results.filter((r) => !r.ok)
   const saved = results.length - failed.length
-  notice.value =
+  store.notice =
     (saved ? `${saved} fichier${saved > 1 ? 's' : ''} enregistré${saved > 1 ? 's' : ''}.` : '') +
     failed.map((r) => ` Non enregistré : ${r.path} (${r.ok ? '' : r.message}).`).join('')
-}
-async function downloadZip() {
-  const r = await store.downloadZip()
-  notice.value =
-    `Configuration téléchargée : ${r.name}` +
-    (r.errors ? ` (${r.errors} erreur${r.errors > 1 ? 's' : ''} restante${r.errors > 1 ? 's' : ''})` : '') +
-    (r.reformatted.length ? `. Fichiers réindentés : ${r.reformatted.join(', ')}` : '')
 }
 
 function reload() {
@@ -85,7 +77,7 @@ const showProblems = ref(true)
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
-      <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="downloadZip">Télécharger (ZIP)</v-btn>
+      <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="store.download({ kind: 'all' })">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
@@ -101,8 +93,8 @@ const showProblems = ref(true)
       <ProblemsPanel />
     </v-navigation-drawer>
 
-    <v-snackbar :model-value="!!notice" timeout="8000" data-testid="notice" @update:model-value="(v: boolean) => !v && (notice = undefined)">
-      {{ notice }}
+    <v-snackbar :model-value="!!store.notice" timeout="8000" data-testid="notice" @update:model-value="(v: boolean) => !v && (store.notice = undefined)">
+      {{ store.notice }}
     </v-snackbar>
 
     <v-main>
