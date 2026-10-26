@@ -15,10 +15,10 @@ code.
 
 ## Phase 2 : US2, conformité à l'import GpU — branche `010-variables-import-gpu/us2` (#86)
 
-- [ ] T006 [P] Tests `gpu-import` : un cas par règle de R4 (dont doublons entre modèles et entre tables, sans double signalement ; aucune règle sans `variables.json`) ; fixtures dgpr, naviforest, ppr inchangées (SC-003)
-- [ ] T007 [P] Tests `catalog` : `ERR-GPU-ID-MISSING` corrigé par un nouvel `id`, annulable
-- [ ] T008 [US2] `gpu-import.ts`, branchement dans `validateProject`, messages, contrat `problem-codes.md`, correction
-- [ ] T009 [US2] Test sur la configuration complète (`VCE_CONFIG_DIR`) : aucune nouvelle erreur (SC-002) ; e2e : doublon d'`id` entre deux modèles signalé, `vce check` code 1
+- [x] T006 [P] Tests `gpu-import` : un cas par règle de R4 (dont doublons entre modèles et entre tables, sans double signalement ; aucune règle sans `variables.json`) ; fixtures dgpr, naviforest, ppr inchangées (SC-003)
+- [x] T007 [P] Tests `catalog` : `ERR-GPU-ID-MISSING` corrigé par un nouvel `id`, annulable
+- [x] T008 [US2] `gpu-import.ts`, branchement dans `validateProject`, messages, contrat `problem-codes.md`, correction
+- [x] T009 [US2] Test sur la configuration complète (`VCE_CONFIG_DIR`) : aucune nouvelle erreur (SC-002) ; e2e : doublon d'`id` entre deux modèles signalé, `vce check` code 1
 
 ## Phase 3 : US3, identifiants des créations — branche `010-variables-import-gpu/us3` (#87)
 

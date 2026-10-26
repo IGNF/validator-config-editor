@@ -44,6 +44,8 @@ class Checker {
   constructor(
     private readonly project: Project,
     private readonly checked: Map<string, CheckedModel>,
+    /** Configuration GpU (010) : surcharge orpheline en erreur. */
+    private readonly gpuImport = false,
   ) {
     this.files = new Set([...project.models.values()].flatMap((m) => m.files))
   }
@@ -200,12 +202,12 @@ class Checker {
     const known = this.knownIds(name)
     for (const [section, entries] of Object.entries(c.gpu)) {
       for (const id of Object.keys(entries ?? {})) {
-        if (!known.has(id)) this.out.push(problem('WARN-GPU-ORPHAN-ID', name, `${name}/gpu.json`, pointer(section, id), { id }))
+        if (!known.has(id)) this.out.push(problem(this.gpuImport ? 'ERR-GPU-ORPHAN-ID' : 'WARN-GPU-ORPHAN-ID', name, `${name}/gpu.json`, pointer(section, id), { id }))
       }
     }
   }
 }
 
-export function crossReferences(project: Project, checked: Map<string, CheckedModel>): Problem[] {
-  return new Checker(project, checked).run()
+export function crossReferences(project: Project, checked: Map<string, CheckedModel>, gpuImport = false): Problem[] {
+  return new Checker(project, checked, gpuImport).run()
 }
