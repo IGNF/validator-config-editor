@@ -5,7 +5,7 @@ import type { LoadedModel } from '@core/model/types'
 import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from '@core/fixes/catalog'
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
-import { scopeFiles, type ExportScope } from '@core/export'
+import { outgoingRefs, scopeFiles, type ExportScope } from '@core/export'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
 import { ServerSource } from '../io/server'
@@ -102,7 +102,8 @@ export const useProject = defineStore('project', () => {
   }
 
   /**
-   * Télécharge une portée (plan 008, R2) : toute la configuration en ZIP, ou un fichier seul.
+   * Télécharge une portée (plan 008, R2) : toute la configuration ou un modèle en ZIP, ou un
+   * fichier seul.
    * Seul le téléchargement de toute la configuration retire l'avertissement avant de quitter.
    */
   async function download(scope: ExportScope): Promise<void> {
@@ -116,6 +117,16 @@ export const useProject = defineStore('project', () => {
       const type = name.toLowerCase().endsWith('.csv') ? 'text/csv' : 'application/json'
       offer((await bytes(s, scope.path)) as BlobPart, name, type)
       notice.value = `Fichier téléchargé : ${name}${remaining(countsByFile.value.get(scope.path)?.errors ?? 0)}${reindented}`
+      return
+    }
+    if (scope.kind === 'model') {
+      // Les chemins commencent déjà par <modèle>/ : l'archive contient ce seul dossier.
+      const entries = await Promise.all(paths.map(async (path) => ({ path, data: await bytes(s, path) })))
+      offer(zip(entries) as BlobPart, `${scope.model}.zip`, 'application/zip')
+      const outgoing = outgoingRefs(s, scope.model)
+      notice.value =
+        `Modèle téléchargé : ${scope.model}.zip${remaining(countsByModel.value.get(scope.model)?.errors ?? 0)}${reindented}` +
+        (outgoing.length ? `. Références vers d'autres modèles, absentes de l'archive : ${outgoing.join(', ')}` : '')
       return
     }
     const name = (source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config'

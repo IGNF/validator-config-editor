@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPlus } from '@mdi/js'
+import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiFolderDownload, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { addCode, addFile, codeName, moveItem, removeItem, setOrRemove, type DocumentList } from '@core/edit/operations'
@@ -78,6 +78,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
   <FileFrame :title="`Modèle ${name}`" :file="path ?? `${name}/`" :source="path">
     <template #chips>
       <v-chip v-if="doc?.abstract" size="small" color="secondary">abstrait</v-chip>
+      <v-btn :prepend-icon="mdiFolderDownload" size="small" variant="tonal" data-testid="download-model" @click="store.download({ kind: 'model', model: name })">
+        Télécharger le modèle
+      </v-btn>
     </template>
 
     <template v-if="!loaded?.document">

@@ -10,6 +10,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Téléchargement du fichier affiché, avec son contenu courant (octets d'origine s'il n'est pas modifié) (#70).
+- Téléchargement d'un modèle en ZIP, depuis sa vue ou l'arbre ; références vers d'autres modèles signalées (#71).
 
 ### Removed
 

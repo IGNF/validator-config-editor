@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiFileDocumentOutline, mdiFormatListBulleted, mdiTable, mdiTune } from '@mdi/js'
+import { mdiFileDocumentOutline, mdiFolderDownload, mdiFormatListBulleted, mdiTable, mdiTune } from '@mdi/js'
 import type { LoadedModel } from '@core/model/types'
 import { baseName } from '../files'
 import { href, route } from '../router'
@@ -50,5 +50,7 @@ const modelPath = () => props.model.document?.path ?? `${props.model.name}/`
     <v-list-item v-if="model.gpu" :href="href(model.gpu.path)" :active="route.file === model.gpu.path" :prepend-icon="mdiTune" :title="mark(model.gpu.path) + 'Surcharges GpU (gpu.json)'">
       <template #append><ProblemCount :counts="store.countsByFile.get(model.gpu.path)" /></template>
     </v-list-item>
+    <v-list-item role="button" :prepend-icon="mdiFolderDownload" title="Télécharger le modèle (ZIP)" :data-testid="`download-model-${model.name}`"
+      @click="store.download({ kind: 'model', model: model.name })" />
   </v-list-group>
 </template>

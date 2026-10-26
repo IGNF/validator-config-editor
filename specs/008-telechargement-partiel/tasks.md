@@ -15,8 +15,8 @@ code.
 
 ## Phase 2 : US2, télécharger un modèle — branche `008-telechargement-partiel/us2` (#71)
 
-- [ ] T006 [P] Tests `scopeFiles` portée `model` (rien hors du dossier, dossier sans `files.json`) et `outgoingRefs` (`../`, URL ignorées)
-- [ ] T007 [US2] `scopeFiles` (`model`), `outgoingRefs`
-- [ ] T008 [US2] Store : portée `model`, message avec erreurs et références sortantes
-- [ ] T009 [US2] `ModelView` et `ModelNode` : « Télécharger le modèle »
-- [ ] T010 [US2] e2e : ZIP de `cnig_PLU_2017` décompressé (dossier `cnig_PLU_2017/` seul), `vce check` sur l'extrait (SC-003), ZIP depuis l'arbre ; axe
+- [x] T006 [P] Tests `scopeFiles` portée `model` (rien hors du dossier, dossier sans `files.json`) et `outgoingRefs` (`../`, URL ignorées)
+- [x] T007 [US2] `scopeFiles` (`model`), `outgoingRefs`
+- [x] T008 [US2] Store : portée `model`, message avec erreurs et références sortantes
+- [x] T009 [US2] `ModelView` et `ModelNode` : « Télécharger le modèle »
+- [x] T010 [US2] e2e : ZIP de `cnig_PLU_2017` décompressé (dossier `cnig_PLU_2017/` seul), `vce check` sur l'extrait (SC-003), ZIP depuis l'arbre ; axe
