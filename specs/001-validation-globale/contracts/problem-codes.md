@@ -46,7 +46,10 @@ code est un changement de version mineure.
 | `ERR-FK-TARGET-LIST` | erreur | cible ni déclarée dans `codes[]` du modèle, ni nom d'une table du modèle (le validator ignore `parent`) | `Clé étrangère : liste « ListeTypezonePLU » non déclarée dans files.json` |
 | `ERR-FK-TARGET-COLUMN` | erreur | colonne cible absente de l'en-tête du CSV de la liste (ou des colonnes de la table cible) | `Clé étrangère : colonne « TYPEZONE » absente de ListeTypezonePLU.csv` |
 | `ERR-REFERENCE-TARGET` | erreur | `constraints.reference` `TABLE.COLONNE` non résolue dans le modèle | `Référence « SERVITUDE.IDSUP » : table ou colonne introuvable` |
-| `ERR-ID-DUPLICATE` | erreur | même `id` porté par deux objets du modèle (hors parent embarqué) | `Identifiant 7833f9f8… déjà utilisé par types/ZONE_URBA.json#/` |
+| `ERR-ID-DUPLICATE` | erreur | même `id` porté par deux objets du modèle ; sur une configuration GpU, aussi deux objets de même type dans deux modèles, ou deux colonnes de deux tables (feature 010) | `Identifiant 7833f9f8… déjà utilisé par types/ZONE_URBA.json#/` |
+| `ERR-GPU-ID-MISSING` | erreur | configuration GpU (`variables.json`) : modèle, fichier, liste, table ou colonne sans `id` (feature 010) | `Colonne sans identifiant (obligatoire pour l'import dans le GpU)` |
+| `ERR-GPU-INHERITANCE` | erreur | configuration GpU : `parent` dans `files.json`, `parent_id` ou `abstract` dans `gpu.json` (feature 010) | `Héritage dans files.json : refusé par l'import dans le GpU` |
+| `ERR-GPU-ORPHAN-ID` | erreur | configuration GpU : remplace `WARN-GPU-ORPHAN-ID` (feature 010) | `gpu.json : identifiant 1773dd88… sans objet correspondant` |
 | `WARN-GPU-ORPHAN-ID` | avertissement | clé de section de `gpu.json` absente des `id` connus (plan R10) | `gpu.json : identifiant 1773dd88… sans objet correspondant` |
 | `WARN-UNREFERENCED-FILE` | avertissement | fichier `types/**.json` ou `codes/**.csv` qui n'est le modèle de table d'aucun fichier ni le `data` d'aucun code | `Fichier non référencé par files.json` |
 

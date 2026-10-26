@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { loadProject } from '@core/load/project'
 import { checkConfig } from '@core/validation/validate'
@@ -7,6 +9,7 @@ import { editJson, memoryFs, readConfig } from '../../support/fixtures'
 const PLU = 'cnig_PLU_2017'
 const ZONE_URBA = `${PLU}/types/ZONE_URBA.json`
 const FILES = `${PLU}/files.json`
+const VARIABLES = readFileSync(join(import.meta.dirname, '../../fixtures/variables.json'), 'utf8')
 
 const key = (p: Pick<Problem, 'code' | 'file' | 'pointer'>) => `${p.code} ${p.file} ${p.pointer ?? ''}`
 
@@ -71,6 +74,9 @@ describe('codes de problème', () => {
     ['ERR-FK-TARGET-COLUMN', (f) => editJson(f, ZONE_URBA, (d) => { d.constraints.foreignKeys = ['(TYPEZONE) REFERENCES ListeTypezonePLU(INCONNUE)'] }), { pointer: '/constraints/foreignKeys/0' }],
     ['ERR-REFERENCE-TARGET', (f) => editJson(f, ZONE_URBA, (d) => { d.columns[0].constraints.reference = 'INCONNUE.ID' }), { pointer: '/columns/0/constraints/reference' }],
     ['ERR-ID-DUPLICATE', (f) => editJson(f, ZONE_URBA, (d) => { d.id = JSON.parse(f.get(`${PLU}/types/DOC_URBA.json`)!).id }), { pointer: '/id' }],
+    ['ERR-GPU-ID-MISSING', (f) => { f.set('variables.json', VARIABLES); editJson(f, FILES, (d) => { delete d.codes[0].id }) }, { file: FILES, pointer: '/codes/0' }],
+    ['ERR-GPU-INHERITANCE', (f) => { f.set('variables.json', VARIABLES); editJson(f, FILES, (d) => { d.parent = { name: 'X' } }) }, { file: FILES, pointer: '/parent' }],
+    ['ERR-GPU-ORPHAN-ID', (f) => { f.set('variables.json', VARIABLES); editJson(f, `${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } }) }, { pointer: '/validator_file_model/0123456789abcdef0123456789abcdef' }],
     ['WARN-GPU-ORPHAN-ID', (f) => editJson(f, `${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } }), { pointer: '/validator_file_model/0123456789abcdef0123456789abcdef' }],
     ['WARN-UNREFERENCED-FILE', (f) => f.set(`${PLU}/types/ORPHELINE.json`, f.get(ZONE_URBA)!.replace(/"ZONE_URBA"/g, '"ORPHELINE"')), { file: `${PLU}/types/ORPHELINE.json` }],
   ]

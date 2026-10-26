@@ -9,6 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Configuration GpU (`variables.json` présent) : règles de l'import dans le GpU vérifiées — `id` présents et uniques par type d'objet dans toute la configuration, héritage refusé, surcharge `gpu.json` orpheline en erreur ; correction « Attribuer un identifiant » (#86).
 - Regex (nom du dossier, chemins des fichiers attendus, motifs de colonne) affichées avec les variables de `variables.json` à la racine de la configuration, regex complète au survol ; saisie de `<NOM>` convertie en regex (#85).
 - Téléchargement du fichier affiché, avec son contenu courant (octets d'origine s'il n'est pas modifié) (#70).
 - Téléchargement d'un modèle en ZIP, depuis sa vue ou l'arbre ; références vers d'autres modèles signalées (#71).

@@ -6,6 +6,7 @@ import { compareProblems, countProblems, type Problem } from './problems'
 import { crossReferences, type CheckedModel } from './refs'
 import { schemaProblems } from './schema'
 import { readVariables } from '../variables'
+import { gpuImportProblems } from './gpu-import'
 
 /** Valide une configuration chargée : schémas puis références croisées. */
 export function validateProject(project: Project): { checked: Map<string, CheckedModel>; problems: Problem[] } {
@@ -33,8 +34,10 @@ export function validateProject(project: Project): { checked: Map<string, Checke
     checked.set(model.name, c)
   }
 
-  problems.push(...crossReferences(project, checked))
-  if (project.variables) problems.push(...readVariables(project.variables).problems)
+  // Configuration GpU (variables.json présent) : règles de l'import (010, R3-R4).
+  const gpu = project.variables !== undefined
+  problems.push(...crossReferences(project, checked, gpu))
+  if (gpu) problems.push(...readVariables(project.variables!).problems, ...gpuImportProblems(checked))
   return { checked, problems }
 }
 

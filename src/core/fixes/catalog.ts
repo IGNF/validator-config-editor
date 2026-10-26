@@ -60,6 +60,11 @@ const BUILDERS: Partial<Record<Problem['code'], Builder>> = {
   ],
 
   'WARN-GPU-ORPHAN-ID': (_s, p) => [{ label: 'Retirer cette surcharge de gpu.json', changes: [json(p.file, (d) => removeAt(d, p.pointer!))], safe: true }],
+  'ERR-GPU-ORPHAN-ID': (_s, p) => [{ label: 'Retirer cette surcharge de gpu.json', changes: [json(p.file, (d) => removeAt(d, p.pointer!))], safe: true }],
+
+  'ERR-GPU-ID-MISSING': (s, p) => [
+    { label: 'Attribuer un identifiant', changes: [json(p.file, (d) => setAt(d, `${p.pointer ?? ''}/id`, newId(allIds(s))))], safe: true },
+  ],
 
   'WARN-UNREFERENCED-FILE': (s, p) => {
     const model = p.model!
