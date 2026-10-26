@@ -10,6 +10,7 @@ import { pointer } from '@core/pointer'
 import { modelOf } from '../files'
 import { href, route } from '../router'
 import { useProject } from '../stores/project'
+import CodeListDialog from './CodeListDialog.vue'
 import FileFrame from './FileFrame.vue'
 import ModelSummary from './ModelSummary.vue'
 import ProblemBadge from './ProblemBadge.vue'
@@ -163,7 +164,10 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
       <div class="d-flex align-center mt-4">
         <h2 class="text-h6">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
         <v-spacer />
-        <v-btn :prepend-icon="mdiPlus" variant="tonal" data-testid="add-code" @click="newCode">Déclarer une liste</v-btn>
+        <div class="d-flex flex-wrap ga-2">
+          <CodeListDialog :model="name" />
+          <v-btn :prepend-icon="mdiPlus" variant="tonal" data-testid="add-code" @click="newCode">Déclarer une liste</v-btn>
+        </div>
       </div>
       <div v-for="(c, i) in doc.codes ?? []" :key="c.id ?? i" class="d-flex flex-wrap align-center ga-2" :data-pointer="`/codes/${i}`" :data-testid="`code-${c.name}`">
         <v-text-field :label="`Nom de la liste ${i + 1}`" :model-value="c.name" density="compact" variant="outlined" hide-details class="field"

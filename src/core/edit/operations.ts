@@ -100,9 +100,9 @@ export function addFile<T>(doc: T, existingIds: ReadonlySet<string>, type = 'pdf
   return insertAt(doc, '/files', file)
 }
 
-/** Déclare une liste de codes (ordre des clés : data, id, name, title). */
-export function addCode<T>(doc: T, existingIds: ReadonlySet<string>, data: string, name: string, random?: RandomBytes): T {
-  const code: Raw = { data, ...(usesIds(doc, 'codes') && { id: newId(existingIds, random) }), name, title: name }
+/** Déclare une liste de codes (ordre des clés : data, id, name, title ; titre par défaut : le nom). */
+export function addCode<T>(doc: T, existingIds: ReadonlySet<string>, data: string, name: string, random?: RandomBytes, title = name): T {
+  const code: Raw = { data, ...(usesIds(doc, 'codes') && { id: newId(existingIds, random) }), name, title }
   return insertAt(doc, '/codes', code)
 }
 

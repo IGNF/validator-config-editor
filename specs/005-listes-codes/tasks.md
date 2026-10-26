@@ -7,11 +7,11 @@ code.
 
 ## Phase 1 : US1, copier une liste existante — branche `005-listes-codes/us1` (#73)
 
-- [ ] T001 [P] Tests `codeLists` (listes lisibles seulement, URL exclues, tri) et `checkNewName` (nom invalide, déjà déclaré, fichier présent non déclaré)
-- [ ] T002 [P] Tests `copyCodeList` : `ListeEtatPLU` de `cnig_PLU_2017` vers `GPU_MEC_2025`, texte identique, déclaration (`title` d'origine, nouvel `id`), aucun nouveau problème, annulation en un pas ; duplication dans le même modèle sous un autre nom ; contenu courant d'une liste modifiée
-- [ ] T003 [US1] `operations.ts` (`addCode` avec `title`), `codelists.ts` (`codeLists`, `checkNewName`, `copyCodeList`)
-- [ ] T004 [US1] Store : `applyChanges` ; `CodeListDialog` (mode copie) ; bouton dans `ModelView`, ouverture de la liste copiée
-- [ ] T005 [US1] e2e éditeur en ligne : copie vers `GPU_MEC_2025`, CSV du ZIP identique octet pour octet à l'original, refus d'un nom existant, Ctrl+Z ; e2e `vce serve` : l'enregistrement crée le fichier ; axe
+- [x] T001 [P] Tests `codeLists` (listes lisibles seulement, URL exclues, tri) et `checkNewName` (nom invalide, déjà déclaré, fichier présent non déclaré)
+- [x] T002 [P] Tests `copyCodeList` : `ListeEtatPLU` de `cnig_PLU_2017` vers `GPU_MEC_2025`, texte identique, déclaration (`title` d'origine, nouvel `id`), aucun nouveau problème, annulation en un pas ; duplication dans le même modèle sous un autre nom ; contenu courant d'une liste modifiée
+- [x] T003 [US1] `operations.ts` (`addCode` avec `title`), `codelists.ts` (`codeLists`, `checkNewName`, `copyCodeList`)
+- [x] T004 [US1] Store : `applyChanges` ; `CodeListDialog` (mode copie) ; bouton dans `ModelView`, ouverture de la liste copiée
+- [x] T005 [US1] e2e éditeur en ligne : copie vers `GPU_MEC_2025`, CSV du ZIP identique octet pour octet à l'original, refus d'un nom existant, Ctrl+Z ; e2e `vce serve` : l'enregistrement crée le fichier ; axe
 
 ## Phase 2 : US2, créer une liste vide — branche `005-listes-codes/us2` (#74)
 
