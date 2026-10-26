@@ -23,3 +23,12 @@ for (const [name, hash, heading] of [
     expect(await audit(page)).toEqual([])
   })
 }
+
+test('fenêtre de copie d\'une liste de codes', async ({ page }) => {
+  await page.goto('./#/GPU_MEC_2025/files.json')
+  await page.getByTestId('copy-code-list').click()
+  await page.getByTestId('code-list-filter').getByRole('textbox').fill('ListeEtat')
+  await page.getByTestId('source-cnig_PLU_2017-ListeEtatPLU').click()
+  await expect(page.getByTestId('copy-name')).toBeVisible()
+  expect(await audit(page)).toEqual([])
+})

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
+import { allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type FileChange, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from '@core/fixes/catalog'
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
@@ -74,9 +74,11 @@ export const useProject = defineStore('project', () => {
 
   /** Corrections proposées pour un problème, dans l'état courant (feature 004). */
   const fixes = (problem: Problem) => (session.value ? fixesFor(session.value, problem) : [])
-  function applyFix(fix: Fix) {
-    if (session.value) session.value = applyChanges(session.value, fix.changes)
+  /** Applique des modifications de fichiers en un seul pas (correction, copie de liste…). */
+  function apply(changes: readonly FileChange[]) {
+    if (session.value && changes.length) session.value = applyChanges(session.value, changes)
   }
+  const applyFix = (fix: Fix) => apply(fix.changes)
   /** Correction groupée (004 US2) : possible si chaque problème a une seule correction sûre. */
   const canFixAll = (problems: readonly Problem[]) => !!session.value && canFixAllIn(session.value, problems)
   function fixAll(problems: readonly Problem[]) {
@@ -157,7 +159,7 @@ export const useProject = defineStore('project', () => {
   }
 
   return {
-    pending, notice, download, canSave, save, fixes, applyFix, canFixAll, fixAll,
+    pending, notice, download, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
     source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
