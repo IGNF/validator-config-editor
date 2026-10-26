@@ -1,13 +1,28 @@
-# La documentaion 
+# Documentation
 
+- [Utilisation](utilisation.md) : éditeur en ligne et local, installation, `vce check`,
+  `vce serve`, configurations connues.
+- [Principes du projet](principes.md) (obligatoires).
+- [Workflow spec → issue → PR](developper/workflow.md) et
+  [conventions de commit](developper/Doc_commit.md).
 
-N'hésitez pas à mettre dans ce dossier toute documentation que vous jugez pertinente à votre projet. Vous pouvez par exemple y décrire les choix techniques et la stack du projet. Mais aussi comment participer au projet. 
+## Développement
 
-Vous pouvez également indiquez dans cette section les règles d'hygiène de votre projet (comment contribuer? comment écrire mon commit ? quand commit? le choix de gestion des branchs)
+```sh
+npm ci
+npm test                 # tests unitaires
+npm run build            # dist/ui (interface) et dist/cli.js (CLI)
+npm run test:e2e         # tests de bout en bout (Chromium, Firefox)
+node bin/vce.js check tests/fixtures/config
+VCE_CONFIG_DIR=~/gpu/validator-config-gpu/config npm test   # + configuration complète
+```
 
-## Comment enrichir ce template
+## Arborescence
 
-
-Faites une PR sur la branch qui vous intéresse. Les personnes en charge de ce projet ferons une review vous indiquerons si des changements sont nécessaire.
-
-Vous pouvez faire une demande d'ajout pour de template pour un langage spécifique ou bien une demande de modification sur un template déjà existant.
+- `src/core/` : cœur pur (chargement, validation, édition, corrections), sans dépendance au
+  navigateur ni à Node ;
+- `src/ui/` : interface Vue (éditeur en ligne et `vce serve`) ;
+- `src/cli/` : commandes `vce check` et `vce serve` ;
+- `specs/` : spécifications, plans et tâches, une feature par dossier ;
+- `tests/` : tests unitaires et de bout en bout, fixtures réelles ;
+- `.github/` : modèles d'issues et de PR, workflows (CI, Pages, Release).
