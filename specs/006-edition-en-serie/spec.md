@@ -6,9 +6,9 @@
 
 **Statut** : brouillon
 
-**Demande** : « Comment se passer de l'héritage ? » Décision : l'héritage des modèles SUP
-reste tel quel, en lecture seule dans l'éditeur, et l'éditeur permet d'appliquer **une même
-modification aux éléments équivalents de plusieurs modèles**.
+**Demande** : « Comment se passer de l'héritage ? » Décision : l'éditeur ne gère pas l'héritage
+(cas propre au GpU, appelé à disparaître ; `validator-config-gpu` est déjà aplati), et permet
+d'appliquer **une même modification aux éléments équivalents de plusieurs modèles**.
 
 ## Contexte
 
@@ -22,10 +22,10 @@ validator :
 - des fichiers comme `ACTE`, `REGLEMENT` ou `Donnees_geographiques` se retrouvent à
   l'identique dans les 65 modèles SUP 2016.
 
-L'héritage (objet `parent`, modèles `cnig_SUP_XXX_*`, `parent_id` de `gpu.json`) ne sert qu'au
-Géoportail de l'Urbanisme. Le validator l'ignore. Il reste dans les fichiers et n'est pas édité.
+L'héritage (objet `parent`, modèles `cnig_SUP_XXX_*`, `parent_id` de `gpu.json`) ne servait qu'au
+Géoportail de l'Urbanisme. Le validator l'ignore, et l'éditeur ne le gère pas.
 
-Sans édition de l'héritage, corriger une colonne commune (motif d'`IDASS`, longueur de
+Sans héritage, corriger une colonne commune (motif d'`IDASS`, longueur de
 `NOMGEST`…) obligerait à modifier un à un des dizaines de modèles. La modification en série le
 fait en une fois, avec un aperçu et une seule étape d'annulation.
 
@@ -143,7 +143,7 @@ constater le tableau des motifs par modèle.
 - **FR-003** : une modification en série DOIT être une seule étape d'historique, revalidée, et
   marquer les fichiers modifiés (ZIP, enregistrement).
 - **FR-004** : les éléments de fichiers non conformes à leur schéma NE DOIVENT pas être modifiés.
-- **FR-005** : l'héritage (`parent`, modèles abstraits, `parent_id`) NE DOIT pas être modifié.
+- **FR-005** : une clé `parent` éventuelle NE DOIT pas être modifiée (conservée telle quelle).
 - **FR-006** : un tableau de comparaison des éléments équivalents DOIT être disponible en
   lecture.
 
@@ -164,14 +164,13 @@ constater le tableau des motifs par modèle.
 
 ## Hypothèses
 
-- L'héritage reste en place dans les fichiers pour les besoins du Géoportail de l'Urbanisme.
-  L'éditeur le valide (feature 001) mais ne l'édite pas.
+- L'éditeur ne gère pas l'héritage : une clé `parent` est conservée sans être vérifiée.
 - Les règles d'équivalence couvrent les configurations connues. Les cas non couverts restent
   modifiables un par un.
 
 ## Hors périmètre
 
-- Édition ou suppression de l'héritage (objet `parent`, modèles `cnig_SUP_XXX_*`, `parent_id`).
+- Héritage (objet `parent`, modèles `cnig_SUP_XXX_*`, `parent_id`) : non géré.
 - Ajout ou suppression en série de colonnes ou de fichiers attendus.
 - **005-listes-codes** : édition des listes de codes CSV.
 - **007-gpu** : édition de `gpu.json`.

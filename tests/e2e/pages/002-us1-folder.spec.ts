@@ -42,7 +42,7 @@ test('utilise config/ quand on choisit la racine d\'un dépôt', async ({ page }
   mkdirSync(join(repo, '.git'))
   writeFileSync(join(repo, '.git/x.json'), '{}')
   await open(page, repo)
-  await expect(page.getByTestId('summary')).toContainText('4 modèles')
+  await expect(page.getByTestId('summary')).toContainText('3 modèles')
   await expect(page.getByText('validator-config-test/config')).toBeVisible()
 })
 

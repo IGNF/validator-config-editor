@@ -61,7 +61,7 @@ describe('vce check', () => {
   it('configuration sans erreur : résumé et code 0', async () => {
     const r = await run('check', config)
     expect(r.code).toBe(0)
-    expect(r.stdout).toBe('4 modèles, 22 tables, 15 listes de codes — 0 erreur, 0 avertissement')
+    expect(r.stdout).toBe('3 modèles, 22 tables, 15 listes de codes — 0 erreur, 0 avertissement')
   })
 
   it('tableModel cassé : problème localisé et code 1', async () => {
@@ -86,7 +86,7 @@ describe('vce check', () => {
     const r = await run('check', config, '--format', 'json')
     expect(r.code).toBe(1)
     const doc = JSON.parse(r.stdout)
-    expect(doc.summary).toMatchObject({ models: 4, tables: 21, codeLists: 15, errors: 1 })
+    expect(doc.summary).toMatchObject({ models: 3, tables: 21, codeLists: 15, errors: 1 })
     expect(doc.problems.filter((p: { severity: string }) => p.severity === 'error')).toMatchObject([{ code: 'ERR-TABLE-MODEL-MISSING', severity: 'error', model: 'cnig_PLU_2017', file: 'cnig_PLU_2017/files.json' }])
     expect(doc.root).toContain('config')
   })

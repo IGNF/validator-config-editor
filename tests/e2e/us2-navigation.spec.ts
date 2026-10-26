@@ -6,12 +6,12 @@ const FIXTURES = join(import.meta.dirname, '../fixtures/config')
 
 test.beforeEach(async ({ page }) => {
   await page.goto('./')
-  await expect(page.getByTestId('summary')).toContainText('4 modèles, 22 tables, 15 listes de codes')
+  await expect(page.getByTestId('summary')).toContainText('3 modèles, 22 tables, 15 listes de codes')
 })
 
 test('filtre les modèles par une partie de leur nom', async ({ page }) => {
   await page.getByTestId('model-filter').getByRole('textbox').fill('PLU_2017')
-  await expect(page.getByText('1 / 4 modèles')).toBeVisible()
+  await expect(page.getByText('1 / 3 modèles')).toBeVisible()
   await expect(page.getByTestId('model-cnig_PLU_2017')).toBeVisible()
   await expect(page.getByTestId('model-GPU_MEC_2025')).toHaveCount(0)
 })
@@ -48,12 +48,6 @@ test('rattache chaque surcharge GpU à son objet', async ({ page }) => {
   await expect(page.getByText('objet inconnu')).toHaveCount(0)
   await page.getByRole('main').getByRole('link', { name: 'table ZONE_URBA' }).first().click()
   await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
-})
-
-test('affiche un modèle abstrait et les modèles qui en héritent', async ({ page }) => {
-  await page.goto('./#/cnig_SUP_XXX_2016/')
-  await expect(page.getByRole('heading', { name: 'Modèle cnig_SUP_XXX_2016' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'cnig_SUP_A1_2016' })).toBeVisible()
 })
 
 test('affiche le contenu exact du fichier source', async ({ page }) => {

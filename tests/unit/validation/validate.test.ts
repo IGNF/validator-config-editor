@@ -30,23 +30,19 @@ describe('chargement', () => {
   it('charge les modèles, tables, listes de codes et gpu.json des fixtures', async () => {
     const { project, problems } = await loadProject(memoryFs())
     expect(problems).toEqual([])
-    expect([...project.models.keys()].sort()).toEqual(['GPU_MEC_2025', 'cnig_PLU_2017', 'cnig_SUP_A1_2016', 'cnig_SUP_XXX_2016'])
+    expect([...project.models.keys()].sort()).toEqual(['GPU_MEC_2025', 'cnig_PLU_2017', 'cnig_SUP_A1_2016'])
     const plu = project.models.get(PLU)!
     expect(plu.document?.data).toMatchObject({ name: PLU })
     expect(plu.gpu?.data).toBeDefined()
     expect(plu.tables.has(ZONE_URBA)).toBe(true)
     expect(plu.csvs.get(`${PLU}/codes/ListeEtatPLU.csv`)?.csv?.header).toEqual(['ETAT'])
-    // Le modèle abstrait ne contient que gpu.json.
-    const xxx = project.models.get('cnig_SUP_XXX_2016')!
-    expect(xxx.document).toBeUndefined()
-    expect(xxx.gpu).toBeDefined()
   })
 
   it('ignore les fichiers à la racine de la configuration', async () => {
     const files = readConfig()
     files.set('package.json', '{}')
     const { project } = await loadProject(memoryFs(files))
-    expect(project.models.size).toBe(4)
+    expect(project.models.size).toBe(3)
   })
 })
 
@@ -65,7 +61,6 @@ describe('codes de problème', () => {
     ['WARN-MODEL-NO-DOCUMENT', (f) => f.set('orphelin/gpu.json', '{}'), { model: 'orphelin', file: 'orphelin/' }],
     ['ERR-SCHEMA', (f) => editJson(f, ZONE_URBA, (d) => { d.columns[0].type = 'Texte' }), { file: ZONE_URBA, pointer: '/columns/0/type' }],
     ['WARN-MODEL-NAME', (f) => editJson(f, FILES, (d) => { d.name = 'cnig_PLU_2016' }), { file: FILES, pointer: '/name' }],
-    ['ERR-PARENT-MISSING', (f) => editJson(f, 'cnig_SUP_A1_2016/files.json', (d) => { d.parent.name = 'cnig_SUP_ZZZ_2016' }), { pointer: '/parent/name' }],
     ['ERR-TABLE-MODEL-MISSING', (f) => f.delete(ZONE_URBA), { file: FILES, pointer: `/files/${indexOf(readConfig(), FILES, 'files', 'ZONE_URBA')}/tableModel` }],
     ['ERR-CODE-DATA-MISSING', (f) => f.delete(`${PLU}/codes/ListeEtatPLU.csv`), { file: FILES, pointer: `/codes/${indexOf(readConfig(), FILES, 'codes', 'ListeEtatPLU')}/data` }],
     ['ERR-FK-SYNTAX', (f) => editJson(f, ZONE_URBA, (d) => { d.constraints.foreignKeys = ['(TYPEZONE) REFERENCE ListeTypezonePLU(TYPEZONE)'] }), { pointer: '/constraints/foreignKeys/0' }],
@@ -109,7 +104,7 @@ describe('règles propres au format', () => {
     expect(found.filter((p) => p.code === 'ERR-TABLE-MODEL-MISSING')).toEqual([])
   })
 
-  it('accepte des colonnes de même id dans deux tables (héritage d\'une table abstraite)', async () => {
+  it('accepte des colonnes de même id dans deux tables (colonnes communes)', async () => {
     const found = await added((f) => editJson(f, ZONE_URBA, (d) => { d.columns[0].id = JSON.parse(f.get(`${PLU}/types/DOC_URBA.json`)!).columns[0].id }))
     expect(found.filter((p) => p.code === 'ERR-ID-DUPLICATE')).toEqual([])
   })

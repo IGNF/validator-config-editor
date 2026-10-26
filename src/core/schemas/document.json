@@ -10,7 +10,7 @@
     "title": { "type": "string" },
     "description": { "type": "string" },
     "abstract": { "type": "boolean" },
-    "parent": { "$ref": "#/definitions/ParentModel" },
+    "parent": { "title": "Modèle parent (héritage GpU), ignoré par le validator et par l'éditeur" },
     "files": { "type": "array", "items": { "$ref": "#/definitions/FileModel" } },
     "codes": { "type": "array", "items": { "$ref": "#/definitions/StaticTable" } },
     "constraints": { "$ref": "#/definitions/DocumentConstraints" }
@@ -20,21 +20,6 @@
       "type": "string",
       "pattern": "^[0-9A-Za-z]{32}$",
       "title": "Identifiant (32 caractères alphanumériques), propre au GpU et facultatif pour le validator"
-    },
-    "ParentModel": {
-      "type": "object",
-      "title": "Modèle parent abstrait embarqué",
-      "required": ["name", "files"],
-      "properties": {
-        "id": { "$ref": "#/definitions/Id" },
-        "name": { "type": "string", "minLength": 1 },
-        "title": { "type": "string" },
-        "description": { "type": "string" },
-        "abstract": { "type": "boolean" },
-        "files": { "type": "array", "items": { "$ref": "#/definitions/FileModel" } },
-        "codes": { "type": "array", "items": { "$ref": "#/definitions/StaticTable" } },
-        "constraints": { "$ref": "#/definitions/DocumentConstraints" }
-      }
     },
     "DocumentConstraints": {
       "type": "object",
