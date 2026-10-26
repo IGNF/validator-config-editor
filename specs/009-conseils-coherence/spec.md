@@ -53,7 +53,7 @@ nombre de conseils, avec un code de sortie 0, y compris avec `--strict`.
    `--strict`) la valide, **Then** le code de sortie est 0, et le résumé indique le nombre de
    conseils à part.
 2. **Given** `vce check`, **When** il affiche les problèmes, **Then** les conseils ne sont listés
-   qu'avec l'option `--conseils` (texte) ; en JSON, ils sont toujours présents, avec la sévérité
+   qu'avec l'option `--info` (texte) ; en JSON, ils sont toujours présents, avec la sévérité
    `info`.
 3. **Given** l'interface, **When** le panneau des problèmes s'affiche, **Then** les conseils ont
    leur propre icône, leur propre compteur et leur filtre de sévérité. Ils sont masqués par
@@ -161,7 +161,7 @@ sous plusieurs noms), mais sans effet sur la validation.
   (`info`).
 - **FR-002** : les conseils NE DOIVENT pas modifier le code de sortie de `vce check`, y compris
   avec `--strict`. Le résumé DOIT les compter à part.
-- **FR-003** : `vce check` NE DOIT lister les conseils en texte qu'avec `--conseils`. Le format
+- **FR-003** : `vce check` NE DOIT lister les conseils en texte qu'avec `--info`. Le format
   JSON DOIT toujours les inclure.
 - **FR-004** : le panneau des problèmes DOIT afficher les conseils avec leur icône, leur
   compteur et leur filtre, masqués par défaut.

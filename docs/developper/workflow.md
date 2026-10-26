@@ -31,8 +31,7 @@ spec approuvée.
 ## Commits
 
 Le sujet est préfixé par la feature et l'étape : `[001] Spec : …`, `[001/socle] …`,
-`[001/US2] …`. Le corps est une liste à puces, puis `Refs #<issue>`. Voir aussi
-[Doc_commit.md](Doc_commit.md) pour les types de changement.
+`[001/US2] …`. Le corps est une liste à puces, puis `Refs #<issue>`.
 
 ## Conditions de merge
 

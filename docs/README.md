@@ -3,8 +3,7 @@
 - [Utilisation](utilisation.md) : éditeur en ligne et local, installation, `vce check`,
   `vce serve`, configurations connues.
 - [Principes du projet](principes.md) (obligatoires).
-- [Workflow spec → issue → PR](developper/workflow.md) et
-  [conventions de commit](developper/Doc_commit.md).
+- [Workflow spec → issue → PR et conventions de commit](developper/workflow.md).
 
 ## Développement
 
