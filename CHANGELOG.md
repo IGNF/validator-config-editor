@@ -12,6 +12,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 - Téléchargement du fichier affiché, avec son contenu courant (octets d'origine s'il n'est pas modifié) (#70).
 - Téléchargement d'un modèle en ZIP, depuis sa vue ou l'arbre ; références vers d'autres modèles signalées (#71).
 - Copie d'une liste de codes depuis n'importe quel modèle, ou duplication dans le modèle, en une étape annulable (#73).
+- Arbre des modèles : catégorie « Fichiers » (pièces écrites, dossiers, métadonnées), qui ouvre le fichier attendu dans la vue du modèle ; chemin du fichier affiché en bas de la vue et au survol du titre.
 - Panneaux latéraux (modèles, problèmes) rétractables et redimensionnables (souris ou clavier), état mémorisé dans le navigateur ; arbre des modèles plus compact (retrait de 12 px par niveau).
 
 ### Removed
