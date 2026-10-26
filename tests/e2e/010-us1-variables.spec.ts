@@ -19,7 +19,7 @@ test('motif de colonne affiché avec les variables, regex complète au survol', 
   withVariables()
   await page.goto(`${server.url}#/${ZONE_URBA}`)
   const motif = page.getByTestId('column-LIB_IDZONE').locator('.constraint', { hasText: 'motif' })
-  await expect(motif).toHaveText('motif <INSEE_COMMUNE>_PLU_<YYYYMMDD>_ZO<ENTIER>')
+  await expect(motif).toHaveText('motif <INSEE_COMMUNE>_PLU_[0-9]{8}_ZO<ENTIER>')
   await expect(motif).toHaveAttribute('title', '[AB0-9]{5}_PLU_[0-9]{8}_ZO[0-9]+')
 })
 
@@ -27,11 +27,11 @@ test('chemin d\'un fichier attendu et nom du dossier affichés avec les variable
   withVariables()
   await page.goto(`${server.url}#/cnig_PLU_2017/files.json`)
   const zone = page.getByTestId('regex').filter({ hasText: 'ZONE_URBA' })
-  await expect(zone).toHaveText('Donnees_geographiques/<INSEE_COMMUNE>_ZONE_URBA_<YYYYMMDD>')
+  await expect(zone).toHaveText('Donnees_geographiques/<INSEE_COMMUNE>_ZONE_URBA_[0-9]{8}')
   await expect(zone).toHaveAttribute('title', 'Donnees_geographiques/[AB0-9]{5}_ZONE_URBA_[0-9]{8}')
   // Champ : regex complète, forme à variables en aide.
   await expect(page.getByTestId('model-folderName').getByRole('textbox')).toHaveValue('[a-zA-Z0-9]+_PLU_[0-9]{8}(_[a-zA-Z])?')
-  await expect(page.getByTestId('model-folderName')).toContainText('Affichage : [a-zA-Z0-9]+_PLU_<YYYYMMDD>(_<CHAR>)?')
+  await expect(page.getByTestId('model-folderName')).toContainText('Affichage : [a-zA-Z0-9]+_PLU_[0-9]{8}<DOCUMENT_PART>')
 })
 
 test('saisie d\'une variable : la regex complète est enregistrée', async ({ page }) => {
@@ -43,7 +43,19 @@ test('saisie d\'une variable : la regex complète est enregistrée', async ({ pa
   await expect(page.getByTestId('notice')).toContainText('1 fichier enregistré')
   const saved = JSON.parse(readFileSync(join(server.dir, ZONE_URBA), 'utf8'))
   const column = saved.columns.find((c: { name: string }) => c.name === 'DATVALID')
-  expect(column.constraints.pattern).toBe('[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])')
+  expect(column.constraints.pattern).toBe('([0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])|00000000)')
+})
+
+test('alias de la famille : <IDGEST> pour un modèle SUP, saisie de l\'alias acceptée', async ({ page }) => {
+  withVariables()
+  await page.goto(`${server.url}#/cnig_SUP_A1_2016/files.json`)
+  await expect(page.getByTestId('model-folderName')).toContainText('Affichage : <IDGEST>_A1_[a-zA-Z0-9]+_[0-9]{8}')
+  await page.getByTestId('model-folderName').getByRole('textbox').fill('<IDGEST>_A1_<MAILLAGE>_<DATE>')
+  await page.getByTestId('save').click()
+  await expect(page.getByTestId('notice')).toContainText('1 fichier enregistré')
+  const saved = JSON.parse(readFileSync(join(server.dir, 'cnig_SUP_A1_2016/files.json'), 'utf8'))
+  expect(saved.constraints.folderName).toMatch(/^\[0-9\]\{9\}_A1_\(FR\|/)
+  expect(saved.constraints.folderName).not.toContain('<')
 })
 
 test('sans variables.json : regex affichées telles quelles', async ({ page }) => {

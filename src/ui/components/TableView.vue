@@ -65,7 +65,7 @@ function constraints(c: ColumnConstraints | undefined): { text: string; title?: 
   if (c.unique) out.push({ text: 'unique' })
   if (c.minLength !== undefined) out.push({ text: `longueur ≥ ${c.minLength}` })
   if (c.maxLength !== undefined && c.maxLength >= 0) out.push({ text: `longueur ≤ ${c.maxLength}` })
-  if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern)}`, title: c.pattern })
+  if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern, model.value)}`, title: c.pattern })
   if (c.enum?.length) out.push({ text: `valeurs : ${c.enum.join(', ')}` })
   if (c.reference) out.push({ text: `référence ${c.reference}` })
   return out
@@ -142,8 +142,8 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <v-text-field label="Longueur maximale" type="number" :model-value="c.constraints?.maxLength" density="compact" variant="outlined" class="number"
                 data-testid="column-maxLength" @update:model-value="(v: string) => setNumber(i, 'maxLength', v)" />
               <v-text-field label="Motif (expression régulière)" :model-value="c.constraints?.pattern" density="compact" variant="outlined" class="field"
-                :hint="store.regexHint(c.constraints?.pattern)" persistent-hint data-testid="column-pattern"
-                @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'pattern', store.regexInput(v)), pointer('columns', i, 'pattern'))" />
+                :hint="store.regexHint(c.constraints?.pattern, model)" persistent-hint data-testid="column-pattern"
+                @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'pattern', store.regexInput(v, model)), pointer('columns', i, 'pattern'))" />
               <v-text-field label="Référence (TABLE.COLONNE)" :model-value="c.constraints?.reference" density="compact" variant="outlined" class="field"
                 data-testid="column-reference" @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'reference', v), pointer('columns', i, 'reference'))" />
             </div>

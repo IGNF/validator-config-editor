@@ -6,7 +6,7 @@ import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
 import { outgoingRefs, scopeFiles, type ExportScope } from '@core/export'
-import { fromVariables, readVariables, toVariables } from '@core/variables'
+import { fromVariables, namesFor, readVariables, toVariables } from '@core/variables'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
 import { ServerSource } from '../io/server'
@@ -91,18 +91,22 @@ export const useProject = defineStore('project', () => {
   const exported = shallowRef<ReadonlyMap<string, unknown>>()
   const pending = computed(() => changed.value.size > 0 && session.value?.edited !== exported.value)
 
-  // Variables d'affichage des regex (010) : dictionnaire variables.json s'il est présent et valide.
-  const variables = computed(() => {
+  // Variables d'affichage des regex (010) : dictionnaire variables.json s'il est présent et valide,
+  // avec les noms propres à la famille du modèle (alias, ex. IDGEST pour les SUP).
+  const dictionary = computed(() => {
     const file = session.value?.result.project.variables
-    return file ? readVariables(file).variables : undefined
+    return file ? readVariables(file) : undefined
   })
+  const variables = computed(() => dictionary.value?.variables)
   /** Regex affichée avec ses variables (inchangée sans dictionnaire). */
-  const regexDisplay = (regex: string) => (variables.value ? toVariables(regex, variables.value) : regex)
-  /** Regex saisie : les <NOM> de variables connues sont remplacés par leur regex. */
-  const regexInput = (text: string) => (variables.value ? fromVariables(text, variables.value) : text)
+  const regexDisplay = (regex: string, model?: string) =>
+    variables.value ? toVariables(regex, variables.value, namesFor(dictionary.value?.aliases, model)) : regex
+  /** Regex saisie : les <NOM> de variables connues (ou leurs alias) sont remplacés par leur regex. */
+  const regexInput = (text: string, model?: string) =>
+    variables.value ? fromVariables(text, variables.value, namesFor(dictionary.value?.aliases, model)) : text
   /** Aide sous un champ de regex : sa forme à variables, si elle diffère. */
-  const regexHint = (regex: string | undefined) => {
-    const shown = regex ? regexDisplay(regex) : ''
+  const regexHint = (regex: string | undefined, model?: string) => {
+    const shown = regex ? regexDisplay(regex, model) : ''
     return shown && shown !== regex ? `Affichage : ${shown}` : undefined
   }
 

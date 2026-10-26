@@ -106,8 +106,8 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
           @update:model-value="(v: string) => setProp('/description', v)" />
         <div class="d-flex flex-wrap ga-4">
           <v-text-field label="Nom du dossier (expression régulière)" :model-value="doc.constraints?.folderName" density="compact" variant="outlined" class="field mono"
-            :hint="store.regexHint(doc.constraints?.folderName)" persistent-hint data-testid="model-folderName"
-            @update:model-value="(v: string) => setProp('/constraints/folderName', store.regexInput(v))" />
+            :hint="store.regexHint(doc.constraints?.folderName, name)" persistent-hint data-testid="model-folderName"
+            @update:model-value="(v: string) => setProp('/constraints/folderName', store.regexInput(v, name))" />
           <v-text-field label="Spécification des métadonnées" :model-value="doc.constraints?.metadataSpecification" density="compact" variant="outlined" class="field"
             data-testid="metadata-specification" @update:model-value="(v: string) => setProp('/constraints/metadataSpecification', v)" />
         </div>
@@ -127,7 +127,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
               <ProblemBadge :file="path!" :pointer="`/files/${i}`" />
               <span class="text-medium-emphasis">{{ fileTypeLabel(f.type) }}</span>
               <span class="tag">{{ mandatoryLabel(f.mandatory) }}</span>
-              <RegexText :value="f.path" class="path" />
+              <RegexText :value="f.path" :model="name" class="path" />
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
@@ -144,8 +144,8 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
                 @update:model-value="(v: string) => setProp(pointer('files', i, 'mandatory'), v, true)" />
             </div>
             <v-text-field label="Chemin (expression régulière)" :model-value="f.path" density="compact" variant="outlined" class="mono" data-testid="file-path"
-              :hint="store.regexHint(f.path)" persistent-hint
-              @update:model-value="(v: string) => setProp(pointer('files', i, 'path'), store.regexInput(v), true)" />
+              :hint="store.regexHint(f.path, name)" persistent-hint
+              @update:model-value="(v: string) => setProp(pointer('files', i, 'path'), store.regexInput(v, name), true)" />
             <div v-if="f.type === 'table'" class="d-flex flex-wrap align-center ga-4">
               <v-combobox label="Modèle de table (vide : ./types/<nom>.json)" :items="tableChoices" :model-value="f.tableModel ?? null" density="compact" variant="outlined"
                 class="field" clearable data-testid="file-tableModel"
