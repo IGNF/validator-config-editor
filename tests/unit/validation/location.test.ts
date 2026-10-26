@@ -37,6 +37,7 @@ describe('describeLocation', () => {
     [`${PLU}/gpu.json`, '/validator_feature_type/7833f9f88c20ca7b5a63cc0ad198a9a2', { file: `Surcharges GpU de ${PLU}`, element: 'Surcharge de table table ZONE_URBA' }],
     [`${PLU}/gpu.json`, '/validator_file_model/0123456789abcdef0123456789abcdef', { file: `Surcharges GpU de ${PLU}`, element: 'Surcharge de fichier 01234567…' }],
     ['orphelin/', undefined, { file: 'Modèle orphelin' }],
+    ['variables.json', undefined, { file: 'Dictionnaire des variables' }],
   ])('%s %s', async (file, pointer, expected) => {
     expect(await at(file, pointer, file.slice(0, file.indexOf('/')))).toEqual(expected)
   })

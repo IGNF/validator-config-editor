@@ -34,6 +34,7 @@ const join = (...parts: (string | undefined)[]) => parts.filter(Boolean).join(' 
 
 function fileLabel(project: Project, problem: Problem): { label: string; data?: unknown } {
   const { file } = problem
+  if (!file.includes('/')) return { label: file === 'variables.json' ? 'Dictionnaire des variables' : file }
   const model = file.slice(0, file.indexOf('/'))
   const rel = file.slice(model.length + 1)
   const loaded = project.models.get(model)

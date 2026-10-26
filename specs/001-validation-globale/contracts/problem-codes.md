@@ -24,6 +24,8 @@ code est un changement de version mineure.
 | `ERR-CSV-SYNTAX` | erreur | guillemet non fermé | `CSV invalide ligne 8 : guillemet non fermé` |
 | `ERR-CSV-HEADER` | erreur | en-tête vide ou nom de colonne vide ou dupliqué | `En-tête CSV invalide : colonne « TYPEZONE » dupliquée` |
 | `ERR-CSV-ROW-LENGTH` | erreur | ligne dont le nombre de colonnes diffère de l'en-tête | `Ligne 14 : 3 valeurs pour 5 colonnes` |
+| `ERR-VARIABLES-FORMAT` | erreur | `variables.json` (racine) illisible, ou sans objet `variables` nom → regex non vide (feature 010) | `variables.json illisible ou mal formé : les regex sont affichées sans variable` |
+| `ERR-VARIABLES-DUPLICATE` | erreur | deux variables de `variables.json` ont la même regex (feature 010) | `La variable SIREN a la même regex que IDGEST` |
 | `WARN-MODEL-NO-DOCUMENT` | avertissement | dossier sans `files.json` | `Dossier sans files.json` |
 
 ## Schémas

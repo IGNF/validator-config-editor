@@ -107,4 +107,6 @@ export interface LoadedModel {
 
 export interface Project {
   models: Map<string, LoadedModel>
+  /** Dictionnaire des variables d'affichage des regex (`variables.json` à la racine, feature 010). */
+  variables?: JsonFile
 }

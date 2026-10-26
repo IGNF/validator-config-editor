@@ -1,6 +1,7 @@
 import type { Csv, JsonFile, LoadedModel, Project } from '../model/types'
 import { problem, type Problem } from '../validation/problems'
 import { parseCsv } from './csv'
+import { VARIABLES_FILE } from '../variables'
 import type { ConfigFs } from './fs'
 import { parseJson } from './json'
 
@@ -23,10 +24,11 @@ function emptyModel(name: string): LoadedModel {
 
 /**
  * Charge tous les modèles d'une configuration : un modèle par dossier de premier niveau.
- * Les fichiers situés directement à la racine sont ignorés.
+ * À la racine, seul `variables.json` est lu (dictionnaire des variables, feature 010).
  */
 export async function loadProject(fs: ConfigFs): Promise<LoadResult> {
-  const paths = (await fs.listFiles()).filter((p) => p.includes('/')).sort()
+  const all = await fs.listFiles()
+  const paths = all.filter((p) => p.includes('/')).sort()
   const texts = await Promise.all(paths.map((p) => fs.readText(p)))
   const models = new Map<string, LoadedModel>()
   const problems: Problem[] = []
@@ -57,5 +59,10 @@ export async function loadProject(fs: ConfigFs): Promise<LoadResult> {
     else model.tables.set(path, file)
   })
 
-  return { project: { models }, problems }
+  const project: Project = { models }
+  if (all.includes(VARIABLES_FILE)) {
+    const r = parseJson(await fs.readText(VARIABLES_FILE))
+    project.variables = r.ok ? { path: VARIABLES_FILE, data: r.value } : { path: VARIABLES_FILE }
+  }
+  return { project, problems }
 }
