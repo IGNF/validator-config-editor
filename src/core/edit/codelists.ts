@@ -61,3 +61,23 @@ export function copyCodeList(session: Session, from: CodeListRef, model: string,
     { path: doc.path, kind: 'json', update: (d) => addCode(d, allIds(session), `./codes/${name}.csv`, name, random, from.title ?? name) },
   ]
 }
+
+/** Raison du refus des colonnes d'une nouvelle liste, ou undefined si elles conviennent. */
+export function checkColumns(columns: readonly string[]): string | undefined {
+  if (columns.length === 0) return 'Indiquez au moins une colonne.'
+  if (columns.some((c) => c === '')) return 'Nom de colonne vide.'
+  if (columns.some((c) => /[,"]/.test(c))) return 'Un nom de colonne ne peut contenir ni virgule ni guillemet.'
+  const twice = columns.find((c, i) => columns.indexOf(c) !== i)
+  if (twice) return `Colonne « ${twice} » en double.`
+  return undefined
+}
+
+/** Crée une liste vide dans `model` : CSV réduit à l'en-tête, déclaré sous `name`. */
+export function createCodeList(session: Session, model: string, name: string, columns: readonly string[], random?: RandomBytes): FileChange[] {
+  const doc = session.result.project.models.get(model)?.document
+  if (!doc) return []
+  return [
+    { path: csvPath(model, name), kind: 'text', text: `${columns.join(',')}\n` },
+    { path: doc.path, kind: 'json', update: (d) => addCode(d, allIds(session), `./codes/${name}.csv`, name, random) },
+  ]
+}

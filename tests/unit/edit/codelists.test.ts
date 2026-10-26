@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { checkNewName, codeLists, copyCodeList, defaultCopyName, type CodeListRef } from '@core/edit/codelists'
+import { checkColumns, checkNewName, codeLists, copyCodeList, createCodeList, defaultCopyName, type CodeListRef } from '@core/edit/codelists'
 import { applyChanges, dataOf, isChanged, openSession, textOf, undoEdit, type Session } from '@core/edit/session'
 import { editJson, readConfig } from '../../support/fixtures'
 
@@ -112,5 +112,31 @@ describe('copyCodeList', () => {
     const s = await openSession(files)
     const after = applyChanges(s, copyCodeList(s, listOf(s, PLU, 'ListeEtatPLU'), MEC, 'ListeEtatPLU'))
     expect(codesOf(after, MEC).at(-1)).not.toHaveProperty('id')
+  })
+})
+
+describe('createCodeList', () => {
+  it('crée le CSV avec la seule ligne d\'en-tête et déclare la liste, sans problème', async () => {
+    const s = await openSession(readConfig())
+    const after = applyChanges(s, createCodeList(s, MEC, 'ListeTest', ['CODE', 'LIBELLE'], fixed))
+    expect(textOf(after, `${MEC}/codes/ListeTest.csv`)).toBe('CODE,LIBELLE\n')
+    expect(codesOf(after, MEC).at(-1)).toEqual({ data: './codes/ListeTest.csv', id: '07'.repeat(16), name: 'ListeTest', title: 'ListeTest' })
+    expect(after.result.problems).toEqual([])
+    expect(undoEdit(after).result.problems).toEqual([])
+    expect(textOf(undoEdit(after), `${MEC}/codes/ListeTest.csv`)).toBeUndefined()
+  })
+})
+
+describe('checkColumns', () => {
+  it('accepte des colonnes distinctes et non vides', () => {
+    expect(checkColumns(['CODE', 'LIBELLE'])).toBeUndefined()
+  })
+
+  it('refuse aucune colonne, une colonne vide, en double, ou avec virgule ou guillemet', () => {
+    expect(checkColumns([])).toMatch(/au moins une colonne/)
+    expect(checkColumns(['CODE', ''])).toMatch(/vide/)
+    expect(checkColumns(['CODE', 'CODE'])).toMatch(/en double/)
+    expect(checkColumns(['A,B'])).toMatch(/virgule/)
+    expect(checkColumns(['A"B'])).toMatch(/virgule/)
   })
 })

@@ -12,6 +12,7 @@ import { href, route } from '../router'
 import { useProject } from '../stores/project'
 import CodeListDialog from './CodeListDialog.vue'
 import FileFrame from './FileFrame.vue'
+import NewCodeListDialog from './NewCodeListDialog.vue'
 import ModelSummary from './ModelSummary.vue'
 import ProblemBadge from './ProblemBadge.vue'
 import NotConformant from './NotConformant.vue'
@@ -165,6 +166,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <h2 class="text-h6">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
         <v-spacer />
         <div class="d-flex flex-wrap ga-2">
+          <NewCodeListDialog :model="name" />
           <CodeListDialog :model="name" />
           <v-btn :prepend-icon="mdiPlus" variant="tonal" data-testid="add-code" @click="newCode">Déclarer une liste</v-btn>
         </div>
