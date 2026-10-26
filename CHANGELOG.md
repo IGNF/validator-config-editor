@@ -9,6 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Regex (nom du dossier, chemins des fichiers attendus, motifs de colonne) affichées avec les variables de `variables.json` à la racine de la configuration, regex complète au survol ; saisie de `<NOM>` convertie en regex (#85).
 - Téléchargement du fichier affiché, avec son contenu courant (octets d'origine s'il n'est pas modifié) (#70).
 - Téléchargement d'un modèle en ZIP, depuis sa vue ou l'arbre ; références vers d'autres modèles signalées (#71).
 - Création d'une liste de codes vide (nom et colonnes) dans un modèle (#74).

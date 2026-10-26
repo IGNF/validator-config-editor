@@ -70,7 +70,7 @@ function withText(project: Project, path: string, text: string): { project: Proj
   if (!path.endsWith('.csv')) throw new Error(`Seules les listes de codes sont modifiables en texte : ${path}`)
   const r = readCsv(name, path, text)
   const files = model.files.includes(path) ? model.files : [...model.files, path].sort()
-  return { project: { models: new Map(project.models).set(name, { ...model, csvs: new Map(model.csvs).set(path, r.entry), files }) }, problems: r.problems }
+  return { project: { ...project, models: new Map(project.models).set(name, { ...model, csvs: new Map(model.csvs).set(path, r.entry), files }) }, problems: r.problems }
 }
 
 // Session avec ces modifications : les fichiers revenus à l'état d'origine ne sont plus modifiés.

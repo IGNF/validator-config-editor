@@ -30,6 +30,18 @@ export const CATALOG = {
     hint: 'La première ligne doit donner un nom unique et non vide à chaque colonne.',
     message: (p) => `En-tête CSV invalide : ${s(p, 'reason')}`,
   },
+  'ERR-VARIABLES-FORMAT': {
+    severity: 'error',
+    title: 'Dictionnaire des variables illisible',
+    hint: 'variables.json doit contenir un objet « variables » associant chaque nom de variable à une regex non vide.',
+    message: () => 'variables.json illisible ou mal formé : les regex sont affichées sans variable',
+  },
+  'ERR-VARIABLES-DUPLICATE': {
+    severity: 'error',
+    title: 'Deux variables pour la même regex',
+    hint: 'Chaque regex ne doit correspondre qu\'à une variable, sinon l\'affichage est ambigu : fusionner les deux variables ou changer l\'une des regex.',
+    message: (p) => `La variable ${s(p, 'name')} a la même regex que ${s(p, 'other')}`,
+  },
   'ERR-CSV-ROW-LENGTH': {
     severity: 'error',
     title: 'Ligne de liste de codes mal découpée',

@@ -5,6 +5,7 @@ import { validateDocument, validateGpu, validateTable, type SchemaValidator } fr
 import { compareProblems, countProblems, type Problem } from './problems'
 import { crossReferences, type CheckedModel } from './refs'
 import { schemaProblems } from './schema'
+import { readVariables } from '../variables'
 
 /** Valide une configuration chargée : schémas puis références croisées. */
 export function validateProject(project: Project): { checked: Map<string, CheckedModel>; problems: Problem[] } {
@@ -33,6 +34,7 @@ export function validateProject(project: Project): { checked: Map<string, Checke
   }
 
   problems.push(...crossReferences(project, checked))
+  if (project.variables) problems.push(...readVariables(project.variables).problems)
   return { checked, problems }
 }
 
@@ -67,7 +69,7 @@ export function withData(project: Project, path: string, data: unknown): Project
   else if (model.gpu?.path === path) copy.gpu = file
   else if (model.tables.has(path)) copy.tables = new Map(model.tables).set(path, file)
   else throw new Error(`Fichier JSON inconnu : ${path}`)
-  return { models: new Map(project.models).set(name, copy) }
+  return { ...project, models: new Map(project.models).set(name, copy) }
 }
 
 export interface Summary {

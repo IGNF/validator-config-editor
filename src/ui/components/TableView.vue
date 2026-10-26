@@ -56,17 +56,18 @@ function add() {
   opened.value = [table.value!.columns.length - 1]
 }
 
-function constraints(c: ColumnConstraints | undefined): string[] {
+// Résumé des contraintes ; le motif s'affiche avec ses variables, regex complète au survol (010).
+function constraints(c: ColumnConstraints | undefined): { text: string; title?: string }[] {
   if (!c) return []
-  const out: string[] = []
-  if (c.required) out.push('valeur obligatoire')
-  if (c.presenceRequired) out.push('colonne obligatoire')
-  if (c.unique) out.push('unique')
-  if (c.minLength !== undefined) out.push(`longueur ≥ ${c.minLength}`)
-  if (c.maxLength !== undefined && c.maxLength >= 0) out.push(`longueur ≤ ${c.maxLength}`)
-  if (c.pattern) out.push(`motif ${c.pattern}`)
-  if (c.enum?.length) out.push(`valeurs : ${c.enum.join(', ')}`)
-  if (c.reference) out.push(`référence ${c.reference}`)
+  const out: { text: string; title?: string }[] = []
+  if (c.required) out.push({ text: 'valeur obligatoire' })
+  if (c.presenceRequired) out.push({ text: 'colonne obligatoire' })
+  if (c.unique) out.push({ text: 'unique' })
+  if (c.minLength !== undefined) out.push({ text: `longueur ≥ ${c.minLength}` })
+  if (c.maxLength !== undefined && c.maxLength >= 0) out.push({ text: `longueur ≤ ${c.maxLength}` })
+  if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern)}`, title: c.pattern })
+  if (c.enum?.length) out.push({ text: `valeurs : ${c.enum.join(', ')}` })
+  if (c.reference) out.push({ text: `référence ${c.reference}` })
   return out
 }
 
@@ -113,7 +114,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <strong>{{ c.name }}</strong>
               <ProblemBadge :file="file" :pointer="`/columns/${i}`" />
               <span class="text-medium-emphasis">{{ c.type }}<template v-if="columnTypeFamily(c.type)"> · {{ columnTypeFamily(c.type) }}</template></span>
-              <span v-for="text in constraints(c.constraints)" :key="text" class="constraint">{{ text }}</span>
+              <span v-for="k in constraints(c.constraints)" :key="k.text" class="constraint" :title="k.title">{{ k.text }}</span>
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
@@ -141,7 +142,8 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <v-text-field label="Longueur maximale" type="number" :model-value="c.constraints?.maxLength" density="compact" variant="outlined" class="number"
                 data-testid="column-maxLength" @update:model-value="(v: string) => setNumber(i, 'maxLength', v)" />
               <v-text-field label="Motif (expression régulière)" :model-value="c.constraints?.pattern" density="compact" variant="outlined" class="field"
-                @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'pattern', v), pointer('columns', i, 'pattern'))" />
+                :hint="store.regexHint(c.constraints?.pattern)" persistent-hint data-testid="column-pattern"
+                @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'pattern', store.regexInput(v)), pointer('columns', i, 'pattern'))" />
               <v-text-field label="Référence (TABLE.COLONNE)" :model-value="c.constraints?.reference" density="compact" variant="outlined" class="field"
                 data-testid="column-reference" @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'reference', v), pointer('columns', i, 'reference'))" />
             </div>
