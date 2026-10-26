@@ -32,3 +32,10 @@ test('fenêtre de copie d\'une liste de codes', async ({ page }) => {
   await expect(page.getByTestId('copy-name')).toBeVisible()
   expect(await audit(page)).toEqual([])
 })
+
+test('fenêtre de création d\'une liste de codes', async ({ page }) => {
+  await page.goto('./#/GPU_MEC_2025/files.json')
+  await page.getByTestId('new-code-list').click()
+  await expect(page.getByTestId('new-list-name')).toBeVisible()
+  expect(await audit(page)).toEqual([])
+})

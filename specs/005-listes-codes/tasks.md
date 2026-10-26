@@ -15,7 +15,7 @@ code.
 
 ## Phase 2 : US2, créer une liste vide — branche `005-listes-codes/us2` (#74)
 
-- [ ] T006 [P] Tests `createCodeList` : en-tête seul, déclaration, refus (colonnes vides, en double, avec virgule)
-- [ ] T007 [US2] `createCodeList`
-- [ ] T008 [US2] `CodeListDialog` (mode création), bouton dans `ModelView`
-- [ ] T009 [US2] e2e : `ListeTest` (`CODE,LIBELLE`) dans `GPU_MEC_2025`, aucune erreur, liste affichée ; axe
+- [x] T006 [P] Tests `createCodeList` : en-tête seul, déclaration, refus (colonnes vides, en double, avec virgule)
+- [x] T007 [US2] `createCodeList`
+- [x] T008 [US2] `CodeListDialog` (mode création), bouton dans `ModelView`
+- [x] T009 [US2] e2e : `ListeTest` (`CODE,LIBELLE`) dans `GPU_MEC_2025`, aucune erreur, liste affichée ; axe

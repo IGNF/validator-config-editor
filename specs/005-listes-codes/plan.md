@@ -55,7 +55,7 @@ modèle.
   et `PUT /api/file` sait créer un fichier dans `codes/` d'un modèle existant
   (`If-None-Match: *`, 412 s'il existe).
 
-- **R6 – Interface** (`CodeListDialog.vue`) :
+- **R6 – Interface** (`CodeListDialog.vue` pour la copie, `NewCodeListDialog.vue` pour la création) :
   - deux boutons dans la section « Listes de codes » de `ModelView`, à côté de « Déclarer une
     liste » : « Nouvelle liste » (`new-code-list`) et « Copier une liste existante »
     (`copy-code-list`) ;
