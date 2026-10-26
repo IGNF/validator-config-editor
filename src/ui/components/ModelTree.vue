@@ -45,7 +45,8 @@ watch(
       hide-details clearable class="ma-2" data-testid="model-filter" />
     <p class="text-caption px-4" aria-live="polite">{{ shown.length }} / {{ store.models.length }} modèles</p>
     <!-- Rôles : Vuetify donne « option » aux en-têtes de groupe, invalide hors d'une listbox. -->
-    <v-list v-model:opened="opened" density="compact" nav role="none">
+    <!-- Retrait de 12 px par niveau (famille › modèle › fichiers) au lieu de 56 px, icône à 10 px du texte. -->
+    <v-list v-model:opened="opened" density="compact" nav role="none" class="tree">
       <template v-for="n in nodes" :key="isFamily(n) ? familyKey(n.family) : n.name">
         <v-list-group v-if="isFamily(n)" :value="familyKey(n.family)">
           <template #activator="{ props }">
@@ -62,3 +63,11 @@ watch(
     </v-list>
   </nav>
 </template>
+
+<style scoped>
+.tree {
+  --v-list-group-prepend: 0px;
+  --v-list-indent: 12px;
+  --v-list-prepend-gap: 10px;
+}
+</style>
