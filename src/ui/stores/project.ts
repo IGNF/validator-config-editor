@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { allFiles, allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
+import { allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type Session } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from '@core/fixes/catalog'
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
+import { scopeFiles, type ExportScope } from '@core/export'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
 import { ServerSource } from '../io/server'
@@ -87,20 +88,41 @@ export const useProject = defineStore('project', () => {
   const exported = shallowRef<ReadonlyMap<string, unknown>>()
   const pending = computed(() => changed.value.size > 0 && session.value?.edited !== exported.value)
 
-  /** Télécharge toute la configuration en ZIP (contrat source-et-ecriture). */
-  async function downloadZip(): Promise<{ name: string; errors: number; reformatted: string[] }> {
+  /** Message affiché après un téléchargement ou un enregistrement. */
+  const notice = ref<string>()
+
+  // Octets d'un fichier (contrat source-et-ecriture) : ceux d'origine s'il n'est pas modifié.
+  async function bytes(s: Session, path: string): Promise<Uint8Array> {
+    const text = textOf(s, path) ?? ''
+    if (!isChanged(s, path)) {
+      const raw = await source.value?.raw?.(path)
+      if (raw) return raw
+    }
+    return new TextEncoder().encode(text)
+  }
+
+  /**
+   * Télécharge une portée (plan 008, R2) : toute la configuration en ZIP, ou un fichier seul.
+   * Seul le téléchargement de toute la configuration retire l'avertissement avant de quitter.
+   */
+  async function download(scope: ExportScope): Promise<void> {
     const s = session.value!
+    const paths = scopeFiles(s, scope)
+    const rewritten = reformatted(s).filter((p) => paths.includes(p))
+    const reindented = rewritten.length ? `. Fichiers réindentés : ${rewritten.join(', ')}` : ''
+    const remaining = (n: number) => (n ? ` (${n} erreur${n > 1 ? 's' : ''} restante${n > 1 ? 's' : ''})` : '')
+    if (scope.kind === 'file') {
+      const name = scope.path.slice(scope.path.lastIndexOf('/') + 1)
+      const type = name.toLowerCase().endsWith('.csv') ? 'text/csv' : 'application/json'
+      offer((await bytes(s, scope.path)) as BlobPart, name, type)
+      notice.value = `Fichier téléchargé : ${name}${remaining(countsByFile.value.get(scope.path)?.errors ?? 0)}${reindented}`
+      return
+    }
     const name = (source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config'
-    const encoder = new TextEncoder()
-    const entries = await Promise.all(
-      [...allFiles(s)].map(async ([path, text]) => ({
-        path: `${name}/${path}`,
-        data: isChanged(s, path) ? encoder.encode(text) : ((await source.value?.raw?.(path)) ?? encoder.encode(text)),
-      })),
-    )
+    const entries = await Promise.all(paths.map(async (path) => ({ path: `${name}/${path}`, data: await bytes(s, path) })))
     offer(zip(entries) as BlobPart, `${name}.zip`, 'application/zip')
     exported.value = s.edited
-    return { name: `${name}.zip`, errors: countProblems(s.result.problems).errors, reformatted: reformatted(s) }
+    notice.value = `Configuration téléchargée : ${name}.zip${remaining(countProblems(s.result.problems).errors)}${reindented}`
   }
 
   const canSave = computed(() => !!source.value?.save)
@@ -124,7 +146,7 @@ export const useProject = defineStore('project', () => {
   }
 
   return {
-    pending, downloadZip, canSave, save, fixes, applyFix, canFixAll, fixAll,
+    pending, notice, download, canSave, save, fixes, applyFix, canFixAll, fixAll,
     source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

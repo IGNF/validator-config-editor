@@ -7,6 +7,10 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Téléchargement du fichier affiché, avec son contenu courant (octets d'origine s'il n'est pas modifié) (#70).
+
 ### Removed
 
 - Gestion de l'héritage (cas propre au GpU, déjà aplati dans `validator-config-gpu`) : plus de vérification `ERR-PARENT-MISSING`, de résolution des `id` de `gpu.json` par le parent ou les modèles qui en héritent, ni d'affichage du parent embarqué et des modèles hérités. La clé `parent` reste tolérée et conservée.

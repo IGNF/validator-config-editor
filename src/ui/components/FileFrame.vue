@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiDownload } from '@mdi/js'
 import { nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { closestPointer } from '@core/validation/problems'
 import { route } from '../router'
@@ -41,6 +42,8 @@ watch(tab, highlight)
       <h1 class="text-h5">{{ title }}</h1>
       <v-chip v-if="source && store.isEdited(source)" size="small" color="warning" data-testid="edited">● modifié</v-chip>
       <slot name="chips" />
+      <v-btn v-if="source" :icon="mdiDownload" size="small" variant="text" aria-label="Télécharger ce fichier" title="Télécharger ce fichier"
+        data-testid="download-file" @click="store.download({ kind: 'file', path: source })" />
     </div>
     <p class="text-body-2 text-medium-emphasis mb-2"><code>{{ file }}</code></p>
     <v-tabs v-if="source" v-model="tab" density="compact" class="mb-4">
