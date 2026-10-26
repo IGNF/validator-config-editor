@@ -3,14 +3,13 @@
 ## `config/`
 
 Extrait réel de [IGNF/validator-config-gpu](https://github.com/IGNF/validator-config-gpu),
-branche `json-source`, commit `5fb2cdb7`, copié sans modification :
+branche `json-source`, copié sans modification :
 
-| Modèle | Intérêt |
-|---|---|
-| `cnig_PLU_2017` | modèle complet : tables, listes de codes multi-colonnes, codes `.json`, `gpu.json` |
-| `cnig_SUP_XXX_2016` | modèle abstrait (seulement `gpu.json`) |
-| `cnig_SUP_A1_2016` | modèle hérité : `parent` embarqué, `parent_id` dans `gpu.json` |
-| `GPU_MEC_2025` | dossier `codes/` vide (`.gitkeep` ajouté pour git) |
+| Modèle | Commit | Intérêt |
+|---|---|---|
+| `cnig_PLU_2017` | `5fb2cdb7` | modèle complet : tables, listes de codes multi-colonnes, codes `.json`, `gpu.json` |
+| `cnig_SUP_A1_2016` | `823d71e` | modèle SUP aplati (sans héritage) : colonnes communes de même `id` dans plusieurs tables |
+| `GPU_MEC_2025` | `5fb2cdb7` | dossier `codes/` vide (`.gitkeep` ajouté pour git) |
 
 Cette configuration ne doit produire **aucune erreur**.
 

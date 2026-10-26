@@ -6,6 +6,11 @@
 
 **Statut** : brouillon
 
+> **Mise à jour du 2026-10-26** : l'héritage (`parent`, modèles abstraits `cnig_SUP_XXX_*`,
+> `ERR-PARENT-MISSING`) n'est plus géré par l'éditeur : `parent` est toléré sans être vérifié, un
+> dossier sans `files.json` donne `WARN-MODEL-NO-DOCUMENT`. Les passages sur l'héritage
+> ci-dessous sont caducs.
+
 **Demande** : « Une GitHub Pages pour pouvoir tester d'éditer une configuration et la
 télécharger. » Il faut pour cela l'édition des modèles, qui est donc intégrée à cette feature,
 et aussi rendue disponible dans l'éditeur local `vce serve`.
@@ -281,7 +286,7 @@ l'outil sans installation.
 - Création et suppression de modèles, de tables (fichiers) et de listes de codes (fichiers).
 - **005-listes-codes** : édition des listes de codes CSV.
 - **006-edition-en-serie** : même modification appliquée aux éléments équivalents de plusieurs modèles
-  (l'héritage des modèles SUP reste en lecture seule).
+  (l'héritage n'est pas géré par l'éditeur).
 - **007-gpu** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…).
 - Ouverture d'une archive ZIP dans l'éditeur en ligne.
 - **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL

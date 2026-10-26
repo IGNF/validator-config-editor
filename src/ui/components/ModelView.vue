@@ -20,9 +20,6 @@ const store = useProject()
 const name = computed(() => modelOf(props.file))
 const loaded = computed(() => store.result!.project.models.get(name.value))
 const path = computed(() => loaded.value?.document?.path)
-const children = computed(() =>
-  [...store.result!.checked.values()].filter((c) => c.document?.parent?.name === name.value).map((c) => c.model.name),
-)
 
 // Donnée courante, même non conforme au schéma, pourvu qu'elle ait une liste de fichiers.
 const doc = computed(() => {
@@ -80,18 +77,12 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
 <template>
   <FileFrame :title="`Modèle ${name}`" :file="path ?? `${name}/`" :source="path">
     <template #chips>
-      <v-chip v-if="!loaded?.document || doc?.abstract" size="small" color="secondary">abstrait</v-chip>
+      <v-chip v-if="doc?.abstract" size="small" color="secondary">abstrait</v-chip>
     </template>
 
     <template v-if="!loaded?.document">
-      <p class="mb-2">Modèle abstrait : ce dossier ne contient que des surcharges GpU.</p>
+      <p class="mb-2">Ce dossier ne contient pas de files.json.</p>
       <p v-if="loaded?.gpu"><a :href="href(loaded.gpu.path)">Surcharges GpU (gpu.json)</a></p>
-      <template v-if="children.length">
-        <h2 class="text-h6 mt-4">Modèles qui en héritent ({{ children.length }})</h2>
-        <ul class="ml-6">
-          <li v-for="child in children" :key="child"><a :href="href(`${child}/files.json`)">{{ child }}</a></li>
-        </ul>
-      </template>
     </template>
 
     <NotConformant v-else-if="!doc" />
@@ -114,10 +105,6 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
             data-testid="metadata-specification" @update:model-value="(v: string) => setProp('/constraints/metadataSpecification', v)" />
         </div>
         <p v-if="doc.id" class="text-body-2">Identifiant : <code>{{ doc.id }}</code></p>
-        <p v-if="doc.parent" class="text-body-2" data-pointer="/parent">
-          Modèle parent : <a :href="href(`${doc.parent.name}/`)">{{ doc.parent.name }}</a>
-          <span class="text-medium-emphasis">(embarqué dans files.json, en lecture seule)</span>
-        </p>
       </section>
 
       <div class="d-flex align-center mt-4">

@@ -2,6 +2,11 @@
 
 **Feature** : `004-correctifs-lisibilite` | **Spec** : [spec.md](spec.md) | **Date** : 2026-10-16
 
+> **Mise à jour du 2026-10-26** : l'héritage (`parent`, modèles abstraits `cnig_SUP_XXX_*`,
+> `ERR-PARENT-MISSING`) n'est plus géré par l'éditeur : `parent` est toléré sans être vérifié, un
+> dossier sans `files.json` donne `WARN-MODEL-NO-DOCUMENT`. Les passages sur l'héritage
+> ci-dessous sont caducs.
+
 ## Résumé
 
 - **Correctifs.** Le cœur calcule, pour un problème et l'état de la session, des corrections pures

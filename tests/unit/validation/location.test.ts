@@ -40,8 +40,4 @@ describe('describeLocation', () => {
   ])('%s %s', async (file, pointer, expected) => {
     expect(await at(file, pointer, file.slice(0, file.indexOf('/')))).toEqual(expected)
   })
-
-  it('localise dans le parent embarqué', async () => {
-    expect(await at('cnig_SUP_A1_2016/files.json', '/parent/name', 'cnig_SUP_A1_2016')).toEqual({ file: 'Modèle cnig_SUP_A1_2016', element: 'Modèle parent · nom' })
-  })
 })

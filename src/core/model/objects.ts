@@ -1,7 +1,7 @@
 import type { LoadedModel } from './types'
 import { pointer } from '../pointer'
 
-export type ObjectKind = 'modèle' | 'modèle parent' | 'fichier' | 'liste de codes' | 'table' | 'colonne'
+export type ObjectKind = 'modèle' | 'fichier' | 'liste de codes' | 'table' | 'colonne'
 
 /** Objet identifié d'un modèle, pour l'affichage et la navigation. */
 export interface ObjectRef {
@@ -31,10 +31,7 @@ export function indexObjects(model: LoadedModel): Map<string, ObjectRef> {
     list(data.codes).forEach(([c, i]) => add(c, 'liste de codes', text(c.name, `liste ${i + 1}`), file, pointer(...base, 'codes', i)))
   }
   const doc = model.document
-  if (doc && isObject(doc.data)) {
-    document(doc.data, 'modèle', doc.path, [])
-    if (isObject(doc.data.parent)) document(doc.data.parent, 'modèle parent', doc.path, ['parent'])
-  }
+  if (doc && isObject(doc.data)) document(doc.data, 'modèle', doc.path, [])
   for (const [path, file] of model.tables) {
     if (!isObject(file.data)) continue
     const table = text(file.data.name, path.slice(path.lastIndexOf('/') + 1, -'.json'.length))

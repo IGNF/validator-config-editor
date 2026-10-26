@@ -61,13 +61,10 @@ test('déclare une liste de codes en choisissant un CSV de codes/', async ({ pag
   await expect(page.getByTestId('problem-WARN-GPU-ORPHAN-ID')).toBeVisible()
 })
 
-test('modèle hérité : le parent embarqué est en lecture seule et conservé', async ({ page }) => {
+test('renommer un modèle : avertissement si le nom diffère du dossier', async ({ page }) => {
   await page.goto(`${server.url}#/cnig_SUP_A1_2016/files.json`)
-  await expect(page.getByText('embarqué dans files.json, en lecture seule')).toBeVisible()
-  const before = (await source(page)).parent
   await page.getByTestId('model-name').getByRole('textbox').fill('cnig_SUP_A1_2016_bis')
   const after = await source(page)
   expect(after.name).toBe('cnig_SUP_A1_2016_bis')
-  expect(after.parent).toEqual(before)
   await expect(page.getByTestId('problem-WARN-MODEL-NAME')).toBeVisible()
 })

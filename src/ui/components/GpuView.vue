@@ -21,19 +21,10 @@ const SECTIONS: Record<GpuSection, string> = {
   validator_attribute_type: 'Colonnes',
 }
 
-// Objets connus : ceux du modèle, puis ceux de son parent et des modèles qui en héritent.
+// Objets connus : ceux du modèle.
 const objects = computed(() => {
-  const index = new Map<string, ObjectRef>()
-  const models = store.result!.project.models
-  const checked = store.result!.checked
-  const parent = checked.get(model.value)?.document?.parent?.name
-  const related = [model.value, ...(parent ? [parent] : [])]
-  for (const c of checked.values()) if (c.document?.parent?.name === model.value) related.push(c.model.name)
-  for (const name of related) {
-    const loaded = models.get(name)
-    if (loaded) for (const [id, ref] of indexObjects(loaded)) if (!index.has(id)) index.set(id, ref)
-  }
-  return index
+  const loaded = store.result!.project.models.get(model.value)
+  return loaded ? indexObjects(loaded) : new Map<string, ObjectRef>()
 })
 
 const sections = computed(() =>

@@ -119,7 +119,7 @@ describe('corrections', () => {
     expect(after).toBeDefined()
   })
 
-  it('ERR-TABLE-MODEL-MISSING, ERR-CODE-DATA-MISSING, ERR-PARENT-MISSING : chemins et noms proches', async () => {
+  it('ERR-TABLE-MODEL-MISSING, ERR-CODE-DATA-MISSING : chemins et noms proches', async () => {
     let s = await broken((f) => editJson(f, FILES, (d) => {
       d.files.find((x: { name: string }) => x.name === 'ZONE_URBA').tableModel = './types/ZONE_URB.json'
       d.codes.find((x: { name: string }) => x.name === 'ListeEtatPLU').data = './codes/ListeEtatPL.csv'
@@ -127,8 +127,6 @@ describe('corrections', () => {
     s = fix(s, 'ERR-TABLE-MODEL-MISSING').after
     s = fix(s, 'ERR-CODE-DATA-MISSING').after
     expect(codes(s)).toEqual([])
-    const sup = await broken((f) => editJson(f, 'cnig_SUP_A1_2016/files.json', (d) => { d.parent.name = 'cnig_SUP_XXX_2061' }))
-    expect(fix(sup, 'ERR-PARENT-MISSING').fixes[0]!.label).toBe('Utiliser le modèle parent « cnig_SUP_XXX_2016 »')
   })
 
   it('ERR-CSV-ROW-LENGTH : met entre guillemets la valeur qui contient des virgules', async () => {

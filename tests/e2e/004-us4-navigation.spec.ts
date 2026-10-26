@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs'
+import { cpSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { serveCopy, type TempServer } from './support/serve'
@@ -18,6 +18,9 @@ test.beforeEach(async ({ page }) => {
 test.afterEach(() => server.stop())
 
 test('arbre groupé par famille, ouverte par le filtre', async ({ page }) => {
+  // Deuxième modèle de la famille cnig_SUP : copie du premier.
+  cpSync(join(server.dir, 'cnig_SUP_A1_2016'), join(server.dir, 'cnig_SUP_A2_2016'), { recursive: true })
+  await page.reload()
   const sup = page.getByTestId('family-cnig_SUP')
   await expect(sup).toContainText('cnig_SUP (2)')
   await expect(page.getByTestId('model-cnig_SUP_A1_2016')).toBeHidden()

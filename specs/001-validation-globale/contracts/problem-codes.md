@@ -24,7 +24,7 @@ code est un changement de version mineure.
 | `ERR-CSV-SYNTAX` | erreur | guillemet non fermé | `CSV invalide ligne 8 : guillemet non fermé` |
 | `ERR-CSV-HEADER` | erreur | en-tête vide ou nom de colonne vide ou dupliqué | `En-tête CSV invalide : colonne « TYPEZONE » dupliquée` |
 | `ERR-CSV-ROW-LENGTH` | erreur | ligne dont le nombre de colonnes diffère de l'en-tête | `Ligne 14 : 3 valeurs pour 5 colonnes` |
-| `WARN-MODEL-NO-DOCUMENT` | avertissement | dossier sans `files.json`, non désigné comme parent | `Dossier sans files.json et non utilisé comme modèle parent` |
+| `WARN-MODEL-NO-DOCUMENT` | avertissement | dossier sans `files.json` | `Dossier sans files.json` |
 
 ## Schémas
 
@@ -37,7 +37,6 @@ code est un changement de version mineure.
 | Code | Sévérité | Déclencheur | Message (exemple) |
 |---|---|---|---|
 | `WARN-MODEL-NAME` | avertissement | `name` de `files.json` ≠ nom du dossier | `Le nom « cnig_PLU_2016 » diffère du dossier « cnig_PLU_2017 »` |
-| `ERR-PARENT-MISSING` | erreur | `parent.name` ne désigne aucun dossier de la configuration | `Modèle parent « cnig_SUP_XXX_2016 » introuvable` |
 | `ERR-TABLE-MODEL-MISSING` | erreur | modèle de table absent pour un fichier `table` ou une table de `multi_table` : chemin `tableModel`, ou à défaut `./types/<name>.json` (convention du validator). `auto` et les URL ne sont pas vérifiés | `Modèle de table « ./types/ZONE_URBA.json » introuvable` |
 | `ERR-CODE-DATA-MISSING` | erreur | `codes[].data` désigne un fichier absent (les URL ne sont pas vérifiées) | `Liste de codes « ./codes/ListeEtatPLU.csv » introuvable` |
 | `ERR-FK-SYNTAX` | erreur | clé étrangère illisible ou listes de colonnes de longueurs différentes | `Clé étrangère illisible : « (TYPE) REFERENCE Liste(TYPE) »` |

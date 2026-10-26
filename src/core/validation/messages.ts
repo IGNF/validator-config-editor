@@ -39,8 +39,8 @@ export const CATALOG = {
   'WARN-MODEL-NO-DOCUMENT': {
     severity: 'warning',
     title: 'Dossier sans modèle',
-    hint: 'Ajouter un files.json, ou déclarer ce dossier comme parent d\'un modèle, ou le retirer de la configuration.',
-    message: () => 'Dossier sans files.json et non utilisé comme modèle parent',
+    hint: 'Ajouter un files.json, ou retirer le dossier de la configuration.',
+    message: () => 'Dossier sans files.json',
   },
   'ERR-SCHEMA': {
     severity: 'error',
@@ -53,12 +53,6 @@ export const CATALOG = {
     title: 'Nom du modèle différent du dossier',
     hint: 'Le validator n\'impose rien, mais un nom identique au dossier évite les confusions.',
     message: (p) => `Le nom « ${s(p, 'name')} » diffère du dossier « ${s(p, 'folder')} »`,
-  },
-  'ERR-PARENT-MISSING': {
-    severity: 'error',
-    title: 'Modèle parent introuvable',
-    hint: 'Corriger le nom du parent, ou ajouter le dossier du modèle parent à la configuration.',
-    message: (p) => `Modèle parent « ${s(p, 'name')} » introuvable`,
   },
   'ERR-TABLE-MODEL-MISSING': {
     severity: 'error',

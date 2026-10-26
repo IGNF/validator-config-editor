@@ -171,11 +171,6 @@ const BUILDERS: Partial<Record<Problem['code'], Builder>> = {
     return replacements(similar(ref, candidates), (c) => `Utiliser le fichier « ${c} »`, (c) => json(p.file, (d) => setAt(d, p.pointer!, c)))
   },
 
-  'ERR-PARENT-MISSING': (s, p) => {
-    const name = getAt(dataOf(s, p.file), p.pointer!) as string
-    return replacements(similar(name, s.result.project.models.keys()), (c) => `Utiliser le modèle parent « ${c} »`, (c) => json(p.file, (d) => setAt(d, p.pointer!, c)))
-  },
-
   'ERR-CSV-ROW-LENGTH': (s, p) => {
     const text = textOf(s, p.file)
     const line = Number(p.pointer?.slice(1))

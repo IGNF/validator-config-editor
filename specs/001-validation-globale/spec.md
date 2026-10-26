@@ -6,6 +6,11 @@
 
 **Statut** : brouillon
 
+> **Mise à jour du 2026-10-26** : l'héritage (`parent`, modèles abstraits `cnig_SUP_XXX_*`,
+> `ERR-PARENT-MISSING`) n'est plus géré par l'éditeur : `parent` est toléré sans être vérifié, un
+> dossier sans `files.json` donne `WARN-MODEL-NO-DOCUMENT`. Les passages sur l'héritage
+> ci-dessous sont caducs.
+
 **Demande** : « Un éditeur, sur le modèle de tableschema-editor, uniquement pour éditer des
 configurations IGNF/validator (ex. `IGNF/validator-config-gpu`), en travaillant sur tout le
 dossier de configuration en même temps. » Cette première feature couvre la lecture et la
@@ -281,5 +286,5 @@ passe. Une PR qui casse une référence fait échouer le workflow.
   (abandonnée).
 - **005-listes-codes** : édition des listes de codes CSV.
 - **006-edition-en-serie** : même modification appliquée aux éléments équivalents de plusieurs modèles
-  (l'héritage des modèles SUP reste en lecture seule).
+  (l'héritage n'est pas géré par l'éditeur).
 - **007-gpu** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…).

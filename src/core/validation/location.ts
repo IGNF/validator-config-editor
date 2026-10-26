@@ -75,7 +75,6 @@ function element(project: Project, problem: Problem, data: unknown): string | un
   if (head === 'constraints' && (index === 'foreignKeys' || index === 'conditions') && rest[0] !== undefined) {
     return `${index === 'foreignKeys' ? 'Clé étrangère' : 'Condition'} ${Number(rest[0]) + 1}`
   }
-  if (head === 'parent') return join('Modèle parent', property(s.at(-1) === 'parent' ? undefined : s.at(-1)))
   return property(s.at(-1))!.replace(/^./, (c) => c.toUpperCase())
 }
 

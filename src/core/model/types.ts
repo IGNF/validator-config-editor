@@ -35,7 +35,8 @@ export interface DocumentModel {
   title?: string
   description?: string
   abstract?: boolean
-  parent?: Omit<DocumentModel, 'parent'>
+  /** Héritage GpU : ignoré par le validator et par l'éditeur, conservé tel quel. */
+  parent?: unknown
   files: FileModel[]
   codes?: StaticTable[]
   constraints?: DocumentConstraints

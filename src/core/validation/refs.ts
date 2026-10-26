@@ -39,7 +39,6 @@ function gpuDefinitions(gpu: GpuFile | undefined): string[] {
 class Checker {
   readonly out: Problem[] = []
   private readonly files: Set<string>
-  private readonly parentNames = new Set<string>()
   private readonly known = new Map<string, Set<string>>()
 
   constructor(
@@ -47,7 +46,6 @@ class Checker {
     private readonly checked: Map<string, CheckedModel>,
   ) {
     this.files = new Set([...project.models.values()].flatMap((m) => m.files))
-    for (const c of checked.values()) if (c.document?.parent) this.parentNames.add(c.document.parent.name)
   }
 
   run(): Problem[] {
@@ -57,7 +55,7 @@ class Checker {
 
   private model(c: CheckedModel) {
     const name = c.model.name
-    if (!c.model.document && !this.parentNames.has(name)) this.out.push(problem('WARN-MODEL-NO-DOCUMENT', name, `${name}/`, undefined))
+    if (!c.model.document) this.out.push(problem('WARN-MODEL-NO-DOCUMENT', name, `${name}/`, undefined))
     const referenced = this.document(c)
     this.ids(c)
     for (const [path, table] of c.tables) this.table(c, path, table)
@@ -79,9 +77,6 @@ class Checker {
     const name = c.model.name
     const file = `${name}/files.json`
     if (doc.name !== name) this.out.push(problem('WARN-MODEL-NAME', name, file, '/name', { name: doc.name, folder: name }))
-    if (doc.parent && !this.project.models.has(doc.parent.name)) {
-      this.out.push(problem('ERR-PARENT-MISSING', name, file, '/parent/name', { name: doc.parent.name }))
-    }
     const tableRef = (ref: string | undefined, tableName: string, at: string) => {
       const target = tableModelRef(ref, tableName)
       if (target === undefined) return
@@ -183,28 +178,18 @@ class Checker {
     return model?.csvs.get(path)?.csv?.header
   }
 
-  // `id` connus d'un modèle (plan R10) : objets du modèle (parent embarqué compris), définitions
-  // de son gpu.json, `id` connus de son parent ; pour un modèle abstrait, objets des modèles qui
-  // en héritent (son gpu.json surcharge des colonnes héritées par leurs tables).
-  private knownIds(name: string, visiting = new Set<string>()): Set<string> {
+  // `id` connus d'un modèle (plan R10) : objets du modèle et définitions de son gpu.json.
+  // L'héritage (`parent`, modèles abstraits) n'est pas géré.
+  private knownIds(name: string): Set<string> {
     const cached = this.known.get(name)
     if (cached) return cached
     const known = new Set<string>()
     const c = this.checked.get(name)
-    if (!c || visiting.has(name)) return known
-    visiting.add(name)
+    if (!c) return known
     // Données brutes : une table non conforme à son schéma ne rend pas ses `id` orphelins.
     collectIds(c.model.document?.data, known)
     for (const t of c.model.tables.values()) collectIds(t.data, known)
     for (const id of gpuDefinitions(c.gpu)) known.add(id)
-    if (c.document?.parent) for (const id of this.knownIds(c.document.parent.name, visiting)) known.add(id)
-    if (!c.model.document) {
-      for (const child of this.checked.values()) {
-        if (child.document?.parent?.name !== name) continue
-        collectIds(child.model.document?.data, known)
-        for (const t of child.model.tables.values()) collectIds(t.data, known)
-      }
-    }
     this.known.set(name, known)
     return known
   }
