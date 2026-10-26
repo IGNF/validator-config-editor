@@ -10,11 +10,8 @@ export interface FolderSelection {
 
 const ignored = (segment: string) => segment.startsWith('.') || segment === 'node_modules'
 
-/** Fichier de configuration lisible : `*.json` ou `*.csv`, hors dossiers cachés et `node_modules/`. */
-export const isConfigFile = (path: string) => /\.(json|csv)$/i.test(path) && !path.split('/').some(ignored)
-
-/** Vrai si un modèle existe sous `prefix` : <prefix><modèle>/files.json ou gpu.json. */
-export const hasModel = (paths: readonly string[], prefix: string) =>
+// Fichier de modèle sous `prefix` : <prefix><modèle>/files.json ou gpu.json.
+const hasModel = (paths: string[], prefix: string) =>
   paths.some((p) => p.startsWith(prefix) && /^[^/]+\/(files|gpu)\.json$/.test(p.slice(prefix.length)))
 
 /**
@@ -22,7 +19,7 @@ export const hasModel = (paths: readonly string[], prefix: string) =>
  * `config/` si le dossier choisi est un dépôt de configuration, sinon le dossier lui-même.
  */
 export function selectFolder(paths: readonly string[]): FolderSelection {
-  const kept = paths.filter(isConfigFile)
+  const kept = paths.filter((p) => /\.(json|csv)$/i.test(p) && !p.split('/').some(ignored))
   const top = kept[0]?.split('/')[0] ?? ''
   const root = hasModel(kept, `${top}/config/`) ? `${top}/config/` : `${top}/`
   const files = new Map<string, string>()

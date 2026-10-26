@@ -277,7 +277,8 @@ passe. Une PR qui casse une référence fait échouer le workflow.
 - **002-edition-en-ligne** : édition de `files.json` et `types/*.json` (formulaires,
   annuler/rétablir, enregistrement sans perte), éditeur en ligne sur GitHub Pages avec
   téléchargement ZIP.
-- **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL.
+- **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL
+  (abandonnée).
 - **005-listes-codes** : édition des listes de codes CSV.
 - **006-edition-en-serie** : même modification appliquée aux éléments équivalents de plusieurs modèles
   (l'héritage des modèles SUP reste en lecture seule).
