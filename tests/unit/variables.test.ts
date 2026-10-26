@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { loadProject } from '@core/load/project'
-import { fromVariables, readVariables, toVariables } from '@core/variables'
+import { fromVariables, namesFor, readVariables, toVariables } from '@core/variables'
 import { checkConfig } from '@core/validation/validate'
 import { allFiles, applyChanges, edit, openSession } from '@core/edit/session'
 import { setAt } from '@core/edit/pointer'
@@ -16,14 +16,17 @@ const file = (text: string) => {
     return { path: 'variables.json' }
   }
 }
-const variables = readVariables(file(DICTIONARY)).variables!
+const dictionary = readVariables(file(DICTIONARY))
+const variables = dictionary.variables!
+const DATE = variables.get('DATE')!
 
 describe('readVariables', () => {
   it('lit le dictionnaire réel', () => {
     const r = readVariables(file(DICTIONARY))
     expect(r.problems).toEqual([])
-    expect(r.variables?.get('YYYYMMDD')).toBe('[0-9]{8}')
+    expect(r.variables?.get('YYYYMMDD')).toBeUndefined()
     expect(r.variables?.get('DIGIT_9')).toBe('[0-9]{9}')
+    expect(r.aliases?.get('cnig_SUP')?.get('DIGIT_9')).toBe('IDGEST')
   })
 
   it('signale un format inattendu', () => {
@@ -43,20 +46,43 @@ describe('readVariables', () => {
 
 describe('toVariables / fromVariables', () => {
   it('remplace la plus longue regex d\'abord', () => {
-    expect(toVariables('Pieces_ecrites/[AB0-9]{5}_reglement_[0-9]{8}.pdf', variables)).toBe('Pieces_ecrites/<INSEE_COMMUNE>_reglement_<YYYYMMDD>.pdf')
+    expect(toVariables(`Pieces_ecrites/[AB0-9]{5}_reglement_${DATE}(_[a-zA-Z])?\\.pdf`, variables)).toBe('Pieces_ecrites/<INSEE_COMMUNE>_reglement_<DATE><DOCUMENT_PART>\\.pdf')
     // DATE contient [0-9]{4} puis des groupes : reconnue entière, pas morceau par morceau.
-    expect(toVariables(variables.get('DATE')!, variables)).toBe('<DATE>')
+    expect(toVariables(DATE, variables)).toBe('<DATE>')
+    // MAILLAGE_OPT contient MAILLAGE : la plus longue l'emporte.
+    expect(toVariables(variables.get('MAILLAGE_OPT')!, variables)).toBe('<MAILLAGE_OPT>')
     expect(toVariables('sans variable', variables)).toBe('sans variable')
   })
 
   it('remplace les variables connues et garde les autres', () => {
-    expect(fromVariables('<MAILLAGE>_PLU_<YYYYMMDD>', variables)).toBe(`${variables.get('MAILLAGE')}_PLU_[0-9]{8}`)
+    expect(fromVariables('<MAILLAGE>_PLU_<DATE>', variables)).toBe(`${variables.get('MAILLAGE')}_PLU_${DATE}`)
     expect(fromVariables('<INCONNUE>_[0-9]', variables)).toBe('<INCONNUE>_[0-9]')
   })
 
   it('aller-retour sur des formes réelles', () => {
-    for (const form of ['<MAILLAGE>_PLU_<YYYYMMDD>(_<CHAR>)?', '<CATEGORIE>-<DIGIT_9>-<ENTIER>-<ENTIER>', 'Actes/<CATEGORIE>_<DIGIT_9>_<YYYYMMDD>_act']) {
+    for (const form of ['<MAILLAGE>_PLU_<DATE><DOCUMENT_PART>', '<CATEGORIE>-<DIGIT_9>-<ENTIER>-<ENTIER>', 'Actes/<CATEGORIE>_<DIGIT_9>_<DATE>_act']) {
       expect(toVariables(fromVariables(form, variables), variables)).toBe(form)
+    }
+  })
+})
+
+describe('alias par famille', () => {
+  it('nom affiché selon la famille du modèle (préfixe suivi de « _ »)', () => {
+    const sup = namesFor(dictionary.aliases, 'cnig_SUP_A1_2016')
+    expect(toVariables('[0-9]{9}', variables, sup)).toBe('<IDGEST>')
+    expect(toVariables('[0-9]{9}', variables, namesFor(dictionary.aliases, 'cnig_PLUi_2024'))).toBe('<SIREN>')
+    expect(toVariables('[0-9]{9}', variables, namesFor(dictionary.aliases, 'cnig_SCoT_2018'))).toBe('<SIREN>')
+    // cnig_PLU n'est pas cnig_PLUi : pas d'alias.
+    expect(toVariables('[0-9]{9}', variables, namesFor(dictionary.aliases, 'cnig_PLU_2017'))).toBe('<DIGIT_9>')
+    expect(fromVariables('<IDGEST>_<DIGIT_9>', variables, sup)).toBe('[0-9]{9}_[0-9]{9}')
+    expect(fromVariables('<IDGEST>', variables, namesFor(dictionary.aliases, 'cnig_PLU_2017'))).toBe('<IDGEST>')
+  })
+
+  it('alias mal formé ou vers une variable inconnue : dictionnaire refusé', () => {
+    for (const aliases of ['[]', '{"cnig_SUP": {"INCONNUE": "X"}}', '{"cnig_SUP": {"DIGIT_9": 3}}']) {
+      const r = readVariables(file(`{"variables": {"DIGIT_9": "[0-9]{9}"}, "aliases": ${aliases}}`))
+      expect(r.variables).toBeUndefined()
+      expect(r.problems).toMatchObject([{ code: 'ERR-VARIABLES-FORMAT', pointer: '/aliases' }])
     }
   })
 })

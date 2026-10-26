@@ -138,7 +138,10 @@ Les créations de l'éditeur respectent l'unicité globale des `id`.
   dans l'éditeur en ligne et dans `vce serve`, et le valider (objet `variables` nom → regex,
   regex distinctes).
 - **FR-002** : l'affichage des regex DOIT remplacer les regex des variables par `<NOM>` (la plus
-  longue d'abord). La regex pure DOIT rester visible au survol et seule enregistrée.
+  longue d'abord). La regex pure DOIT rester visible au survol et seule enregistrée. Un alias de
+  famille (`aliases` de `variables.json`, ex. `cnig_SUP` : `DIGIT_9` → `IDGEST`, `cnig_PLUi` et
+  `cnig_SCoT` : `DIGIT_9` → `SIREN`) DOIT remplacer le nom de la variable pour les modèles dont le
+  nom commence par `<famille>_`, à l'affichage comme à la saisie.
 - **FR-003** : une saisie contenant `<NOM>` d'une variable connue DOIT enregistrer la regex pure.
 - **FR-004** : sur une configuration GpU, les `id` DOIVENT être présents et uniques par type
   d'objet dans toute la configuration ; `parent`, `parent_id` et `abstract` DOIVENT être des

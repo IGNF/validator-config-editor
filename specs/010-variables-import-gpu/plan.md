@@ -49,6 +49,12 @@
 
   Un dictionnaire invalide n'est pas utilisé : les regex s'affichent telles quelles.
 
+  Alias (mise à jour du 2026-10-26) : objet facultatif `aliases` famille → (variable → nom
+  affiché). `namesFor(aliases, modèle)` retient la famille la plus précise dont le nom du modèle
+  commence par `<famille>_` ; `toVariables` et `fromVariables` reçoivent ces noms. Un alias vers
+  une variable inconnue rend le dictionnaire invalide (`ERR-VARIABLES-FORMAT`, pointeur
+  `/aliases`).
+
 - **R3 – Configuration GpU** : `Project.variables` présent (même invalide). Le critère est
   recalculé à chaque validation.
 
