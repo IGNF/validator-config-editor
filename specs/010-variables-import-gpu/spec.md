@@ -35,9 +35,13 @@ regex déjà présentes, pures, dans `files.json` et `types/*.json` : 4 210 entr
 - un dictionnaire `config/variables.json` (nom → regex, une regex par variable, toutes
   distinctes) est partagé par GpU et l'éditeur, qui calculent l'affichage à partir des regex.
 
-Une issue GpU porte la suite : lecture du dictionnaire, listes de codes lues par `data`,
-`gpu.json` facultatif. La migration de la configuration (`migrer_variables.py`) est faite dans
-`validator-config-gpu`. Cette feature ne couvre que l'éditeur.
+Côté GpU (branche `dsfr`) et `validator-config-gpu` (branche `json-source`), réalisé le
+2026-10-26 : dictionnaire `config/variables.json`, affichage calculé, `gpu.json` facultatif,
+listes de codes lues par `data` (dossier `codes/` racine supprimé). Il ne reste qu'un `gpu.json`
+(`enabled` de `cnig_SCoT_2013`). À terme, l'édition de la configuration dans GpU (export, pages
+d'édition) est retirée : **l'éditeur devient le seul outil d'édition**, GpU ne fait plus qu'importer
+et afficher. L'éditeur doit donc garantir à lui seul les règles de l'import. Cette feature ne
+couvre que l'éditeur.
 
 Avec le dictionnaire de `variables.json`, la conversion inverse redonne 4 186 formes sur
 4 210. Les 24 autres sont des `[0-9]{8}` écrits en dur, affichés `<YYYYMMDD>`.
@@ -86,7 +90,7 @@ colonne de `cnig_PLU_2017` ; constater une erreur.
 
 **Scénarios d'acceptation** :
 
-1. **Given** une configuration GpU (au moins un `gpu.json`), **When** deux objets de même type
+1. **Given** une configuration GpU (`config/variables.json` présent), **When** deux objets de même type
    (modèle, fichier, liste, table, colonne) ont le même `id`, dans un même modèle ou non,
    **Then** l'erreur `ERR-ID-DUPLICATE` est émise, avec l'autre objet nommé.
 2. **Given** une configuration GpU, **When** un objet n'a pas d'`id`, **Then** l'erreur
@@ -95,7 +99,7 @@ colonne de `cnig_PLU_2017` ; constater une erreur.
    contient `parent_id` ou `abstract`, **Then** l'erreur `ERR-GPU-INHERITANCE` est émise.
 4. **Given** une configuration GpU, **When** une entrée de `gpu.json` ne correspond à aucun
    objet du modèle, **Then** `WARN-GPU-ORPHAN-ID` devient une erreur (`ERR-GPU-ORPHAN-ID`).
-5. **Given** une configuration sans `gpu.json` (dgpr, naviforest, ppr), **When** elle est
+5. **Given** une configuration sans `variables.json` (dgpr, naviforest, ppr), **When** elle est
    validée, **Then** seules les règles actuelles s'appliquent : `id` facultatifs, unicité dans
    le modèle.
 
@@ -117,8 +121,8 @@ Les créations de l'éditeur respectent l'unicité globale des `id`.
 
 ### Cas limites
 
-- **Configuration GpU** : au moins un modèle a un `gpu.json`. Le critère se recalcule à chaque
-  validation.
+- **Configuration GpU** : `config/variables.json` est présent (les `gpu.json` ont presque tous
+  disparu et ne peuvent plus servir de critère). Le critère se recalcule à chaque validation.
 - **Variable dans une variable** : la conversion inverse prend la plus longue regex d'abord
   (`DATE` avant `INT_2`).
 - **Regex qui contient une regex de variable par hasard** : elle s'affiche avec la variable.
@@ -140,7 +144,7 @@ Les créations de l'éditeur respectent l'unicité globale des `id`.
   d'objet dans toute la configuration ; `parent`, `parent_id` et `abstract` DOIVENT être des
   erreurs ; une entrée de `gpu.json` sans objet DOIT être une erreur.
 - **FR-005** : les règles de FR-004 NE DOIVENT pas s'appliquer à une configuration sans
-  `gpu.json`.
+  `variables.json`.
 - **FR-006** : les nouveaux codes (`ERR-GPU-ID-MISSING`, `ERR-GPU-INHERITANCE`,
   `ERR-GPU-ORPHAN-ID`, problème de `variables.json`) et l'extension d'`ERR-ID-DUPLICATE` DOIVENT
   être ajoutés au contrat `problem-codes.md`.
@@ -149,7 +153,7 @@ Les créations de l'éditeur respectent l'unicité globale des `id`.
 ### Entités clés
 
 - **Dictionnaire de variables** : nom, regex.
-- **Configuration GpU** : configuration dont au moins un modèle a un `gpu.json`.
+- **Configuration GpU** : configuration qui contient `config/variables.json`.
 
 ## Critères de succès
 
@@ -161,8 +165,7 @@ Les créations de l'éditeur respectent l'unicité globale des `id`.
 
 ## Hypothèses
 
-- GpU adopte `config/variables.json` et ne réécrit plus les formes à variables dans
-  `gpu.json` (issue GpU).
+- GpU lit `config/variables.json` et n'écrit plus de formes à variables dans `gpu.json` (fait).
 - Les `id` restent dans les configurations : ce sont les clés de la base GpU.
 
 ## Hors périmètre
