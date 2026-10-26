@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiFileDocumentOutline, mdiFolderDownload, mdiFormatListBulleted, mdiTable, mdiTune } from '@mdi/js'
+import { mdiDatabaseOutline, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiFormatListBulleted, mdiTable, mdiTune } from '@mdi/js'
 import type { LoadedModel } from '@core/model/types'
 import { baseName } from '../files'
 import { href, route } from '../router'
@@ -18,6 +18,12 @@ const tables = () =>
   })
 const codeLists = () => [...props.model.csvs.keys()].map((path) => ({ path, title: baseName(path).replace(/\.csv$/i, '') }))
 const modelPath = () => props.model.document?.path ?? `${props.model.name}/`
+// Fichiers attendus autres que les tables (pièces écrites, dossiers, métadonnées, bases multi-tables).
+const FILE_ICONS: Record<string, string> = { pdf: mdiFilePdfBox, directory: mdiFolderOutline, metadata: mdiFileDocumentOutline, multi_table: mdiDatabaseOutline }
+const expected = () =>
+  (store.result?.checked.get(props.model.name)?.document?.files ?? [])
+    .map((f, i) => ({ ...f, pointer: `/files/${i}` }))
+    .filter((f) => f.type !== 'table')
 </script>
 
 <template>
@@ -35,6 +41,11 @@ const modelPath = () => props.model.document?.path ?? `${props.model.name}/`
       :title="mark(model.document?.path) + (model.document ? 'Modèle (files.json)' : 'Dossier sans files.json')">
       <template #append><ProblemCount :counts="store.countsByFile.get(modelPath())" /></template>
     </v-list-item>
+    <template v-if="expected().length">
+      <v-list-subheader>Fichiers ({{ expected().length }})</v-list-subheader>
+      <v-list-item v-for="f in expected()" :key="f.pointer" :href="href(modelPath(), f.pointer)" :prepend-icon="FILE_ICONS[f.type] ?? mdiFileOutline"
+        :title="f.name" :data-testid="`expected-${model.name}-${f.name}`" />
+    </template>
     <template v-if="model.tables.size">
       <v-list-subheader>Tables ({{ model.tables.size }})</v-list-subheader>
       <v-list-item v-for="t in tables()" :key="t.path" :href="href(t.path)" :active="route.file === t.path" :prepend-icon="mdiTable" :title="mark(t.path) + t.title">

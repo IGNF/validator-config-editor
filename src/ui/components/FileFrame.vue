@@ -39,19 +39,20 @@ watch(tab, highlight)
 <template>
   <section ref="root">
     <div class="d-flex align-center flex-wrap ga-2">
-      <h1 class="text-h5">{{ title }}</h1>
+      <h1 class="text-h5" :title="file">{{ title }}</h1>
       <v-chip v-if="source && store.isEdited(source)" size="small" color="warning" data-testid="edited">● modifié</v-chip>
       <slot name="chips" />
       <v-btn v-if="source" :icon="mdiDownload" size="small" variant="text" aria-label="Télécharger ce fichier" title="Télécharger ce fichier"
         data-testid="download-file" @click="store.download({ kind: 'file', path: source })" />
     </div>
-    <p class="text-body-2 text-medium-emphasis mb-2"><code>{{ file }}</code></p>
     <v-tabs v-if="source" v-model="tab" density="compact" class="mb-4">
       <v-tab value="view">Vue</v-tab>
       <v-tab value="source">Source</v-tab>
     </v-tabs>
     <slot v-if="tab === 'view' || !source" />
     <SourceView v-else :file="source" />
+    <!-- Chemin du fichier : discret, en bas de la vue (et au survol du titre). -->
+    <p class="text-caption text-medium-emphasis mt-6" data-testid="file-path">Fichier : <code>{{ file }}</code></p>
   </section>
 </template>
 
