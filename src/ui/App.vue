@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
 import GpuView from './components/GpuView.vue'
@@ -7,9 +7,11 @@ import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
 import ProblemsPanel from './components/ProblemsPanel.vue'
+import ResizeHandle from './components/ResizeHandle.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
 import { kindOf } from './files'
+import { panels } from './layout'
 import { route } from './router'
 import { useProject } from './stores/project'
 
@@ -63,12 +65,15 @@ function reload() {
 
 const VIEWS = { model: ModelView, table: TableView, codes: CodeListView, gpu: GpuView, other: SourceView }
 const view = computed(() => VIEWS[kindOf(route.value.file)])
-const showProblems = ref(true)
 </script>
 
 <template>
   <v-app>
     <v-app-bar density="compact" color="primary">
+      <template v-if="store.result" #prepend>
+        <v-btn :icon="mdiFileTreeOutline" :aria-pressed="panels.models.open" aria-label="Panneau des modèles" title="Afficher ou masquer les modèles"
+          data-testid="toggle-models" @click="panels.models.open = !panels.models.open" />
+      </template>
       <v-app-bar-title>
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
@@ -80,17 +85,19 @@ const showProblems = ref(true)
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="store.download({ kind: 'all' })">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
-      <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
+      <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="panels.problems.open" data-testid="toggle-problems" @click="panels.problems.open = !panels.problems.open">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-if="store.result" permanent :width="340">
+    <v-navigation-drawer v-if="store.result" v-model="panels.models.open" permanent :width="panels.models.width" data-testid="models-panel">
       <ModelTree />
+      <ResizeHandle :panel="panels.models" edge="right" label="Largeur du panneau des modèles" />
     </v-navigation-drawer>
 
-    <v-navigation-drawer v-if="store.result" v-model="showProblems" location="end" :width="420" permanent>
+    <v-navigation-drawer v-if="store.result" v-model="panels.problems.open" location="end" :width="panels.problems.width" permanent data-testid="problems-panel">
       <ProblemsPanel />
+      <ResizeHandle :panel="panels.problems" edge="left" label="Largeur du panneau des problèmes" />
     </v-navigation-drawer>
 
     <v-snackbar :model-value="!!store.notice" timeout="8000" data-testid="notice" @update:model-value="(v: boolean) => !v && (store.notice = undefined)">
