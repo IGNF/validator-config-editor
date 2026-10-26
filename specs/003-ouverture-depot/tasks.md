@@ -2,6 +2,8 @@
 
 **Spec** : [spec.md](spec.md) | **Plan** : [plan.md](plan.md) | **Issue parente** : #27
 
+> Feature abandonnée : le code a été retiré le 2026-10-26, après réalisation des tâches ci-dessous.
+
 ## Phase 1 : US1, ouvrir un dépôt par son URL — branche `003-ouverture-depot/us1` (#23)
 
 - [x] T001 [P] Tests `parseRepoUrl`, `splitRef`, `selectRepoRoot` (formes d'URL, branche avec « / », `config/`, dossier demandé, dossiers cachés)

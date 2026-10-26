@@ -11,7 +11,7 @@ const alias = {
 }
 
 // GitHub Pages n'envoie pas d'en-têtes : la CSP est mise en <meta> (plan 002, R10).
-const CSP = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com"
+const CSP = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
 const cspMeta = (): Plugin => ({
   name: 'csp-meta',
   transformIndexHtml: (html) => html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${CSP}" />`),

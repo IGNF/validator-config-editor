@@ -7,13 +7,10 @@ import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
 import ProblemsPanel from './components/ProblemsPanel.vue'
-import RepoDialog from './components/RepoDialog.vue'
-import SourceChip from './components/SourceChip.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
 import { kindOf } from './files'
-import { GitHubSource } from './io/github'
-import { readRepoParams, route } from './router'
+import { route } from './router'
 import { useProject } from './stores/project'
 
 const store = useProject()
@@ -40,10 +37,7 @@ function onBeforeUnload(e: BeforeUnloadEvent) {
 }
 
 onMounted(() => {
-  // Lien partageable : ?depot=… ouvre ce dépôt, dans les deux modes ; sinon le serveur local.
-  const repo = readRepoParams()
-  if (repo) store.load(new GitHubSource(repo))
-  else if (!online) store.load()
+  if (!online) store.load()
   window.addEventListener('keydown', onKey)
   window.addEventListener('beforeunload', onBeforeUnload)
 })
@@ -86,15 +80,14 @@ const showProblems = ref(true)
       <v-app-bar-title>
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
-      <SourceChip />
-      <RepoDialog />
+      <span class="text-body-2 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="downloadZip">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
-      <v-btn v-if="!online && store.source?.kind === 'server'" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
+      <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="showProblems" data-testid="toggle-problems" @click="showProblems = !showProblems">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>
@@ -114,8 +107,7 @@ const showProblems = ref(true)
 
     <v-main>
       <v-container fluid>
-        <!-- L'accueil de l'éditeur en ligne affiche lui-même l'erreur d'ouverture. -->
-        <v-alert v-if="store.error && !(online && (!store.result || showHome))" type="error" class="mb-4">{{ store.error }}</v-alert>
+        <v-alert v-if="store.error" type="error" class="mb-4">{{ store.error }}</v-alert>
         <v-progress-linear v-if="store.loading && !store.result" indeterminate aria-label="Chargement de la configuration" />
         <Home v-if="online && (!store.result || showHome)" />
         <template v-else-if="store.result">
@@ -138,5 +130,11 @@ const showProblems = ref(true)
 .home {
   color: inherit;
   text-decoration: none;
+}
+.root {
+  max-width: 40vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

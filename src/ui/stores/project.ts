@@ -7,9 +7,7 @@ import { countByModel, countProblems, type Problem } from '@core/validation/prob
 import { summarize } from '@core/validation/validate'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
-import { GitHubError, GitHubSource } from '../io/github'
 import { ServerSource } from '../io/server'
-import { writeRepoParams } from '../router'
 import type { ConfigSource, SaveResult } from '../io/source'
 
 export const useProject = defineStore('project', () => {
@@ -17,39 +15,25 @@ export const useProject = defineStore('project', () => {
   // Session immuable (src/core/edit/session) : remplacée à chaque édition.
   const session = shallowRef<Session>()
   const loading = ref(false)
-  /** Progression de la lecture (fichiers lus / total), pour les sources distantes. */
-  const progress = ref<{ done: number; total: number }>()
   /** Filtre « Modèle » du panneau des problèmes (partagé avec la synthèse du modèle). */
   const problemModel = ref<string | null>(null)
   const error = ref<string>()
-  /** Autre source proposée après une erreur (ex. branche par défaut d'un dépôt). */
-  const suggestion = shallowRef<{ label: string; source: ConfigSource }>()
 
   /** Charge une source ; en cas d'échec, la configuration courante est conservée. */
   async function load(next: ConfigSource = source.value ?? new ServerSource()) {
     loading.value = true
     error.value = undefined
-    suggestion.value = undefined
     try {
-      progress.value = undefined
-      const opened = await openSession(await next.load((done, total) => (progress.value = { done, total })))
+      const opened = await openSession(await next.load())
       if (opened.result.project.models.size === 0) {
         throw new Error('Aucun modèle trouvé : choisissez le dossier qui contient les modèles (ex. config/) ou la racine d\'un dépôt de configuration.')
       }
       session.value = opened
       source.value = next
-      // Adresse partageable (003, US4) : le dépôt ouvert, ou rien pour une autre source.
-      writeRepoParams(
-        next instanceof GitHubSource && next.branch
-          ? { owner: next.spec.owner, repo: next.spec.repo, branch: next.branch, ...(next.path && { path: next.path }) }
-          : undefined,
-      )
     } catch (e) {
       error.value = e instanceof Error ? e.message : String(e)
-      if (e instanceof GitHubError && e.suggestion) suggestion.value = { label: e.suggestion.label, source: new GitHubSource(e.suggestion.spec) }
     } finally {
       loading.value = false
-      progress.value = undefined
     }
   }
 
@@ -106,7 +90,7 @@ export const useProject = defineStore('project', () => {
   /** Télécharge toute la configuration en ZIP (contrat source-et-ecriture). */
   async function downloadZip(): Promise<{ name: string; errors: number; reformatted: string[] }> {
     const s = session.value!
-    const name = source.value?.archiveName ?? ((source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config')
+    const name = (source.value?.label ?? '').split('/').filter(Boolean).at(-1) || 'config'
     const encoder = new TextEncoder()
     const entries = await Promise.all(
       [...allFiles(s)].map(async ([path, text]) => ({
@@ -141,7 +125,7 @@ export const useProject = defineStore('project', () => {
 
   return {
     pending, downloadZip, canSave, save, fixes, applyFix, canFixAll, fixAll,
-    source, session, loading, progress, problemModel, error, suggestion, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
+    source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
 })

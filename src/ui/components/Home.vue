@@ -2,8 +2,6 @@
 import { mdiFolderOpen } from '@mdi/js'
 import { useTemplateRef } from 'vue'
 import { canPickFolder, FolderSource } from '../io/folder'
-import KnownConfigs from './KnownConfigs.vue'
-import RepoDialog from './RepoDialog.vue'
 import { useProject } from '../stores/project'
 
 const store = useProject()
@@ -43,22 +41,7 @@ defineExpose({ choose })
       <p class="text-body-2 mt-2">Choisissez le dossier <code>config/</code> ou la racine d'un dépôt de configuration (ex. un clone de validator-config-gpu).</p>
       <input ref="input" type="file" webkitdirectory multiple hidden data-testid="folder-input" @change="picked" />
     </template>
-    <div class="mt-6">
-      <p class="mb-2">Ou lire la configuration d'un dépôt GitHub public, sans clone :</p>
-      <RepoDialog>
-        <template #activator="{ props }">
-          <v-btn v-bind="props" variant="tonal" data-testid="home-open-repo">Ouvrir un dépôt GitHub</v-btn>
-        </template>
-      </RepoDialog>
-    </div>
-    <div class="mt-6">
-      <h2 class="text-h6">Configurations connues</h2>
-      <KnownConfigs />
-      <v-progress-linear v-if="store.loading" :model-value="store.progress ? (100 * store.progress.done) / store.progress.total : undefined"
-        :indeterminate="!store.progress" aria-label="Lecture du dépôt" />
-      <v-alert v-if="store.error && !store.loading" type="error" variant="tonal" class="mt-2">{{ store.error }}</v-alert>
-    </div>
-    <v-alert v-if="!supported" type="warning" variant="tonal" class="mt-4">
+    <v-alert v-else type="warning" variant="tonal">
       Ce navigateur ne permet pas de choisir un dossier : utilisez une version récente de Firefox, Chrome, Edge ou Safari.
     </v-alert>
     <p class="text-body-2 mt-8">

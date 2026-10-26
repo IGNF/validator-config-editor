@@ -4,7 +4,7 @@
 
 **Créée le** : 2026-10-16
 
-**Statut** : brouillon
+**Statut** : abandonnée (fonctionnalité retirée le 2026-10-26)
 
 **Demande** : « Ajouter une feature de chargement de modèle par URL » : il s'agit de l'URL d'un
 **dépôt** de configuration. « Ajouter les autres configurations connues » : dgpr, naviforest,

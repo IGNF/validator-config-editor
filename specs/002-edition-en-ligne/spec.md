@@ -284,4 +284,5 @@ l'outil sans installation.
   (l'héritage des modèles SUP reste en lecture seule).
 - **007-gpu** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…).
 - Ouverture d'une archive ZIP dans l'éditeur en ligne.
-- **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL.
+- **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL
+  (abandonnée).
