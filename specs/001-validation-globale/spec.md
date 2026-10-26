@@ -284,7 +284,8 @@ passe. Une PR qui casse une référence fait échouer le workflow.
   téléchargement ZIP.
 - **003-ouverture-depot** : ouverture de la configuration d'un dépôt GitHub par son URL
   (abandonnée).
-- **005-listes-codes** : édition des listes de codes CSV.
+- **005-listes-codes** : création, duplication et copie des listes de codes (l'édition de leur
+  contenu viendra plus tard).
 - **006-edition-en-serie** : même modification appliquée aux éléments équivalents de plusieurs modèles
   (l'héritage n'est pas géré par l'éditeur).
 - **007-gpu** : édition de `gpu.json` (surcharges, variables `<INSEE_COMMUNE>`…).
