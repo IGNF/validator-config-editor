@@ -61,8 +61,9 @@ courant) et propose le fichier ou l'archive au navigateur. L'interface ajoute de
     fichier source (`data-testid="download-file"`) ;
   - `ModelView` (modèle et dossier sans `files.json`) : bouton « Télécharger le modèle »
     (`download-model`) ;
-  - `ModelNode` : bouton icône dans la ligne du modèle (`download-model-<nom>`), sans ouvrir ni
-    replier le groupe (`@click.stop`).
+  - `ModelNode` : entrée « Télécharger le modèle (ZIP) » dans le groupe du modèle
+    (`download-model-<nom>`). Un bouton dans la ligne du modèle, elle-même un bouton, serait un
+    élément interactif imbriqué (règle axe `nested-interactive`).
 
 - **R6 – Tests** :
   - unitaires : `scopeFiles` (fichiers créés compris, rien hors du modèle), `outgoingRefs`
