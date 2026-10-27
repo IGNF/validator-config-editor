@@ -35,7 +35,8 @@
     vue du modèle, comme aujourd'hui.
   - **Modèle courant** (celui du fichier affiché, `modelOf(route.file)`) : classe `current` sur
     son en-tête, avec texte en gras, barre latérale de 4 px (`primary`) et fond `primary` à 8 %.
-  - **Élément affiché** : actif (`active` de Vuetify), en gras. Il est rendu visible par
+  - **Élément affiché** : actif (`active` de Vuetify), en gras. Les dossiers de fichiers
+    attendus qui le contiennent s'ouvrent, puis il est rendu visible par
     `scrollIntoView({ block: 'nearest' })` à chaque changement de route.
 
   Les éléments actifs portent `aria-current="page"`, qui ne repose pas sur la couleur (FR-003).
