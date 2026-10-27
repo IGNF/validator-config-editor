@@ -9,6 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Vue d'un modèle (`files.json`) : fichiers attendus rangés selon leur arborescence, dossiers sur fond bleuté et contenu en retrait avec un filet bleu, icône par type de fichier.
 - Arbre des modèles en accordéon (un seul modèle ouvert) ; bloc du modèle affiché encadré en bleu ; téléchargement du modèle retiré de l'arbre (il reste dans la vue du modèle). Contrastes renforcés : texte plein, texte secondaire, libellés et contours des champs plus foncés, élément actif de l'arbre en bleu gras.
 - Arbre des modèles allégé : sous un modèle, seulement le modèle, ses fichiers attendus et ses surcharges GpU ; un fichier attendu de type table ouvre sa table ; modèle et élément affichés mis en évidence et visibles (#113). Listes de codes depuis la vue du modèle (« Listes de codes (N) », nombre de valeurs), tables non référencées listées dans la vue du modèle (#114).
 - Polices et couleurs de validator-api-client : Open Sans (texte) et Fira Sans (titres) servies par l'application, bleu `#1a5fb4` et texte `#091625` aux contrastes AA, arbre et problèmes sur fond clair, en-tête blanc ; accessibilité vérifiée en thème clair et sombre (#115). Dépendances de développement `@fontsource/open-sans` et `@fontsource/fira-sans` (licence OFL-1.1, livrée dans `licences/`) : le paquet publié reste sans dépendance d'exécution.
