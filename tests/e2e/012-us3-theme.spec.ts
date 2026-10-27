@@ -22,6 +22,6 @@ test('arbre et problèmes sur fond clair, panneau principal blanc, en-tête blan
   await expect(page.getByTestId('models-panel')).toHaveCSS('background-color', 'rgb(244, 246, 248)')
   await expect(page.getByTestId('problems-panel')).toHaveCSS('background-color', 'rgb(244, 246, 248)')
   await expect(page.locator('.v-app-bar')).toHaveCSS('background-color', 'rgb(255, 255, 255)')
-  await expect(page.locator('.v-app-bar')).toHaveCSS('border-bottom-color', 'rgb(221, 225, 230)')
+  await expect(page.locator('.v-app-bar')).toHaveCSS('border-bottom-color', 'rgb(184, 192, 202)')
   await expect(page.locator('.v-main')).toHaveCSS('background-color', /rgba?\(255, 255, 255|rgba\(0, 0, 0, 0\)/)
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiFileDocumentOutline, mdiFolderDownload, mdiTune } from '@mdi/js'
+import { mdiFileDocumentOutline, mdiTune } from '@mdi/js'
 import { computed } from 'vue'
 import { fileTree } from '@core/model/file-tree'
 import type { LoadedModel } from '@core/model/types'
@@ -24,7 +24,8 @@ const expected = () => fileTree(expectedFiles())
 </script>
 
 <template>
-  <v-list-group :value="model.name">
+  <!-- Modèle affiché : tout son bloc (en-tête et fichiers) encadré en bleu. -->
+  <v-list-group :value="model.name" :class="{ 'current-group': current }" :data-testid="`model-group-${model.name}`">
     <template #activator="{ props: activator }">
       <v-list-item v-bind="activator" role="button" :aria-selected="null" :aria-expanded="opened" :class="{ current }"
         :aria-current="current ? 'true' : undefined" :data-testid="`model-${model.name}`">
@@ -47,12 +48,15 @@ const expected = () => fileTree(expectedFiles())
     <v-list-item v-if="model.gpu" :href="href(model.gpu.path)" :active="route.file === model.gpu.path" :aria-current="route.file === model.gpu.path ? 'page' : undefined" :prepend-icon="mdiTune" :title="mark(model.gpu.path) + 'Surcharges GpU (gpu.json)'">
       <template #append><ProblemCount :counts="store.countsByFile.get(model.gpu.path)" /></template>
     </v-list-item>
-    <v-list-item role="button" :prepend-icon="mdiFolderDownload" title="Télécharger le modèle (ZIP)" :data-testid="`download-model-${model.name}`"
-      @click="store.download({ kind: 'model', model: model.name })" />
   </v-list-group>
 </template>
 
 <style scoped>
+.current-group {
+  border: 2px solid rgb(var(--v-theme-primary));
+  border-radius: 6px;
+  margin: 2px 0;
+}
 .current,
 .current :deep(.v-list-item-title) {
   font-weight: 700;
