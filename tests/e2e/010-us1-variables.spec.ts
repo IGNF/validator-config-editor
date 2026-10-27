@@ -43,9 +43,14 @@ test('variables facultatives (_OPT) en jaune, les autres en étiquette simple', 
   await expect(optional).toHaveText('<_PART_OPT>')
   await expect(optional).toHaveAttribute('title', '_PART_OPT : (_[a-zA-Z])? (facultatif)')
   await expect(optional).toHaveClass(/optional/)
+  await expect(optional).toHaveCSS('color', 'rgb(61, 47, 0)')
   await page.getByTestId('model-tab-files').click()
   const zone = page.getByTestId('regex').filter({ hasText: 'ZONE_URBA' })
   await expect(zone.getByTestId('variable')).toHaveText('<INSEE_COMMUNE>')
+  // Variables en bleu, facultatives en jaune, regex encadrée.
+  await page.emulateMedia({ colorScheme: 'light' })
+  await expect(zone.getByTestId('variable')).toHaveCSS('color', 'rgb(26, 95, 180)')
+  await expect(zone).toHaveClass(/regex/)
   await expect(zone.getByTestId('variable-optional')).toHaveCount(0)
 })
 

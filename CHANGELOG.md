@@ -9,6 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Arborescence des fichiers attendus (arbre et vue du modèle) : à chaque niveau, les fichiers d'abord, puis les dossiers. Regex mises en valeur : encadrées en police à chasse fixe, variables de `variables.json` en bleu gras, variables facultatives en jaune. Accueil de l'éditeur en ligne : pleine largeur, sans les paragraphes de confidentialité et de commandes.
 - Vue d'un modèle en onglets « Modèle », « Fichiers », « Tables » (nouveau : modèles de table du modèle avec présence, nombre de colonnes et problèmes, tables non référencées) et « Listes de codes » ; l'onglet suit l'adresse (fichier de l'arbre, problème cliqué). Bandeau de synthèse en tuiles qui ouvrent l'onglet correspondant, types de fichiers au pluriel. Bouton « Listes de codes (N) » retiré. « Télécharger le JSON » (ou le CSV) à côté des onglets Vue / Source, et non plus dans le titre.
 - Vue d'un modèle (`files.json`) : fichiers attendus rangés selon leur arborescence, dossiers sur fond bleuté et contenu en retrait avec un filet bleu, icône par type de fichier.
 - En-tête : version de l'éditeur et lien vers le dépôt GitHub ; annuler, rétablir et problèmes affichés seulement une fois une configuration chargée. Accueil d'une configuration : chiffres clés (modèles, tables, listes, erreurs, avertissements), familles de modèles avec liens et comparaison de la dernière version. Accueil de l'éditeur en ligne mis en forme (fonctionnalités, confidentialité).

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiCompareHorizontal, mdiFolderOpen, mdiPencilOutline, mdiShieldLockOutline, mdiTrayArrowDown } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiCompareHorizontal, mdiFolderOpen, mdiPencilOutline, mdiTrayArrowDown } from '@mdi/js'
 import { useTemplateRef } from 'vue'
 import { canPickFolder, FolderSource } from '../io/folder'
 import { useProject } from '../stores/project'
@@ -61,21 +61,10 @@ const FEATURES = [
       </li>
     </ul>
 
-    <v-alert type="info" variant="tonal" :icon="mdiShieldLockOutline" class="mb-4">
-      <strong>Les fichiers restent sur votre poste :</strong> ils sont lus par le navigateur et rien n'est envoyé sur le réseau.
-    </v-alert>
-    <p class="text-body-2">
-      Pour enregistrer directement sur disque, utilisez l'éditeur local : <code>npx vce serve config</code> ;
-      pour publier une configuration en lecture seule : <code>npx vce site config _site</code>
-      (<a href="https://github.com/IGNF/validator-config-editor" rel="noopener">documentation</a>).
-    </p>
   </section>
 </template>
 
 <style scoped>
-.home {
-  max-width: 60rem;
-}
 .hero {
   padding: 24px;
   border: 1px solid rgb(var(--v-theme-divider));
