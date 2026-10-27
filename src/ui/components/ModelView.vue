@@ -278,7 +278,7 @@ function newCode() {
       </div>
       <v-table v-if="doc.codes?.length" density="comfortable" class="tables codes mt-2" data-testid="code-table">
         <thead>
-          <tr><th scope="col">Liste</th><th scope="col">Fichier</th><th scope="col">Valeurs</th><th scope="col">Problèmes</th><th scope="col"><span class="sr-only">Actions</span></th></tr>
+          <tr><th scope="col">Liste</th><th scope="col">Valeurs</th><th scope="col">Problèmes</th><th scope="col"><span class="sr-only">Actions</span></th></tr>
         </thead>
         <tbody>
           <tr v-for="(c, i) in doc.codes" :key="c.id ?? i" :data-pointer="`/codes/${i}`" :data-testid="`code-${c.name}`">
@@ -287,8 +287,6 @@ function newCode() {
               <span v-else class="text-error" data-testid="code-name">{{ c.name }}</span>
               <div v-if="c.title && c.title !== c.name" class="code-title">{{ c.title }}</div>
             </th>
-            <!-- Fichier imposé par le nom de la liste : ./codes/<nom>.csv (écart signalé par WARN-CODE-NAME-FILE). -->
-            <td><code class="code-file" data-testid="code-data">{{ c.data }}</code></td>
             <td>{{ rowsOf(c.data) ?? '—' }}</td>
             <td><ProblemBadge :file="path!" :pointer="`/codes/${i}`" /><ProblemCount :counts="codePath(c.data) ? store.countsByFile.get(codePath(c.data)!) : undefined" /></td>
             <td class="actions">
@@ -326,10 +324,6 @@ function newCode() {
   font-weight: 400;
   font-size: 0.8rem;
   color: rgb(var(--v-theme-secondary));
-}
-.code-file {
-  font-size: 0.85rem;
-  overflow-wrap: anywhere;
 }
 .codes .actions {
   width: 1%;

@@ -9,6 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Colonnes d'une table : type seul (`Url`, et non plus `Url · fichier ou lien`), dans l'en-tête comme dans le choix du type ; crayon au lieu du chevron pour ouvrir le formulaire. Onglet « Listes de codes » : colonne « Fichier » retirée, le nom de la liste mène au CSV.
 - « Appliquer aux colonnes / fichiers semblables » n'apparaît qu'une fois l'élément modifié (et non enregistré) ; plus proposé pour les déclarations de listes ni sur le site en lecture seule. Liste de codes : fichier imposé `./codes/<nom>.csv`, affiché sans choix possible (l'écart reste signalé par `WARN-CODE-NAME-FILE`, avec sa correction).
 - Arbre de gauche réduit aux modèles groupés par famille : un clic ouvre la vue du modèle (`files.json`), le détail (fichiers attendus) est dans le panneau principal. Fil d'Ariane sans la famille. Onglet « Fichiers » : type donné par l'icône seule (libellé au survol), métadonnées en `</>`, crayon au lieu du chevron pour ouvrir le formulaire d'un fichier. Regex : variables affichées par leur nom seul, sans chevrons ni suffixe `_OPT` (la couleur indique une variable facultative). Onglet « Listes de codes » en tableau (liste, fichier, valeurs, problèmes) ; vue d'une liste avec numéros de ligne, en-tête sur fond clair et lignes alternées. Bouton « Parcourir les modèles » retiré de l'accueil.
 

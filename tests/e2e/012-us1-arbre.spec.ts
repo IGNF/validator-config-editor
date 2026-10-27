@@ -91,5 +91,5 @@ test('vue du modèle : onglets, onglet choisi par l\'adresse, tables du modèle'
   await expect(page.getByTestId('file-REGLEMENT')).toBeVisible()
   await page.getByTestId('model-tab-codes').click()
   await expect(page.getByTestId('code-ListeValidegestSUP')).toBeVisible()
-  await expect(page.getByTestId('code-table').locator('thead th')).toHaveText(['Liste', 'Fichier', 'Valeurs', 'Problèmes', 'Actions'])
+  await expect(page.getByTestId('code-table').locator('thead th')).toHaveText(['Liste', 'Valeurs', 'Problèmes', 'Actions'])
 })

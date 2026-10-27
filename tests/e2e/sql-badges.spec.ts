@@ -26,6 +26,7 @@ test('fichiers attendus : présence colorée, sans « Monter » ni « Descendre 
   await expect(zone.getByTestId('equivalents')).toHaveCount(0)
   await zone.getByTestId('file-mandatory').click()
   await page.getByRole('option', { name: 'Facultatif (OPTIONAL)' }).click()
+  await expect(zone.getByTestId('file-presence')).toHaveText('Facultatif')
   await expect(zone.getByTestId('equivalents')).toHaveText('Appliquer aux fichiers semblables')
   await page.goto('./#/cnig_PLU_2017/types/ZONE_URBA.json')
   const typezone = page.getByTestId('column-TYPEZONE')

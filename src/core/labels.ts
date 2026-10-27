@@ -18,23 +18,6 @@ export const FILE_TYPE_LABELS: Record<string, string> = {
 export const mandatoryLabel = (mandatory: string | undefined) => MANDATORY_LABELS[mandatory ?? 'WARN'] ?? mandatory ?? ''
 export const fileTypeLabel = (type: string) => FILE_TYPE_LABELS[type] ?? type
 
-export type ColumnFamily = 'texte' | 'nombre' | 'booléen' | 'date' | 'géométrie' | 'fichier ou lien'
-
-const FAMILIES: Record<string, ColumnFamily> = {
-  String: 'texte',
-  Integer: 'nombre',
-  Double: 'nombre',
-  Boolean: 'booléen',
-  Date: 'date',
-  Url: 'fichier ou lien',
-  Filename: 'fichier ou lien',
-  Path: 'fichier ou lien',
-}
-
-/** Famille d'un type de colonne ; les types géométriques (Point, MultiPolygon…) sont des géométries. */
-export const columnTypeFamily = (type: string): ColumnFamily | undefined =>
-  FAMILIES[type] ?? (/Point|LineString|Polygon|Geometry/.test(type) ? 'géométrie' : undefined)
-
 /** Famille d'un modèle : les deux premiers segments du nom (cnig_SUP_A1_2016 → cnig_SUP). */
 export const modelFamily = (name: string) => name.split('_').slice(0, 2).join('_')
 

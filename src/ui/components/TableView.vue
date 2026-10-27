@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { mdiDelete, mdiPencil, mdiPlus } from '@mdi/js'
+import { mdiDelete, mdiPencil, mdiPencilOffOutline, mdiPencilOutline, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { setAt } from '@core/edit/pointer'
 import {
   addColumn, addListItem, parseEnum, removeColumn, removeListItem, setConstraint, setListItem, setOrRemove, type TableList,
 } from '@core/edit/operations'
-import { columnTypeFamily } from '@core/labels'
 import { resolvePath } from '@core/model/paths'
 import type { ColumnConstraints, TableModel } from '@core/model/types'
 import { pointer } from '@core/pointer'
@@ -36,7 +35,7 @@ const table = computed(() => {
 const TYPES = [
   'String', 'Integer', 'Double', 'Boolean', 'Date', 'Url', 'Filename', 'Path',
   'Point', 'LineString', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon', 'Geometry', 'GeometryCollection',
-].map((value) => ({ title: `${value} (${columnTypeFamily(value)})`, value }))
+]
 
 type Update = (t: TableModel) => unknown
 const edit = (update: Update, key?: string) => store.edit<TableModel>(props.file, update, key)
@@ -138,11 +137,12 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
 
       <v-expansion-panels v-model="opened" multiple variant="accordion" class="my-2">
         <v-expansion-panel v-for="(c, i) in table.columns" :key="c.id ?? i" :value="i" :data-pointer="`/columns/${i}`" :data-testid="`column-${c.name}`">
-          <v-expansion-panel-title>
+          <!-- Crayon plutôt que chevron : le panneau ouvre le formulaire de la colonne. -->
+          <v-expansion-panel-title :expand-icon="mdiPencilOutline" :collapse-icon="mdiPencilOffOutline">
             <div class="d-flex flex-wrap align-center ga-2">
               <strong>{{ c.name }}</strong>
               <ProblemBadge :file="file" :pointer="`/columns/${i}`" />
-              <span class="text-medium-emphasis">{{ c.type }}<template v-if="columnTypeFamily(c.type)"> · {{ columnTypeFamily(c.type) }}</template></span>
+              <span class="text-medium-emphasis" data-testid="column-type-label">{{ c.type }}</span>
               <span v-for="k in constraints(c.constraints)" :key="k.text" :class="k.tone ?? 'constraint'" :title="k.title"><template v-if="k.regex">motif <RegexText :value="k.regex" :model="model" /></template><template v-else>{{ k.text }}</template></span>
             </div>
           </v-expansion-panel-title>

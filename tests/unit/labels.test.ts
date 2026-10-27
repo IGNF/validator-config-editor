@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { columnTypeFamily, fileTypeLabel, groupByFamily, mandatoryLabel, modelFamily } from '@core/labels'
+import { fileTypeLabel, groupByFamily, mandatoryLabel, modelFamily } from '@core/labels'
 
 describe('libellés métier', () => {
   it('présence et type de fichier', () => {
@@ -8,14 +8,6 @@ describe('libellés métier', () => {
     expect(mandatoryLabel('OPTIONAL')).toBe('Facultatif')
     expect(fileTypeLabel('multi_table')).toBe('Base multi-tables (GeoPackage…)')
     expect(fileTypeLabel('inconnu')).toBe('inconnu')
-  })
-
-  it.each([
-    ['String', 'texte'], ['Integer', 'nombre'], ['Double', 'nombre'], ['Boolean', 'booléen'], ['Date', 'date'],
-    ['Url', 'fichier ou lien'], ['Filename', 'fichier ou lien'], ['MultiPolygon', 'géométrie'], ['Point', 'géométrie'],
-    ['GeometryCollection', 'géométrie'], ['Inconnu', undefined],
-  ])('famille du type %s', (type, family) => {
-    expect(columnTypeFamily(type)).toBe(family)
   })
 })
 
