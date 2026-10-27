@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiPlus, mdiTable } from '@mdi/js'
+import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiFormatListBulleted, mdiPlus, mdiTable } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
