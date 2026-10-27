@@ -23,6 +23,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Fil d'Ariane au-dessus de chaque vue : configuration › famille › modèle › table ou liste › élément désigné (colonne, fichier, liste), chaque niveau menant à sa vue.
 - `vce site <dossier> <sortie> [--title] [--force]` : site statique en lecture seule de la configuration, pour GitHub Pages ou tout serveur statique. Il reprend l'interface livrée et un instantané de la configuration. Navigation, problèmes, comparaison, équivalents en lecture et téléchargements restent disponibles ; aucun champ n'est modifiable, un bandeau l'indique ; workflow GitHub Pages d'exemple dans `docs/utilisation.md` (#95).
 - Modification en série : « Équivalents » sur une colonne liste les colonnes de même nom des tables équivalentes (famille du modèle ou toute la configuration) et recopie une propriété vers celles qui sont cochées, après aperçu, en une étape d'annulation (#55) ; onglet « Comparer » : propriétés principales des équivalents par modèle, écarts à la source marqués « ≠ », modèles sans équivalent (#57) ; aussi sur les fichiers attendus et les déclarations de listes de codes (#56).
 - Comparaison de deux modèles (« Comparer » dans la vue du modèle), par défaut avec la version précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes ajoutés, retirés ou modifiés, modifications non enregistrées comprises (#97) ; contenu des listes de codes : colonnes et lignes ajoutées, retirées ou modifiées, lignes rapprochées par les colonnes de la clé étrangère (#98).

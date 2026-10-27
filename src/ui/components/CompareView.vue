@@ -6,6 +6,7 @@ import { resolvePath } from '@core/model/paths'
 import { pointer } from '@core/pointer'
 import { compareHref, href } from '../router'
 import { useProject } from '../stores/project'
+import Breadcrumbs from './Breadcrumbs.vue'
 import RegexText from './RegexText.vue'
 
 // Comparaison de deux modèles (feature 011, plan R7) : `model` comparé à `reference`, en lecture seule.
@@ -65,6 +66,7 @@ const count = (s: Section) => s.added.length + s.removed.length + s.changed.leng
 
 <template>
   <section data-testid="compare-view">
+    <Breadcrumbs :file="`${model}/`" last="Comparaison" />
     <h1 class="text-h5 mb-4">Comparaison de modèles</h1>
     <div class="d-flex flex-wrap align-center ga-4 mb-4">
       <v-select label="Référence" :items="names.filter((n) => n !== model)" :model-value="reference || null" density="compact" variant="outlined"

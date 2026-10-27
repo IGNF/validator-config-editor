@@ -4,6 +4,7 @@ import { nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { closestPointer } from '@core/validation/problems'
 import { route } from '../router'
 import { useProject } from '../stores/project'
+import Breadcrumbs from './Breadcrumbs.vue'
 import SourceView from './SourceView.vue'
 
 // Cadre commun des vues : titre, chemin du fichier, onglets « Vue » et « Source », et mise en
@@ -38,6 +39,7 @@ watch(tab, highlight)
 
 <template>
   <section ref="root">
+    <Breadcrumbs :file="file" />
     <div class="d-flex align-center flex-wrap ga-2">
       <h1 class="text-h5" :title="file">{{ title }}</h1>
       <v-chip v-if="source && store.isEdited(source)" size="small" color="warning" data-testid="edited">● modifié</v-chip>
