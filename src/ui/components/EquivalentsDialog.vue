@@ -18,6 +18,9 @@ const all = ref(false)
 const property = ref<string>()
 const unchecked = ref(new Set<string>())
 
+// Libellé du bouton selon l'élément : colonnes, fichiers ou listes semblables des autres modèles.
+const BUTTON: Record<Source['kind'], string> = { column: 'Appliquer aux colonnes semblables', file: 'Appliquer aux fichiers semblables', code: 'Appliquer aux listes semblables' }
+
 const LABELS: Record<string, string> = {
   '/type': 'Type', '/title': 'Titre', '/description': 'Description', '/constraints/required': 'Valeur obligatoire',
   '/constraints/presenceRequired': 'Colonne obligatoire', '/constraints/unique': 'Unique', '/constraints/minLength': 'Longueur minimale',
@@ -93,7 +96,7 @@ function apply() {
 <template>
   <v-dialog v-model="open" max-width="900" scrollable>
     <template #activator="{ props: activator }">
-      <v-btn v-bind="activator" :prepend-icon="mdiSourceBranchSync" size="small" variant="text" data-testid="equivalents">Équivalents</v-btn>
+      <v-btn v-bind="activator" :prepend-icon="mdiSourceBranchSync" size="small" variant="text" data-testid="equivalents">{{ BUTTON[source.kind] }}</v-btn>
     </template>
     <v-card :title="`Équivalents de ${label}`" :subtitle="all ? 'Toute la configuration' : 'Modèles de la même famille'" data-testid="equivalents-dialog">
       <v-card-text>

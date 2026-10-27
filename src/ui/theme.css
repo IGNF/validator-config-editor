@@ -63,3 +63,39 @@ h3,
 .v-navigation-drawer .v-list-item--active .v-list-item-title {
   font-weight: 700;
 }
+
+/* Présence d'un fichier attendu : obligatoire en rouge, recommandé en orange, facultatif en vert
+   (texte foncé sur fond clair, contraste ≥ 4,5:1 ; équivalents sombres). */
+.presence {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 10px;
+  border: 1px solid currentColor;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.presence-ERROR {
+  color: #8c1d18;
+  background: #fde7e5;
+}
+.presence-WARN {
+  color: #7a4100;
+  background: #fff0d6;
+}
+.presence-OPTIONAL {
+  color: #1e5631;
+  background: #e3f4e8;
+}
+.v-theme--dark .presence-ERROR {
+  color: #ffb4ab;
+  background: rgba(255, 180, 171, 0.12);
+}
+.v-theme--dark .presence-WARN {
+  color: #ffcc80;
+  background: rgba(255, 204, 128, 0.12);
+}
+.v-theme--dark .presence-OPTIONAL {
+  color: #a5d6a7;
+  background: rgba(165, 214, 167, 0.12);
+}
