@@ -39,6 +39,9 @@ export const useProject = defineStore('project', () => {
     }
   }
 
+  /** Site en lecture seule (013, R3) : aucune modification possible, quel que soit le contrôle. */
+  const readOnly = computed(() => source.value?.kind === 'site')
+
   const result = computed(() => session.value?.result)
   const root = computed(() => source.value?.label ?? '')
 
@@ -62,10 +65,10 @@ export const useProject = defineStore('project', () => {
 
   /** Applique une édition pure à un fichier JSON ; `key` fusionne les saisies d'un même champ. */
   function edit<T = unknown>(path: string, update: (data: T) => unknown, key?: string) {
-    if (session.value) session.value = editSession(session.value, path, update, key)
+    if (session.value && !readOnly.value) session.value = editSession(session.value, path, update, key)
   }
-  const undo = () => session.value && (session.value = undoEdit(session.value))
-  const redo = () => session.value && (session.value = redoEdit(session.value))
+  const undo = () => session.value && !readOnly.value && (session.value = undoEdit(session.value))
+  const redo = () => session.value && !readOnly.value && (session.value = redoEdit(session.value))
   const canUndo = computed(() => (session.value?.history.past.length ?? 0) > 0)
   const canRedo = computed(() => (session.value?.history.future.length ?? 0) > 0)
   const changed = computed(() => (session.value ? changedFiles(session.value) : new Map<string, string>()))
@@ -77,13 +80,13 @@ export const useProject = defineStore('project', () => {
   const fixes = (problem: Problem) => (session.value ? fixesFor(session.value, problem) : [])
   /** Applique des modifications de fichiers en un seul pas (correction, copie de liste…). */
   function apply(changes: readonly FileChange[]) {
-    if (session.value && changes.length) session.value = applyChanges(session.value, changes)
+    if (session.value && changes.length && !readOnly.value) session.value = applyChanges(session.value, changes)
   }
   const applyFix = (fix: Fix) => apply(fix.changes)
   /** Correction groupée (004 US2) : possible si chaque problème a une seule correction sûre. */
   const canFixAll = (problems: readonly Problem[]) => !!session.value && canFixAllIn(session.value, problems)
   function fixAll(problems: readonly Problem[]) {
-    const next = session.value && fixAllIn(session.value, problems)
+    const next = session.value && !readOnly.value && fixAllIn(session.value, problems)
     if (next) session.value = next
   }
 
@@ -161,7 +164,7 @@ export const useProject = defineStore('project', () => {
     notice.value = `Configuration téléchargée : ${name}.zip${remaining(countProblems(s.result.problems).errors)}${reindented}`
   }
 
-  const canSave = computed(() => !!source.value?.save)
+  const canSave = computed(() => !!source.value?.save && !readOnly.value)
 
   /**
    * Enregistre les fichiers modifiés (vce serve). Les fichiers écrits deviennent la nouvelle
@@ -169,7 +172,7 @@ export const useProject = defineStore('project', () => {
    */
   async function save(): Promise<SaveResult[]> {
     const s = session.value
-    if (!s || !source.value?.save || changed.value.size === 0) return []
+    if (!s || !source.value?.save || readOnly.value || changed.value.size === 0) return []
     const changes = changed.value
     const results = await source.value.save(changes, s.originals)
     const originals = new Map(s.originals)
@@ -183,7 +186,7 @@ export const useProject = defineStore('project', () => {
 
   return {
     pending, notice, download, variables, regexDisplay, regexSegments, regexInput, regexHint, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
-    source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
+    readOnly, source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }
 })

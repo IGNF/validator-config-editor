@@ -3,7 +3,7 @@
 export type SaveResult = { path: string; ok: true } | { path: string; ok: false; reason: 'conflict' | 'forbidden' | 'error'; message: string }
 
 export interface ConfigSource {
-  kind: 'server' | 'folder'
+  kind: 'server' | 'folder' | 'site'
   /** Affiché dans la barre : chemin du dossier, nom du dossier choisi… */
   label: string
   load(onProgress?: (done: number, total: number) => void): Promise<Map<string, string>>

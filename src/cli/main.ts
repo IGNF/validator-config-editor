@@ -2,6 +2,7 @@ import pkg from '../../package.json' with { type: 'json' }
 import { fileURLToPath } from 'node:url'
 import { runCheck, type Output } from './check'
 import { runCompare } from './compare'
+import { runSite } from './site'
 import { runServe } from './serve'
 import type { RunningServer } from './server'
 
@@ -9,6 +10,7 @@ const HELP = `Usage :
   vce check <dossier> [--format text|json] [--strict]
   vce serve <dossier> [--port <n>] [--open]
   vce compare <référence> <modèle> [--format text|json]
+  vce site <dossier> <sortie> [--title <titre>] [--force]
   vce --help | --version
 
 <dossier> : dossier contenant les modèles (ex. config/).
@@ -19,7 +21,9 @@ check     valide tous les modèles ; code de sortie 0 sans erreur, 1 avec au moi
 serve     ouvre l'éditeur local sur http://127.0.0.1:<port>/ (5174 par défaut, ou le suivant
           libre) ; --open l'ouvre dans le navigateur.
 compare   compare <modèle> à <référence> : dossier, fichiers attendus, tables, colonnes, listes
-          de codes et leur contenu ; code de sortie 0, ou 2 en cas d'usage incorrect.`
+          de codes et leur contenu ; code de sortie 0, ou 2 en cas d'usage incorrect.
+site      écrit dans <sortie> un site statique en lecture seule de la configuration (GitHub
+          Pages…) ; --title remplace le nom du dossier ; --force remplace une sortie inconnue.`
 
 const console_: Output = { log: (l) => console.log(l), error: (l) => console.error(l) }
 
@@ -89,6 +93,16 @@ export async function main(argv: string[], out: Output = console_, uiDir = UI_DI
     if (format !== 'text' && format !== 'json') return usage(out, `Format inconnu : ${String(format)} (text ou json)`)
     if (positional.length !== 2) return usage(out, 'Indiquer deux dossiers de modèle : la référence, puis le modèle comparé')
     return runCompare(positional[0]!, positional[1]!, { format }, out)
+  }
+  if (command === 'site') {
+    const parsed = parseArgs(rest, ['--title'])
+    if (typeof parsed === 'string') return usage(out, parsed)
+    const { positional, options } = parsed
+    const unknown = [...options.keys()].filter((o) => o !== '--title' && o !== '--force')
+    if (unknown.length > 0) return usage(out, `Option inconnue : ${unknown[0]}`)
+    if (positional.length !== 2) return usage(out, 'Indiquer le dossier de la configuration, puis le dossier du site')
+    const title = options.get('--title')
+    return runSite(positional[0]!, positional[1]!, { ...(typeof title === 'string' && { title }), force: options.has('--force'), uiDir }, out)
   }
   return usage(out, command ? `Commande inconnue : ${command}` : undefined)
 }

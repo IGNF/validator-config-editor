@@ -58,7 +58,8 @@ function preselect() {
 watch(open, (o) => {
   if (!o) return
   all.value = false
-  tab.value = 'apply'
+  // Site en lecture seule (013) : comparaison seulement.
+  tab.value = store.readOnly ? 'compare' : 'apply'
   unchecked.value = new Set()
   property.value = preselect()
 })
@@ -99,7 +100,7 @@ function apply() {
         <v-switch v-model="all" label="Toute la configuration" density="compact" hide-details color="primary" data-testid="equivalents-all" />
         <p v-if="!equivalents.items.length" class="my-2" data-testid="equivalents-none">Aucun élément équivalent.</p>
         <v-tabs v-else v-model="tab" density="compact" class="mt-2">
-          <v-tab value="apply" data-testid="equivalents-tab-apply">Appliquer</v-tab>
+          <v-tab v-if="!store.readOnly" value="apply" data-testid="equivalents-tab-apply">Appliquer</v-tab>
           <v-tab value="compare" data-testid="equivalents-tab-compare">Comparer</v-tab>
         </v-tabs>
         <template v-if="equivalents.items.length && tab === 'compare'">
