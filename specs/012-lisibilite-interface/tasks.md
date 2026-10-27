@@ -16,8 +16,8 @@ Les deux stories sont livrées ensemble : sans l'US2, les listes de codes ne ser
 
 ## Phase 2 : US3, polices, couleurs et zones — branche `012-lisibilite-interface/us3` (#115)
 
-- [ ] T005 [P] e2e : polices calculées (Open Sans, Fira Sans), fonds des panneaux ; axe sur chaque vue en clair et en sombre (SC-002)
-- [ ] T006 [US3] `@fontsource/*` (R4), `vuetify.ts`, `App.vue` (R3), justification de la dérogation dans le CHANGELOG
+- [x] T005 [P] e2e : polices calculées (Open Sans, Fira Sans), fonds des panneaux ; axe sur chaque vue en clair et en sombre (SC-002)
+- [x] T006 [US3] `@fontsource/*` (R4), `vuetify.ts`, `App.vue` (R3), justification de la dérogation dans le CHANGELOG
 
 ## Phase 3 : US4, nom de la liste égal au nom du fichier — branche `012-lisibilite-interface/us4` (#116)
 

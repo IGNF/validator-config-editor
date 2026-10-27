@@ -53,8 +53,11 @@ const expected = () => fileTree(expectedFiles())
 </template>
 
 <style scoped>
-.current {
+.current,
+.current :deep(.v-list-item-title) {
   font-weight: 700;
+}
+.current {
   border-left: 4px solid rgb(var(--v-theme-primary));
   background: rgba(var(--v-theme-primary), 0.08);
 }

@@ -10,18 +10,23 @@ async function audit(page: Page) {
   return violations.map((v) => `${v.id} (${v.impact}) : ${v.nodes.length} élément(s) — ${v.help}`)
 }
 
-for (const [name, hash, heading] of [
-  ['accueil', '', 'Configuration'],
-  ['modèle', '#/cnig_PLU_2017/files.json', 'Modèle cnig_PLU_2017'],
-  ['table', '#/cnig_PLU_2017/types/ZONE_URBA.json', 'Table ZONE_URBA'],
-  ['liste de codes', '#/cnig_PLU_2017/codes/InformationUrbaType.csv', 'Liste de codes InformationUrbaType'],
-  ['surcharges GpU', '#/cnig_SUP_A1_2016/gpu.json', 'Surcharges GpU de cnig_SUP_A1_2016'],
-]) {
-  test(`écran ${name}`, async ({ page }) => {
-    await page.goto(`./${hash}`)
-    await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible()
-    expect(await audit(page)).toEqual([])
-  })
+// Chaque écran en thème clair et en thème sombre (012, SC-002).
+for (const scheme of ['light', 'dark'] as const) {
+  for (const [name, hash, heading] of [
+    ['accueil', '', 'Configuration'],
+    ['modèle', '#/cnig_PLU_2017/files.json', 'Modèle cnig_PLU_2017'],
+    ['table', '#/cnig_PLU_2017/types/ZONE_URBA.json', 'Table ZONE_URBA'],
+    ['liste de codes', '#/cnig_PLU_2017/codes/InformationUrbaType.csv', 'Liste de codes InformationUrbaType'],
+    ['surcharges GpU', '#/cnig_SUP_A1_2016/gpu.json', 'Surcharges GpU de cnig_SUP_A1_2016'],
+    ['comparaison', '#/cnig_PLU_2017/?compare=GPU_MEC_2025', 'Comparaison de modèles'],
+  ]) {
+    test(`écran ${name} (${scheme === 'light' ? 'clair' : 'sombre'})`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: scheme })
+      await page.goto(`./${hash}`)
+      await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible()
+      expect(await audit(page)).toEqual([])
+    })
+  }
 }
 
 test('fenêtre de copie d\'une liste de codes', async ({ page }) => {
