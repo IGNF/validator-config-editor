@@ -15,10 +15,15 @@ import { kindOf, modelOf } from './files'
 import { panels } from './layout'
 import { route } from './router'
 import { useProject } from './stores/project'
+import { isSite, SiteSource } from './io/site'
 
 const store = useProject()
 // Éditeur en ligne (build « pages ») : pas de serveur, l'utilisateur choisit un dossier.
 const online = import.meta.env.MODE === 'pages'
+// Site en lecture seule produit par `vce site` (013) : instantané statique, champs en lecture seule.
+const site = isSite()
+const siteSource = site ? new SiteSource() : undefined
+const READ_ONLY = { VTextField: { readonly: true }, VTextarea: { readonly: true }, VSelect: { readonly: true }, VCombobox: { readonly: true }, VCheckbox: { readonly: true } }
 const showHome = ref(false)
 watch(() => store.session, () => (showHome.value = false))
 
@@ -40,7 +45,7 @@ function onBeforeUnload(e: BeforeUnloadEvent) {
 }
 
 onMounted(() => {
-  if (!online) store.load()
+  if (!online) store.load(siteSource)
   window.addEventListener('keydown', onKey)
   window.addEventListener('beforeunload', onBeforeUnload)
 })
@@ -79,13 +84,13 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
       <span class="text-body-2 ml-4 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
-      <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
-      <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
+      <v-btn v-if="!store.readOnly" :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
+      <v-btn v-if="!store.readOnly" :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="store.download({ kind: 'all' })">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
-      <v-btn v-if="!online" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
+      <v-btn v-if="!online && !site" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="panels.problems.open" data-testid="toggle-problems" @click="panels.problems.open = !panels.problems.open">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>
@@ -106,6 +111,11 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
     </v-snackbar>
 
     <v-main>
+      <v-alert v-if="store.readOnly" type="info" variant="tonal" density="compact" class="rounded-0" data-testid="read-only-banner">
+        <strong>Lecture seule</strong> — pour modifier cette configuration, ouvrez son dépôt avec <code>vce serve</code> ou l'éditeur en ligne.
+        <span v-if="siteSource?.version" class="text-medium-emphasis"> Éditeur v{{ siteSource.version }}.</span>
+      </v-alert>
+      <v-defaults-provider :defaults="store.readOnly ? READ_ONLY : undefined">
       <v-container fluid>
         <v-alert v-if="store.error" type="error" class="mb-4">{{ store.error }}</v-alert>
         <v-progress-linear v-if="store.loading && !store.result" indeterminate aria-label="Chargement de la configuration" />
@@ -123,6 +133,7 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
           </section>
         </template>
       </v-container>
+      </v-defaults-provider>
     </v-main>
   </v-app>
 </template>

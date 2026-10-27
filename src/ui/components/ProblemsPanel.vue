@@ -59,7 +59,7 @@ const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
       {{ shown.length }} problème{{ shown.length > 1 ? 's' : '' }}<template v-if="shown.length !== all.length"> sur {{ all.length }}</template>
     </p>
     <div v-if="bulk" class="px-2">
-      <v-btn :prepend-icon="mdiAutoFix" color="primary" block data-testid="fix-all" @click="store.fixAll(bulk)">
+      <v-btn v-if="!store.readOnly" :prepend-icon="mdiAutoFix" color="primary" block data-testid="fix-all" @click="store.fixAll(bulk)">
         Corriger les {{ bulk.length }} problèmes
       </v-btn>
       <p class="text-caption mt-1">{{ plural(bulkFiles, 'fichier') }} modifié{{ bulkFiles > 1 ? 's' : '' }}, en une seule étape annulable.</p>
@@ -79,7 +79,7 @@ const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <ProblemItem v-for="(p, i) in g.problems" :key="`${p.code}${p.pointer}${i}`" :problem="p">
-            <FixMenu :problem="p" />
+            <FixMenu v-if="!store.readOnly" :problem="p" />
           </ProblemItem>
         </v-expansion-panel-text>
       </v-expansion-panel>

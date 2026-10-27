@@ -143,7 +143,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
       <div class="d-flex align-center mt-4">
         <h2 class="text-h6">Fichiers ({{ doc.files.length }})</h2>
         <v-spacer />
-        <v-btn :prepend-icon="mdiPlus" variant="tonal" data-testid="add-file" @click="newFile">Ajouter un fichier</v-btn>
+        <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-file" @click="newFile">Ajouter un fichier</v-btn>
       </div>
       <v-expansion-panels v-model="opened" multiple variant="accordion" class="my-2">
         <v-expansion-panel v-for="(f, i) in doc.files" :key="f.id ?? i" :value="i" :data-pointer="`/files/${i}`" :data-testid="`file-${f.name}`">
@@ -184,11 +184,11 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
             <v-textarea label="Description" :model-value="f.description" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => setProp(pointer('files', i, 'description'), v)" />
             <div class="d-flex flex-wrap ga-2">
-              <v-btn :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="move('files', i, i - 1)">Monter</v-btn>
-              <v-btn :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === doc.files.length - 1" @click="move('files', i, i + 1)">Descendre</v-btn>
+              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="move('files', i, i - 1)">Monter</v-btn>
+              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === doc.files.length - 1" @click="move('files', i, i + 1)">Descendre</v-btn>
               <EquivalentsDialog :source="{ kind: 'file', file: path!, pointer: pointer('files', i) }" :label="`${name} › ${f.name}`" />
               <v-spacer />
-              <v-btn :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-file" @click="edit((d) => removeItem(d, 'files', i))">Supprimer le fichier</v-btn>
+              <v-btn v-if="!store.readOnly" :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-file" @click="edit((d) => removeItem(d, 'files', i))">Supprimer le fichier</v-btn>
             </div>
           </v-expansion-panel-text>
         </v-expansion-panel>
@@ -206,9 +206,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <h2 class="text-h6">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
         <v-spacer />
         <div class="d-flex flex-wrap ga-2">
-          <NewCodeListDialog :model="name" />
-          <CodeListDialog :model="name" />
-          <v-btn :prepend-icon="mdiPlus" variant="tonal" data-testid="add-code" @click="newCode">Déclarer une liste</v-btn>
+          <NewCodeListDialog v-if="!store.readOnly" :model="name" />
+          <CodeListDialog v-if="!store.readOnly" :model="name" />
+          <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-code" @click="newCode">Déclarer une liste</v-btn>
         </div>
       </div>
       <div v-for="(c, i) in doc.codes ?? []" :key="c.id ?? i" class="d-flex flex-wrap align-center ga-2" :data-pointer="`/codes/${i}`" :data-testid="`code-${c.name}`">
@@ -218,7 +218,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir<template v-if="rowsOf(c.data) !== undefined"> ({{ rowsOf(c.data) }} valeur{{ rowsOf(c.data)! > 1 ? 's' : '' }})</template></a>
         <ProblemBadge :file="path!" :pointer="`/codes/${i}`" />
         <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
-        <v-btn :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
+        <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
       </div>
     </template>
   </FileFrame>

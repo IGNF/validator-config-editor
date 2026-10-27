@@ -106,7 +106,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
       <div class="d-flex align-center mt-2">
         <h2 class="text-h6">Colonnes ({{ table.columns.length }})</h2>
         <v-spacer />
-        <v-btn :prepend-icon="mdiPlus" variant="tonal" data-testid="add-column" @click="add">Ajouter une colonne</v-btn>
+        <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-column" @click="add">Ajouter une colonne</v-btn>
       </div>
 
       <v-expansion-panels v-model="opened" multiple variant="accordion" class="my-2">
@@ -152,11 +152,11 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             <v-textarea label="Valeurs autorisées (une par ligne)" :model-value="(c.constraints?.enum ?? []).join('\n')" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enum', parseEnum(v, c.constraints?.enum)), pointer('columns', i, 'enum'))" />
             <div class="d-flex flex-wrap ga-2">
-              <v-btn :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="edit((t) => moveColumn(t, i, i - 1))">Monter</v-btn>
-              <v-btn :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === table.columns.length - 1" @click="edit((t) => moveColumn(t, i, i + 1))">Descendre</v-btn>
+              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="edit((t) => moveColumn(t, i, i - 1))">Monter</v-btn>
+              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === table.columns.length - 1" @click="edit((t) => moveColumn(t, i, i + 1))">Descendre</v-btn>
               <EquivalentsDialog :source="{ kind: 'column', file, pointer: pointer('columns', i) }" :label="`${table.name}.${c.name}`" />
               <v-spacer />
-              <v-btn :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-column" @click="edit((t) => removeColumn(t, i))">Supprimer la colonne</v-btn>
+              <v-btn v-if="!store.readOnly" :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-column" @click="edit((t) => removeColumn(t, i))">Supprimer la colonne</v-btn>
             </div>
           </v-expansion-panel-text>
         </v-expansion-panel>
@@ -166,7 +166,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
         <div class="d-flex align-center mt-4">
           <h2 class="text-h6">{{ list.title }} ({{ table.constraints?.[list.key]?.length ?? 0 }})</h2>
           <v-spacer />
-          <v-btn :prepend-icon="mdiPlus" variant="tonal" :data-testid="`add-${list.key}`" @click="edit((t) => addListItem(t, list.key))">Ajouter</v-btn>
+          <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" :data-testid="`add-${list.key}`" @click="edit((t) => addListItem(t, list.key))">Ajouter</v-btn>
         </div>
         <div v-for="(text, i) in table.constraints?.[list.key] ?? []" :key="i" class="d-flex align-center ga-2" :data-pointer="`/constraints/${list.key}/${i}`">
           <v-text-field :label="`${list.title} ${i + 1}`" :model-value="text" :placeholder="list.placeholder" density="compact" variant="outlined" hide-details class="mono"
@@ -176,7 +176,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             <a v-if="target(text)!.path" :href="href(target(text)!.path!)">{{ target(text)!.label }}</a>
             <span v-else class="text-error">{{ target(text)!.label }}</span>
           </template>
-          <v-btn :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer ${list.title.toLowerCase()} ${i + 1}`" @click="edit((t) => removeListItem(t, list.key, i))" />
+          <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer ${list.title.toLowerCase()} ${i + 1}`" @click="edit((t) => removeListItem(t, list.key, i))" />
         </div>
       </template>
     </template>
