@@ -22,4 +22,4 @@ code.
 
 ## Phase 3 : US3, identifiants des créations — branche `010-variables-import-gpu/us3` (#87)
 
-- [ ] T010 [US3] Tests : copie et création de liste (005), ajouts de fichier et de colonne (002) sur une configuration GpU, aucune erreur US2
+- [x] T010 [US3] Tests : copie et création de liste (005), ajouts de fichier et de colonne (002) sur une configuration GpU, aucune erreur US2
