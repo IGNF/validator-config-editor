@@ -16,6 +16,7 @@ import { useProject } from '../stores/project'
 import FileFrame from './FileFrame.vue'
 import ProblemBadge from './ProblemBadge.vue'
 import RegexText from './RegexText.vue'
+import EquivalentsDialog from './EquivalentsDialog.vue'
 import NotConformant from './NotConformant.vue'
 
 const props = defineProps<{ file: string }>()
@@ -150,9 +151,10 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             </div>
             <v-textarea label="Valeurs autorisées (une par ligne)" :model-value="(c.constraints?.enum ?? []).join('\n')" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enum', parseEnum(v, c.constraints?.enum)), pointer('columns', i, 'enum'))" />
-            <div class="d-flex ga-2">
+            <div class="d-flex flex-wrap ga-2">
               <v-btn :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="edit((t) => moveColumn(t, i, i - 1))">Monter</v-btn>
               <v-btn :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === table.columns.length - 1" @click="edit((t) => moveColumn(t, i, i + 1))">Descendre</v-btn>
+              <EquivalentsDialog :source="{ kind: 'column', file, pointer: pointer('columns', i) }" :label="`${table.name}.${c.name}`" />
               <v-spacer />
               <v-btn :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-column" @click="edit((t) => removeColumn(t, i))">Supprimer la colonne</v-btn>
             </div>
