@@ -3,15 +3,17 @@ import { mdiSourceBranchSync } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { getAt } from '@core/edit/pointer'
 import { dataOf } from '@core/edit/session'
-import { applyToEquivalents, findEquivalents, PROPERTIES, type Equivalent, type Source } from '@core/equivalents'
+import { applyToEquivalents, COMPARED, differingProperties, findEquivalents, PROPERTIES, type Equivalent, type Source } from '@core/equivalents'
 import { href } from '../router'
 import { useProject } from '../stores/project'
+import RegexText from './RegexText.vue'
 
 // Modification en série (feature 006, plan R6) : éléments équivalents de `source` dans les autres
 // modèles, puis recopie d'une propriété vers ceux qui sont cochés, en une étape d'annulation.
 const props = defineProps<{ source: Source; label: string }>()
 const store = useProject()
 const open = ref(false)
+const tab = ref<'apply' | 'compare'>('apply')
 const all = ref(false)
 const property = ref<string>()
 const unchecked = ref(new Set<string>())
@@ -56,9 +58,20 @@ function preselect() {
 watch(open, (o) => {
   if (!o) return
   all.value = false
+  tab.value = 'apply'
   unchecked.value = new Set()
   property.value = preselect()
 })
+
+// Tableau de comparaison (US3) : source en premier, propriétés principales, écarts à la source.
+const compared = computed(() => COMPARED[props.source.kind])
+const sourceModel = computed(() => props.source.file.slice(0, props.source.file.indexOf('/')))
+const rows = computed(() => [
+  { key: 'source', model: sourceModel.value, file: props.source.file, pointer: props.source.pointer, data: sourceData.value, differs: [] as string[], isSource: true },
+  ...equivalents.value.items.map((e) => ({ key: keyOf(e), ...e, differs: differingProperties(sourceData.value, e.data, compared.value), isSource: false })),
+])
+const divergent = computed(() => rows.value.filter((r) => r.differs.length).length)
+const isRegex = (p: string) => p === '/constraints/pattern' || p === '/path'
 
 function toggle(e: Equivalent, on: boolean | null) {
   const next = new Set(unchecked.value)
@@ -85,7 +98,36 @@ function apply() {
       <v-card-text>
         <v-switch v-model="all" label="Toute la configuration" density="compact" hide-details color="primary" data-testid="equivalents-all" />
         <p v-if="!equivalents.items.length" class="my-2" data-testid="equivalents-none">Aucun élément équivalent.</p>
-        <template v-else>
+        <v-tabs v-else v-model="tab" density="compact" class="mt-2">
+          <v-tab value="apply" data-testid="equivalents-tab-apply">Appliquer</v-tab>
+          <v-tab value="compare" data-testid="equivalents-tab-compare">Comparer</v-tab>
+        </v-tabs>
+        <template v-if="equivalents.items.length && tab === 'compare'">
+          <p class="text-body-2 my-2" data-testid="equivalents-divergent">
+            <template v-if="divergent">{{ divergent }} élément{{ divergent > 1 ? 's' : '' }} sur {{ equivalents.items.length }} diffère{{ divergent > 1 ? 'nt' : '' }} de {{ label }} (valeurs marquées « ≠ »).</template>
+            <template v-else>Les {{ equivalents.items.length }} éléments équivalents ont les mêmes valeurs que {{ label }}.</template>
+          </p>
+          <v-table density="compact" class="compare" data-testid="equivalents-table">
+            <caption class="sr-only">Comparaison de {{ label }} avec ses équivalents</caption>
+            <thead>
+              <tr>
+                <th scope="col">Modèle</th>
+                <th v-for="p in compared" :key="p" scope="col">{{ LABELS[p] ?? p }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="r in rows" :key="r.key" :data-testid="`compare-row-${r.model}`">
+                <th scope="row"><a :href="href(r.file, r.pointer)">{{ r.model }}</a><template v-if="r.isSource"> (source)</template></th>
+                <td v-for="p in compared" :key="p" :class="{ diff: r.differs.includes(p) }">
+                  <template v-if="r.differs.includes(p)">≠ </template>
+                  <RegexText v-if="isRegex(p) && typeof valueOf(r.data, p) === 'string'" :value="valueOf(r.data, p) as string" :model="r.model" />
+                  <template v-else>{{ format(valueOf(r.data, p)) }}</template>
+                </td>
+              </tr>
+            </tbody>
+          </v-table>
+        </template>
+        <template v-else-if="equivalents.items.length">
           <v-select v-model="property" :items="properties" label="Propriété à appliquer" density="compact" variant="outlined" class="mt-2"
             data-testid="equivalents-property" />
           <p v-if="property" class="text-body-2 mb-2">
@@ -110,7 +152,7 @@ function apply() {
       <v-card-actions>
         <v-spacer />
         <v-btn @click="open = false">Fermer</v-btn>
-        <v-btn color="primary" variant="flat" :disabled="!property || !selected.length" data-testid="equivalents-apply" @click="apply">
+        <v-btn v-if="tab === 'apply'" color="primary" variant="flat" :disabled="!property || !selected.length" data-testid="equivalents-apply" @click="apply">
           Appliquer à {{ selected.length }} élément{{ selected.length > 1 ? 's' : '' }}
         </v-btn>
       </v-card-actions>
@@ -128,6 +170,21 @@ function apply() {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+.compare td.diff {
+  font-weight: bold;
+  background: rgba(var(--v-theme-warning), 0.12);
+}
+.compare td,
+.compare th {
+  white-space: nowrap;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 }
 .status {
   font-size: 0.8rem;

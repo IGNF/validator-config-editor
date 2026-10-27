@@ -9,7 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Modification en série : « Équivalents » sur une colonne liste les colonnes de même nom des tables équivalentes (famille du modèle ou toute la configuration) et recopie une propriété vers celles qui sont cochées, après aperçu, en une étape d'annulation (#55).
+- Modification en série : « Équivalents » sur une colonne liste les colonnes de même nom des tables équivalentes (famille du modèle ou toute la configuration) et recopie une propriété vers celles qui sont cochées, après aperçu, en une étape d'annulation (#55) ; onglet « Comparer » : propriétés principales des équivalents par modèle, écarts à la source marqués « ≠ », modèles sans équivalent (#57).
 - Comparaison de deux modèles (« Comparer » dans la vue du modèle), par défaut avec la version précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes ajoutés, retirés ou modifiés, modifications non enregistrées comprises (#97) ; contenu des listes de codes : colonnes et lignes ajoutées, retirées ou modifiées, lignes rapprochées par les colonnes de la clé étrangère (#98).
 - `vce compare <référence> <modèle> [--format text|json]` : la même comparaison en ligne de commande (#99).
 - Variables facultatives (suffixe `_OPT`, regex `(…)?`, ex. `<_PART_OPT>`) surlignées en jaune comme dans GpU ; préfixe `_` pour une regex qui commence par `_` ; écart à ces conventions signalé (`WARN-VARIABLES-OPT`).

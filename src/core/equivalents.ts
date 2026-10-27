@@ -39,6 +39,20 @@ export const PROPERTIES: Record<Kind, readonly string[]> = {
   code: ['/data', '/title'],
 }
 
+/** Propriétés principales du tableau de comparaison (US3). */
+export const COMPARED: Record<Kind, readonly string[]> = {
+  column: ['/type', '/constraints/required', '/constraints/presenceRequired', '/constraints/unique', '/constraints/minLength',
+    '/constraints/maxLength', '/constraints/pattern', '/constraints/enum'],
+  file: ['/type', '/mandatory', '/path', '/tableModel'],
+  code: ['/data', '/title'],
+}
+
+/** Propriétés de `properties` dont la valeur diffère entre deux éléments (absente, null ou vide sont équivalents). */
+export function differingProperties(a: unknown, b: unknown, properties: readonly string[]): string[] {
+  const norm = (v: unknown) => JSON.stringify(v === undefined || v === '' || (Array.isArray(v) && v.length === 0) ? null : v)
+  return properties.filter((p) => norm(getAt(a, p)) !== norm(getAt(b, p)))
+}
+
 const isObject = (v: unknown): v is Record<string, unknown> => v !== null && typeof v === 'object' && !Array.isArray(v)
 const modelOf = (file: string) => file.slice(0, file.indexOf('/'))
 const nameOf = (v: unknown) => (isObject(v) && typeof v.name === 'string' ? v.name : undefined)

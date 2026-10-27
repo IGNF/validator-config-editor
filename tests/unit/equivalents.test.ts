@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyToEquivalents, baseTableName, findEquivalents, type Source } from '@core/equivalents'
+import { applyToEquivalents, baseTableName, COMPARED, differingProperties, findEquivalents, type Source } from '@core/equivalents'
 import { applyChanges, dataOf, edit, openSession, textOf, undoEdit, type Session } from '@core/edit/session'
 import { setAt } from '@core/edit/pointer'
 import { readConfig } from '../support/fixtures'
@@ -126,6 +126,26 @@ describe('applyToEquivalents', () => {
     const [target] = findEquivalents(s, src, 'family').items
     const other = { ...target!, pointer: `/columns/${columnIndex(s, GEST('cnig_SUP_A2_2016'), 'NUMTEL')}` }
     expect(applyToEquivalents(s, src, [target!, other], '/constraints/maxLength')).toHaveLength(1)
+  })
+})
+
+describe('differingProperties (US3)', () => {
+  it('propriétés principales qui diffèrent ; absent, vide et null équivalents', () => {
+    const a = { type: 'String', constraints: { maxLength: 80, pattern: '[A-Z]+', enum: [] } }
+    const b = { type: 'String', constraints: { maxLength: 120, required: false } }
+    expect(differingProperties(a, b, COMPARED.column)).toEqual(['/constraints/required', '/constraints/maxLength', '/constraints/pattern'])
+    expect(differingProperties(a, a, COMPARED.column)).toEqual([])
+  })
+
+  it('sur les équivalents réels : valeur divergente repérée', async () => {
+    let s = await session()
+    const i = columnIndex(s, GEST('cnig_SUP_A2_2016'), 'NOMGEST')
+    s = edit(s, GEST('cnig_SUP_A2_2016'), (d) => setAt(d, `/columns/${i}/constraints/maxLength`, 33))
+    const src = source(s, GEST(A1), 'NOMGEST')
+    const [a2, a3] = findEquivalents(s, src, 'family').items
+    const data = dataOf(s, GEST(A1)) as { columns: unknown[] }
+    expect(differingProperties(data.columns[columnIndex(s, GEST(A1), 'NOMGEST')], a2!.data, COMPARED.column)).toEqual(['/constraints/maxLength'])
+    expect(a3).toBeUndefined()
   })
 })
 
