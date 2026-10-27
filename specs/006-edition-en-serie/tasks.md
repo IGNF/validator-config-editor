@@ -17,8 +17,8 @@ code.
 
 ## Phase 2 : US3, comparer les équivalents — branche `006-edition-en-serie/us3` (#57)
 
-- [ ] T008 [US3] Fenêtre : tableau de comparaison (modèles × propriétés), différences mises en évidence, liens, modèles absents, portée
-- [ ] T009 [US3] e2e : tableau des motifs d'une colonne, valeur divergente signalée, modèle absent
+- [x] T008 [US3] Fenêtre : tableau de comparaison (modèles × propriétés), différences mises en évidence, liens, modèles absents, portée
+- [x] T009 [US3] e2e : tableau des motifs d'une colonne, valeur divergente signalée, modèle absent
 
 ## Phase 3 : US2, fichiers attendus et listes — branche `006-edition-en-serie/us2` (#56)
 

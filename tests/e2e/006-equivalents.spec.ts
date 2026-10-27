@@ -76,3 +76,30 @@ test('accessibilité de la fenêtre', async ({ page }) => {
   const { violations } = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
   expect(violations.flatMap((v) => v.nodes.map((n) => `${v.id} ${n.target.join(' ')} ${n.failureSummary}`))).toEqual([])
 })
+
+// US3 : tableau de comparaison des équivalents.
+test('comparer : valeur divergente marquée, modèle absent, accessibilité', async ({ page }) => {
+  const a2 = join(server.dir, GEST('cnig_SUP_A2_2016'))
+  const table = JSON.parse(readFileSync(a2, 'utf8'))
+  table.columns.find((c: { name: string }) => c.name === 'NOMGEST').constraints.maxLength = 33
+  writeFileSync(a2, JSON.stringify(table, null, 4))
+  const a3 = join(server.dir, GEST('cnig_SUP_A3_2016'))
+  const other = JSON.parse(readFileSync(a3, 'utf8'))
+  other.columns = other.columns.filter((c: { name: string }) => c.name !== 'NOMGEST')
+  writeFileSync(a3, JSON.stringify(other, null, 4))
+
+  await page.goto(`${server.url}#/${GEST(A1)}`)
+  await page.getByTestId('column-NOMGEST').click()
+  await page.getByTestId('column-NOMGEST').getByTestId('equivalents').click()
+  const dialog = page.getByTestId('equivalents-dialog')
+  await dialog.getByTestId('equivalents-tab-compare').click()
+  await expect(dialog.getByTestId('equivalents-divergent')).toHaveText('1 élément sur 1 diffère de GESTIONNAIRE_SUP.NOMGEST (valeurs marquées « ≠ »).')
+  await expect(dialog.getByTestId(`compare-row-${A1}`)).toContainText('(source)')
+  await expect(dialog.getByTestId('compare-row-cnig_SUP_A2_2016')).toContainText('≠ 33')
+  await expect(dialog.getByTestId('equivalents-absent')).toHaveText('Sans élément équivalent : cnig_SUP_A3_2016')
+  await expect(dialog.getByTestId('equivalents-apply')).toHaveCount(0)
+
+  await expect(page.locator('.v-overlay__content').filter({ has: dialog })).toHaveCSS('opacity', '1')
+  const { violations } = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
+  expect(violations.flatMap((v) => v.nodes.map((n) => `${v.id} ${n.target.join(' ')} ${n.failureSummary}`))).toEqual([])
+})

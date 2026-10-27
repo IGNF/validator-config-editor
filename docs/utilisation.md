@@ -101,7 +101,8 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - appliquer une modification de colonne aux colonnes équivalentes des autres modèles
   (« Équivalents » sur la colonne) : même nom dans les tables équivalentes de la famille du
   modèle (`A1_ASSIETTE_SUP_S` ↔ `A2_ASSIETTE_SUP_S`) ou de toute la configuration, aperçu des
-  valeurs actuelles, éléments à cocher, une seule étape d'annulation ;
+  valeurs actuelles, éléments à cocher, une seule étape d'annulation ; l'onglet « Comparer »
+  montre les propriétés principales de chaque équivalent et marque « ≠ » les écarts ;
 - comparer un modèle à un autre (« Comparer » dans la vue du modèle), par défaut à la version
   précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes
   ajoutés, retirés ou modifiés, avec l'ancienne et la nouvelle valeur, et codes ajoutés, retirés
