@@ -70,6 +70,82 @@ produit un document JSON exploitable par un autre outil.
 | 1 | au moins une erreur (ou, avec `--strict`, au moins un avertissement) |
 | 2 | usage incorrect ou dossier sans modèle |
 
+## `vce site` : site en lecture seule
+
+```
+vce site <dossier> <sortie> [--title <titre>] [--force]
+```
+
+Écrit dans `<sortie>` un site statique de la configuration, en lecture seule, à publier sur
+GitHub Pages ou sur n'importe quel serveur statique. Il contient l'interface de l'éditeur (celle de
+la version installée) et un instantané de la configuration (`api/snapshot.json`). Il fonctionne
+depuis un sous-chemin, sans aucune ressource distante.
+
+Sur le site, on navigue, on consulte les problèmes, on compare des standards (« Comparer ») et les
+éléments équivalents (onglet « Comparer »), et on télécharge des fichiers ; aucun champ n'est
+modifiable et un bandeau l'indique. La configuration est validée et son résumé affiché, mais les
+erreurs ne bloquent pas : le site les montre (le blocage reste le rôle de `vce check`).
+
+- `--title` : titre affiché à la place du nom du dossier, par exemple
+  `--title "validator-config-gpu (json-source)"` ;
+- `--force` : remplace une sortie qui n'est ni vide ni un site déjà produit par `vce site`.
+
+Code de sortie 0, ou 2 en cas d'usage incorrect (dossier inexistant ou sans modèle, sortie refusée).
+Sur `validator-config-gpu`, le site pèse 8,5 Mo, se produit en moins d'une seconde et s'ouvre en
+moins de deux.
+
+### Publier sur GitHub Pages
+
+Dans le dépôt de configuration :
+
+1. **Settings → Pages → Source** : « GitHub Actions ».
+2. Ajouter `.github/workflows/pages.yml` :
+
+```yaml
+name: Site de la configuration
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx vce site config _site --title "${{ github.event.repository.name }} (${{ github.ref_name }})"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Adapter `branches` (par exemple `json-source`) et le dossier `config`. Le site est publié à
+`https://<organisation>.github.io/<dépôt>/`. Pour un dépôt interne, GitHub Pages limite l'accès
+aux membres de l'organisation, selon les réglages de celle-ci.
+
 ## `vce compare`
 
 ```

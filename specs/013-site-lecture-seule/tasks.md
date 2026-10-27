@@ -15,4 +15,4 @@ Livrées ensemble : un site qui permettrait d'éditer sans enregistrer serait tr
 
 ## Phase 2 : US3, publication — branche `013-site-lecture-seule/us3`
 
-- [ ] T005 [US3] `docs/utilisation.md` : workflow complet et réglages du dépôt (R4) ; SC-001 mesuré sur `validator-config-gpu`
+- [x] T005 [US3] `docs/utilisation.md` : workflow complet et réglages du dépôt (R4) ; SC-001 mesuré sur `validator-config-gpu`
