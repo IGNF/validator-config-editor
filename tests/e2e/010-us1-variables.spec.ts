@@ -26,10 +26,12 @@ test('motif de colonne affiché avec les variables, regex complète au survol', 
 test('chemin d\'un fichier attendu et nom du dossier affichés avec les variables', async ({ page }) => {
   withVariables()
   await page.goto(`${server.url}#/cnig_PLU_2017/files.json`)
+  await page.getByTestId('model-tab-files').click()
   const zone = page.getByTestId('regex').filter({ hasText: 'ZONE_URBA' })
   await expect(zone).toHaveText('Donnees_geographiques/<INSEE_COMMUNE>_ZONE_URBA_[0-9]{8}')
   await expect(zone).toHaveAttribute('title', 'Donnees_geographiques/[AB0-9]{5}_ZONE_URBA_[0-9]{8}')
-  // Champ : regex complète, forme à variables en aide.
+  // Champ : regex complète, forme à variables en aide (onglet « Modèle »).
+  await page.getByTestId('model-tab-model').click()
   await expect(page.getByTestId('model-folderName').getByRole('textbox')).toHaveValue('[a-zA-Z0-9]+_PLU_[0-9]{8}(_[a-zA-Z])?')
   await expect(page.getByTestId('model-folderName')).toContainText('Affichage : [a-zA-Z0-9]+_PLU_[0-9]{8}<_PART_OPT>')
 })
@@ -41,6 +43,7 @@ test('variables facultatives (_OPT) en jaune, les autres en étiquette simple', 
   await expect(optional).toHaveText('<_PART_OPT>')
   await expect(optional).toHaveAttribute('title', '_PART_OPT : (_[a-zA-Z])? (facultatif)')
   await expect(optional).toHaveClass(/optional/)
+  await page.getByTestId('model-tab-files').click()
   const zone = page.getByTestId('regex').filter({ hasText: 'ZONE_URBA' })
   await expect(zone.getByTestId('variable')).toHaveText('<INSEE_COMMUNE>')
   await expect(zone.getByTestId('variable-optional')).toHaveCount(0)
