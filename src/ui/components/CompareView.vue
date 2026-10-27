@@ -166,6 +166,27 @@ const count = (s: Section) => s.added.length + s.removed.length + s.changed.leng
           <li v-for="n in comparison.codes.removed" :key="`-${n}`"><span class="badge removed">retirée</span> <a :href="codeLink(reference, n)">{{ n }}</a></li>
         </ul>
       </section>
+
+      <section v-if="comparison.codes.content.length" class="mb-4" data-testid="compare-codes-content">
+        <h2 class="text-h6">Contenu des listes de codes ({{ comparison.codes.content.length }})</h2>
+        <ul class="changes">
+          <li v-for="l in comparison.codes.content" :key="l.name" :data-testid="`compare-list-${l.name}`">
+            <span class="badge changed">modifiée</span> <a :href="codeLink(model, l.name)">{{ l.name }}</a>
+            <ul>
+              <li v-for="c in l.columns.added" :key="`+c${c}`"><span class="badge added">colonne ajoutée</span> {{ c }}</li>
+              <li v-for="c in l.columns.removed" :key="`-c${c}`"><span class="badge removed">colonne retirée</span> {{ c }}</li>
+              <li v-for="r in l.rows.added" :key="`+${r}`"><span class="badge added">ligne ajoutée</span> <code>{{ r }}</code></li>
+              <li v-for="r in l.rows.removed" :key="`-${r}`"><span class="badge removed">ligne retirée</span> <code>{{ r }}</code></li>
+              <li v-for="r in l.rows.changed" :key="`~${r.key}`">
+                <span class="badge changed">ligne modifiée</span> <code>{{ r.key }}</code> :
+                <template v-for="(c, i) in r.changes" :key="c.field">
+                  <template v-if="i > 0">, </template>{{ c.field }} <span class="old">{{ format(c.field, c.old) }}</span> → <span class="new">{{ format(c.field, c.new) }}</span>
+                </template>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
     </template>
   </section>
 </template>

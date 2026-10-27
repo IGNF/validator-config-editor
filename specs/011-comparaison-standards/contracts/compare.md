@@ -87,5 +87,7 @@ Exemple tiré de `cnig_PLU_2022` → `cnig_PLU_2024`, abrégé (`…`) :
 - **Tri** : toutes les listes de noms et de clés sont triées.
 - **`unreadable`** : chemins des tables ou listes illisibles d'un des deux modèles, laissées de
   côté.
+- **Lignes** (`rows.added`, `rows.removed`) : valeurs des colonnes communes, jointes par « , » ;
+  `rows.changed[].key` : valeurs de la clé de rapprochement, jointes par « , ».
 - **`total`** : nombre d'éléments ajoutés, retirés ou modifiés, toutes sections confondues
   (champ du dossier, fichier, table, colonne, liste, ligne).

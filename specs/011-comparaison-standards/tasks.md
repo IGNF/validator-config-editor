@@ -16,9 +16,9 @@ code.
 
 ## Phase 2 : US2, contenu des listes de codes — branche `011-comparaison-standards/us2` (#98)
 
-- [ ] T007 [P] Tests R5 : rapprochement par les colonnes de la clé étrangère (`LIBELLE` changé → ligne modifiée), par la première colonne sans clé, clés en double → ligne entière ; colonnes ajoutées et retirées ; contenu identique sous deux chemins `data` → rien
-- [ ] T008 [US2] `compareModels` : `codes.content`
-- [ ] T009 [US2] `CompareView` : section « Contenu des listes » ; e2e : liste de codes modifiée dans la session
+- [x] T007 [P] Tests R5 : rapprochement par les colonnes de la clé étrangère (`LIBELLE` changé → ligne modifiée), par la première colonne sans clé, clés en double → ligne entière ; colonnes ajoutées et retirées ; contenu identique sous deux chemins `data` → rien
+- [x] T008 [US2] `compareModels` : `codes.content`
+- [x] T009 [US2] `CompareView` : section « Contenu des listes » ; e2e : liste de codes modifiée (fichier de la configuration ; l'interface n'édite pas encore le contenu des CSV, 005)
 
 ## Phase 3 : US3, `vce compare` — branche `011-comparaison-standards/us3` (#99)
 
