@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiGithub, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
+import ConfigHome from './components/ConfigHome.vue'
 import CompareView from './components/CompareView.vue'
 import GpuView from './components/GpuView.vue'
 import Home from './components/Home.vue'
@@ -15,6 +16,7 @@ import { kindOf, modelOf } from './files'
 import { panels } from './layout'
 import { route } from './router'
 import { useProject } from './stores/project'
+import pkg from '../../package.json' with { type: 'json' }
 import { isSite, SiteSource } from './io/site'
 
 const store = useProject()
@@ -54,7 +56,6 @@ onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', onBeforeUnload)
 })
 
-const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
 async function save() {
   const results = await store.save()
   const failed = results.filter((r) => !r.ok)
@@ -83,15 +84,18 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
       <v-app-bar-title>
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
+      <span class="version text-body-2" :title="`Version ${pkg.version} de validator-config-editor`" data-testid="app-version">v{{ pkg.version }}</span>
+      <v-btn :icon="mdiGithub" size="small" variant="text" href="https://github.com/IGNF/validator-config-editor" target="_blank" rel="noopener"
+        aria-label="validator-config-editor sur GitHub (nouvel onglet)" title="validator-config-editor sur GitHub" data-testid="app-github" />
       <span class="text-body-2 ml-4 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
-      <v-btn v-if="!store.readOnly" :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
-      <v-btn v-if="!store.readOnly" :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
+      <v-btn v-if="store.result && !store.readOnly" :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
+      <v-btn v-if="store.result && !store.readOnly" :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="store.download({ kind: 'all' })">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online && !site" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
-      <v-btn :prepend-icon="mdiAlertCircleOutline" :aria-pressed="panels.problems.open" data-testid="toggle-problems" @click="panels.problems.open = !panels.problems.open">
+      <v-btn v-if="store.result" :prepend-icon="mdiAlertCircleOutline" :aria-pressed="panels.problems.open" data-testid="toggle-problems" @click="panels.problems.open = !panels.problems.open">
         Problèmes ({{ store.result?.problems.length ?? 0 }})
       </v-btn>
     </v-app-bar>
@@ -123,14 +127,7 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
         <template v-else-if="store.result">
           <CompareView v-if="route.file && route.compare !== undefined" :model="modelOf(route.file)" :reference="route.compare" />
           <component :is="view" v-else-if="route.file" :key="route.file" :file="route.file" />
-          <section v-else>
-            <h1 class="text-h5 mb-2">Configuration</h1>
-            <p v-if="store.summary" data-testid="summary">
-              {{ plural(store.summary.models, 'modèle') }}, {{ plural(store.summary.tables, 'table') }}, {{ plural(store.summary.codeLists, 'liste') }} de codes —
-              {{ plural(store.summary.errors, 'erreur') }}, {{ plural(store.summary.warnings, 'avertissement') }}.
-            </p>
-            <p class="mt-2">Choisissez un modèle dans la liste.</p>
-          </section>
+          <ConfigHome v-else />
         </template>
       </v-container>
       </v-defaults-provider>
@@ -142,6 +139,14 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
 .home {
   color: inherit;
   text-decoration: none;
+}
+.version {
+  margin-left: 8px;
+  padding: 0 6px;
+  border: 1px solid rgb(var(--v-theme-divider));
+  border-radius: 4px;
+  color: rgb(var(--v-theme-secondary));
+  white-space: nowrap;
 }
 .root {
   max-width: 40vw;
