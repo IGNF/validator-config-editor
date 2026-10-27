@@ -33,7 +33,11 @@ async function editMaxLength(page: Page, value: string) {
 
 // Télécharge le ZIP et le décompresse (lecteur indépendant : zipfile de Python).
 async function downloadAndExtract(page: Page): Promise<string> {
-  const [download] = await Promise.all([page.waitForEvent('download'), page.getByTestId('download-zip').click()])
+  const [download] = await Promise.all([page.waitForEvent('download'), (async () => {
+    // Avec des modifications, la revue s'ouvre et attend la confirmation.
+    await page.getByTestId('download-zip').click()
+    await page.getByTestId('confirm-download').click()
+  })()])
   expect(download.suggestedFilename()).toBe('config.zip')
   const archive = join(tmp, 'config.zip')
   await download.saveAs(archive)

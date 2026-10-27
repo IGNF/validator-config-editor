@@ -30,7 +30,11 @@ test('crée ListeTest (CODE,LIBELLE) : en-tête seul, déclarée, sans erreur, a
   await expect(page.getByRole('heading', { name: 'Liste de codes ListeTest' })).toBeVisible()
   await expect(page.getByTestId('problems-count')).toHaveText('0 problème')
 
-  const [download] = await Promise.all([page.waitForEvent('download'), page.getByTestId('download-zip').click()])
+  const [download] = await Promise.all([page.waitForEvent('download'), (async () => {
+    // Avec des modifications, la revue s'ouvre et attend la confirmation.
+    await page.getByTestId('download-zip').click()
+    await page.getByTestId('confirm-download').click()
+  })()])
   const archive = join(tmp, 'config.zip')
   await download.saveAs(archive)
   const out = join(tmp, 'extrait')

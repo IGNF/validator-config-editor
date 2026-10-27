@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiGithub, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
+import ChangesDialog from './components/ChangesDialog.vue'
 import CodeListView from './components/CodeListView.vue'
 import ConfigHome from './components/ConfigHome.vue'
 import CompareView from './components/CompareView.vue'
@@ -29,6 +30,12 @@ const siteSource = site ? new SiteSource() : undefined
 const FIELDS = { VTextField: { hideDetails: 'auto' }, VTextarea: { hideDetails: 'auto' }, VSelect: { hideDetails: 'auto' }, VCombobox: { hideDetails: 'auto' } }
 const READ_ONLY = { VTextField: { hideDetails: 'auto', readonly: true }, VTextarea: { hideDetails: 'auto', readonly: true }, VSelect: { hideDetails: 'auto', readonly: true }, VCombobox: { hideDetails: 'auto', readonly: true }, VCheckbox: { readonly: true } }
 const showHome = ref(false)
+// Téléchargement complet : avec des modifications, la revue s'ouvre et attend la confirmation.
+const changes = useTemplateRef<InstanceType<typeof ChangesDialog>>('changes')
+function downloadAll() {
+  if (store.changed.size) changes.value?.show(true)
+  else store.download({ kind: 'all' })
+}
 watch(() => store.session, () => (showHome.value = false))
 // Panneau des problèmes : à chaque chargement, ouvert s'il y a des problèmes, replié sinon.
 watch(
@@ -106,10 +113,11 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
       <span class="text-body-2 ml-4 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
       <v-btn v-if="store.result && !store.readOnly" :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn v-if="store.result && !store.readOnly" :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
-      <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
+      <v-btn v-if="store.changed.size" variant="tonal" color="warning" class="mx-2 changed" title="Revoir les modifications" data-testid="changed-count"
+        @click="changes?.show()">{{ store.changed.size }} fichier(s) modifié(s)</v-btn>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
       <SearchDialog v-if="store.result" />
-      <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="store.download({ kind: 'all' })">Télécharger (ZIP)</v-btn>
+      <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="downloadAll">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online && !site" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
       <v-btn v-if="store.result" :prepend-icon="mdiAlertCircleOutline" :aria-pressed="panels.problems.open" data-testid="toggle-problems" @click="panels.problems.open = !panels.problems.open">
@@ -126,6 +134,8 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
       <ProblemsPanel />
       <ResizeHandle :panel="panels.problems" edge="left" label="Largeur du panneau des problèmes" />
     </v-navigation-drawer>
+
+    <ChangesDialog ref="changes" />
 
     <v-snackbar :model-value="!!store.notice" timeout="8000" data-testid="notice" @update:model-value="(v: boolean) => !v && (store.notice = undefined)">
       {{ store.notice }}

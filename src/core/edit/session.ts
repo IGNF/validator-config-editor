@@ -24,7 +24,7 @@ export interface Session {
 /** Modification demandée d'un fichier : édition pure d'une donnée JSON, ou nouveau texte. */
 export type FileChange =
   | { path: string; kind: 'json'; update: (data: unknown) => unknown }
-  | { path: string; kind: 'text'; text: string }
+  | { path: string; kind: 'text'; text: string | undefined }
 
 class MapFs implements ConfigFs {
   constructor(private readonly files: ReadonlyMap<string, string>) {}
@@ -212,4 +212,14 @@ export function allIds(session: Session): Set<string> {
     for (const t of model.tables.values()) collectIds(t.data, ids)
   }
   return ids
+}
+
+/** Rétablit un fichier dans son état d'origine (revue des modifications), en un pas annulable ; un fichier créé est retiré. */
+export function revertFile(session: Session, path: string): Session {
+  if (!isChanged(session, path)) return session
+  if (session.edited.has(path)) {
+    const original = originalData(session, path)
+    return applyChanges(session, [{ path, kind: 'json', update: () => original }])
+  }
+  return applyChanges(session, [{ path, kind: 'text', text: session.originals.get(path) }])
 }

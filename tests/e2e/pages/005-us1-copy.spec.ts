@@ -40,7 +40,11 @@ test('copie une liste d\'un autre modèle : CSV identique dans le ZIP, déclaré
   await page.getByTestId('model-tab-codes').click()
   await expect(page.getByTestId('code-ListeEtatPLU')).toBeVisible()
 
-  const [download] = await Promise.all([page.waitForEvent('download'), page.getByTestId('download-zip').click()])
+  const [download] = await Promise.all([page.waitForEvent('download'), (async () => {
+    // Avec des modifications, la revue s'ouvre et attend la confirmation.
+    await page.getByTestId('download-zip').click()
+    await page.getByTestId('confirm-download').click()
+  })()])
   const archive = join(tmp, 'config.zip')
   await download.saveAs(archive)
   const out = join(tmp, 'extrait')

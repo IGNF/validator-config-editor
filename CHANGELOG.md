@@ -23,6 +23,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Revue des modifications : le compteur « N fichier(s) modifié(s) » ouvre la liste des fichiers modifiés ou créés, avec leur diff ligne à ligne, l'ouverture du fichier et l'annulation de ses modifications (un pas annulable). Le téléchargement complet (ZIP) passe par cette revue quand il y a des modifications.
 - Recherche dans toute la configuration (« Rechercher » dans l'en-tête, ou touche `/`) : modèles, fichiers attendus, tables, colonnes (nom, description, motif), listes de codes et leurs valeurs, identifiants ; chaque résultat ouvre l'élément trouvé.
 - Colonne visée par une clé étrangère vers une liste de codes : valeurs autorisées affichées dans son panneau (colonne de la clé, puis libellés ; 50 premières lignes), avec un lien vers la liste.
 - Essai d'un nom contre une regex (« Tester un nom ») sous le nom du dossier, le chemin des fichiers attendus et le motif des colonnes : accepté, ou refusé à partir de la première partie qui ne correspond plus (variable `<DATE>`, texte…). Disponible aussi sur le site en lecture seule.
