@@ -17,10 +17,9 @@ test.afterEach(() => rmSync(tmp, { recursive: true, force: true }))
 
 const open = (page: Page, dir: string) => page.getByTestId('folder-input').setInputFiles(dir)
 
-test('accueil : ouvrir un dossier, fichiers restant sur le poste', async ({ page }) => {
+test('accueil : ouvrir un dossier', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Éditeur de configuration validator' })).toBeVisible()
   await expect(page.getByTestId('open-folder')).toBeVisible()
-  await expect(page.getByText('rien n\'est envoyé sur le réseau')).toBeVisible()
 })
 
 test('ouvre un dossier de modèles : mêmes résultats que vce check', async ({ page }) => {

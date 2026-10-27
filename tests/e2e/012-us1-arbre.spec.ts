@@ -84,8 +84,8 @@ test('vue du modèle : fichiers attendus rangés selon l\'arborescence', async (
   await page.getByTestId('model-tab-files').click()
   const rows = page.locator('[data-testid^="file-"][data-depth]')
   const order = await rows.evaluateAll((els) => els.map((e) => `${e.getAttribute('data-depth')}:${e.getAttribute('data-testid')!.slice(5)}`))
-  // Chaque dossier est suivi de son contenu, en retrait.
-  expect(order.slice(0, 3)).toEqual(['0:Actes', '1:ACTE', '1:REGLEMENT'])
+  // Fichiers d'abord, puis chaque dossier suivi de son contenu, en retrait.
+  expect(order.slice(0, 4)).toEqual(['0:METADONNEES', '0:Actes', '1:ACTE', '1:REGLEMENT'])
   expect(order).toContain('1:GESTIONNAIRE_SUP')
   expect(order.indexOf('1:GESTIONNAIRE_SUP')).toBeGreaterThan(order.indexOf('0:Donnees_geographiques'))
   await expect(page.getByTestId('file-Actes')).toHaveClass(/folder/)

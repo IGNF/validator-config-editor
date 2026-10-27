@@ -1,5 +1,6 @@
 // Arborescence des fichiers attendus d'un modèle : chaque fichier est rangé sous le dossier
-// (fichier de type directory) dont le chemin est le plus long préfixe du sien.
+// (fichier de type directory) dont le chemin est le plus long préfixe du sien. À chaque niveau,
+// les fichiers viennent d'abord, puis les dossiers, chacun dans l'ordre de files.json.
 import type { FileModel } from './types'
 
 export interface FileNode {
@@ -22,5 +23,9 @@ export function fileTree(files: readonly FileModel[]): FileNode[] {
     if (parent) parent.children.push(node)
     else roots.push(node)
   }
-  return roots
+  const order = (list: FileNode[]): FileNode[] => {
+    for (const n of list) n.children = order(n.children)
+    return [...list.filter((n) => !n.directory), ...list.filter((n) => n.directory)]
+  }
+  return order(roots)
 }
