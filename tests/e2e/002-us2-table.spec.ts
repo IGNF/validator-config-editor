@@ -72,6 +72,9 @@ test('annule et rétablit, aux boutons et au clavier', async ({ page }) => {
 })
 
 test('modifie une clé étrangère et conserve les propriétés inconnues', async ({ page }) => {
+  // Affichage SQL (REFERENCES en mot-clé), puis saisie par le crayon.
+  await expect(page.getByTestId('foreignKeys-0-sql').locator('.keyword')).toHaveText('REFERENCES')
+  await page.getByTestId('foreignKeys-0-edit').click()
   const fk = page.getByTestId('foreignKeys-0').getByRole('textbox')
   await fk.fill('(TYPEZONE) REFERENCES Inconnue(TYPEZONE)')
   await expect(page.getByTestId('problem-ERR-FK-TARGET-LIST')).toBeVisible()

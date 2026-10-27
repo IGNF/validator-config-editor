@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPlus } from '@mdi/js'
+import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPencil, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { setAt } from '@core/edit/pointer'
 import {
@@ -16,6 +16,7 @@ import { useProject } from '../stores/project'
 import FileFrame from './FileFrame.vue'
 import ProblemBadge from './ProblemBadge.vue'
 import RegexText from './RegexText.vue'
+import SqlText from './SqlText.vue'
 import EquivalentsDialog from './EquivalentsDialog.vue'
 import NotConformant from './NotConformant.vue'
 
@@ -59,12 +60,12 @@ function add() {
 }
 
 // Résumé des contraintes ; le motif s'affiche avec ses variables, regex complète au survol (010).
-function constraints(c: ColumnConstraints | undefined): { text: string; title?: string; regex?: string }[] {
+function constraints(c: ColumnConstraints | undefined): { text: string; title?: string; regex?: string; tone?: string }[] {
   if (!c) return []
-  const out: { text: string; title?: string; regex?: string }[] = []
-  if (c.required) out.push({ text: 'valeur obligatoire' })
-  if (c.presenceRequired) out.push({ text: 'colonne obligatoire' })
-  if (c.unique) out.push({ text: 'unique' })
+  const out: { text: string; title?: string; regex?: string; tone?: string }[] = []
+  if (c.required) out.push({ text: 'valeur obligatoire', tone: 'presence presence-ERROR' })
+  if (c.presenceRequired) out.push({ text: 'colonne obligatoire', tone: 'presence presence-WARN' })
+  if (c.unique) out.push({ text: 'unique', tone: 'unique' })
   if (c.minLength !== undefined) out.push({ text: `longueur ≥ ${c.minLength}` })
   if (c.maxLength !== undefined && c.maxLength >= 0) out.push({ text: `longueur ≤ ${c.maxLength}` })
   if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern, model.value)}`, title: c.pattern, regex: c.pattern })
@@ -83,6 +84,9 @@ function target(text: string): { label: string; path?: string } | undefined {
   const tablePath = [...(checked.value?.tables ?? [])].find(([, t]) => t.name === fk.target)?.[0]
   return { label: fk.target, ...(tablePath && { path: tablePath }) }
 }
+
+/** Clé étrangère ou condition en cours de saisie (`<liste>/<indice>`). */
+const editing = ref<string>()
 
 const LISTS: { key: TableList; title: string; placeholder: string }[] = [
   { key: 'foreignKeys', title: 'Clés étrangères', placeholder: '(COLONNE) REFERENCES Liste(COLONNE)' },
@@ -116,7 +120,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <strong>{{ c.name }}</strong>
               <ProblemBadge :file="file" :pointer="`/columns/${i}`" />
               <span class="text-medium-emphasis">{{ c.type }}<template v-if="columnTypeFamily(c.type)"> · {{ columnTypeFamily(c.type) }}</template></span>
-              <span v-for="k in constraints(c.constraints)" :key="k.text" class="constraint" :title="k.title"><template v-if="k.regex">motif <RegexText :value="k.regex" :model="model" /></template><template v-else>{{ k.text }}</template></span>
+              <span v-for="k in constraints(c.constraints)" :key="k.text" :class="k.tone ?? 'constraint'" :title="k.title"><template v-if="k.regex">motif <RegexText :value="k.regex" :model="model" /></template><template v-else>{{ k.text }}</template></span>
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
@@ -168,9 +172,17 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
           <v-spacer />
           <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" :data-testid="`add-${list.key}`" @click="edit((t) => addListItem(t, list.key))">Ajouter</v-btn>
         </div>
-        <div v-for="(text, i) in table.constraints?.[list.key] ?? []" :key="i" class="d-flex align-center ga-2" :data-pointer="`/constraints/${list.key}/${i}`">
-          <v-text-field :label="`${list.title} ${i + 1}`" :model-value="text" :placeholder="list.placeholder" density="compact" variant="outlined" hide-details class="mono"
-            :data-testid="`${list.key}-${i}`" @update:model-value="(v: string) => edit((t) => setListItem(t, list.key, i, v), `/constraints/${list.key}/${i}`)" />
+        <div v-for="(text, i) in table.constraints?.[list.key] ?? []" :key="i" class="d-flex align-center ga-2 my-1" :data-pointer="`/constraints/${list.key}/${i}`">
+          <!-- Affichage SQL (mots-clés en bleu gras) ; le crayon passe en saisie, un élément vide s'édite d'emblée. -->
+          <v-text-field v-if="!text || editing === `${list.key}/${i}`" :label="`${list.title} ${i + 1}`" :model-value="text" :placeholder="list.placeholder"
+            density="compact" variant="outlined" hide-details class="mono" autofocus :data-testid="`${list.key}-${i}`"
+            @update:model-value="(v: string) => edit((t) => setListItem(t, list.key, i, v), `/constraints/${list.key}/${i}`)"
+            @blur="editing = undefined" @keydown.enter="editing = undefined" />
+          <template v-else>
+            <SqlText :value="text" :data-testid="`${list.key}-${i}-sql`" />
+            <v-btn v-if="!store.readOnly" :icon="mdiPencil" size="small" variant="text" :aria-label="`Modifier ${list.title.toLowerCase()} ${i + 1}`"
+              :data-testid="`${list.key}-${i}-edit`" @click="editing = `${list.key}/${i}`" />
+          </template>
           <template v-if="list.key === 'foreignKeys' && target(text)">
             →
             <a v-if="target(text)!.path" :href="href(target(text)!.path!)">{{ target(text)!.label }}</a>
@@ -184,6 +196,14 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
 </template>
 
 <style scoped>
+.unique {
+  padding: 0 8px;
+  border-radius: 10px;
+  border: 1px solid rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-primary));
+  font-size: 0.8rem;
+  font-weight: 600;
+}
 .field {
   min-width: 16rem;
   flex: 1 1 16rem;

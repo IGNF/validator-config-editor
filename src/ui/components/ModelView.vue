@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiFormatListBulleted, mdiPlus, mdiTable } from '@mdi/js'
+import { mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiPlus, mdiTable } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
 import { renameCodeList } from '@core/edit/codelists'
-import { addCode, addFile, codeName, moveItem, removeItem, setOrRemove, type DocumentList } from '@core/edit/operations'
+import { addCode, addFile, codeName, removeItem, setOrRemove } from '@core/edit/operations'
 import { setAt } from '@core/edit/pointer'
 import { fileTree, type FileNode } from '@core/model/file-tree'
 import { resolvePath, tableModelRef } from '@core/model/paths'
@@ -131,7 +131,6 @@ function newCode() {
   const data = csvChoices.value.find((c) => !declared.has(c)) ?? ''
   edit((d) => addCode(d, store.ids(), data, codeName(data) || 'NOUVELLE_LISTE'))
 }
-const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem(d, list, i, to))
 </script>
 
 <template>
@@ -200,7 +199,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
               <strong>{{ f.name }}</strong>
               <ProblemBadge :file="path!" :pointer="`/files/${i}`" />
               <span class="text-medium-emphasis">{{ fileTypeLabel(f.type) }}</span>
-              <span class="tag">{{ mandatoryLabel(f.mandatory) }}</span>
+              <span class="presence" :class="`presence-${f.mandatory ?? 'WARN'}`" data-testid="file-presence">{{ mandatoryLabel(f.mandatory) }}</span>
               <RegexText :value="f.path" :model="name" class="path" />
             </div>
           </v-expansion-panel-title>
@@ -232,8 +231,6 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
             <v-textarea label="Description" :model-value="f.description" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => setProp(pointer('files', i, 'description'), v)" />
             <div class="d-flex flex-wrap ga-2">
-              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="move('files', i, i - 1)">Monter</v-btn>
-              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === doc.files.length - 1" @click="move('files', i, i + 1)">Descendre</v-btn>
               <EquivalentsDialog :source="{ kind: 'file', file: path!, pointer: pointer('files', i) }" :label="`${name} › ${f.name}`" />
               <v-spacer />
               <v-btn v-if="!store.readOnly" :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-file" @click="edit((d) => removeItem(d, 'files', i))">Supprimer le fichier</v-btn>
@@ -256,7 +253,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
                 <span v-else class="text-error">{{ t.name }} (modèle de table introuvable)</span>
                 <a v-if="t.file !== t.name" class="file-link" :href="href(path!, pointer('files', t.index))">fichier {{ t.file }}</a>
               </th>
-              <td>{{ mandatoryLabel(t.mandatory) }}</td>
+              <td><span class="presence" :class="`presence-${t.mandatory ?? 'WARN'}`">{{ mandatoryLabel(t.mandatory) }}</span></td>
               <td>{{ t.columns ?? '—' }}</td>
               <td><ProblemCount :counts="t.path ? store.countsByFile.get(t.path) : undefined" /><span v-if="!t.path || !store.countsByFile.get(t.path)">aucun</span></td>
             </tr>
