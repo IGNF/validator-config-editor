@@ -43,7 +43,7 @@ test('utilise config/ quand on choisit la racine d\'un dépôt', async ({ page }
   writeFileSync(join(repo, '.git/x.json'), '{}')
   await open(page, repo)
   await expect(page.getByTestId('summary')).toContainText('3 modèles')
-  await expect(page.getByText('validator-config-test/config')).toBeVisible()
+  await expect(page.getByTestId('config-source')).toHaveText('validator-config-test/config')
 })
 
 test('dossier sans modèle : message explicite, accueil conservé', async ({ page }) => {
