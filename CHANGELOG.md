@@ -10,6 +10,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Comparaison de deux modèles (« Comparer » dans la vue du modèle), par défaut avec la version précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes ajoutés, retirés ou modifiés, modifications non enregistrées comprises (#97) ; contenu des listes de codes : colonnes et lignes ajoutées, retirées ou modifiées, lignes rapprochées par les colonnes de la clé étrangère (#98).
+- `vce compare <référence> <modèle> [--format text|json]` : la même comparaison en ligne de commande (#99).
 - Variables facultatives (suffixe `_OPT`, regex `(…)?`, ex. `<_PART_OPT>`) surlignées en jaune comme dans GpU ; préfixe `_` pour une regex qui commence par `_` ; écart à ces conventions signalé (`WARN-VARIABLES-OPT`).
 - Variables : alias par famille de modèles (`aliases` de `variables.json`, ex. `<IDGEST>` pour les SUP, `<SIREN>` pour les PLUi et SCoT), à l'affichage et à la saisie.
 - Configuration GpU (`variables.json` présent) : règles de l'import dans le GpU vérifiées — `id` présents et uniques par type d'objet dans toute la configuration, héritage refusé, surcharge `gpu.json` orpheline en erreur ; correction « Attribuer un identifiant » (#86).

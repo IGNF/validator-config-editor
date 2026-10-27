@@ -70,6 +70,20 @@ produit un document JSON exploitable par un autre outil.
 | 1 | au moins une erreur (ou, avec `--strict`, au moins un avertissement) |
 | 2 | usage incorrect ou dossier sans modèle |
 
+## `vce compare`
+
+```
+vce compare <référence> <modèle> [--format text|json]
+```
+
+Compare deux dossiers de modèle, par exemple `config/cnig_PLU_2022` et `config/cnig_PLU_2024`,
+comme le bouton « Comparer » de l'éditeur : dossier, fichiers attendus, tables, colonnes, listes de
+codes et leur contenu. Le texte liste les éléments ajoutés (`+`), retirés (`-`) et modifiés (`~`),
+puis le total ; `--format json` suit le contrat
+[compare.md](../specs/011-comparaison-standards/contracts/compare.md). Code de sortie 0, ou 2 en
+cas d'usage incorrect (dossier inexistant ou sans `files.json`). Utile pour relire une PR d'un dépôt
+de configuration.
+
 ## `vce serve`
 
 ```

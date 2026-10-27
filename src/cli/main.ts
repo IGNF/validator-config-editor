@@ -1,20 +1,25 @@
 import pkg from '../../package.json' with { type: 'json' }
 import { fileURLToPath } from 'node:url'
 import { runCheck, type Output } from './check'
+import { runCompare } from './compare'
 import { runServe } from './serve'
 import type { RunningServer } from './server'
 
 const HELP = `Usage :
   vce check <dossier> [--format text|json] [--strict]
   vce serve <dossier> [--port <n>] [--open]
+  vce compare <référence> <modèle> [--format text|json]
   vce --help | --version
 
 <dossier> : dossier contenant les modèles (ex. config/).
+<référence>, <modèle> : dossiers de modèle (ex. config/cnig_PLU_2022 config/cnig_PLU_2024).
 
 check     valide tous les modèles ; code de sortie 0 sans erreur, 1 avec au moins une erreur
           (ou un avertissement avec --strict), 2 en cas d'usage incorrect.
 serve     ouvre l'éditeur local sur http://127.0.0.1:<port>/ (5174 par défaut, ou le suivant
-          libre) ; --open l'ouvre dans le navigateur.`
+          libre) ; --open l'ouvre dans le navigateur.
+compare   compare <modèle> à <référence> : dossier, fichiers attendus, tables, colonnes, listes
+          de codes et leur contenu ; code de sortie 0, ou 2 en cas d'usage incorrect.`
 
 const console_: Output = { log: (l) => console.log(l), error: (l) => console.error(l) }
 
@@ -73,6 +78,17 @@ export async function main(argv: string[], out: Output = console_, uiDir = UI_DI
     if (port !== undefined && !(Number.isInteger(port) && port >= 0 && port < 65536)) return usage(out, `Port invalide : ${String(portText)}`)
     if (positional.length !== 1) return usage(out, 'Indiquer un et un seul dossier')
     return runServe(positional[0]!, { port, open: options.has('--open'), uiDir }, out)
+  }
+  if (command === 'compare') {
+    const parsed = parseArgs(rest, ['--format'])
+    if (typeof parsed === 'string') return usage(out, parsed)
+    const { positional, options } = parsed
+    const unknown = [...options.keys()].filter((o) => o !== '--format')
+    if (unknown.length > 0) return usage(out, `Option inconnue : ${unknown[0]}`)
+    const format = options.get('--format') ?? 'text'
+    if (format !== 'text' && format !== 'json') return usage(out, `Format inconnu : ${String(format)} (text ou json)`)
+    if (positional.length !== 2) return usage(out, 'Indiquer deux dossiers de modèle : la référence, puis le modèle comparé')
+    return runCompare(positional[0]!, positional[1]!, { format }, out)
   }
   return usage(out, command ? `Commande inconnue : ${command}` : undefined)
 }

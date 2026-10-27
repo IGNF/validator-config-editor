@@ -22,5 +22,5 @@ code.
 
 ## Phase 3 : US3, `vce compare` — branche `011-comparaison-standards/us3` (#99)
 
-- [ ] T010 [P] Tests CLI : texte, `--format json` conforme au contrat, deux parents différents, dossier sans `files.json` → code 2, option inconnue → code 2
-- [ ] T011 [US3] `src/cli/compare.ts`, `main.ts`, `HELP`, `docs/utilisation.md`, CHANGELOG
+- [x] T010 [P] Tests CLI : texte, `--format json` conforme au contrat, deux parents différents (même nom dans deux configurations : refusé, hors périmètre), dossier sans `files.json` → code 2, option inconnue → code 2
+- [x] T011 [US3] `src/cli/compare.ts`, `main.ts`, `HELP`, `docs/utilisation.md`, CHANGELOG
