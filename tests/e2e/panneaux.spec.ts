@@ -7,20 +7,28 @@ test.beforeEach(async ({ page }) => {
 })
 
 // Un panneau masqué est poussé hors de l'écran (Vuetify) : il n'est plus dans la zone visible.
-test('masquer et réafficher les panneaux ; l\'état est conservé au rechargement', async ({ page }) => {
+test('masquer et réafficher les panneaux ; l\'arbre garde son état au rechargement', async ({ page }) => {
   await page.getByTestId('toggle-models').click()
   await expect(page.getByTestId('models-panel')).not.toBeInViewport()
   await expect(page.getByTestId('toggle-models')).toHaveAttribute('aria-pressed', 'false')
-  await page.getByTestId('toggle-problems').click()
-  await expect(page.getByTestId('problems-panel')).not.toBeInViewport()
   await page.reload()
   await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
   await expect(page.getByTestId('models-panel')).not.toBeInViewport()
-  await expect(page.getByTestId('problems-panel')).not.toBeInViewport()
   await page.getByTestId('toggle-models').click()
-  await page.getByTestId('toggle-problems').click()
   await expect(page.getByTestId('models-panel')).toBeInViewport()
+})
+
+test('problèmes : panneau replié sans problème, ouvert à la demande et quand un problème apparaît', async ({ page }) => {
+  await expect(page.getByTestId('problems-panel')).not.toBeInViewport()
+  await page.getByTestId('toggle-problems').click()
   await expect(page.getByTestId('problems-panel')).toBeInViewport()
+  await page.getByTestId('toggle-problems').click()
+  await expect(page.getByTestId('problems-panel')).not.toBeInViewport()
+  // Une modification qui crée un problème rouvre le panneau.
+  await page.getByTestId('column-LIB_IDZONE').click()
+  await page.getByTestId('column-LIB_IDZONE').getByTestId('column-reference').getByRole('textbox').fill('INCONNUE.ID')
+  await expect(page.getByTestId('problems-panel')).toBeInViewport()
+  await expect(page.getByTestId('problem-ERR-REFERENCE-TARGET')).toBeVisible()
 })
 
 test('largeur réglable au clavier, bornée, conservée au rechargement', async ({ page }) => {
@@ -37,7 +45,8 @@ test('largeur réglable au clavier, bornée, conservée au rechargement', async 
   await page.keyboard.press('ArrowRight')
   await page.reload()
   await expect(page.getByRole('separator', { name: 'Largeur du panneau des modèles' })).toHaveAttribute('aria-valuenow', '240')
-  // Panneau de droite : la flèche gauche l'élargit.
+  // Panneau de droite (replié sans problème) : la flèche gauche l'élargit.
+  await page.getByTestId('toggle-problems').click()
   const right = page.getByRole('separator', { name: 'Largeur du panneau des problèmes' })
   await right.focus()
   await page.keyboard.press('ArrowLeft')

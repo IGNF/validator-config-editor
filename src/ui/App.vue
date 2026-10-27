@@ -29,6 +29,20 @@ const FIELDS = { VTextField: { hideDetails: 'auto' }, VTextarea: { hideDetails: 
 const READ_ONLY = { VTextField: { hideDetails: 'auto', readonly: true }, VTextarea: { hideDetails: 'auto', readonly: true }, VSelect: { hideDetails: 'auto', readonly: true }, VCombobox: { hideDetails: 'auto', readonly: true }, VCheckbox: { readonly: true } }
 const showHome = ref(false)
 watch(() => store.session, () => (showHome.value = false))
+// Panneau des problèmes : à chaque chargement, ouvert s'il y a des problèmes, replié sinon.
+watch(
+  () => store.loading,
+  (loading, was) => {
+    if (was && !loading && store.result) panels.problems.open = store.result.problems.length > 0
+  },
+)
+// Un problème qui apparaît (édition) rouvre le panneau.
+watch(
+  () => store.result?.problems.length ?? 0,
+  (count, before) => {
+    if (before === 0 && count > 0 && !store.loading) panels.problems.open = true
+  },
+)
 
 // Raccourcis : Ctrl+Z annuler, Ctrl+Maj+Z ou Ctrl+Y rétablir.
 function onKey(e: KeyboardEvent) {
