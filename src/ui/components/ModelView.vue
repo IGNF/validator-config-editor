@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiFolderDownload, mdiPlus } from '@mdi/js'
+import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDelete, mdiFolderDownload, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
+import { previousVersion } from '@core/compare'
 import { addCode, addFile, codeName, moveItem, removeItem, setOrRemove, type DocumentList } from '@core/edit/operations'
 import { setAt } from '@core/edit/pointer'
 import { resolvePath, tableModelRef } from '@core/model/paths'
 import type { DocumentModel, FileModel } from '@core/model/types'
 import { pointer } from '@core/pointer'
 import { modelOf } from '../files'
-import { href, route } from '../router'
+import { compareHref, href, route } from '../router'
 import { useProject } from '../stores/project'
 import CodeListDialog from './CodeListDialog.vue'
 import FileFrame from './FileFrame.vue'
@@ -83,6 +84,10 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
       <v-chip v-if="doc?.abstract" size="small" color="secondary">abstrait</v-chip>
       <v-btn :prepend-icon="mdiFolderDownload" size="small" variant="tonal" data-testid="download-model" @click="store.download({ kind: 'model', model: name })">
         Télécharger le modèle
+      </v-btn>
+      <v-btn :prepend-icon="mdiCompareHorizontal" size="small" variant="tonal" data-testid="compare-model-button"
+        :href="compareHref(name, previousVersion(name, store.models.map((m) => m.name)))">
+        Comparer
       </v-btn>
     </template>
 

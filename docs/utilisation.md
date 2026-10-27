@@ -84,6 +84,10 @@ le port, `--open` ouvre le navigateur). Il permet de :
   clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant les liens
   entre eux ;
 - afficher le contenu exact de chaque fichier (onglet « Source ») ;
+- comparer un modèle à un autre (« Comparer » dans la vue du modèle), par défaut à la version
+  précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes
+  ajoutés, retirés ou modifiés, avec l'ancienne et la nouvelle valeur. L'adresse
+  (`#/cnig_PLU_2024/?compare=cnig_PLU_2022`) rouvre la même comparaison ;
 - consulter les problèmes (les mêmes que `vce check`), les filtrer par sévérité, code ou modèle,
   et aller d'un clic à l'élément concerné ;
 - corriger d'un clic les problèmes courants (« Corriger » dans le panneau des problèmes) :
