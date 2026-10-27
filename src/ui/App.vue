@@ -70,7 +70,7 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
 
 <template>
   <v-app>
-    <v-app-bar density="compact" color="primary">
+    <v-app-bar density="compact" flat class="app-header">
       <template v-if="store.result" #prepend>
         <v-btn :icon="mdiFileTreeOutline" :aria-pressed="panels.models.open" aria-label="Panneau des modèles" title="Afficher ou masquer les modèles"
           data-testid="toggle-models" @click="panels.models.open = !panels.models.open" />
@@ -78,7 +78,7 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
       <v-app-bar-title>
         <a href="#/" class="home">Configuration validator</a>
       </v-app-bar-title>
-      <span class="text-body-2 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
+      <span class="text-body-2 ml-4 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
       <v-btn :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
       <v-btn :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>

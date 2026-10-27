@@ -28,9 +28,10 @@
     "test:e2e": "playwright test",
     "build:pages": "vite build --mode pages"
   },
-  "dependencies": {},
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
+    "@fontsource/fira-sans": "5.3.0",
+    "@fontsource/open-sans": "5.3.0",
     "@mdi/js": "7.4.47",
     "@playwright/test": "1.63.0",
     "@types/node": "24.19.0",

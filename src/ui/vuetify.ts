@@ -10,9 +10,24 @@ export const vuetify = createVuetify({
   theme: {
     defaultTheme: 'system',
     themes: {
-      // Opacité « medium-emphasis » relevée (0,6 par défaut) pour un contraste ≥ 4,5:1 (WCAG AA).
-      light: { dark: false, colors: { primary: '#1f4e79', secondary: '#5c6f82', optional: '#ffca00' }, variables: { 'medium-emphasis-opacity': 0.75 } },
-      dark: { dark: true, colors: { primary: '#8ab4e0', secondary: '#a3b4c6', optional: '#ffca00' }, variables: { 'medium-emphasis-opacity': 0.8 } },
+      // Couleurs de validator-api-client (012, R3) aux contrastes WCAG AA : #1a5fb4 (6,3:1) pour
+      // les liens et boutons, #3f4a55 (9:1) pour le texte secondaire ; #3993f3 et #788089, trop
+      // clairs pour du texte, ne servent qu'au décor. Opacité « medium-emphasis » relevée (0,6 par
+      // défaut) pour un contraste ≥ 4,5:1.
+      light: {
+        dark: false,
+        colors: {
+          primary: '#1a5fb4', secondary: '#3f4a55', accent: '#3993f3', optional: '#ffca00',
+          background: '#ffffff', surface: '#ffffff', 'surface-light': '#f4f6f8', divider: '#dde1e6',
+          'on-background': '#091625', 'on-surface': '#091625',
+        },
+        variables: { 'medium-emphasis-opacity': 0.75 },
+      },
+      dark: {
+        dark: true,
+        colors: { primary: '#8ab4e0', secondary: '#a3b4c6', accent: '#3993f3', optional: '#ffca00', 'surface-light': '#1b222b', divider: '#3f4a55' },
+        variables: { 'medium-emphasis-opacity': 0.8 },
+      },
     },
   },
 })

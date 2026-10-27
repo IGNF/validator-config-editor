@@ -1,0 +1,35 @@
+/* Polices et zones de l'interface (feature 012, plan R3–R4), d'après validator-api-client :
+   Open Sans pour le texte, Fira Sans pour les titres ; arbre et problèmes sur fond clair. */
+:root {
+  --v-font-body: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  --v-font-heading: 'Fira Sans', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.v-application {
+  font-family: var(--v-font-body);
+}
+
+.v-navigation-drawer {
+  background: rgb(var(--v-theme-surface-light)) !important;
+  border-color: rgb(var(--v-theme-divider)) !important;
+}
+
+.v-app-bar.app-header .v-app-bar-title {
+  flex: none;
+}
+
+.v-app-bar.app-header {
+  background: rgb(var(--v-theme-surface)) !important;
+  color: rgb(var(--v-theme-on-surface)) !important;
+  border-bottom: 1px solid rgb(var(--v-theme-divider));
+}
+
+h1,
+h2,
+h3,
+.text-h5,
+.text-h6,
+.v-app-bar-title,
+.v-card-title {
+  font-family: var(--v-font-heading);
+}
