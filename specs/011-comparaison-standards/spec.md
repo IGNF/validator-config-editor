@@ -22,16 +22,15 @@ branche `dsfr`). Elle rapproche fichiers, tables, attributs et listes de codes *
 compare par défaut avec la version précédente du même standard. Cette page disparaîtra avec
 l'édition dans GpU ; l'éditeur reprend ses règles et ajoute le contenu des listes de codes.
 
-Mesures sur `validator-config-gpu` (`json-source`, après la migration du 2026-10-27), sans
-compter les `id`. Elles sont approximatives : tous les champs y sont comparés, titres et
-descriptions compris. Elles seront recalculées au plan avec les champs de FR-003 :
+Mesures sur `validator-config-gpu` (`json-source`, commit `976b9fce`), avec les champs de
+FR-003, sans les `id`. Chaque case donne ajoutés / retirés / modifiés :
 
-| Comparaison | Fichiers (+ / − / ~) | Tables ~ | Colonnes (+ / − / ~) | Listes (+ / −) | Listes au contenu modifié |
-|---|---|---|---|---|---|
-| `cnig_PLU_2017` → `cnig_PLU_2022` | 2 / 0 / 1 | 1 | 14 / 0 / 1 | 1 / 0 | 3 |
-| `cnig_PLU_2022` → `cnig_PLU_2024` | 21 / 2 / 1 | 7 | 2 / 0 / 4 | 6 / 2 | 1 |
-| `cnig_PLUi_2022` → `cnig_PLUi_2024` | 24 / 5 / 14 | 7 | 2 / 0 / 5 | 7 / 3 | 1 |
-| `cnig_SUP_A1_2013` → `cnig_SUP_A1_2016` | 1 / 0 / 7 | 5 | 2 / 1 / 17 | 0 / 0 | 0 |
+| Comparaison | Dossier ~ | Fichiers | Tables | Colonnes | Listes (+ / −) | Listes au contenu modifié |
+|---|---|---|---|---|---|---|
+| `cnig_PLU_2017` → `cnig_PLU_2022` | 1 | 2 / 0 / 1 | 0 / 0 / 1 | 14 / 0 / 1 | 1 / 0 | 3 |
+| `cnig_PLU_2022` → `cnig_PLU_2024` | 1 | 21 / 2 / 1 | 0 / 0 / 7 | 2 / 0 / 4 | 6 / 2 | 1 |
+| `cnig_PLUi_2022` → `cnig_PLUi_2024` | 1 | 24 / 5 / 14 | 0 / 0 / 7 | 2 / 0 / 5 | 7 / 3 | 1 |
+| `cnig_SUP_A1_2013` → `cnig_SUP_A1_2016` | 1 | 1 / 0 / 7 | 0 / 0 / 3 | 2 / 1 / 17 | 0 / 0 | 0 |
 
 ## Scénarios utilisateur et tests
 
@@ -55,7 +54,7 @@ configuration, par défaut la version précédente du même standard.
    modèle de la configuration) ou inverse le sens, **Then** la comparaison se met à jour.
 3. **Given** deux modèles, **When** la comparaison s'affiche, **Then** elle liste, par section :
    - **fichiers attendus** ajoutés, retirés, modifiés (type, présence, chemin, modèle de table) ;
-   - **tables** ajoutées, retirées, modifiées (clé primaire, conditions, clés étrangères) ;
+   - **tables** ajoutées, retirées, modifiées (conditions, clés étrangères) ;
    - **colonnes** de chaque table modifiée : ajoutées, retirées, modifiées (description, type,
      contraintes) ;
    - **listes de codes** ajoutées, retirées ;
@@ -106,13 +105,13 @@ configuration.
 **Pourquoi cette priorité** : utile en revue, mais l'interface couvre le besoin principal.
 
 **Test indépendant** : `vce compare config/cnig_PLU_2022 config/cnig_PLU_2024` affiche les mêmes
-nombres que l'interface ; `--json` produit un JSON conforme au contrat.
+nombres que l'interface ; `--format json` produit un JSON conforme au contrat.
 
 **Scénarios d'acceptation** :
 
 1. **Given** deux dossiers de modèles, **When** `vce compare <référence> <modèle>` est lancé,
    **Then** la comparaison s'affiche en texte, section par section, et le code de sortie est 0.
-2. **Given** l'option `--json`, **When** la commande est lancée, **Then** la comparaison est
+2. **Given** l'option `--format json` (comme `vce check`), **When** la commande est lancée, **Then** la comparaison est
    écrite en JSON (contrat `contracts/compare.md`).
 3. **Given** un dossier sans `files.json`, **When** la commande est lancée, **Then** un message
    l'indique et le code de sortie est 2.
@@ -144,10 +143,11 @@ nombres que l'interface ; `--json` produit un JSON conforme au contrat.
 - **FR-002** : la référence par défaut DOIT être la version précédente du même standard (même
   nom à l'année finale près, année immédiatement inférieure présente dans la configuration).
 - **FR-003** : les champs comparés DOIVENT être, au minimum, ceux de `StandardComparator` (GpU) :
-  fichiers `type`, `mandatory`, `path` ; tables `primaryKey`, `conditions`, `foreignKeys` ;
+  fichiers `type`, `mandatory`, `path` ; tables `conditions`, `foreignKeys` ;
   colonnes `description`, `type`, `minLength`, `maxLength`, `required`, `presenceRequired`,
   `unique`, `enum`, `pattern`. S'y ajoutent `tableModel`, le nom du dossier et la spécification
-  des métadonnées. Les `id` NE DOIVENT PAS être comparés.
+  des métadonnées. `primaryKey` (GpU) n'existe pas dans le format du validator. Les `id` NE
+  DOIVENT PAS être comparés.
 - **FR-004** : la comparaison DOIT être un module pur du cœur, partagé par l'interface et la CLI.
 - **FR-005** : la comparaison NE DOIT rien modifier dans la session.
 - **FR-006** : l'adresse de la page DOIT encoder les deux modèles comparés.
@@ -165,7 +165,7 @@ nombres que l'interface ; `--json` produit un JSON conforme au contrat.
 ## Critères de succès
 
 - **SC-001** : sur `validator-config-gpu`, les nombres de fichiers, tables, colonnes et listes
-  ajoutés, retirés et modifiés sont ceux du tableau recalculé au plan.
+  ajoutés, retirés et modifiés sont ceux du tableau du contexte.
 - **SC-002** : sur les fixtures, la comparaison de deux versions s'affiche en moins d'une
   seconde.
 - **SC-003** : sur les comparaisons du tableau, les différences de champs coïncident avec
