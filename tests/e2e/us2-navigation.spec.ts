@@ -18,7 +18,6 @@ test('filtre les modèles par une partie de leur nom', async ({ page }) => {
 
 test('affiche un modèle, suit le lien vers une table puis vers une liste de codes', async ({ page }) => {
   await page.getByTestId('model-cnig_PLU_2017').click()
-  await page.getByRole('link', { name: 'Modèle (files.json)' }).click()
   await expect(page.getByRole('heading', { name: 'Modèle cnig_PLU_2017' })).toBeVisible()
   await expect(page.getByTestId('metadata-specification').getByRole('textbox')).toHaveValue('CNIG PLU v2017')
   await expect(page.getByRole('tab', { name: /^Fichiers \(\d+\)$/ })).toBeVisible()

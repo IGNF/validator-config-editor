@@ -47,20 +47,24 @@ async function addRow() {
     <NotConformant v-if="!csv" />
     <template v-else>
       <div class="d-flex align-center flex-wrap ga-2 mb-2">
-        <p class="mb-0">{{ csv.rows.length }} valeur{{ csv.rows.length > 1 ? 's' : '' }}</p>
+        <p class="mb-0 summary" data-testid="code-summary">
+          <strong>{{ csv.rows.length }}</strong> valeur{{ csv.rows.length > 1 ? 's' : '' }} ·
+          <strong>{{ csv.header.length }}</strong> colonne{{ csv.header.length > 1 ? 's' : '' }}
+        </p>
         <v-spacer />
         <v-btn v-if="editable" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-row" @click="addRow">Ajouter une ligne</v-btn>
       </div>
       <p v-if="!store.readOnly && !editable" class="text-body-2 mb-2">Une valeur s'étend sur plusieurs lignes : modifiez ce fichier dans un éditeur de texte.</p>
       <!-- Tableau large : région défilante accessible au clavier. -->
       <div class="scroll" tabindex="0" role="region" :aria-label="`Valeurs de ${name ?? baseName(file)}`">
-      <v-table density="compact" data-testid="code-values">
+      <v-table density="compact" class="values" data-testid="code-values">
         <thead>
-          <tr><th v-for="h in csv.header" :key="h">{{ h }}</th><th v-if="editable" class="actions"><span class="sr-only">Actions</span></th></tr>
+          <tr><th class="ln" scope="col">Ligne</th><th v-for="h in csv.header" :key="h" scope="col">{{ h }}</th><th v-if="editable" class="actions"><span class="sr-only">Actions</span></th></tr>
         </thead>
         <tbody>
           <!-- Pointeur '/<ligne>' : la ligne 1 est l'en-tête (contrat problem-codes). -->
           <tr v-for="(row, i) in csv.rows" :key="i" :data-pointer="`/${i + 2}`">
+            <td class="ln">{{ i + 2 }}</td>
             <td v-for="(v, j) in csv.header.map((_, k) => row[k] ?? '')" :key="j">
               <input v-if="editable" class="cell" :value="v" :aria-label="`${csv.header[j]}, ligne ${i + 2}`" :data-testid="`cell-${i}-${j}`"
                 @change="setCell(i, j, ($event.target as HTMLInputElement).value, $event.target as HTMLInputElement)" @keydown.enter="($event.target as HTMLInputElement).blur()" />
@@ -96,6 +100,29 @@ async function addRow() {
   outline: none;
   border-color: rgb(var(--v-theme-primary));
   background: rgb(var(--v-theme-surface));
+}
+.values {
+  border: 1px solid rgb(var(--v-theme-divider));
+  border-radius: 6px;
+}
+.values :deep(thead th) {
+  background: rgb(var(--v-theme-surface-light)) !important;
+  font-weight: 600 !important;
+}
+.values :deep(tbody tr:nth-child(even)) {
+  background: rgba(var(--v-theme-on-surface), 0.03);
+}
+.ln {
+  width: 1%;
+  color: rgb(var(--v-theme-secondary));
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.summary {
+  color: rgb(var(--v-theme-secondary));
+}
+.summary strong {
+  color: rgb(var(--v-theme-on-surface));
 }
 .actions {
   width: 1%;

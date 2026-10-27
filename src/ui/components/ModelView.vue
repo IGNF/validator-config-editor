@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiPlus, mdiTable } from '@mdi/js'
+import { mdiCodeTags, mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiPencilOffOutline, mdiPencilOutline, mdiPlus, mdiTable } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
@@ -66,8 +66,9 @@ function chooseFile(index: number, data: string) {
   if (refusal) store.notice = refusal
   else store.applyChanges(changes)
 }
+// L'icône suffit à dire le type ; son libellé reste lisible au survol et par un lecteur d'écran.
 // Fichiers attendus dans l'ordre de leur arborescence, avec leur profondeur (dossier › contenu).
-const FILE_ICONS: Record<string, string> = { directory: mdiFolderOutline, table: mdiTable, pdf: mdiFilePdfBox, metadata: mdiFileDocumentOutline, multi_table: mdiDatabaseOutline }
+const FILE_ICONS: Record<string, string> = { directory: mdiFolderOutline, table: mdiTable, pdf: mdiFilePdfBox, metadata: mdiCodeTags, multi_table: mdiDatabaseOutline }
 const rows = computed(() => {
   const files = doc.value?.files ?? []
   const out: { f: FileModel; i: number; depth: number }[] = []
@@ -194,12 +195,13 @@ function newCode() {
         <!-- Fichiers rangés selon leur arborescence (dossiers puis leur contenu, en retrait). -->
         <v-expansion-panel v-for="{ f, i, depth } in rows" :key="f.id ?? i" :value="i" :data-pointer="`/files/${i}`" :data-testid="`file-${f.name}`"
           :class="['tree-row', { folder: f.type === 'directory', nested: depth > 0 }]" :style="{ marginLeft: `${depth * 28}px`, maxWidth: `calc(100% - ${depth * 28}px)` }" :data-depth="depth">
-          <v-expansion-panel-title>
+          <!-- Crayon plutôt que chevron : le panneau ouvre le formulaire du fichier, pas l'arborescence. -->
+          <v-expansion-panel-title :expand-icon="mdiPencilOutline" :collapse-icon="mdiPencilOffOutline">
             <div class="d-flex flex-wrap align-center ga-2">
-              <v-icon :icon="FILE_ICONS[f.type] ?? mdiFileOutline" size="small" :color="f.type === 'directory' ? 'primary' : undefined" aria-hidden="true" />
+              <v-icon :icon="FILE_ICONS[f.type] ?? mdiFileOutline" size="small" :color="f.type === 'directory' ? 'primary' : undefined" role="img"
+                :aria-label="fileTypeLabel(f.type)" :title="fileTypeLabel(f.type)" data-testid="file-type-icon" />
               <strong>{{ f.name }}</strong>
               <ProblemBadge :file="path!" :pointer="`/files/${i}`" />
-              <span class="text-medium-emphasis">{{ fileTypeLabel(f.type) }}</span>
               <span class="presence" :class="`presence-${f.mandatory ?? 'WARN'}`" data-testid="file-presence">{{ mandatoryLabel(f.mandatory) }}</span>
               <RegexText :value="f.path" :model="name" class="path" />
             </div>
@@ -281,15 +283,31 @@ function newCode() {
           <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-code" @click="newCode">Déclarer une liste</v-btn>
         </div>
       </div>
-      <div v-for="(c, i) in doc.codes ?? []" :key="c.id ?? i" class="d-flex flex-wrap align-center ga-2" :data-pointer="`/codes/${i}`" :data-testid="`code-${c.name}`">
-        <strong class="list-name" data-testid="code-name">{{ c.name }}</strong>
-        <v-select :label="`Fichier de la liste ${c.name}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details class="field"
-          data-testid="code-data" @update:model-value="(v: string) => chooseFile(i, v)" />
-        <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir<template v-if="rowsOf(c.data) !== undefined"> ({{ rowsOf(c.data) }} valeur{{ rowsOf(c.data)! > 1 ? 's' : '' }})</template></a>
-        <ProblemBadge :file="path!" :pointer="`/codes/${i}`" />
-        <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
-        <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
-      </div>
+      <v-table v-if="doc.codes?.length" density="comfortable" class="tables codes mt-2" data-testid="code-table">
+        <thead>
+          <tr><th scope="col">Liste</th><th scope="col">Fichier</th><th scope="col">Valeurs</th><th scope="col">Problèmes</th><th scope="col"><span class="sr-only">Actions</span></th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="(c, i) in doc.codes" :key="c.id ?? i" :data-pointer="`/codes/${i}`" :data-testid="`code-${c.name}`">
+            <th scope="row">
+              <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)" data-testid="code-name"><v-icon :icon="mdiFileOutline" size="small" class="mr-1" aria-hidden="true" />{{ c.name }}</a>
+              <span v-else class="text-error" data-testid="code-name">{{ c.name }}</span>
+              <div v-if="c.title && c.title !== c.name" class="code-title">{{ c.title }}</div>
+            </th>
+            <td class="code-file">
+              <v-select :label="`Fichier de la liste ${c.name}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details
+                data-testid="code-data" @update:model-value="(v: string) => chooseFile(i, v)" />
+            </td>
+            <td>{{ rowsOf(c.data) ?? '—' }}</td>
+            <td><ProblemBadge :file="path!" :pointer="`/codes/${i}`" /><ProblemCount :counts="codePath(c.data) ? store.countsByFile.get(codePath(c.data)!) : undefined" /></td>
+            <td class="actions">
+              <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
+              <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+      <p v-else class="text-body-2 mt-2">Aucune liste de codes déclarée.</p>
       </template>
     </template>
   </FileFrame>
@@ -314,8 +332,24 @@ function newCode() {
   border-left: 3px solid rgba(var(--v-theme-primary), 0.45);
   width: auto;
 }
-.list-name {
-  min-width: 12rem;
+.code-title {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: rgb(var(--v-theme-secondary));
+}
+.code-file {
+  min-width: 16rem;
+}
+.codes .actions {
+  width: 1%;
+  white-space: nowrap;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 }
 .field {
   min-width: 0;

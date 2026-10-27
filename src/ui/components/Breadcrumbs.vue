@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { modelFamily } from '@core/labels'
 import { getAt } from '@core/edit/pointer'
 import { parsePointer } from '@core/pointer'
 import { baseName, kindOf, modelOf } from '../files'
 import { href, route } from '../router'
 import { useProject } from '../stores/project'
 
-// Fil d'Ariane d'une vue : configuration › famille › modèle › table ou liste › élément du pointeur.
+// Fil d'Ariane d'une vue : configuration › modèle › table ou liste › élément du pointeur.
 const props = defineProps<{ file: string; last?: string }>()
 const store = useProject()
 
@@ -18,9 +17,7 @@ const nameAt = (data: unknown, ptr: string) => {
 const items = computed(() => {
   const model = modelOf(props.file)
   const doc = `${model}/files.json`
-  const family = modelFamily(model)
   const out: { title: string; href?: string }[] = [{ title: 'Configuration', href: '#/' }]
-  if (family !== model) out.push({ title: family })
   const kind = kindOf(props.file)
   const data = store.data(props.file)
   out.push({ title: model, ...(kind !== 'model' || route.value.pointer !== undefined || route.value.compare !== undefined ? { href: href(store.has(doc) ? doc : `${model}/`) } : {}) })

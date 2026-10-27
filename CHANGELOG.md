@@ -9,6 +9,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Arbre de gauche réduit aux modèles groupés par famille : un clic ouvre la vue du modèle (`files.json`), le détail (fichiers attendus) est dans le panneau principal. Fil d'Ariane sans la famille. Onglet « Fichiers » : type donné par l'icône seule (libellé au survol), métadonnées en `</>`, crayon au lieu du chevron pour ouvrir le formulaire d'un fichier. Regex : variables affichées par leur nom seul, sans chevrons ni suffixe `_OPT` (la couleur indique une variable facultative). Onglet « Listes de codes » en tableau (liste, fichier, valeurs, problèmes) ; vue d'une liste avec numéros de ligne, en-tête sur fond clair et lignes alternées. Bouton « Parcourir les modèles » retiré de l'accueil.
+
 - Panneau des problèmes replié au chargement d'une configuration sans problème, ouvert s'il y en a, et rouvert quand une modification en crée.
 - Formulaires mis en forme : champs en grille, sections titrées dans l'onglet « Modèle », contenu des panneaux dépliés sur fond clair, messages sous les champs lisibles. Titre du modèle dans l'en-tête de sa vue. Bandeau du modèle réduit aux problèmes ; identifiant du modèle, chemin du fichier en bas de vue, tuiles et types de fichiers retirés. « Monter » et « Descendre » retirés des colonnes. Carte d'un problème et fenêtre des corrections proposées mises en forme (gravité en pastille, conseil encadré, correction « sûre » signalée).
 - Clés étrangères et conditions affichées comme du SQL (mots-clés en bleu gras, chaînes en vert), modifiables par un crayon. Badges colorés : présence des fichiers attendus (obligatoire en rouge, recommandé en orange, facultatif en vert), contraintes des colonnes (valeur obligatoire, colonne obligatoire, unique). « Monter » et « Descendre » retirés des fichiers attendus. Bouton « Équivalents » renommé « Appliquer aux colonnes / fichiers / listes semblables ».
@@ -46,6 +48,8 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 - Panneaux latéraux (modèles, problèmes) rétractables et redimensionnables (souris ou clavier), état mémorisé dans le navigateur ; arbre des modèles plus compact (retrait de 12 px par niveau).
 
 ### Removed
+
+- Annuler et rétablir (boutons de l'en-tête, Ctrl+Z, Ctrl+Maj+Z, Ctrl+Y) ; la revue des modifications permet toujours d'annuler celles d'un fichier. Nom de la configuration retiré de l'en-tête (il reste sur l'accueil de la configuration).
 
 - Support de `gpu.json` (vue des surcharges GpU, schéma, `WARN-GPU-ORPHAN-ID` et `ERR-GPU-ORPHAN-ID`) et de l'héritage (`parent`, `abstract`, `ERR-GPU-INHERITANCE`) : les anciens modèles GpU ne sont plus pris en charge. Un `gpu.json` présent est ignoré ; `parent` et `abstract` sont conservés tels quels sans être interprétés.
 - Gestion de l'héritage (cas propre au GpU, déjà aplati dans `validator-config-gpu`) : plus de vérification `ERR-PARENT-MISSING`, de résolution des `id` de `gpu.json` par le parent ou les modèles qui en héritent, ni d'affichage du parent embarqué et des modèles hérités. La clé `parent` reste tolérée et conservée.

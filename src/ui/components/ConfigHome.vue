@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiCompareHorizontal, mdiFileTreeOutline, mdiFolderMultipleOutline } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiCompareHorizontal, mdiFolderMultipleOutline } from '@mdi/js'
 import { computed } from 'vue'
 import { previousVersion } from '@core/compare'
 import { groupByFamily } from '@core/labels'
@@ -59,7 +59,6 @@ const latestPair = (models: LoadedModel[]) => {
     </ul>
 
     <div class="d-flex flex-wrap ga-2 mb-6">
-      <v-btn :prepend-icon="mdiFileTreeOutline" variant="tonal" color="primary" data-testid="home-show-models" @click="panels.models.open = true">Parcourir les modèles</v-btn>
       <v-btn :prepend-icon="mdiAlertCircleOutline" variant="tonal" :color="store.summary?.errors ? 'error' : 'primary'" data-testid="home-show-problems"
         @click="panels.problems.open = true">Voir les problèmes</v-btn>
     </div>

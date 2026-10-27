@@ -62,10 +62,3 @@ test('largeur réglable à la souris', async ({ page }) => {
   await page.mouse.up()
   await expect(page.getByRole('separator', { name: 'Largeur du panneau des modèles' })).toHaveAttribute('aria-valuenow', '440')
 })
-
-test('arbre : retrait réduit entre le modèle et ses fichiers', async ({ page }) => {
-  const model = (await page.getByTestId('model-cnig_PLU_2017').locator('.v-list-item-title').boundingBox())!
-  const table = (await page.getByTestId('expected-cnig_PLU_2017-DOC_URBA').locator('.v-list-item-title').boundingBox())!
-  // Avant : 56 px de retrait plus 32 px entre l'icône et le texte.
-  expect(table.x - model.x).toBeLessThan(50)
-})

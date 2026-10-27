@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiFolderMultipleOutline, mdiMagnify } from '@mdi/js'
-import { computed, nextTick, provide, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { groupByFamily, modelFamily } from '@core/labels'
 import type { LoadedModel } from '@core/model/types'
 import { countProblems } from '@core/validation/problems'
@@ -12,19 +12,8 @@ import ProblemCount from './ProblemCount.vue'
 
 const store = useProject()
 const filter = ref('')
+// Seules les familles se déplient ; un modèle est un lien vers sa vue.
 const opened = ref<string[]>([])
-// Accordéon (un seul modèle ouvert) : ouvrir un modèle referme les autres et leurs dossiers ;
-// les familles restent comme elles sont.
-const modelNames = computed(() => new Set(store.models.map((m) => m.name)))
-const modelOfKey = (key: string) => (modelNames.value.has(key) ? key : key.startsWith('famille:') ? undefined : key.slice(0, key.indexOf(':')))
-function setOpened(next: string[]) {
-  const added = next.filter((k) => modelNames.value.has(k) && !opened.value.includes(k)).at(-1)
-  opened.value = added ? next.filter((k) => { const m = modelOfKey(k); return m === undefined || m === added }) : next
-}
-// Ouverture d'un groupe par un descendant (dossier de fichiers attendus contenant l'élément affiché).
-provide('openTreeGroup', (key: string) => {
-  if (!opened.value.includes(key)) opened.value = [...opened.value, key]
-})
 
 const shown = computed(() => {
   const f = filter.value.trim().toLowerCase()
@@ -37,7 +26,7 @@ const familyKey = (family: string) => `famille:${family}`
 const familyCounts = (models: LoadedModel[]) =>
   countProblems((store.result?.problems ?? []).filter((p) => models.some((m) => m.name === p.model)))
 
-// Le filtre ouvre les familles concernées ; la sélection ouvre sa famille et son modèle.
+// Le filtre ouvre les familles concernées ; la sélection ouvre sa famille.
 watch(filter, (f) => {
   if (f?.trim()) opened.value = [...new Set([...opened.value, ...nodes.value.filter(isFamily).map((n) => familyKey(n.family))])]
 })
@@ -45,8 +34,8 @@ watch(
   () => route.value.file,
   (file) => {
     const model = file && modelOf(file)
-    if (model) setOpened([...new Set([...opened.value, familyKey(modelFamily(model)), model])])
-    // Élément affiché rendu visible dans l'arbre (012, R1), après ouverture des groupes.
+    if (model) opened.value = [...new Set([...opened.value, familyKey(modelFamily(model))])]
+    // Modèle affiché rendu visible dans l'arbre (012, R1), après ouverture de sa famille.
     nextTick(() => setTimeout(() => document.querySelector('[data-testid="models-panel"] .v-list-item--active')?.scrollIntoView({ block: 'nearest' }), 300))
   },
   { immediate: true },
@@ -59,8 +48,8 @@ watch(
       hide-details clearable class="ma-2" data-testid="model-filter" />
     <p class="text-caption px-4" aria-live="polite">{{ shown.length }} / {{ store.models.length }} modèles</p>
     <!-- Rôles : Vuetify donne « option » aux en-têtes de groupe, invalide hors d'une listbox. -->
-    <!-- Retrait de 12 px par niveau (famille › modèle › fichiers) au lieu de 56 px, icône à 10 px du texte. -->
-    <v-list :opened="opened" density="compact" nav role="none" class="tree" @update:opened="(v: unknown) => setOpened(v as string[])">
+    <!-- Retrait de 12 px par niveau (famille › modèle) au lieu de 56 px, icône à 10 px du texte. -->
+    <v-list :opened="opened" density="compact" nav role="none" class="tree" @update:opened="(v: unknown) => (opened = v as string[])">
       <template v-for="n in nodes" :key="isFamily(n) ? familyKey(n.family) : n.name">
         <v-list-group v-if="isFamily(n)" :value="familyKey(n.family)">
           <template #activator="{ props }">
@@ -70,9 +59,9 @@ watch(
               <template #append><ProblemCount :counts="familyCounts(n.models)" /></template>
             </v-list-item>
           </template>
-          <ModelNode v-for="m in n.models" :key="m.name" :model="m" :opened="opened.includes(m.name)" />
+          <ModelNode v-for="m in n.models" :key="m.name" :model="m" />
         </v-list-group>
-        <ModelNode v-else :model="n" :opened="opened.includes(n.name)" />
+        <ModelNode v-else :model="n" />
       </template>
     </v-list>
   </nav>

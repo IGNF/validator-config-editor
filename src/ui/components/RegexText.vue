@@ -2,18 +2,19 @@
 import { computed } from 'vue'
 import { useProject } from '../stores/project'
 
-// Regex affichée avec ses variables (feature 010) ; regex complète au survol, variables
-// facultatives (_OPT) en jaune comme dans le GpU.
+// Regex affichée avec ses variables (feature 010) ; regex complète au survol. Une variable
+// s'affiche par son nom seul, sans chevrons ; facultative (_OPT), elle est en jaune sans le suffixe.
 const props = defineProps<{ value: string | undefined; model?: string }>()
 const store = useProject()
 const segments = computed(() => store.regexSegments(props.value ?? '', props.model))
+const label = (s: { text: string; variable?: string }) => (s.variable ? s.variable.replace(/_OPT$/, '') : s.text)
 const display = computed(() => segments.value.map((s) => s.text).join(''))
 </script>
 
 <template>
   <code class="regex" :title="display !== value ? value : undefined" data-testid="regex"><template v-for="(s, i) in segments" :key="i"><span
     v-if="s.variable" class="variable" :class="{ optional: s.optional }" :title="`${s.variable} : ${s.regex}${s.optional ? ' (facultatif)' : ''}`"
-    :data-testid="s.optional ? 'variable-optional' : 'variable'">{{ s.text }}</span><template v-else>{{ s.text }}</template></template></code>
+    :data-testid="s.optional ? 'variable-optional' : 'variable'">{{ label(s) }}</span><template v-else>{{ s.text }}</template></template></code>
 </template>
 
 <style scoped>

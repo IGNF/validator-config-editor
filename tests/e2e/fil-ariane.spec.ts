@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 test('table et colonne désignée : chaque niveau mène à sa vue', async ({ page }) => {
   await page.goto('./#/cnig_PLU_2017/types/ZONE_URBA.json?p=%2Fcolumns%2F7')
   const crumbs = page.getByTestId('breadcrumbs')
-  await expect(crumbs.getByRole('listitem')).toHaveText(['Configuration', 'cnig_PLU', 'cnig_PLU_2017', 'Table ZONE_URBA', 'Colonne TYPEZONE'])
+  await expect(crumbs.getByRole('listitem')).toHaveText(['Configuration', 'cnig_PLU_2017', 'Table ZONE_URBA', 'Colonne TYPEZONE'])
   await expect(crumbs.locator('[aria-current="page"]')).toHaveText('Colonne TYPEZONE')
   await crumbs.getByRole('link', { name: 'Table ZONE_URBA' }).click()
   await expect(page).toHaveURL(/#\/cnig_PLU_2017\/types\/ZONE_URBA\.json$/)

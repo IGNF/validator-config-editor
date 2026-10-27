@@ -41,7 +41,7 @@ test('synthèse du modèle et lien vers ses problèmes', async ({ page }) => {
 test('libellés métier et badge de problème sur la colonne', async ({ page }) => {
   await page.goto(`${server.url}#/cnig_PLU_2017/files.json`)
   await page.getByTestId('model-tab-files').click()
-  await expect(page.getByTestId('file-ZONE_URBA')).toContainText('Table')
+  await expect(page.getByTestId('file-ZONE_URBA').getByTestId('file-type-icon')).toHaveAttribute('aria-label', 'Table')
   await expect(page.getByTestId('file-ZONE_URBA')).toContainText('Obligatoire')
   await page.goto(`${server.url}#/${ZONE_URBA}`)
   const column = page.getByTestId('column-TYPEZONE')
