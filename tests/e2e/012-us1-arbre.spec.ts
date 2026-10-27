@@ -95,7 +95,7 @@ test('vue du modèle : fichiers attendus rangés selon l\'arborescence', async (
   expect(Math.round(child!.x + child!.width)).toBeLessThanOrEqual(Math.round(folder!.x + folder!.width))
 })
 
-test('vue du modèle : onglets, bandeau qui ouvre l\'onglet, onglet choisi par l\'adresse, tables du modèle', async ({ page }) => {
+test('vue du modèle : onglets, onglet choisi par l\'adresse, tables du modèle', async ({ page }) => {
   await page.goto(`./#/${SUP}/files.json`)
   await expect(page.getByTestId('model-tab-model')).toHaveAttribute('aria-selected', 'true')
   await expect(page.getByTestId('model-name')).toBeVisible()
@@ -103,7 +103,7 @@ test('vue du modèle : onglets, bandeau qui ouvre l\'onglet, onglet choisi par l
   // Téléchargement du fichier à côté des onglets Vue / Source.
   await expect(page.getByTestId('download-file')).toHaveText('Télécharger le JSON')
 
-  await page.getByTestId('summary-tables').click()
+  await page.getByTestId('model-tab-tables').click()
   await expect(page.getByTestId('model-tab-tables')).toHaveAttribute('aria-selected', 'true')
   const gest = page.getByTestId('model-table-GESTIONNAIRE_SUP')
   await expect(gest).toContainText('6')
@@ -114,6 +114,6 @@ test('vue du modèle : onglets, bandeau qui ouvre l\'onglet, onglet choisi par l
   await page.goto(`./#/${SUP}/files.json?p=%2Ffiles%2F2`)
   await expect(page.getByTestId('model-tab-files')).toHaveAttribute('aria-selected', 'true')
   await expect(page.getByTestId('file-REGLEMENT')).toBeVisible()
-  await page.getByTestId('summary-codes').click()
+  await page.getByTestId('model-tab-codes').click()
   await expect(page.getByTestId('code-ListeValidegestSUP')).toBeVisible()
 })

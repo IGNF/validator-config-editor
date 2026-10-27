@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircle, mdiAlert } from '@mdi/js'
+import { mdiAlert, mdiAlertCircle, mdiLightbulbOnOutline } from '@mdi/js'
 import { computed } from 'vue'
 import { describeLocation } from '@core/validation/location'
 import { CATALOG } from '@core/validation/messages'
@@ -23,16 +23,20 @@ const current = computed(() => route.value.file === props.problem.file && route.
   <div class="problem" :class="[problem.severity, { current }]">
     <a :href="href(problem.file, problem.pointer)" class="link" :data-testid="`problem-${problem.code}`">
       <span class="head">
-        <v-icon :icon="isError ? mdiAlertCircle : mdiAlert" size="small" :color="isError ? 'error' : 'warning'" aria-hidden="true" />
-        <span class="severity">{{ isError ? 'Erreur' : 'Avertissement' }}</span>
-        <strong>{{ entry.title }}</strong>
+        <span class="severity">
+          <v-icon :icon="isError ? mdiAlertCircle : mdiAlert" size="x-small" aria-hidden="true" />
+          {{ isError ? 'Erreur' : 'Avertissement' }}
+        </span>
+        <strong class="title">{{ entry.title }}</strong>
       </span>
       <span v-if="where" class="where">{{ where }}</span>
-      <span>{{ problem.message }}</span>
+      <span class="message">{{ problem.message }}</span>
     </a>
-    <span class="hint">{{ entry.hint }}</span>
-    <span class="code">{{ problem.code }}</span>
-    <slot />
+    <span class="hint"><v-icon :icon="mdiLightbulbOnOutline" size="small" aria-hidden="true" /><span>{{ entry.hint }}</span></span>
+    <div class="foot">
+      <span class="code">{{ problem.code }}</span>
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -40,53 +44,101 @@ const current = computed(() => route.value.file === props.problem.file && route.
 .problem {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 6px 8px;
-  margin: 4px 0;
+  gap: 4px;
+  padding: 8px 10px;
+  margin: 6px 0;
+  border: 1px solid rgb(var(--v-theme-divider));
   border-left: 4px solid;
-  border-radius: 4px;
-  font-size: 0.85rem;
+  border-radius: 6px;
+  background: rgb(var(--v-theme-surface));
+  font-size: 0.875rem;
   word-break: break-word;
 }
 .problem.error {
-  border-color: rgb(var(--v-theme-error));
+  border-left-color: rgb(var(--v-theme-error));
 }
 .problem.warning {
-  border-color: rgb(var(--v-theme-warning));
+  border-left-color: rgb(var(--v-theme-warning));
 }
 .problem:hover,
 .problem.current,
 .problem:focus-within {
-  background: rgba(var(--v-theme-on-surface), 0.06);
+  box-shadow: 0 0 0 2px rgba(var(--v-theme-primary), 0.35);
 }
 .link {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   color: inherit;
   text-decoration: none;
 }
 .head {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 .severity {
-  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 7px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
+.error .severity {
+  color: #8c1d18;
+  background: #fde7e5;
+}
+.warning .severity {
+  color: #7a4100;
+  background: #fff0d6;
+}
+.title {
+  font-size: 0.95rem;
+}
 .where {
-  font-weight: 500;
+  font-weight: 600;
+  color: rgb(var(--v-theme-secondary));
 }
 .hint {
-  font-style: italic;
-  opacity: 0.85;
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: rgb(var(--v-theme-surface-light));
+  color: rgb(var(--v-theme-on-surface));
+}
+.hint .v-icon {
+  color: rgb(var(--v-theme-primary));
+  flex: none;
+}
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 .code {
-  font-family: monospace;
-  font-size: 0.75rem;
-  opacity: 0.7;
+  padding: 0 6px;
+  border: 1px solid rgb(var(--v-theme-divider));
+  border-radius: 4px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: rgb(var(--v-theme-secondary));
+}
+</style>
+
+<style>
+.v-theme--dark .problem.error .severity {
+  color: #ffb4ab;
+  background: rgba(255, 180, 171, 0.14);
+}
+.v-theme--dark .problem.warning .severity {
+  color: #ffcc80;
+  background: rgba(255, 204, 128, 0.14);
 }
 </style>

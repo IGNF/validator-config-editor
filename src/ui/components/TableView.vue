@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiDelete, mdiPencil, mdiPlus } from '@mdi/js'
+import { mdiDelete, mdiPencil, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { setAt } from '@core/edit/pointer'
 import {
-  addColumn, addListItem, moveColumn, parseEnum, removeColumn, removeListItem, setConstraint, setListItem, setOrRemove, type TableList,
+  addColumn, addListItem, parseEnum, removeColumn, removeListItem, setConstraint, setListItem, setOrRemove, type TableList,
 } from '@core/edit/operations'
 import { columnTypeFamily } from '@core/labels'
 import { resolvePath } from '@core/model/paths'
@@ -98,7 +98,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
   <FileFrame :title="`Table ${table?.name || baseName(file)}`" :file="file" :source="file">
     <NotConformant v-if="!table" />
     <template v-else>
-      <div class="d-flex flex-wrap ga-4 mb-2" data-pointer="">
+      <div class="form-grid" data-pointer="">
         <v-text-field label="Nom" :model-value="table.name" density="compact" variant="outlined" class="field" data-testid="table-name"
           @update:model-value="(v: string) => setProp('/name', v, true)" />
         <v-text-field label="Titre" :model-value="table.title" density="compact" variant="outlined" class="field"
@@ -124,7 +124,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <div class="d-flex flex-wrap ga-4">
+            <div class="form-grid">
               <v-text-field label="Nom" :model-value="c.name" density="compact" variant="outlined" class="field" data-testid="column-name"
                 @update:model-value="(v: string) => setProp(pointer('columns', i, 'name'), v, true)" />
               <v-text-field label="Titre" :model-value="c.title" density="compact" variant="outlined" class="field"
@@ -134,7 +134,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             </div>
             <v-textarea label="Description" :model-value="c.description" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => setProp(pointer('columns', i, 'description'), v)" />
-            <div class="d-flex flex-wrap ga-4">
+            <div class="d-flex flex-wrap ga-4 checks">
               <v-checkbox label="Valeur obligatoire" :model-value="c.constraints?.required ?? false" density="compact" hide-details
                 @update:model-value="(v: boolean | null) => edit((t) => setConstraint(t, i, 'required', !!v))" />
               <v-checkbox label="Colonne obligatoire" :model-value="c.constraints?.presenceRequired ?? false" density="compact" hide-details
@@ -142,7 +142,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <v-checkbox label="Unique" :model-value="c.constraints?.unique ?? false" density="compact" hide-details
                 @update:model-value="(v: boolean | null) => edit((t) => setConstraint(t, i, 'unique', !!v))" />
             </div>
-            <div class="d-flex flex-wrap ga-4 mt-2">
+            <div class="form-grid">
               <v-text-field label="Longueur minimale" type="number" :model-value="c.constraints?.minLength" density="compact" variant="outlined" class="number"
                 @update:model-value="(v: string) => setNumber(i, 'minLength', v)" />
               <v-text-field label="Longueur maximale" type="number" :model-value="c.constraints?.maxLength" density="compact" variant="outlined" class="number"
@@ -156,8 +156,6 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             <v-textarea label="Valeurs autorisées (une par ligne)" :model-value="(c.constraints?.enum ?? []).join('\n')" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enum', parseEnum(v, c.constraints?.enum)), pointer('columns', i, 'enum'))" />
             <div class="d-flex flex-wrap ga-2">
-              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="edit((t) => moveColumn(t, i, i - 1))">Monter</v-btn>
-              <v-btn v-if="!store.readOnly" :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === table.columns.length - 1" @click="edit((t) => moveColumn(t, i, i + 1))">Descendre</v-btn>
               <EquivalentsDialog :source="{ kind: 'column', file, pointer: pointer('columns', i) }" :label="`${table.name}.${c.name}`" />
               <v-spacer />
               <v-btn v-if="!store.readOnly" :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-column" @click="edit((t) => removeColumn(t, i))">Supprimer la colonne</v-btn>
@@ -205,11 +203,11 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
   font-weight: 600;
 }
 .field {
-  min-width: 16rem;
+  min-width: 0;
   flex: 1 1 16rem;
 }
 .number {
-  max-width: 12rem;
+  min-width: 0;
 }
 .mono :deep(input) {
   font-family: monospace;

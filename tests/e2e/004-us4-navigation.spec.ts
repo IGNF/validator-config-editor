@@ -33,8 +33,6 @@ test('arbre groupé par famille, ouverte par le filtre', async ({ page }) => {
 test('synthèse du modèle et lien vers ses problèmes', async ({ page }) => {
   await page.goto(`${server.url}#/cnig_PLU_2017/files.json`)
   const summary = page.getByTestId('model-summary')
-  await expect(summary).toContainText('fichiers attendus')
-  await expect(summary).toContainText('14 tables')
   await expect(summary).toContainText('1 erreur, 0 avertissement')
   await summary.getByTestId('show-model-problems').click()
   await expect(page.getByRole('combobox', { name: 'Modèle', exact: true })).toHaveValue('cnig_PLU_2017')

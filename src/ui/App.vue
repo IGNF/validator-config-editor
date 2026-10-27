@@ -25,7 +25,9 @@ const online = import.meta.env.MODE === 'pages'
 // Site en lecture seule produit par `vce site` (013) : instantané statique, champs en lecture seule.
 const site = isSite()
 const siteSource = site ? new SiteSource() : undefined
-const READ_ONLY = { VTextField: { readonly: true }, VTextarea: { readonly: true }, VSelect: { readonly: true }, VCombobox: { readonly: true }, VCheckbox: { readonly: true } }
+// Champs : pas d'espace réservé sous un champ sans message ; en lecture seule (013), non modifiables.
+const FIELDS = { VTextField: { hideDetails: 'auto' }, VTextarea: { hideDetails: 'auto' }, VSelect: { hideDetails: 'auto' }, VCombobox: { hideDetails: 'auto' } }
+const READ_ONLY = { VTextField: { hideDetails: 'auto', readonly: true }, VTextarea: { hideDetails: 'auto', readonly: true }, VSelect: { hideDetails: 'auto', readonly: true }, VCombobox: { hideDetails: 'auto', readonly: true }, VCheckbox: { readonly: true } }
 const showHome = ref(false)
 watch(() => store.session, () => (showHome.value = false))
 
@@ -119,7 +121,7 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
         <strong>Lecture seule</strong> — pour modifier cette configuration, ouvrez son dépôt avec <code>vce serve</code> ou l'éditeur en ligne.
         <span v-if="siteSource?.version" class="text-medium-emphasis"> Éditeur v{{ siteSource.version }}.</span>
       </v-alert>
-      <v-defaults-provider :defaults="store.readOnly ? READ_ONLY : undefined">
+      <v-defaults-provider :defaults="store.readOnly ? READ_ONLY : FIELDS">
       <v-container fluid>
         <v-alert v-if="store.error" type="error" class="mb-4">{{ store.error }}</v-alert>
         <v-progress-linear v-if="store.loading && !store.result" indeterminate aria-label="Chargement de la configuration" />
