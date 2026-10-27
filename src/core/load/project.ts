@@ -49,13 +49,12 @@ export async function loadProject(fs: ConfigFs): Promise<LoadResult> {
     }
 
     const isTable = rel.startsWith('types/') && rel.endsWith('.json')
-    if (rel !== 'files.json' && rel !== 'gpu.json' && !isTable) return
+    if (rel !== 'files.json' && !isTable) return
     const file: JsonFile = { path }
     const r = parseJson(text)
     if (r.ok) file.data = r.value
     else problems.push(problem('ERR-JSON-SYNTAX', name, path, undefined, { line: r.line, column: r.column, detail: r.detail }))
     if (rel === 'files.json') model.document = file
-    else if (rel === 'gpu.json') model.gpu = file
     else model.tables.set(path, file)
   })
 

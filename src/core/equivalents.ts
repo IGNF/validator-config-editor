@@ -1,6 +1,6 @@
 // Éléments équivalents de plusieurs modèles et modification en série (feature 006, plan R1–R5) :
 // colonnes de même nom dans des tables équivalentes, fichiers attendus et déclarations de listes
-// de même nom. Seule la propriété choisie est recopiée ; ni `id` ni `parent` ne sont touchés.
+// de même nom. Seule la propriété choisie est recopiée ; les `id` ne sont pas touchés.
 import { getAt } from './edit/pointer'
 import { setOrRemove } from './edit/operations'
 import { dataOf, type FileChange, type Session } from './edit/session'

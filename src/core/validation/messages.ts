@@ -131,24 +131,9 @@ export const CATALOG = {
     hint: 'L\'import dans le GpU exige un identifiant pour chaque objet : en attribuer un.',
     message: (p) => `${s(p, 'kind').replace(/^./, (c) => c.toUpperCase())} sans identifiant (obligatoire pour l'import dans le GpU)`,
   },
-  'ERR-GPU-INHERITANCE': {
-    severity: 'error',
-    title: 'Héritage non supporté',
-    hint: 'L\'import dans le GpU refuse l\'héritage : retirer « parent » de files.json, ou « parent_id » et « abstract » de gpu.json.',
-    message: (p) => `Héritage dans ${s(p, 'where')} : refusé par l'import dans le GpU`,
-  },
-  'ERR-GPU-ORPHAN-ID': {
-    severity: 'error',
-    title: 'Surcharge GpU orpheline',
-    hint: 'L\'objet surchargé n\'existe plus, ce qui fait échouer l\'import dans le GpU : retirer la surcharge de gpu.json.',
-    message: (p) => `gpu.json : identifiant ${s(p, 'id')} sans objet correspondant`,
-  },
-  'WARN-GPU-ORPHAN-ID': {
-    severity: 'warning',
-    title: 'Surcharge GpU orpheline',
-    hint: 'L\'objet surchargé n\'existe plus : retirer la surcharge de gpu.json.',
-    message: (p) => `gpu.json : identifiant ${s(p, 'id')} sans objet correspondant`,
-  },
+
+
+
   'WARN-CODE-NAME-FILE': {
     severity: 'warning',
     title: 'Nom de liste différent de son fichier',

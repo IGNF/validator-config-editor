@@ -23,8 +23,7 @@ const gpuConfig = (edit: (files: Map<string, string>) => void = () => {}, withVa
   return files
 }
 const problems = async (files: Map<string, string>) => (await checkConfig(memoryFs(files))).problems
-// Changer ou retirer un id rend orpheline la surcharge gpu.json qui le visait : ignorée ici.
-const codes = async (files: Map<string, string>) => (await problems(files)).map((p) => p.code).filter((c) => !c.endsWith('GPU-ORPHAN-ID'))
+const codes = async (files: Map<string, string>) => (await problems(files)).map((p) => p.code)
 const json = (files: Map<string, string>, path: string) => JSON.parse(files.get(path)!) as Record<string, any>
 
 describe('configuration GpU (variables.json)', () => {
@@ -69,23 +68,6 @@ describe('configuration GpU (variables.json)', () => {
     expect(found.filter((p) => p.code === 'ERR-GPU-ID-MISSING').map((p) => `${p.file} ${p.pointer}`).sort()).toEqual(
       [`${PLU}/files.json `, `${PLU}/files.json /codes/0`, `${ZONE_URBA} `, `${ZONE_URBA} /columns/3`].sort(),
     )
-  })
-
-  it('héritage : parent dans files.json, parent_id ou abstract dans gpu.json', async () => {
-    const found = await problems(gpuConfig((f) => {
-      editJson(f, `${PLU}/files.json`, (d) => { d.parent = { name: 'cnig_PLU_XXX' } })
-      editJson(f, `${PLU}/gpu.json`, (d) => {
-        const [id] = Object.keys(d.validator_file_model)
-        d.validator_file_model[id!].parent_id = 'abc'
-      })
-    }))
-    expect(found.filter((p) => p.code === 'ERR-GPU-INHERITANCE').map((p) => p.file).sort()).toEqual([`${PLU}/files.json`, `${PLU}/gpu.json`])
-  })
-
-  it('surcharge orpheline : erreur au lieu d\'un avertissement', async () => {
-    const edit = (f: Map<string, string>) => editJson(f, `${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } })
-    expect((await problems(gpuConfig(edit))).map((p) => p.code)).toEqual(['ERR-GPU-ORPHAN-ID'])
-    expect((await problems(gpuConfig(edit, false))).map((p) => p.code)).toEqual(['WARN-GPU-ORPHAN-ID'])
   })
 
   it('sans variables.json : id facultatifs', async () => {

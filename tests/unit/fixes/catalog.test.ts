@@ -64,13 +64,6 @@ describe('corrections', () => {
     expect(codes(fix(s, 'ERR-ID-DUPLICATE').after)).not.toContain('ERR-ID-DUPLICATE')
   })
 
-  it('WARN-GPU-ORPHAN-ID : retire la surcharge', async () => {
-    const s = await broken((f) => editJson(f, `${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } }))
-    const { fixes, after } = fix(s, 'WARN-GPU-ORPHAN-ID')
-    expect(fixes[0]).toMatchObject({ label: 'Retirer cette surcharge de gpu.json', safe: true })
-    expect(codes(after)).toEqual([])
-  })
-
   it('WARN-UNREFERENCED-FILE : déclare une liste de codes', async () => {
     const s = await broken((f) => f.set(`${PLU}/codes/Orpheline.csv`, 'A\n1\n'))
     const { fixes, after } = fix(s, 'WARN-UNREFERENCED-FILE')
@@ -89,8 +82,7 @@ describe('corrections', () => {
     const s = await broken((f) => editJson(f, FILES, (d) => { d.codes = d.codes.filter((c: { name: string }) => c.name !== 'ListeTypezonePLU') }))
     const { fixes, after } = fix(s, 'ERR-FK-TARGET-LIST')
     expect(fixes[0]!.label).toBe('Déclarer la liste « ListeTypezonePLU » (codes/ListeTypezonePLU.csv) dans files.json')
-    // Reste la surcharge GpU de l'ancienne déclaration, devenue orpheline.
-    expect(codes(after)).toEqual(['WARN-GPU-ORPHAN-ID'])
+    expect(codes(after)).toEqual([])
   })
 
   it('ERR-FK-TARGET-LIST : copie la liste depuis un autre modèle, annulable en un pas', async () => {
@@ -105,9 +97,9 @@ describe('corrections', () => {
     })
     const { fixes, after } = fix(s, 'ERR-FK-TARGET-LIST')
     expect(fixes[0]!.label).toBe(`Copier la liste « ListeTypezonePLU » depuis ${PLU} et la déclarer`)
-    expect(codes(after)).toEqual(['WARN-GPU-ORPHAN-ID'])
+    expect(codes(after)).toEqual([])
     expect(after.texts.get(`${BIS}/codes/ListeTypezonePLU.csv`)).toBe(s.originals.get(`${PLU}/codes/ListeTypezonePLU.csv`))
-    expect(codes(undoEdit(after))).toEqual(['WARN-GPU-ORPHAN-ID', 'ERR-FK-TARGET-LIST'])
+    expect(codes(undoEdit(after))).toEqual(['ERR-FK-TARGET-LIST'])
   })
 
   it.each([
@@ -156,17 +148,17 @@ describe('corrections', () => {
 })
 
 describe('corrections groupées', () => {
-  const ORPHANS = ['0123456789abcdef0123456789abcde1', '0123456789abcdef0123456789abcde2', '0123456789abcdef0123456789abcde3']
+  const MODELS = ['GPU_MEC_2025', 'cnig_PLU_2017', 'cnig_SUP_A1_2016']
 
   it('corrige tous les problèmes d\'un code en un pas, défait par une annulation', async () => {
-    const s = await broken((f) => editJson(f, `${PLU}/gpu.json`, (d) => { for (const id of ORPHANS) d.validator_file_model[id] = { path: 'x' } }))
-    const problems = s.result.problems.filter((p) => p.code === 'WARN-GPU-ORPHAN-ID')
+    const s = await broken((f) => { for (const m of MODELS) editJson(f, `${m}/files.json`, (d) => { d.name = `${m}_autre` }) })
+    const problems = s.result.problems.filter((p) => p.code === 'WARN-MODEL-NAME')
     expect(problems).toHaveLength(3)
     expect(canFixAll(s, problems)).toBe(true)
     const after = fixAll(s, problems)!
     expect(codes(after)).toEqual([])
     expect(after.history.past).toHaveLength(1)
-    expect(codes(undoEdit(after))).toEqual(['WARN-GPU-ORPHAN-ID', 'WARN-GPU-ORPHAN-ID', 'WARN-GPU-ORPHAN-ID'])
+    expect(codes(undoEdit(after))).toEqual(['WARN-MODEL-NAME', 'WARN-MODEL-NAME', 'WARN-MODEL-NAME'])
   })
 
   it('enchaîne les corrections d\'un même texte (lignes CSV successives)', async () => {

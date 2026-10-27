@@ -17,7 +17,6 @@ for (const scheme of ['light', 'dark'] as const) {
     ['modèle', '#/cnig_PLU_2017/files.json', 'Modèle cnig_PLU_2017'],
     ['table', '#/cnig_PLU_2017/types/ZONE_URBA.json', 'Table ZONE_URBA'],
     ['liste de codes', '#/cnig_PLU_2017/codes/InformationUrbaType.csv', 'Liste de codes InformationUrbaType'],
-    ['surcharges GpU', '#/cnig_SUP_A1_2016/gpu.json', 'Surcharges GpU de cnig_SUP_A1_2016'],
     ['comparaison', '#/cnig_PLU_2017/?compare=GPU_MEC_2025', 'Comparaison de modèles'],
   ]) {
     test(`écran ${name} (${scheme === 'light' ? 'clair' : 'sombre'})`, async ({ page }) => {

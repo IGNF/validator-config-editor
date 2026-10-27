@@ -50,7 +50,7 @@ describe('checkNewName', () => {
 
   it('refuse un dossier sans files.json', async () => {
     const files = readConfig()
-    files.set('orphelin/gpu.json', '{}')
+    files.set('orphelin/notes.json', '{}')
     expect(checkNewName(await openSession(files), 'orphelin', 'L')).toMatch(/files\.json/)
   })
 })

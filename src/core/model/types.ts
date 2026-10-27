@@ -34,9 +34,6 @@ export interface DocumentModel {
   name: string
   title?: string
   description?: string
-  abstract?: boolean
-  /** Héritage GpU : ignoré par le validator et par l'éditeur, conservé tel quel. */
-  parent?: unknown
   files: FileModel[]
   codes?: StaticTable[]
   constraints?: DocumentConstraints
@@ -71,15 +68,6 @@ export interface TableModel {
   constraints?: { conditions?: string[]; foreignKeys?: string[] }
 }
 
-export type GpuSection =
-  | 'validator_document_model'
-  | 'validator_file_model'
-  | 'validator_feature_type'
-  | 'validator_attribute_type'
-  | 'validator_static_table'
-
-export type GpuFile = Partial<Record<GpuSection, Record<string, Record<string, string | null>>>>
-
 export interface Csv {
   header: string[]
   rows: string[][]
@@ -96,7 +84,6 @@ export interface LoadedModel {
   /** Nom du dossier. */
   name: string
   document?: JsonFile
-  gpu?: JsonFile
   /** Modèles de table (`types/**.json`), indexés par chemin relatif à la configuration. */
   tables: Map<string, JsonFile>
   /** Listes de codes CSV, indexées par chemin ; `csv` absent si illisible. */

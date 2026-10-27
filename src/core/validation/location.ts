@@ -1,6 +1,5 @@
 // Localisation lisible d'un problème (004, R8) : nom du fichier et de l'élément, déduits de la
 // donnée plutôt qu'un pointeur JSON.
-import { indexObjects } from '../model/objects'
 import type { Project } from '../model/types'
 import { parsePointer } from '../pointer'
 import type { Problem } from './problems'
@@ -14,17 +13,12 @@ export interface Location {
 
 const PROPERTIES: Record<string, string> = {
   id: 'identifiant', name: 'nom', title: 'titre', description: 'description', type: 'type', path: 'chemin',
-  mandatory: 'présence', tableModel: 'modèle de table', data: 'fichier', tables: 'tables', abstract: 'abstrait',
+  mandatory: 'présence', tableModel: 'modèle de table', data: 'fichier', tables: 'tables',
   folderName: 'nom de dossier', metadataSpecification: 'spécification des métadonnées', required: 'valeur obligatoire',
   presenceRequired: 'colonne obligatoire', unique: 'unicité', pattern: 'motif', minLength: 'longueur minimale',
   maxLength: 'longueur maximale', enum: 'valeurs autorisées', reference: 'référence', columns: 'colonnes', files: 'fichiers',
   codes: 'listes de codes', constraints: 'contraintes', foreignKeys: 'clés étrangères', conditions: 'conditions',
 }
-const SECTIONS: Record<string, string> = {
-  validator_document_model: 'du modèle', validator_file_model: 'de fichier', validator_feature_type: 'de table',
-  validator_attribute_type: 'de colonne', validator_static_table: 'de liste de codes',
-}
-
 type Raw = Record<string, unknown>
 const at = (data: unknown, key: string | number): unknown =>
   data !== null && typeof data === 'object' ? (data as Raw)[key as string] : undefined
@@ -40,7 +34,6 @@ function fileLabel(project: Project, problem: Problem): { label: string; data?: 
   const loaded = project.models.get(model)
   const base = rel.slice(rel.lastIndexOf('/') + 1)
   if (rel === '' || rel === 'files.json') return { label: `Modèle ${model}`, data: loaded?.document?.data }
-  if (rel === 'gpu.json') return { label: `Surcharges GpU de ${model}`, data: loaded?.gpu?.data }
   if (rel.startsWith('types/') && rel.endsWith('.json')) {
     const data = loaded?.tables.get(file)?.data
     return { label: `Table ${nameOf(data, base.replace(/\.json$/, ''))}`, data }
@@ -55,13 +48,7 @@ function element(project: Project, problem: Problem, data: unknown): string | un
   const rel = problem.file.slice(problem.file.indexOf('/') + 1)
   if (s.length === 0) return undefined
   if (rel.endsWith('.csv')) return `Ligne ${s[0]}`
-  if (rel === 'gpu.json') {
-    const [section, id] = s
-    const model = project.models.get(problem.model ?? '')
-    const object = model && id !== undefined ? indexObjects(model).get(id) : undefined
-    const what = object ? `${object.kind} ${object.label}` : `${(id ?? '').slice(0, 8)}…`
-    return `Surcharge ${SECTIONS[section ?? ''] ?? ''} ${what}`.replace(/\s+/g, ' ')
-  }
+
   const [head, index, ...rest] = s
   const i = Number(index)
   if (head === 'columns' && !Number.isNaN(i)) {

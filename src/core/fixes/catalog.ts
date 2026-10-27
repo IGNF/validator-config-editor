@@ -2,7 +2,7 @@
 // session, appliquées par `applyChanges` en un seul pas d'historique.
 import { allIds, applyInOneStep, dataOf, textOf, type FileChange, type Session } from '../edit/session'
 import { addCode, addTableFile, codeName } from '../edit/operations'
-import { getAt, removeAt, setAt } from '../edit/pointer'
+import { getAt, setAt } from '../edit/pointer'
 import { newId } from '../edit/ids'
 import { listNameOf, resolvePath } from '../model/paths'
 import { renameCodeList } from '../edit/codelists'
@@ -57,8 +57,6 @@ const BUILDERS: Partial<Record<Problem['code'], Builder>> = {
     { label: 'Attribuer un nouvel identifiant à cet objet', changes: [json(p.file, (d) => setAt(d, p.pointer!, newId(allIds(s))))], safe: true },
   ],
 
-  'WARN-GPU-ORPHAN-ID': (_s, p) => [{ label: 'Retirer cette surcharge de gpu.json', changes: [json(p.file, (d) => removeAt(d, p.pointer!))], safe: true }],
-  'ERR-GPU-ORPHAN-ID': (_s, p) => [{ label: 'Retirer cette surcharge de gpu.json', changes: [json(p.file, (d) => removeAt(d, p.pointer!))], safe: true }],
 
   'ERR-GPU-ID-MISSING': (s, p) => [
     { label: 'Attribuer un identifiant', changes: [json(p.file, (d) => setAt(d, `${p.pointer ?? ''}/id`, newId(allIds(s))))], safe: true },

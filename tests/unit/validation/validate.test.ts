@@ -30,13 +30,12 @@ function indexOf(files: Map<string, string>, path: string, list: string, name: s
 }
 
 describe('chargement', () => {
-  it('charge les modèles, tables, listes de codes et gpu.json des fixtures', async () => {
+  it('charge les modèles, tables et listes de codes des fixtures', async () => {
     const { project, problems } = await loadProject(memoryFs())
     expect(problems).toEqual([])
     expect([...project.models.keys()].sort()).toEqual(['GPU_MEC_2025', 'cnig_PLU_2017', 'cnig_SUP_A1_2016'])
     const plu = project.models.get(PLU)!
     expect(plu.document?.data).toMatchObject({ name: PLU })
-    expect(plu.gpu?.data).toBeDefined()
     expect(plu.tables.has(ZONE_URBA)).toBe(true)
     expect(plu.csvs.get(`${PLU}/codes/ListeEtatPLU.csv`)?.csv?.header).toEqual(['ETAT'])
   })
@@ -61,7 +60,7 @@ describe('codes de problème', () => {
     ['ERR-CSV-SYNTAX', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT\n"01\n'), { file: `${PLU}/codes/ListeEtatPLU.csv`, pointer: '/2' }],
     ['ERR-CSV-HEADER', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT,ETAT\n01,02\n'), { pointer: '/1' }],
     ['ERR-CSV-ROW-LENGTH', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT\n01\n02,03\n'), { pointer: '/3' }],
-    ['WARN-MODEL-NO-DOCUMENT', (f) => f.set('orphelin/gpu.json', '{}'), { model: 'orphelin', file: 'orphelin/' }],
+    ['WARN-MODEL-NO-DOCUMENT', (f) => f.set('orphelin/notes.json', '{}'), { model: 'orphelin', file: 'orphelin/' }],
     ['ERR-VARIABLES-FORMAT', (f) => f.set('variables.json', '{"variables": []}'), { model: null, file: 'variables.json' }],
     ['ERR-VARIABLES-DUPLICATE', (f) => f.set('variables.json', '{"variables": {"A": "[0-9]", "B": "[0-9]"}}'), { model: null, file: 'variables.json', pointer: '/variables/B' }],
     ['WARN-CODE-NAME-FILE', (f) => editJson(f, FILES, (d) => { d.codes.find((c: { name: string }) => c.name === 'ListeStypeinf').name = 'Stypeinf' }), { file: FILES, pointer: `/codes/${indexOf(readConfig(), FILES, 'codes', 'ListeStypeinf')}/name` }],
@@ -77,9 +76,6 @@ describe('codes de problème', () => {
     ['ERR-REFERENCE-TARGET', (f) => editJson(f, ZONE_URBA, (d) => { d.columns[0].constraints.reference = 'INCONNUE.ID' }), { pointer: '/columns/0/constraints/reference' }],
     ['ERR-ID-DUPLICATE', (f) => editJson(f, ZONE_URBA, (d) => { d.id = JSON.parse(f.get(`${PLU}/types/DOC_URBA.json`)!).id }), { pointer: '/id' }],
     ['ERR-GPU-ID-MISSING', (f) => { f.set('variables.json', VARIABLES); editJson(f, FILES, (d) => { delete d.codes[0].id }) }, { file: FILES, pointer: '/codes/0' }],
-    ['ERR-GPU-INHERITANCE', (f) => { f.set('variables.json', VARIABLES); editJson(f, FILES, (d) => { d.parent = { name: 'X' } }) }, { file: FILES, pointer: '/parent' }],
-    ['ERR-GPU-ORPHAN-ID', (f) => { f.set('variables.json', VARIABLES); editJson(f, `${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } }) }, { pointer: '/validator_file_model/0123456789abcdef0123456789abcdef' }],
-    ['WARN-GPU-ORPHAN-ID', (f) => editJson(f, `${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } }), { pointer: '/validator_file_model/0123456789abcdef0123456789abcdef' }],
     ['WARN-UNREFERENCED-FILE', (f) => f.set(`${PLU}/types/ORPHELINE.json`, f.get(ZONE_URBA)!.replace(/"ZONE_URBA"/g, '"ORPHELINE"')), { file: `${PLU}/types/ORPHELINE.json` }],
   ]
 

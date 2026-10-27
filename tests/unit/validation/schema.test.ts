@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { validateDocument, validateGpu, validateTable } from '@core/schemas/generated/validate.js'
+import { validateDocument, validateTable } from '@core/schemas/generated/validate.js'
 import { schemaProblems } from '@core/validation/schema'
 import { countProblems } from '@core/validation/problems'
 
@@ -29,12 +29,6 @@ describe('schemaProblems', () => {
     ])
   })
 
-  it('signale une section ou une clé gpu.json invalide', () => {
-    expect(messages(validateGpu, { inconnue: {} })).toEqual([' / : propriété « inconnue » non autorisée'])
-    expect(messages(validateGpu, { validator_file_model: { 'a/b': {} } })).toEqual([
-      '/validator_file_model/a~1b /validator_file_model/a~1b : clé « a/b » invalide (identifiant de 32 caractères alphanumériques attendu)',
-    ])
-  })
 })
 
 describe('countProblems', () => {

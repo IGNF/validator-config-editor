@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { validateDocument, validateGpu, validateTable, type SchemaValidator } from '@core/schemas/generated/validate.js'
+import { validateDocument, validateTable, type SchemaValidator } from '@core/schemas/generated/validate.js'
 
 const fixtures = join(import.meta.dirname, '../../fixtures/config')
 
@@ -15,7 +15,6 @@ function walk(dir: string): string[] {
 // Associe chaque fichier JSON de configuration au validateur de son schéma.
 function validatorFor(path: string): SchemaValidator | undefined {
   if (path.endsWith('/files.json')) return validateDocument
-  if (path.endsWith('/gpu.json')) return validateGpu
   if (/\/types\/[^/]+\.json$/.test(path)) return validateTable
   return undefined
 }
@@ -50,7 +49,6 @@ describe('JSON Schema', () => {
   it('acceptent les cas minimaux valides', () => {
     expect(validateDocument(document)).toBe(true)
     expect(validateTable(table)).toBe(true)
-    expect(validateGpu({ validator_file_model: { [id]: { path: 'x' } } })).toBe(true)
   })
 
   it('acceptent maxLength = -1 (pas de limite pour le validator)', () => {
@@ -79,9 +77,6 @@ describe('JSON Schema', () => {
     ['id mal formé', validateDocument, { ...document, id: 'abc' }, '/id'],
     ['code sans data', validateDocument, { ...document, codes: [{ id, name: 'Liste' }] }, '/codes/0'],
     ['fichier sans chemin', validateDocument, { ...document, files: [{ name: 'F', type: 'pdf' }] }, '/files/0'],
-    ['section gpu.json inconnue', validateGpu, { validator_inconnu: {} }, ''],
-    ['clé gpu.json mal formée', validateGpu, { validator_file_model: { 'pas-un-id': {} } }, '/validator_file_model'],
-    ['valeur gpu.json non textuelle', validateGpu, { validator_file_model: { [id]: { path: 1 } } }, `/validator_file_model/${id}/path`],
   ] as const)('refusent : %s', (_label, validate, data, instancePath) => {
     expect(validate(data)).toBe(false)
     expect(validate.errors?.map((e) => e.instancePath)).toContain(instancePath)

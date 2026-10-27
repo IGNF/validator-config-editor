@@ -42,15 +42,6 @@ test('affiche un modèle, suit le lien vers une table puis vers une liste de cod
   await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
 })
 
-test('rattache chaque surcharge GpU à son objet', async ({ page }) => {
-  await page.goto('./#/cnig_PLU_2017/gpu.json')
-  await expect(page.getByRole('heading', { name: 'Surcharges GpU de cnig_PLU_2017' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'colonne ZONE_URBA.LIB_IDZONE' })).toBeVisible()
-  await expect(page.getByText('objet inconnu')).toHaveCount(0)
-  await page.getByRole('main').getByRole('link', { name: 'table ZONE_URBA' }).first().click()
-  await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
-})
-
 test('affiche le contenu exact du fichier source', async ({ page }) => {
   await page.goto('./#/cnig_PLU_2017/types/ZONE_URBA.json')
   await page.getByRole('tab', { name: 'Source' }).click()

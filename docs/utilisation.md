@@ -54,11 +54,10 @@ vce check <dossier> [--format text|json] [--strict]
 
 Valide tous les modèles du dossier :
 
-- conformité de `files.json`, `types/*.json` et `gpu.json` à leur [JSON Schema](../src/core/schemas/) ;
+- conformité de `files.json` et `types/*.json` à leur [JSON Schema](../src/core/schemas/) ;
 - lisibilité des CSV de `codes/` (en-tête, nombre de colonnes) ;
 - références croisées : modèle de table de chaque fichier (`tableModel`, ou `./types/<name>.json`
-  par convention), fichiers des listes de codes, clés étrangères, `reference`, unicité des `id`,
-  `id` de `gpu.json`, fichiers non référencés.
+  par convention), fichiers des listes de codes, clés étrangères, `reference`, unicité des `id`, fichiers non référencés.
 
 Chaque problème est affiché sous la forme `<fichier>:<pointeur JSON> <CODE> <message>` (voir la
 [liste des codes](../specs/001-validation-globale/contracts/problem-codes.md)). `--format json`
@@ -171,7 +170,7 @@ le port, `--open` ouvre le navigateur). Il permet de :
 
 - filtrer et parcourir les modèles : sous chaque modèle, ses fichiers attendus (une table s'ouvre depuis son fichier) ; le modèle et l'élément affichés sont mis en évidence ; les listes de codes s'ouvrent depuis la vue du modèle (« Listes de codes (N) ») ;
 - consulter un modèle (propriétés, fichiers, listes de codes), une table (colonnes, contraintes,
-  clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant les liens
+  clés étrangères, conditions), une liste de codes, en suivant les liens
   entre eux ;
 - afficher le contenu exact de chaque fichier (onglet « Source ») ;
 - appliquer une modification de colonne, de fichier attendu ou de déclaration de liste aux
@@ -187,7 +186,7 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - consulter les problèmes (les mêmes que `vce check`), les filtrer par sévérité, code ou modèle,
   et aller d'un clic à l'élément concerné ;
 - corriger d'un clic les problèmes courants (« Corriger » dans le panneau des problèmes) :
-  surcharge GpU orpheline, liste non déclarée ou à copier depuis un autre modèle, identifiant en
+  liste non déclarée ou à copier depuis un autre modèle, identifiant en
   double, nom mal saisi, valeur CSV contenant une virgule… ;
 - modifier tables et modèles de document (annuler/rétablir), puis enregistrer les fichiers
   modifiés (« Enregistrer » ou Ctrl+S) : seuls ces fichiers sont réécrits, dans leur mise en forme

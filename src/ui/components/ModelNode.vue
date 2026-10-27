@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiFileDocumentOutline, mdiTune } from '@mdi/js'
+import { mdiFileDocumentOutline } from '@mdi/js'
 import { computed } from 'vue'
 import { fileTree } from '@core/model/file-tree'
 import type { LoadedModel } from '@core/model/types'
@@ -10,7 +10,7 @@ import FileTreeNode from './FileTreeNode.vue'
 import ProblemCount from './ProblemCount.vue'
 
 // Un modèle dans l'arbre (012, R1) : son document, ses fichiers attendus (une table s'ouvre depuis
-// son fichier), ses surcharges GpU. Les listes de codes s'ouvrent depuis la vue du modèle.
+// son fichier). Les listes de codes s'ouvrent depuis la vue du modèle.
 const props = defineProps<{ model: LoadedModel; opened: boolean }>()
 const store = useProject()
 
@@ -45,9 +45,6 @@ const expected = () => fileTree(expectedFiles())
       <v-list-subheader>Fichiers ({{ expectedFiles().length }})</v-list-subheader>
       <FileTreeNode v-for="node in expected()" :key="node.index" :node="node" :model="model.name" :model-path="modelPath()" />
     </template>
-    <v-list-item v-if="model.gpu" :href="href(model.gpu.path)" :active="route.file === model.gpu.path" :aria-current="route.file === model.gpu.path ? 'page' : undefined" :prepend-icon="mdiTune" :title="mark(model.gpu.path) + 'Surcharges GpU (gpu.json)'">
-      <template #append><ProblemCount :counts="store.countsByFile.get(model.gpu.path)" /></template>
-    </v-list-item>
   </v-list-group>
 </template>
 

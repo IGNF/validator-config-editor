@@ -6,7 +6,6 @@ Ces schémas (draft-07) décrivent le format **réel** des configurations IGNF/v
 |---|---|
 | `document.json` | `<modèle>/files.json` |
 | `table.json` | `<modèle>/types/*.json` |
-| `gpu.json` | `<modèle>/gpu.json` |
 
 ## Origine
 
@@ -23,10 +22,9 @@ Le code de validation est généré dans `generated/` par `npm run schemas` : ne
 
 ## Écarts avec les schémas du validator (`validator-core/src/main/resources/schema/`)
 
-- `Document.json` : ajout de `id`, `title`, `abstract`, `parent`, `codes`,
+- `Document.json` : ajout de `id`, `title`, `codes`,
   `constraints.folderName` / `metadataSpecification` (remplacent `regexp`), `id`/`title`/
   `description` des fichiers, `tables` des fichiers `multi_table`.
 - `Table.json` : ajout de `id`, `title`, `constraints.conditions` / `foreignKeys` au niveau de la
   table, `presenceRequired` et `reference` au niveau de la colonne ; type `Url` (et non `URL`)
   et types `Filename`, `MultiPoint`, `MultiLineString`, `MultiPolygon`.
-- `gpu.json` est propre au Géoportail de l'Urbanisme et ignoré par le validator.

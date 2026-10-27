@@ -136,7 +136,6 @@ function newCode() {
 <template>
   <FileFrame :title="`Modèle ${doc?.title || name}`" :file="path ?? `${name}/`" :source="path">
     <template #chips>
-      <v-chip v-if="doc?.abstract" size="small" color="secondary">abstrait</v-chip>
       <v-btn :prepend-icon="mdiFolderDownload" size="small" variant="tonal" data-testid="download-model" @click="store.download({ kind: 'model', model: name })">
         Télécharger le modèle
       </v-btn>
@@ -148,7 +147,6 @@ function newCode() {
 
     <template v-if="!loaded?.document">
       <p class="mb-2">Ce dossier ne contient pas de files.json.</p>
-      <p v-if="loaded?.gpu"><a :href="href(loaded.gpu.path)">Surcharges GpU (gpu.json)</a></p>
     </template>
 
     <NotConformant v-else-if="!doc" />

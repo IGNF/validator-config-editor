@@ -10,9 +10,9 @@ export interface FolderSelection {
 
 const ignored = (segment: string) => segment.startsWith('.') || segment === 'node_modules'
 
-// Fichier de modèle sous `prefix` : <prefix><modèle>/files.json ou gpu.json.
+// Fichier de modèle sous `prefix` : <prefix><modèle>/files.json.
 const hasModel = (paths: string[], prefix: string) =>
-  paths.some((p) => p.startsWith(prefix) && /^[^/]+\/(files|gpu)\.json$/.test(p.slice(prefix.length)))
+  paths.some((p) => p.startsWith(prefix) && /^[^/]+\/files\.json$/.test(p.slice(prefix.length)))
 
 /**
  * Retient les `*.json` et `*.csv` hors dossiers cachés et `node_modules/`, et choisit la racine :

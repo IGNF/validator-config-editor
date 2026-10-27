@@ -9,9 +9,9 @@ describe('selectFolder', () => {
   })
 
   it('utilise config/ quand le dossier choisi est un dépôt de configuration', () => {
-    const s = selectFolder(['depot/package.json', 'depot/config/m/files.json', 'depot/config/m/gpu.json', 'depot/config-backup/x.csv'])
+    const s = selectFolder(['depot/package.json', 'depot/config/m/files.json', 'depot/config/m/notes.json', 'depot/config-backup/x.csv'])
     expect(s.root).toBe('depot/config/')
-    expect([...s.files.entries()]).toEqual([['depot/config/m/files.json', 'm/files.json'], ['depot/config/m/gpu.json', 'm/gpu.json']])
+    expect([...s.files.entries()]).toEqual([['depot/config/m/files.json', 'm/files.json'], ['depot/config/m/notes.json', 'm/notes.json']])
   })
 
   it('ignore les dossiers cachés et node_modules', () => {

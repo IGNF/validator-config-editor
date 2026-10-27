@@ -13,4 +13,3 @@ export interface SchemaValidator {
 
 export const validateDocument: SchemaValidator
 export const validateTable: SchemaValidator
-export const validateGpu: SchemaValidator

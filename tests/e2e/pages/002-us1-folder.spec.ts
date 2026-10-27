@@ -60,7 +60,7 @@ test('aucune requête vers une autre origine', async ({ page }) => {
   })
   await open(page, FIXTURES)
   await expect(page.getByTestId('summary')).toBeVisible()
-  await page.goto('./#/cnig_PLU_2017/gpu.json')
+  await page.goto('./#/cnig_PLU_2017/types/ZONE_URBA.json')
   expect(remote).toEqual([])
 })
 

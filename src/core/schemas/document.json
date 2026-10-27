@@ -9,8 +9,6 @@
     "name": { "type": "string", "minLength": 1, "title": "Nom technique du modèle" },
     "title": { "type": "string" },
     "description": { "type": "string" },
-    "abstract": { "type": "boolean" },
-    "parent": { "title": "Modèle parent (héritage GpU), ignoré par le validator et par l'éditeur" },
     "files": { "type": "array", "items": { "$ref": "#/definitions/FileModel" } },
     "codes": { "type": "array", "items": { "$ref": "#/definitions/StaticTable" } },
     "constraints": { "$ref": "#/definitions/DocumentConstraints" }

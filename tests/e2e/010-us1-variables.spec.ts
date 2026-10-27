@@ -1,4 +1,4 @@
-import { copyFileSync, readFileSync } from 'node:fs'
+import { copyFileSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { serveCopy, type TempServer } from './support/serve'
@@ -85,7 +85,7 @@ test('sans variables.json : regex affichées telles quelles', async ({ page }) =
 })
 
 test('variables.json invalide : problème signalé, regex telles quelles', async ({ page }) => {
-  copyFileSync(join(ROOT, 'tests/fixtures/config/cnig_PLU_2017/gpu.json'), join(server.dir, 'variables.json'))
+  writeFileSync(join(server.dir, 'variables.json'), '{ "validator_file_model": {} }')
   await page.goto(`${server.url}#/${ZONE_URBA}`)
   await expect(page.getByTestId('problem-ERR-VARIABLES-FORMAT')).toBeVisible()
   await expect(page.getByTestId('column-LIB_IDZONE').locator('.constraint', { hasText: 'motif' })).toHaveText('motif [AB0-9]{5}_PLU_[0-9]{8}_ZO[0-9]+')

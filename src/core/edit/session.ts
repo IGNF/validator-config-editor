@@ -45,7 +45,7 @@ export async function openSession(files: ReadonlyMap<string, string>): Promise<S
 
 function originalData(session: Session, path: string): unknown {
   const model = session.loaded.project.models.get(path.slice(0, path.indexOf('/')))
-  const file = model?.document?.path === path ? model.document : model?.gpu?.path === path ? model.gpu : model?.tables.get(path)
+  const file = model?.document?.path === path ? model.document : model?.tables.get(path)
   return file?.data
 }
 
@@ -209,7 +209,6 @@ export function allIds(session: Session): Set<string> {
   const ids = new Set<string>()
   for (const model of session.result.project.models.values()) {
     collectIds(model.document?.data, ids)
-    collectIds(model.gpu?.data, ids)
     for (const t of model.tables.values()) collectIds(t.data, ids)
   }
   return ids

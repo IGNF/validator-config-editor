@@ -30,14 +30,6 @@ describe('revalidation après édition', () => {
     expect(loaded.project.models.get('cnig_PLU_2017')!.document!.data).toBe(before)
   })
 
-  it('remplace aussi gpu.json, et refuse un fichier inconnu', async () => {
-    const loaded = await loadProject(memoryFs())
-    const project = withData(loaded.project, 'cnig_PLU_2017/gpu.json', { inconnue: {} })
-    expect(checkLoaded({ project, problems: [] }).problems.map((p) => p.code)).toContain('ERR-SCHEMA')
-    expect(() => withData(loaded.project, 'cnig_PLU_2017/codes/ListeEtatPLU.csv', {})).toThrow('inconnu')
-    expect(() => withData(loaded.project, 'absent/files.json', {})).toThrow('Modèle inconnu')
-  })
-
   it.skipIf(!process.env.VCE_CONFIG_DIR)('revalide la configuration complète en moins d\'1 s', async () => {
     const files = readConfig(process.env.VCE_CONFIG_DIR)
     const loaded = await loadProject(memoryFs(files))

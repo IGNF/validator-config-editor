@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { loadProject } from '@core/load/project'
-import { indexObjects } from '@core/model/objects'
 import { isUrl, resolvePath, tableModelRef } from '@core/model/paths'
-import { editJson, memoryFs, readConfig } from '../support/fixtures'
 
 describe('chemins', () => {
   it('résout un chemin relatif au modèle', () => {
@@ -23,26 +20,3 @@ describe('chemins', () => {
   })
 })
 
-describe('indexObjects', () => {
-  it('indexe modèle, fichiers, codes, tables et colonnes par id', async () => {
-    const { project } = await loadProject(memoryFs())
-    const plu = indexObjects(project.models.get('cnig_PLU_2017')!)
-    const zone = [...plu.values()].find((o) => o.kind === 'table' && o.label === 'ZONE_URBA')!
-    expect(zone).toMatchObject({ file: 'cnig_PLU_2017/types/ZONE_URBA.json', pointer: '' })
-    expect([...plu.values()].find((o) => o.label === 'ZONE_URBA.TYPEZONE')).toMatchObject({ kind: 'colonne', pointer: expect.stringMatching(/^\/columns\/\d+$/) })
-    expect([...plu.values()].find((o) => o.kind === 'liste de codes' && o.label === 'ListeEtatPLU')).toMatchObject({ pointer: expect.stringMatching(/^\/codes\/\d+$/) })
-    expect([...plu.values()].filter((o) => o.kind === 'modèle')).toMatchObject([{ label: 'cnig_PLU_2017', pointer: '' }])
-  })
-
-  it('tolère des données non conformes', async () => {
-    const files = readConfig()
-    editJson(files, 'cnig_PLU_2017/types/ZONE_URBA.json', (d) => {
-      d.columns = [null, { id: 'x' }]
-      delete d.name
-    })
-    files.set('cnig_PLU_2017/types/CASSEE.json', '[')
-    const { project } = await loadProject(memoryFs(files))
-    const index = indexObjects(project.models.get('cnig_PLU_2017')!)
-    expect(index.get('x')).toMatchObject({ kind: 'colonne', label: 'ZONE_URBA.2', pointer: '/columns/1' })
-  })
-})

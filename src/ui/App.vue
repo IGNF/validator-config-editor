@@ -4,7 +4,6 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
 import ConfigHome from './components/ConfigHome.vue'
 import CompareView from './components/CompareView.vue'
-import GpuView from './components/GpuView.vue'
 import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
@@ -72,7 +71,7 @@ function reload() {
   store.load()
 }
 
-const VIEWS = { model: ModelView, table: TableView, codes: CodeListView, gpu: GpuView, other: SourceView }
+const VIEWS = { model: ModelView, table: TableView, codes: CodeListView, other: SourceView }
 const view = computed(() => VIEWS[kindOf(route.value.file)])
 </script>
 

@@ -1,4 +1,4 @@
-import type { DocumentModel, GpuFile, LoadedModel, Project, TableModel } from '../model/types'
+import type { DocumentModel, LoadedModel, Project, TableModel } from '../model/types'
 import { isUrl, listNameOf, resolvePath, tableModelRef } from '../model/paths'
 import { pointer } from '../pointer'
 import { parseForeignKey } from './foreign-key'
@@ -10,42 +10,15 @@ export interface CheckedModel {
   document?: DocumentModel
   /** Tables conformes, indexées par chemin. */
   tables: Map<string, TableModel>
-  gpu?: GpuFile
-}
-
-// Tous les `id` (chaînes) portés par des objets, à toute profondeur.
-function collectIds(data: unknown, into: Set<string>): Set<string> {
-  if (Array.isArray(data)) for (const v of data) collectIds(v, into)
-  else if (data !== null && typeof data === 'object') {
-    for (const [k, v] of Object.entries(data)) {
-      if (k === 'id' && typeof v === 'string') into.add(v)
-      else collectIds(v, into)
-    }
-  }
-  return into
-}
-
-// Entrées de gpu.json qui définissent un objet propre au GpU (plan R10).
-function gpuDefinitions(gpu: GpuFile | undefined): string[] {
-  const out: string[] = []
-  for (const section of Object.values(gpu ?? {})) {
-    for (const [id, entry] of Object.entries(section ?? {})) {
-      if ('name' in entry || 'feature_type_id' in entry || 'document_model_id' in entry) out.push(id)
-    }
-  }
-  return out
 }
 
 class Checker {
   readonly out: Problem[] = []
   private readonly files: Set<string>
-  private readonly known = new Map<string, Set<string>>()
 
   constructor(
     private readonly project: Project,
     private readonly checked: Map<string, CheckedModel>,
-    /** Configuration GpU (010) : surcharge orpheline en erreur. */
-    private readonly gpuImport = false,
   ) {
     this.files = new Set([...project.models.values()].flatMap((m) => m.files))
   }
@@ -68,7 +41,6 @@ class Checker {
         if (candidate && !referenced.has(path)) this.out.push(problem('WARN-UNREFERENCED-FILE', name, path, undefined))
       }
     }
-    this.gpu(c)
   }
 
   // Références de files.json ; renvoie les fichiers référencés.
@@ -181,35 +153,8 @@ class Checker {
     const model = this.project.models.get(path.slice(0, path.indexOf('/')))
     return model?.csvs.get(path)?.csv?.header
   }
-
-  // `id` connus d'un modèle (plan R10) : objets du modèle et définitions de son gpu.json.
-  // L'héritage (`parent`, modèles abstraits) n'est pas géré.
-  private knownIds(name: string): Set<string> {
-    const cached = this.known.get(name)
-    if (cached) return cached
-    const known = new Set<string>()
-    const c = this.checked.get(name)
-    if (!c) return known
-    // Données brutes : une table non conforme à son schéma ne rend pas ses `id` orphelins.
-    collectIds(c.model.document?.data, known)
-    for (const t of c.model.tables.values()) collectIds(t.data, known)
-    for (const id of gpuDefinitions(c.gpu)) known.add(id)
-    this.known.set(name, known)
-    return known
-  }
-
-  private gpu(c: CheckedModel) {
-    if (!c.gpu) return
-    const name = c.model.name
-    const known = this.knownIds(name)
-    for (const [section, entries] of Object.entries(c.gpu)) {
-      for (const id of Object.keys(entries ?? {})) {
-        if (!known.has(id)) this.out.push(problem(this.gpuImport ? 'ERR-GPU-ORPHAN-ID' : 'WARN-GPU-ORPHAN-ID', name, `${name}/gpu.json`, pointer(section, id), { id }))
-      }
-    }
-  }
 }
 
-export function crossReferences(project: Project, checked: Map<string, CheckedModel>, gpuImport = false): Problem[] {
-  return new Checker(project, checked, gpuImport).run()
+export function crossReferences(project: Project, checked: Map<string, CheckedModel>): Problem[] {
+  return new Checker(project, checked).run()
 }

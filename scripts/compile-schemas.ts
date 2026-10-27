@@ -15,12 +15,11 @@ const ajv = new Ajv({
   code: { source: true, esm: true },
 })
 
-for (const name of ['document', 'table', 'gpu']) ajv.addSchema(read(`${name}.json`))
+for (const name of ['document', 'table']) ajv.addSchema(read(`${name}.json`))
 
 const code = standaloneCode(ajv, {
   validateDocument: 'document',
   validateTable: 'table',
-  validateGpu: 'gpu',
 })
 
 // En sortie ESM, Ajv laisse des `require(...)` vers ses helpers d'exécution : on les remplace

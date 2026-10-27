@@ -1,7 +1,7 @@
 import type { ConfigFs } from '../load/fs'
 import { loadProject, type LoadResult } from '../load/project'
-import type { DocumentModel, GpuFile, JsonFile, LoadedModel, Project, TableModel } from '../model/types'
-import { validateDocument, validateGpu, validateTable, type SchemaValidator } from '../schemas/generated/validate.js'
+import type { DocumentModel, JsonFile, LoadedModel, Project, TableModel } from '../model/types'
+import { validateDocument, validateTable, type SchemaValidator } from '../schemas/generated/validate.js'
 import { compareProblems, countProblems, type Problem } from './problems'
 import { crossReferences, type CheckedModel } from './refs'
 import { schemaProblems } from './schema'
@@ -29,14 +29,12 @@ export function validateProject(project: Project): { checked: Map<string, Checke
       const table = check<TableModel>(file, validateTable, model.name)
       if (table) c.tables.set(path, table)
     }
-    const gpu = check<GpuFile>(model.gpu, validateGpu, model.name)
-    if (gpu) c.gpu = gpu
     checked.set(model.name, c)
   }
 
   // Configuration GpU (variables.json présent) : règles de l'import (010, R3-R4).
   const gpu = project.variables !== undefined
-  problems.push(...crossReferences(project, checked, gpu))
+  problems.push(...crossReferences(project, checked))
   if (gpu) problems.push(...readVariables(project.variables!).problems, ...gpuImportProblems(checked))
   return { checked, problems }
 }
@@ -69,7 +67,6 @@ export function withData(project: Project, path: string, data: unknown): Project
   const file = { path, data }
   const copy: LoadedModel = { ...model }
   if (model.document?.path === path) copy.document = file
-  else if (model.gpu?.path === path) copy.gpu = file
   else if (model.tables.has(path)) copy.tables = new Map(model.tables).set(path, file)
   else throw new Error(`Fichier JSON inconnu : ${path}`)
   return { ...project, models: new Map(project.models).set(name, copy) }

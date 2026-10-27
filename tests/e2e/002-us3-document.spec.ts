@@ -59,9 +59,7 @@ test('déclare une liste de codes en choisissant un CSV de codes/', async ({ pag
   await page.getByTestId('add-code').click()
   await expect(page.getByTestId('code-ListeEtatPLU')).toBeVisible()
   await expect(page.getByTestId('problem-WARN-UNREFERENCED-FILE')).toHaveCount(0)
-  // Nouvelle déclaration, nouvel id : la surcharge GpU de l'ancienne devient orpheline (cas limite de la spec).
-  await expect(page.getByTestId('problems-count')).toHaveText('1 problème')
-  await expect(page.getByTestId('problem-WARN-GPU-ORPHAN-ID')).toBeVisible()
+  await expect(page.getByTestId('problems-count')).toHaveText('0 problème')
 })
 
 test('renommer un modèle : avertissement si le nom diffère du dossier', async ({ page }) => {

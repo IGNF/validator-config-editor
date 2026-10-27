@@ -21,18 +21,6 @@ async function fix(page: Page, code: string, option: string | RegExp) {
 
 test.afterEach(() => server.stop())
 
-test('retire une surcharge orpheline, puis annule', async ({ page }) => {
-  server = await serveCopy()
-  editJson(`${PLU}/gpu.json`, (d) => { d.validator_file_model['0123456789abcdef0123456789abcdef'] = { path: 'x' } })
-  await page.goto(server.url)
-  await expect(page.getByTestId('problems-count')).toHaveText('1 problème')
-  await fix(page, 'WARN-GPU-ORPHAN-ID', 'Retirer cette surcharge de gpu.json')
-  await expect(page.getByTestId('problems-count')).toHaveText('0 problème')
-  await expect(page.getByTestId('changed-count')).toHaveText('1 fichier(s) modifié(s)')
-  await page.getByTestId('undo').click()
-  await expect(page.getByTestId('problems-count')).toHaveText('1 problème')
-})
-
 test('copie une liste manquante depuis un autre modèle et l\'enregistre sur disque', async ({ page }) => {
   server = await serveCopy()
   cpSync(join(server.dir, PLU), join(server.dir, BIS), { recursive: true })

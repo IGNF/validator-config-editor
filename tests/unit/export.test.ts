@@ -34,14 +34,14 @@ describe('scopeFiles, portée modèle', () => {
     expect(scopeFiles(s, { kind: 'model', model: 'cnig_PLU_2017' })).toEqual(expected)
     // Pas de confusion avec un modèle dont le nom commence pareil.
     const bis = new Map(files)
-    bis.set('cnig_PLU_2017_bis/gpu.json', '{}')
+    bis.set('cnig_PLU_2017_bis/notes.json', '{}')
     expect(scopeFiles(await openSession(bis), { kind: 'model', model: 'cnig_PLU_2017' })).toEqual(expected)
   })
 
   it('dossier sans files.json : ses fichiers', async () => {
     const files = readConfig()
-    files.set('orphelin/gpu.json', '{}')
-    expect(scopeFiles(await openSession(files), { kind: 'model', model: 'orphelin' })).toEqual(['orphelin/gpu.json'])
+    files.set('orphelin/notes.json', '{}')
+    expect(scopeFiles(await openSession(files), { kind: 'model', model: 'orphelin' })).toEqual(['orphelin/notes.json'])
   })
 })
 
