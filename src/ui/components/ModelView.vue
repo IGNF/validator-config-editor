@@ -21,6 +21,7 @@ import ModelSummary from './ModelSummary.vue'
 import ProblemBadge from './ProblemBadge.vue'
 import ProblemCount from './ProblemCount.vue'
 import RegexText from './RegexText.vue'
+import RegexTester from './RegexTester.vue'
 import NotConformant from './NotConformant.vue'
 
 const props = defineProps<{ file: string }>()
@@ -180,6 +181,7 @@ function newCode() {
           <v-text-field label="Spécification des métadonnées" :model-value="doc.constraints?.metadataSpecification" density="compact" variant="outlined" class="field"
             data-testid="metadata-specification" @update:model-value="(v: string) => setProp('/constraints/metadataSpecification', v)" />
         </div>
+        <RegexTester :regex="doc.constraints?.folderName" :model="name" label="Tester un nom de dossier" />
       </section>
 
       <template v-if="modelTab === 'files'">
@@ -220,6 +222,7 @@ function newCode() {
               @update:model-value="(v: string) => setProp(pointer('files', i, 'path'), store.regexInput(v, name), true)">
               <template #message>Affichage : <RegexText :value="f.path" :model="name" /></template>
             </v-text-field>
+            <RegexTester :regex="f.path" :model="name" label="Tester un chemin (sans extension)" />
             <div v-if="f.type === 'table'" class="d-flex flex-wrap align-center ga-4">
               <v-combobox label="Modèle de table (vide : ./types/<nom>.json)" :items="tableChoices" :model-value="f.tableModel ?? null" density="compact" variant="outlined"
                 class="field" clearable data-testid="file-tableModel"

@@ -43,7 +43,9 @@ async function noEditing(page: Page) {
   for (const id of EDIT_CONTROLS) await expect(page.getByTestId(id), id).toHaveCount(0)
   // Champs du panneau principal : tous en lecture seule (les filtres des panneaux restent utilisables).
   // Les cases à cocher n'ont pas d'attribut readonly : vérifiées par un clic sans effet.
-  await expect(page.locator('main').locator('input:not([readonly]):not([type="hidden"]):not([type="checkbox"]), textarea:not([readonly])')).toHaveCount(0)
+  // Le champ « Tester un nom » reste utilisable : il ne modifie rien.
+  const editable = page.locator('main').locator('input:not([readonly]):not([type="hidden"]):not([type="checkbox"]), textarea:not([readonly])')
+  expect(await editable.evaluateAll((els) => els.filter((e) => !e.closest('[data-testid="regex-tester"]')).length)).toBe(0)
 }
 
 test('modèle, table, liste : lecture seule, bandeau, titre, aucune ressource distante', async ({ page }) => {

@@ -6,6 +6,7 @@ import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
 import { outgoingRefs, scopeFiles, type ExportScope } from '@core/export'
+import { testName } from '@core/regex-test'
 import { fromVariables, namesFor, readVariables, toSegments, toVariables, type Segment } from '@core/variables'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
@@ -107,6 +108,9 @@ export const useProject = defineStore('project', () => {
   /** Regex affichée en morceaux (variables en étiquettes, facultatives en jaune). */
   const regexSegments = (regex: string, model?: string): Segment[] =>
     variables.value ? toSegments(regex, variables.value, namesFor(dictionary.value?.aliases, model)) : regex ? [{ text: regex }] : []
+  /** Essai d'un nom contre une regex, variables du dictionnaire comprises (affichage de l'échec). */
+  const regexTest = (regex: string, sample: string, model?: string) =>
+    testName(regex, sample, variables.value ?? new Map(), namesFor(dictionary.value?.aliases, model))
   /** Regex saisie : les <NOM> de variables connues (ou leurs alias) sont remplacés par leur regex. */
   const regexInput = (text: string, model?: string) =>
     variables.value ? fromVariables(text, variables.value, namesFor(dictionary.value?.aliases, model)) : text
@@ -185,7 +189,7 @@ export const useProject = defineStore('project', () => {
   }
 
   return {
-    pending, notice, download, variables, regexDisplay, regexSegments, regexInput, regexHint, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
+    pending, notice, download, variables, regexDisplay, regexSegments, regexTest, regexInput, regexHint, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
     readOnly, source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

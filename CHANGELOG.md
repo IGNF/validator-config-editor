@@ -23,6 +23,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Essai d'un nom contre une regex (« Tester un nom ») sous le nom du dossier, le chemin des fichiers attendus et le motif des colonnes : accepté, ou refusé à partir de la première partie qui ne correspond plus (variable `<DATE>`, texte…). Disponible aussi sur le site en lecture seule.
 - Vue « Source » lisible : lignes numérotées en liens (`?l=<ligne>`), JSON et CSV colorés ; une erreur de syntaxe (JSON, CSV) ouvre la source à la ligne fautive, mise en évidence. Les problèmes de syntaxe portent leur numéro de ligne (`line`, aussi dans `vce check --format json`).
 - Fil d'Ariane au-dessus de chaque vue : configuration › famille › modèle › table ou liste › élément désigné (colonne, fichier, liste), chaque niveau menant à sa vue.
 - `vce site <dossier> <sortie> [--title] [--force]` : site statique en lecture seule de la configuration, pour GitHub Pages ou tout serveur statique. Il reprend l'interface livrée et un instantané de la configuration. Navigation, problèmes, comparaison, équivalents en lecture et téléchargements restent disponibles ; aucun champ n'est modifiable, un bandeau l'indique ; workflow GitHub Pages d'exemple dans `docs/utilisation.md` (#95).

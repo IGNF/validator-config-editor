@@ -16,6 +16,7 @@ import { useProject } from '../stores/project'
 import FileFrame from './FileFrame.vue'
 import ProblemBadge from './ProblemBadge.vue'
 import RegexText from './RegexText.vue'
+import RegexTester from './RegexTester.vue'
 import SqlText from './SqlText.vue'
 import EquivalentsDialog from './EquivalentsDialog.vue'
 import NotConformant from './NotConformant.vue'
@@ -153,6 +154,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <v-text-field label="Référence (TABLE.COLONNE)" :model-value="c.constraints?.reference" density="compact" variant="outlined" class="field"
                 data-testid="column-reference" @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'reference', v), pointer('columns', i, 'reference'))" />
             </div>
+            <RegexTester v-if="c.constraints?.pattern" :regex="c.constraints.pattern" :model="model" label="Tester une valeur" />
             <v-textarea label="Valeurs autorisées (une par ligne)" :model-value="(c.constraints?.enum ?? []).join('\n')" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enum', parseEnum(v, c.constraints?.enum)), pointer('columns', i, 'enum'))" />
             <div class="d-flex flex-wrap ga-2">
