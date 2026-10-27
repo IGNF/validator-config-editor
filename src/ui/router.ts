@@ -29,8 +29,8 @@ export function href(file: string, pointer?: string, line?: number): string {
   return `#/${path}${query.length ? `?${query.join('&')}` : ''}`
 }
 
-export function go(file: string, pointer?: string): void {
-  location.hash = href(file, pointer)
+export function go(file: string, pointer?: string, line?: number): void {
+  location.hash = href(file, pointer, line)
 }
 
 /** Adresse de la comparaison du modèle `model` avec la référence `reference` (vide : à choisir). */

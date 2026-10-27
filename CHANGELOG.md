@@ -23,6 +23,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Recherche dans toute la configuration (« Rechercher » dans l'en-tête, ou touche `/`) : modèles, fichiers attendus, tables, colonnes (nom, description, motif), listes de codes et leurs valeurs, identifiants ; chaque résultat ouvre l'élément trouvé.
 - Colonne visée par une clé étrangère vers une liste de codes : valeurs autorisées affichées dans son panneau (colonne de la clé, puis libellés ; 50 premières lignes), avec un lien vers la liste.
 - Essai d'un nom contre une regex (« Tester un nom ») sous le nom du dossier, le chemin des fichiers attendus et le motif des colonnes : accepté, ou refusé à partir de la première partie qui ne correspond plus (variable `<DATE>`, texte…). Disponible aussi sur le site en lecture seule.
 - Vue « Source » lisible : lignes numérotées en liens (`?l=<ligne>`), JSON et CSV colorés ; une erreur de syntaxe (JSON, CSV) ouvre la source à la ligne fautive, mise en évidence. Les problèmes de syntaxe portent leur numéro de ligne (`line`, aussi dans `vce check --format json`).

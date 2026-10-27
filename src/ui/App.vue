@@ -8,6 +8,7 @@ import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
 import ModelView from './components/ModelView.vue'
 import ProblemsPanel from './components/ProblemsPanel.vue'
+import SearchDialog from './components/SearchDialog.vue'
 import ResizeHandle from './components/ResizeHandle.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
@@ -107,6 +108,7 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
       <v-btn v-if="store.result && !store.readOnly" :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <span v-if="store.changed.size" class="text-body-2 mx-2" data-testid="changed-count">{{ store.changed.size }} fichier(s) modifié(s)</span>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
+      <SearchDialog v-if="store.result" />
       <v-btn v-if="store.result" :prepend-icon="mdiDownload" data-testid="download-zip" @click="store.download({ kind: 'all' })">Télécharger (ZIP)</v-btn>
       <v-btn v-if="online && store.result" :prepend-icon="mdiFolderOpen" data-testid="other-folder" @click="showHome = true">Ouvrir un dossier</v-btn>
       <v-btn v-if="!online && !site" :prepend-icon="mdiRefresh" :loading="store.loading" data-testid="reload" @click="reload">Recharger</v-btn>
