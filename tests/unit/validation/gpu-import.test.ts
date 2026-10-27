@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { applyChanges, openSession } from '@core/edit/session'
+import { codeLists, copyCodeList, createCodeList } from '@core/edit/codelists'
+import { addCode, addColumn, addFile } from '@core/edit/operations'
+import { allIds, applyChanges, edit, openSession, type Session } from '@core/edit/session'
 import { fixesFor } from '@core/fixes/catalog'
 import { checkConfig } from '@core/validation/validate'
 import { editJson, FIXTURES, memoryFs, readConfig } from '../../support/fixtures'
@@ -94,5 +96,26 @@ describe('configuration GpU (variables.json)', () => {
     for (const name of ['dgpr', 'naviforest', 'ppr']) {
       expect((await problems(readConfig(join(FIXTURES, '../known', name)))).filter((p) => p.severity === 'error')).toEqual([])
     }
+  })
+})
+
+// US3 : les créations de l'éditeur ont un id absent de toute la configuration (FR-004).
+describe('identifiants des créations sur une configuration GpU', () => {
+  const created = (before: Set<string>, after: Session) => [...allIds(after)].filter((id) => !before.has(id))
+
+  it.each([
+    ['copie de liste depuis un autre modèle', (s: Session) => applyChanges(s, copyCodeList(s, codeLists(s).find((l) => l.model === PLU)!, MEC, 'ListeCopiee'))],
+    ['création de liste', (s: Session) => applyChanges(s, createCodeList(s, PLU, 'ListeNouvelle', ['CODE', 'LIBELLE']))],
+    ['ajout d\'un fichier attendu', (s: Session) => edit(s, `${PLU}/files.json`, (d) => addFile(d, allIds(s)))],
+    ['ajout d\'une colonne', (s: Session) => edit(s, ZONE_URBA, (d) => addColumn(d, allIds(s)))],
+    ['déclaration d\'une liste existante', (s: Session) => edit(s, `${MEC}/files.json`, (d) => addCode(d, allIds(s), '../cnig_PLU_2017/codes/ListeEtatPLU.csv', 'ListeEtat'))],
+  ])('%s : nouvel id unique, aucune erreur de l\'import', async (_, create) => {
+    const s = await openSession(gpuConfig())
+    const before = allIds(s)
+    const after = create(s)
+    const ids = created(before, after)
+    expect(ids).toHaveLength(1)
+    expect(ids[0]).toMatch(/^[0-9a-f]{32}$/)
+    expect(after.result.problems.filter((p) => p.code === 'ERR-ID-DUPLICATE' || p.code.startsWith('ERR-GPU-'))).toEqual([])
   })
 })
