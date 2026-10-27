@@ -21,7 +21,7 @@ Les deux stories sont livrées ensemble : sans l'US2, les listes de codes ne ser
 
 ## Phase 3 : US4, nom de la liste égal au nom du fichier — branche `012-lisibilite-interface/us4` (#116)
 
-- [ ] T007 [P] Tests `listNameOf`, `renameCodeList` (nom, titre qui suit, clés étrangères réécrites, une étape, refus si nom déjà déclaré)
-- [ ] T008 [P] Tests `WARN-CODE-NAME-FILE` et sa correction ; catalogue ; configurations connues et `VCE_CONFIG_DIR` sans avertissement (SC-003)
-- [ ] T009 [US4] `codelists.ts`, validation, messages, correction, contrat `problem-codes.md`
-- [ ] T010 [US4] `ModelView` : déclaration par le fichier, nom affiché ; e2e
+- [x] T007 [P] Tests `listNameOf`, `renameCodeList` (nom, titre qui suit, clés étrangères réécrites, une étape, refus si nom déjà déclaré)
+- [x] T008 [P] Tests `WARN-CODE-NAME-FILE` et sa correction ; catalogue ; configurations connues et `VCE_CONFIG_DIR` sans avertissement (SC-003)
+- [x] T009 [US4] `codelists.ts`, validation, messages, correction, contrat `problem-codes.md`
+- [x] T010 [US4] `ModelView` : déclaration par le fichier, nom affiché ; e2e

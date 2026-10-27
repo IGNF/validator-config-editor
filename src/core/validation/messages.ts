@@ -149,6 +149,12 @@ export const CATALOG = {
     hint: 'L\'objet surchargé n\'existe plus : retirer la surcharge de gpu.json.',
     message: (p) => `gpu.json : identifiant ${s(p, 'id')} sans objet correspondant`,
   },
+  'WARN-CODE-NAME-FILE': {
+    severity: 'warning',
+    title: 'Nom de liste différent de son fichier',
+    hint: 'Le nom d\'une liste de codes est celui de son fichier CSV (sans .csv) : renommer la liste, les clés étrangères qui la visent suivent.',
+    message: (p) => `La liste « ${s(p, 'name')} » ne porte pas le nom de son fichier (« ${s(p, 'expected')} »)`,
+  },
   'WARN-UNREFERENCED-FILE': {
     severity: 'warning',
     title: 'Fichier non utilisé',

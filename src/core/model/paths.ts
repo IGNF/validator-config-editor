@@ -23,3 +23,6 @@ export function tableModelRef(tableModel: string | undefined, name: string): str
   if (tableModel !== undefined && (tableModel.toLowerCase() === 'auto' || isUrl(tableModel))) return undefined
   return tableModel ?? `./types/${name}.json`
 }
+
+/** Nom d'une liste de codes d'après son fichier (feature 012, R5) : nom du CSV sans « .csv ». */
+export const listNameOf = (data: string) => (data.split('/').pop() ?? '').replace(/\.csv$/i, '')
