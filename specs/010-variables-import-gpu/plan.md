@@ -55,6 +55,13 @@
   une variable inconnue rend le dictionnaire invalide (`ERR-VARIABLES-FORMAT`, pointeur
   `/aliases`).
 
+  Variables facultatives (mise à jour du 2026-10-27, convention partagée avec GpU) : le suffixe
+  `_OPT` du nom du dictionnaire (pas de l'alias) marque une partie facultative.
+  `toSegments(regex, variables, names)` découpe la forme à variables en morceaux
+  `{ text, variable?, optional? }` ; `toVariables` en est la concaténation. `WARN-VARIABLES-OPT`
+  (avertissement, pointeur `/variables/<NOM>`) signale un nom en `_OPT` dont la regex n'est pas
+  un groupe unique suivi de `?`, ou l'inverse ; le dictionnaire reste utilisé.
+
 - **R3 – Configuration GpU** : `Project.variables` présent (même invalide). Le critère est
   recalculé à chaque validation.
 
@@ -73,7 +80,8 @@
 - **R5 – Affichage** (`RegexText.vue`) : texte à variables, regex pure en `title`. Utilisé pour
   le chemin des fichiers attendus (`ModelView`), le résumé des contraintes de colonne
   (`TableView`, « motif … ») et le nom du dossier. Sous chaque champ de saisie de regex, la forme
-  à variables s'affiche en aide ; la valeur saisie passe par `fromVariables`.
+  à variables s'affiche en aide ; la valeur saisie passe par `fromVariables`. Les variables
+  s'affichent en étiquettes, jaunes si elles sont facultatives (`_OPT`), dans les trois cas.
 
 - **R6 – Store** : `variables` (calculé depuis la session, `undefined` si absent ou invalide),
   exposé aux composants.

@@ -15,6 +15,7 @@ import { href, route } from '../router'
 import { useProject } from '../stores/project'
 import FileFrame from './FileFrame.vue'
 import ProblemBadge from './ProblemBadge.vue'
+import RegexText from './RegexText.vue'
 import NotConformant from './NotConformant.vue'
 
 const props = defineProps<{ file: string }>()
@@ -57,15 +58,15 @@ function add() {
 }
 
 // Résumé des contraintes ; le motif s'affiche avec ses variables, regex complète au survol (010).
-function constraints(c: ColumnConstraints | undefined): { text: string; title?: string }[] {
+function constraints(c: ColumnConstraints | undefined): { text: string; title?: string; regex?: string }[] {
   if (!c) return []
-  const out: { text: string; title?: string }[] = []
+  const out: { text: string; title?: string; regex?: string }[] = []
   if (c.required) out.push({ text: 'valeur obligatoire' })
   if (c.presenceRequired) out.push({ text: 'colonne obligatoire' })
   if (c.unique) out.push({ text: 'unique' })
   if (c.minLength !== undefined) out.push({ text: `longueur ≥ ${c.minLength}` })
   if (c.maxLength !== undefined && c.maxLength >= 0) out.push({ text: `longueur ≤ ${c.maxLength}` })
-  if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern, model.value)}`, title: c.pattern })
+  if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern, model.value)}`, title: c.pattern, regex: c.pattern })
   if (c.enum?.length) out.push({ text: `valeurs : ${c.enum.join(', ')}` })
   if (c.reference) out.push({ text: `référence ${c.reference}` })
   return out
@@ -114,7 +115,7 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <strong>{{ c.name }}</strong>
               <ProblemBadge :file="file" :pointer="`/columns/${i}`" />
               <span class="text-medium-emphasis">{{ c.type }}<template v-if="columnTypeFamily(c.type)"> · {{ columnTypeFamily(c.type) }}</template></span>
-              <span v-for="k in constraints(c.constraints)" :key="k.text" class="constraint" :title="k.title">{{ k.text }}</span>
+              <span v-for="k in constraints(c.constraints)" :key="k.text" class="constraint" :title="k.title"><template v-if="k.regex">motif <RegexText :value="k.regex" :model="model" /></template><template v-else>{{ k.text }}</template></span>
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>

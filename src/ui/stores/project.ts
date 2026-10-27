@@ -6,7 +6,7 @@ import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
 import { summarize } from '@core/validation/validate'
 import { outgoingRefs, scopeFiles, type ExportScope } from '@core/export'
-import { fromVariables, namesFor, readVariables, toVariables } from '@core/variables'
+import { fromVariables, namesFor, readVariables, toSegments, toVariables, type Segment } from '@core/variables'
 import { zip } from '@core/zip'
 import { download as offer } from '../io/download'
 import { ServerSource } from '../io/server'
@@ -101,6 +101,9 @@ export const useProject = defineStore('project', () => {
   /** Regex affichée avec ses variables (inchangée sans dictionnaire). */
   const regexDisplay = (regex: string, model?: string) =>
     variables.value ? toVariables(regex, variables.value, namesFor(dictionary.value?.aliases, model)) : regex
+  /** Regex affichée en morceaux (variables en étiquettes, facultatives en jaune). */
+  const regexSegments = (regex: string, model?: string): Segment[] =>
+    variables.value ? toSegments(regex, variables.value, namesFor(dictionary.value?.aliases, model)) : regex ? [{ text: regex }] : []
   /** Regex saisie : les <NOM> de variables connues (ou leurs alias) sont remplacés par leur regex. */
   const regexInput = (text: string, model?: string) =>
     variables.value ? fromVariables(text, variables.value, namesFor(dictionary.value?.aliases, model)) : text
@@ -179,7 +182,7 @@ export const useProject = defineStore('project', () => {
   }
 
   return {
-    pending, notice, download, variables, regexDisplay, regexInput, regexHint, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
+    pending, notice, download, variables, regexDisplay, regexSegments, regexInput, regexHint, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
     source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
     has, text, data, edit, ids, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
   }

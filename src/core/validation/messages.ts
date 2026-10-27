@@ -42,6 +42,14 @@ export const CATALOG = {
     hint: 'Chaque regex ne doit correspondre qu\'à une variable, sinon l\'affichage est ambigu : fusionner les deux variables ou changer l\'une des regex.',
     message: (p) => `La variable ${s(p, 'name')} a la même regex que ${s(p, 'other')}`,
   },
+  'WARN-VARIABLES-OPT': {
+    severity: 'warning',
+    title: 'Variable facultative mal nommée',
+    hint: 'Le suffixe _OPT marque une partie facultative, affichée en jaune : il est réservé aux regex de la forme (…)?. Renommer la variable ou corriger sa regex.',
+    message: (p) => p.kind === 'suffix'
+      ? `La variable ${s(p, 'name')} a le suffixe _OPT sans regex facultative (…)?`
+      : `La variable ${s(p, 'name')} a une regex facultative (…)? sans le suffixe _OPT`,
+  },
   'ERR-CSV-ROW-LENGTH': {
     severity: 'error',
     title: 'Ligne de liste de codes mal découpée',

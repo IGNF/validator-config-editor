@@ -64,6 +64,7 @@ describe('codes de problème', () => {
     ['WARN-MODEL-NO-DOCUMENT', (f) => f.set('orphelin/gpu.json', '{}'), { model: 'orphelin', file: 'orphelin/' }],
     ['ERR-VARIABLES-FORMAT', (f) => f.set('variables.json', '{"variables": []}'), { model: null, file: 'variables.json' }],
     ['ERR-VARIABLES-DUPLICATE', (f) => f.set('variables.json', '{"variables": {"A": "[0-9]", "B": "[0-9]"}}'), { model: null, file: 'variables.json', pointer: '/variables/B' }],
+    ['WARN-VARIABLES-OPT', (f) => f.set('variables.json', '{"variables": {"GEN": "(_gen[0-9]+)?"}}'), { model: null, file: 'variables.json', pointer: '/variables/GEN' }],
     ['ERR-SCHEMA', (f) => editJson(f, ZONE_URBA, (d) => { d.columns[0].type = 'Texte' }), { file: ZONE_URBA, pointer: '/columns/0/type' }],
     ['WARN-MODEL-NAME', (f) => editJson(f, FILES, (d) => { d.name = 'cnig_PLU_2016' }), { file: FILES, pointer: '/name' }],
     ['ERR-TABLE-MODEL-MISSING', (f) => f.delete(ZONE_URBA), { file: FILES, pointer: `/files/${indexOf(readConfig(), FILES, 'files', 'ZONE_URBA')}/tableModel` }],

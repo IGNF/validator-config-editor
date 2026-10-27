@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { loadProject } from '@core/load/project'
-import { fromVariables, namesFor, readVariables, toVariables } from '@core/variables'
+import { fromVariables, namesFor, readVariables, toSegments, toVariables } from '@core/variables'
 import { checkConfig } from '@core/validation/validate'
 import { allFiles, applyChanges, edit, openSession } from '@core/edit/session'
 import { setAt } from '@core/edit/pointer'
@@ -44,9 +44,36 @@ describe('readVariables', () => {
   })
 })
 
+describe('variables facultatives (_OPT)', () => {
+  it('le dictionnaire réel respecte la convention', () => {
+    expect(readVariables(file(DICTIONARY)).problems).toEqual([])
+  })
+
+  it('signale un écart entre le suffixe _OPT et la regex (…)?, sans refuser le dictionnaire', () => {
+    const r = readVariables(file('{"variables": {"GEN": "(_gen[0-9]+)?", "X_OPT": "[0-9]", "Y_OPT": "(a)|(b)?", "Z_OPT": "(a(b)?)?", "W": "(a)(b)?"}}'))
+    expect(r.variables?.size).toBe(5)
+    expect(r.problems).toMatchObject([
+      { code: 'WARN-VARIABLES-OPT', severity: 'warning', pointer: '/variables/GEN', message: 'La variable GEN a une regex facultative (…)? sans le suffixe _OPT' },
+      { code: 'WARN-VARIABLES-OPT', pointer: '/variables/X_OPT', message: 'La variable X_OPT a le suffixe _OPT sans regex facultative (…)?' },
+      { code: 'WARN-VARIABLES-OPT', pointer: '/variables/Y_OPT' },
+    ])
+  })
+
+  it('découpe la forme à variables en morceaux, facultatifs selon le nom du dictionnaire', () => {
+    const sup = namesFor(dictionary.aliases, 'cnig_SUP_A1_2016')
+    expect(toSegments(`[0-9]{9}_A1(_[a-zA-Z])?\\.pdf`, variables, sup)).toEqual([
+      { text: '<IDGEST>', variable: 'IDGEST', regex: '[0-9]{9}', optional: false },
+      { text: '_A1' },
+      { text: '<PART_OPT>', variable: 'PART_OPT', regex: '(_[a-zA-Z])?', optional: true },
+      { text: '\\.pdf' },
+    ])
+    expect(toSegments('', variables)).toEqual([])
+  })
+})
+
 describe('toVariables / fromVariables', () => {
   it('remplace la plus longue regex d\'abord', () => {
-    expect(toVariables(`Pieces_ecrites/[AB0-9]{5}_reglement_${DATE}(_[a-zA-Z])?\\.pdf`, variables)).toBe('Pieces_ecrites/<INSEE_COMMUNE>_reglement_<DATE><DOCUMENT_PART>\\.pdf')
+    expect(toVariables(`Pieces_ecrites/[AB0-9]{5}_reglement_${DATE}(_[a-zA-Z])?\\.pdf`, variables)).toBe('Pieces_ecrites/<INSEE_COMMUNE>_reglement_<DATE><PART_OPT>\\.pdf')
     // DATE contient [0-9]{4} puis des groupes : reconnue entière, pas morceau par morceau.
     expect(toVariables(DATE, variables)).toBe('<DATE>')
     // MAILLAGE_OPT contient MAILLAGE : la plus longue l'emporte.
@@ -60,7 +87,7 @@ describe('toVariables / fromVariables', () => {
   })
 
   it('aller-retour sur des formes réelles', () => {
-    for (const form of ['<MAILLAGE>_PLU_<DATE><DOCUMENT_PART>', '<CATEGORIE>-<DIGIT_9>-<ENTIER>-<ENTIER>', 'Actes/<CATEGORIE>_<DIGIT_9>_<DATE>_act']) {
+    for (const form of ['<MAILLAGE>_PLU_<DATE><PART_OPT>', '<CATEGORIE>-<DIGIT_9>-<ENTIER>-<ENTIER>', 'Actes/<CATEGORIE>_<DIGIT_9>_<DATE>_act']) {
       expect(toVariables(fromVariables(form, variables), variables)).toBe(form)
     }
   })
