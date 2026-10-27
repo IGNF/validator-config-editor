@@ -58,3 +58,23 @@ test('table non référencée : listée dans la vue du modèle', async ({ page }
     server.stop()
   }
 })
+
+test('accordéon : un seul modèle ouvert ; bloc du modèle affiché encadré ; pas de téléchargement dans l\'arbre', async ({ page }) => {
+  await page.goto(`./#/${SUP}/files.json`)
+  const group = page.getByTestId(`model-group-${SUP}`)
+  await expect(group).toHaveClass(/current-group/)
+  await expect(group).toHaveCSS('border-top-color', 'rgb(26, 95, 180)')
+  await expect(page.getByTestId('models-panel').getByText('Télécharger le modèle')).toHaveCount(0)
+  await expect(page.getByTestId(`expected-${SUP}-ACTE`)).toBeAttached()
+
+  // Ouvrir un autre modèle referme le premier.
+  await page.getByTestId('model-cnig_PLU_2017').click()
+  await expect(page.getByTestId('model-cnig_PLU_2017')).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByTestId(`model-${SUP}`)).toHaveAttribute('aria-expanded', 'false')
+  // Naviguer vers un autre modèle l'ouvre et referme les autres.
+  await page.goto('./#/GPU_MEC_2025/files.json')
+  await expect(page.getByTestId('model-GPU_MEC_2025')).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByTestId('model-cnig_PLU_2017')).toHaveAttribute('aria-expanded', 'false')
+  await expect(page.getByTestId('model-group-GPU_MEC_2025')).toHaveClass(/current-group/)
+  await expect(page.getByTestId(`model-group-${SUP}`)).not.toHaveClass(/current-group/)
+})

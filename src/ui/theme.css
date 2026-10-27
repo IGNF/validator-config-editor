@@ -33,3 +33,33 @@ h3,
 .v-card-title {
   font-family: var(--v-font-heading);
 }
+
+/* Contrastes renforcés : sous-titres de l'arbre et libellés des champs en texte secondaire foncé. */
+.v-list-subheader {
+  color: rgb(var(--v-theme-secondary)) !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+.v-field-label {
+  color: rgb(var(--v-theme-secondary));
+  opacity: 1 !important;
+}
+
+/* Contour des champs plus net (0,38 par défaut). */
+.v-field {
+  --v-field-border-opacity: 0.55;
+}
+
+/* Élément actif de l'arbre : fond bleu et texte bleu en gras plutôt qu'un voile gris. */
+.v-navigation-drawer .v-list-item--active > .v-list-item__overlay {
+  background: rgb(var(--v-theme-primary));
+  opacity: 0.14;
+}
+.v-navigation-drawer .v-list-item--active {
+  color: rgb(var(--v-theme-primary));
+  font-weight: 700;
+}
+.v-navigation-drawer .v-list-item--active .v-list-item-title {
+  font-weight: 700;
+}

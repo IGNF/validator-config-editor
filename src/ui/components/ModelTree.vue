@@ -13,6 +13,14 @@ import ProblemCount from './ProblemCount.vue'
 const store = useProject()
 const filter = ref('')
 const opened = ref<string[]>([])
+// Accordéon (un seul modèle ouvert) : ouvrir un modèle referme les autres et leurs dossiers ;
+// les familles restent comme elles sont.
+const modelNames = computed(() => new Set(store.models.map((m) => m.name)))
+const modelOfKey = (key: string) => (modelNames.value.has(key) ? key : key.startsWith('famille:') ? undefined : key.slice(0, key.indexOf(':')))
+function setOpened(next: string[]) {
+  const added = next.filter((k) => modelNames.value.has(k) && !opened.value.includes(k)).at(-1)
+  opened.value = added ? next.filter((k) => { const m = modelOfKey(k); return m === undefined || m === added }) : next
+}
 // Ouverture d'un groupe par un descendant (dossier de fichiers attendus contenant l'élément affiché).
 provide('openTreeGroup', (key: string) => {
   if (!opened.value.includes(key)) opened.value = [...opened.value, key]
@@ -37,7 +45,7 @@ watch(
   () => route.value.file,
   (file) => {
     const model = file && modelOf(file)
-    if (model) opened.value = [...new Set([...opened.value, familyKey(modelFamily(model)), model])]
+    if (model) setOpened([...new Set([...opened.value, familyKey(modelFamily(model)), model])])
     // Élément affiché rendu visible dans l'arbre (012, R1), après ouverture des groupes.
     nextTick(() => setTimeout(() => document.querySelector('[data-testid="models-panel"] .v-list-item--active')?.scrollIntoView({ block: 'nearest' }), 300))
   },
@@ -52,7 +60,7 @@ watch(
     <p class="text-caption px-4" aria-live="polite">{{ shown.length }} / {{ store.models.length }} modèles</p>
     <!-- Rôles : Vuetify donne « option » aux en-têtes de groupe, invalide hors d'une listbox. -->
     <!-- Retrait de 12 px par niveau (famille › modèle › fichiers) au lieu de 56 px, icône à 10 px du texte. -->
-    <v-list v-model:opened="opened" density="compact" nav role="none" class="tree">
+    <v-list :opened="opened" density="compact" nav role="none" class="tree" @update:opened="(v: unknown) => setOpened(v as string[])">
       <template v-for="n in nodes" :key="isFamily(n) ? familyKey(n.family) : n.name">
         <v-list-group v-if="isFamily(n)" :value="familyKey(n.family)">
           <template #activator="{ props }">

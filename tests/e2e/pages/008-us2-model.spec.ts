@@ -55,12 +55,13 @@ test('le ZIP du modèle contient son seul dossier, identique, et se valide seul'
   await expect(page.getByTestId('notice')).toContainText(`Modèle téléchargé : ${PLU}.zip`)
 })
 
-test('depuis l\'arbre ; modification et erreurs restantes du modèle', async ({ page }) => {
+test('modification d\'une table puis téléchargement depuis la vue du modèle ; erreurs restantes', async ({ page }) => {
   await open(page)
   await page.goto(`./#/${PLU}/types/ZONE_URBA.json`)
   await page.getByTestId('column-LIB_IDZONE').click()
   await page.getByTestId('column-LIB_IDZONE').getByTestId('column-reference').getByRole('textbox').fill('INCONNUE.ID')
-  const out = await downloadModel(page, `download-model-${PLU}`, PLU)
+  await page.goto(`./#/${PLU}/files.json`)
+  const out = await downloadModel(page, 'download-model', PLU)
   expect(readFileSync(join(out, PLU, 'types/ZONE_URBA.json'), 'utf8')).toContain('INCONNUE.ID')
   await expect(page.getByTestId('notice')).toContainText(`Modèle téléchargé : ${PLU}.zip (1 erreur restante)`)
   // Téléchargement partiel : la modification reste en attente.
