@@ -12,6 +12,7 @@ import { modelOf } from '../files'
 import { compareHref, href, route } from '../router'
 import { useProject } from '../stores/project'
 import CodeListDialog from './CodeListDialog.vue'
+import EquivalentsDialog from './EquivalentsDialog.vue'
 import FileFrame from './FileFrame.vue'
 import NewCodeListDialog from './NewCodeListDialog.vue'
 import ModelSummary from './ModelSummary.vue'
@@ -164,9 +165,10 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
             </div>
             <v-textarea label="Description" :model-value="f.description" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => setProp(pointer('files', i, 'description'), v)" />
-            <div class="d-flex ga-2">
+            <div class="d-flex flex-wrap ga-2">
               <v-btn :prepend-icon="mdiArrowUp" size="small" variant="text" :disabled="i === 0" @click="move('files', i, i - 1)">Monter</v-btn>
               <v-btn :prepend-icon="mdiArrowDown" size="small" variant="text" :disabled="i === doc.files.length - 1" @click="move('files', i, i + 1)">Descendre</v-btn>
+              <EquivalentsDialog :source="{ kind: 'file', file: path!, pointer: pointer('files', i) }" :label="`${name} › ${f.name}`" />
               <v-spacer />
               <v-btn :prepend-icon="mdiDelete" size="small" variant="text" color="error" data-testid="remove-file" @click="edit((d) => removeItem(d, 'files', i))">Supprimer le fichier</v-btn>
             </div>
@@ -190,6 +192,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
           @update:model-value="(v: string) => setProp(pointer('codes', i, 'data'), v, true)" />
         <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir</a>
         <ProblemBadge :file="path!" :pointer="`/codes/${i}`" />
+        <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
         <v-btn :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
       </div>
     </template>

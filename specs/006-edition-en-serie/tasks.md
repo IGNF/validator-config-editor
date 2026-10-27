@@ -22,6 +22,6 @@ code.
 
 ## Phase 3 : US2, fichiers attendus et listes — branche `006-edition-en-serie/us2` (#56)
 
-- [ ] T010 [P] Tests `findEquivalents` et `applyToEquivalents` pour `file` et `code`
-- [ ] T011 [US2] Boutons « Équivalents » des fichiers attendus et des déclarations de listes dans `ModelView`
-- [ ] T012 [US2] e2e : `REGLEMENT` passé en « Obligatoire » et appliqué en série, puis annulé
+- [x] T010 [P] Tests `findEquivalents` et `applyToEquivalents` pour `file` et `code`
+- [x] T011 [US2] Boutons « Équivalents » des fichiers attendus et des déclarations de listes dans `ModelView`
+- [x] T012 [US2] e2e : `REGLEMENT` passé en « Obligatoire » et appliqué en série, puis annulé

@@ -103,3 +103,33 @@ test('comparer : valeur divergente marquée, modèle absent, accessibilité', as
   const { violations } = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
   expect(violations.flatMap((v) => v.nodes.map((n) => `${v.id} ${n.target.join(' ')} ${n.failureSummary}`))).toEqual([])
 })
+
+// US2 : fichiers attendus en série.
+test('REGLEMENT passé en « Obligatoire » et appliqué en série, puis annulé', async ({ page }) => {
+  const mandatory = (m: string) => JSON.parse(readFileSync(join(server.dir, `${m}/files.json`), 'utf8')).files.find((f: { name: string }) => f.name === 'REGLEMENT').mandatory
+  await page.goto(`${server.url}#/${A1}/files.json`)
+  const reglement = page.getByTestId('file-REGLEMENT')
+  await reglement.click()
+  await reglement.getByTestId('file-mandatory').click()
+  await page.getByRole('option', { name: 'Obligatoire (ERROR)' }).click()
+  await reglement.getByTestId('equivalents').click()
+  const dialog = page.getByTestId('equivalents-dialog')
+  await expect(dialog.getByTestId('equivalents-property')).toContainText('Présence')
+  await expect(dialog.getByTestId('equivalent-cnig_SUP_A2_2016')).toContainText(': OPTIONAL')
+  await dialog.getByTestId('equivalents-apply').click()
+  await expect(page.getByTestId('notice')).toContainText('Présence appliqué à 2 éléments')
+  await page.getByTestId('undo').click()
+  await expect(page.getByTestId('changed-count')).toHaveText('1 fichier(s) modifié(s)')
+  await page.getByTestId('redo').click()
+  await page.getByTestId('save').click()
+  await expect(page.getByTestId('notice')).toContainText('3 fichiers enregistrés')
+  expect([A1, 'cnig_SUP_A2_2016', 'cnig_SUP_A3_2016'].map(mandatory)).toEqual(['ERROR', 'ERROR', 'ERROR'])
+})
+
+test('déclaration de liste : bouton « Équivalents » et liste des équivalents', async ({ page }) => {
+  await page.goto(`${server.url}#/${A1}/files.json`)
+  await page.getByTestId('code-ListeValidegestSUP').getByTestId('equivalents').click()
+  const dialog = page.getByTestId('equivalents-dialog')
+  await expect(dialog.getByTestId('equivalent-cnig_SUP_A2_2016')).toBeVisible()
+  await expect(dialog.getByTestId('equivalent-cnig_SUP_A3_2016')).toBeVisible()
+})

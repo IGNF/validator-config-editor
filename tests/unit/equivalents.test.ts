@@ -129,6 +129,53 @@ describe('applyToEquivalents', () => {
   })
 })
 
+describe('fichiers attendus et listes (US2)', () => {
+  const FILES = (m: string) => `${m}/files.json`
+  const indexIn = (s: Session, m: string, list: 'files' | 'codes', name: string) =>
+    (dataOf(s, FILES(m)) as Record<string, { name: string }[]>)[list]!.findIndex((x) => x.name === name)
+
+  it('fichier de même nom : présence recopiée en une étape', async () => {
+    let s = await session()
+    const src: Source = { kind: 'file', file: FILES(A1), pointer: `/files/${indexIn(s, A1, 'files', 'REGLEMENT')}` }
+    s = edit(s, FILES(A1), (d) => setAt(d, `${src.pointer}/mandatory`, 'ERROR'))
+    const found = findEquivalents(s, src, 'family')
+    expect(found.items.map((e) => [e.model, e.pointer])).toEqual([
+      ['cnig_SUP_A2_2016', `/files/${indexIn(s, 'cnig_SUP_A2_2016', 'files', 'REGLEMENT')}`],
+      ['cnig_SUP_A3_2016', `/files/${indexIn(s, 'cnig_SUP_A3_2016', 'files', 'REGLEMENT')}`],
+    ])
+    const after = applyChanges(s, applyToEquivalents(s, src, found.items, '/mandatory'))
+    for (const m of ['cnig_SUP_A2_2016', 'cnig_SUP_A3_2016']) {
+      expect((dataOf(after, FILES(m)) as { files: { name: string; mandatory: string }[] }).files.find((f) => f.name === 'REGLEMENT')!.mandatory).toBe('ERROR')
+    }
+    expect(textOf(undoEdit(after), FILES('cnig_SUP_A2_2016'))).toBe(textOf(s, FILES('cnig_SUP_A2_2016')))
+  })
+
+  it('déclaration de liste de même nom : titre recopié ; modèle sans la liste → absent', async () => {
+    let s = await session((f) => {
+      const d = JSON.parse(f.get(FILES('cnig_SUP_A3_2016'))!)
+      d.codes = d.codes.filter((c: { name: string }) => c.name !== 'ListeValidegestSUP')
+      f.set(FILES('cnig_SUP_A3_2016'), JSON.stringify(d, null, 4))
+    })
+    const src: Source = { kind: 'code', file: FILES(A1), pointer: `/codes/${indexIn(s, A1, 'codes', 'ListeValidegestSUP')}` }
+    s = edit(s, FILES(A1), (d) => setAt(d, `${src.pointer}/title`, 'Validation du gestionnaire'))
+    const found = findEquivalents(s, src, 'family')
+    expect(found.items.map((e) => e.model)).toEqual(['cnig_SUP_A2_2016'])
+    expect(found.absent).toEqual(['cnig_SUP_A3_2016'])
+    const after = applyChanges(s, applyToEquivalents(s, src, found.items, '/title'))
+    expect(JSON.stringify(dataOf(after, FILES('cnig_SUP_A2_2016')))).toContain('Validation du gestionnaire')
+  })
+
+  it('files.json non conforme : non modifiable', async () => {
+    const s = await session((f) => {
+      const d = JSON.parse(f.get(FILES('cnig_SUP_A2_2016'))!)
+      d.files[0].type = 'inconnu'
+      f.set(FILES('cnig_SUP_A2_2016'), JSON.stringify(d, null, 4))
+    })
+    const src: Source = { kind: 'file', file: FILES(A1), pointer: `/files/${indexIn(s, A1, 'files', 'REGLEMENT')}` }
+    expect(findEquivalents(s, src, 'family').items.find((e) => e.model === 'cnig_SUP_A2_2016')!.editable).toBe(false)
+  })
+})
+
 describe('differingProperties (US3)', () => {
   it('propriétés principales qui diffèrent ; absent, vide et null équivalents', () => {
     const a = { type: 'String', constraints: { maxLength: 80, pattern: '[A-Z]+', enum: [] } }
