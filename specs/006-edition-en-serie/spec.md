@@ -15,12 +15,16 @@ d'appliquer **une même modification aux éléments équivalents de plusieurs mo
 Dans `validator-config-gpu` (`json-source`), les modèles SUP sont déjà « aplatis » pour le
 validator :
 
-- les 123 modèles hérités reprennent tous les fichiers et toutes les listes de codes de leur
+- les modèles hérités reprennent tous les fichiers et toutes les listes de codes de leur
   parent ;
-- leurs tables reprennent les colonnes des tables abstraites, avec les mêmes `id` (47 colonnes
-  partagent leur `id` entre plus de 10 modèles, jusqu'à 65 modèles SUP 2016) ;
+- leurs tables reprennent les colonnes des tables abstraites : `GESTIONNAIRE_SUP.NOMGEST`,
+  `SERVITUDE.URLREG`… se retrouvent dans les 65 modèles SUP 2016 ;
 - des fichiers comme `ACTE`, `REGLEMENT` ou `Donnees_geographiques` se retrouvent à
   l'identique dans les 65 modèles SUP 2016.
+
+Mise à jour du 2026-10-27 : depuis la feature 010, l'import GpU exige des `id` uniques dans toute
+la configuration. Aucune colonne ne partage plus son `id` entre modèles (mesure sur `json-source`,
+`976b9fce`). L'équivalence se fait donc par le nom.
 
 L'héritage (objet `parent`, modèles `cnig_SUP_XXX_*`, `parent_id` de `gpu.json`) ne servait qu'au
 Géoportail de l'Urbanisme. Le validator l'ignore, et l'éditeur ne le gère pas.
@@ -33,8 +37,7 @@ fait en une fois, avec un aperçu et une seule étape d'annulation.
 
 Deux éléments de modèles différents sont **équivalents** :
 
-- **colonnes** : même `id` (colonne héritée d'une même table abstraite), ou à défaut même nom
-  dans des **tables équivalentes** ;
+- **colonnes** : même nom dans des **tables équivalentes** ;
 - **tables équivalentes** : même nom, une fois retiré le préfixe propre au modèle (premier
   segment du nom de table égal à un segment du nom du modèle : `A1_ASSIETTE_SUP_S` dans
   `cnig_SUP_A1_2016` → `ASSIETTE_SUP_S`) ;
@@ -101,8 +104,7 @@ Depuis une colonne, un fichier ou une liste, l'utilisateur affiche ses élément
 compare leurs valeurs, sans rien modifier, pour repérer les divergences entre modèles.
 
 **Pourquoi cette priorité** : c'est la lecture nécessaire avant une modification en série, et
-elle sert à repérer des incohérences. Par exemple, dans `A1_ASSIETTE_SUP_S`, `MODEGEOASS` a son
-propre `id`, ce qui la sépare des autres colonnes héritées.
+elle sert à repérer des incohérences entre modèles (motif, longueur, valeurs possibles).
 
 **Test indépendant** : depuis `IDASS` de `A1_ASSIETTE_SUP_S`, afficher les équivalents et
 constater le tableau des motifs par modèle.
@@ -114,8 +116,8 @@ constater le tableau des motifs par modèle.
    avec un lien vers chacune.
 2. **Given** ce tableau, **When** des valeurs diffèrent entre modèles, **Then** les différences
    sont mises en évidence.
-3. **Given** une colonne équivalente par son nom mais d'un autre `id`, **When** elle est
-   affichée, **Then** elle est signalée comme « même nom, autre identifiant ».
+3. **Given** un modèle de la famille sans élément équivalent (table ou colonne absente),
+   **When** le tableau s'affiche, **Then** ce modèle est signalé comme « absent ».
 
 ---
 
@@ -123,11 +125,10 @@ constater le tableau des motifs par modèle.
 
 - **Aucun équivalent** : l'action « Appliquer aux équivalents » est absente ou indique « aucun
   élément équivalent ».
-- **Recherche élargie** : sur toute la configuration (gpu : 153 modèles), le calcul des
+- **Recherche élargie** : sur toute la configuration (gpu : 150 modèles), le calcul des
   équivalents reste sous 1 seconde.
-- **Configurations sans `id`** (ppr) : seule l'équivalence par nom s'applique.
-- **Surcharges GpU** : la modification en série ne change pas les `id`, et les surcharges de
-  `gpu.json` restent donc rattachées.
+- **Identifiants** : la modification en série ne change pas les `id` ; une configuration GpU
+  reste conforme à l'import (feature 010).
 - **Annulation** : une modification en série de N fichiers s'annule en une étape (feature 004,
   pas multi-fichiers).
 
@@ -149,8 +150,7 @@ constater le tableau des motifs par modèle.
 
 ### Entités clés
 
-- **Élément équivalent** : modèle, fichier, pointeur, nature de l'équivalence (même `id`, même
-  nom).
+- **Élément équivalent** : modèle, fichier, pointeur.
 - **Modification en série** : propriété, nouvelle valeur ou retrait, éléments ciblés.
 
 ## Critères de succès
