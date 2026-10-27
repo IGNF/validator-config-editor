@@ -2,6 +2,7 @@
 import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CodeListView from './components/CodeListView.vue'
+import CompareView from './components/CompareView.vue'
 import GpuView from './components/GpuView.vue'
 import Home from './components/Home.vue'
 import ModelTree from './components/ModelTree.vue'
@@ -10,7 +11,7 @@ import ProblemsPanel from './components/ProblemsPanel.vue'
 import ResizeHandle from './components/ResizeHandle.vue'
 import SourceView from './components/SourceView.vue'
 import TableView from './components/TableView.vue'
-import { kindOf } from './files'
+import { kindOf, modelOf } from './files'
 import { panels } from './layout'
 import { route } from './router'
 import { useProject } from './stores/project'
@@ -110,7 +111,8 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
         <v-progress-linear v-if="store.loading && !store.result" indeterminate aria-label="Chargement de la configuration" />
         <Home v-if="online && (!store.result || showHome)" />
         <template v-else-if="store.result">
-          <component :is="view" v-if="route.file" :key="route.file" :file="route.file" />
+          <CompareView v-if="route.file && route.compare !== undefined" :model="modelOf(route.file)" :reference="route.compare" />
+          <component :is="view" v-else-if="route.file" :key="route.file" :file="route.file" />
           <section v-else>
             <h1 class="text-h5 mb-2">Configuration</h1>
             <p v-if="store.summary" data-testid="summary">
