@@ -20,7 +20,8 @@ test('valeur d\'une liste de codes : ouvre la liste sur la ligne', async ({ page
   await dialog.getByTestId('search-input').getByRole('textbox').fill('AUc')
   await dialog.getByTestId('search-result').filter({ hasText: 'valeur' }).first().click()
   await expect(page.getByRole('heading', { name: /Liste de codes/ })).toBeVisible()
-  await expect(page.locator('tr.highlight')).toContainText('AUc')
+  // Valeurs dans des champs (liste modifiable) : lues par leur valeur.
+  await expect.poll(() => page.locator('tr.highlight input').evaluateAll((els) => els.map((e) => (e as HTMLInputElement).value))).toContain('AUc')
 })
 
 test('accessibilité de la recherche', async ({ page }) => {

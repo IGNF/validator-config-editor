@@ -23,6 +23,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Édition du contenu des listes de codes : valeurs modifiables dans le tableau, lignes ajoutées ou supprimées, une étape annulable par modification ; seule la ligne touchée du CSV est réécrite (fins de ligne et guillemets du reste conservés). Une liste dont une valeur s'étend sur plusieurs lignes reste en lecture.
 - Revue des modifications : le compteur « N fichier(s) modifié(s) » ouvre la liste des fichiers modifiés ou créés, avec leur diff ligne à ligne, l'ouverture du fichier et l'annulation de ses modifications (un pas annulable). Le téléchargement complet (ZIP) passe par cette revue quand il y a des modifications.
 - Recherche dans toute la configuration (« Rechercher » dans l'en-tête, ou touche `/`) : modèles, fichiers attendus, tables, colonnes (nom, description, motif), listes de codes et leurs valeurs, identifiants ; chaque résultat ouvre l'élément trouvé.
 - Colonne visée par une clé étrangère vers une liste de codes : valeurs autorisées affichées dans son panneau (colonne de la clé, puis libellés ; 50 premières lignes), avec un lien vers la liste.
