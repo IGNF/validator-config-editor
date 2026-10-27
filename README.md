@@ -5,7 +5,10 @@ Outil de validation et d'édition des configurations
 configuration à la fois :
 
 - `vce check <dossier>` valide tous les modèles et leurs références croisées ;
-- `vce serve <dossier>` ouvre un éditeur local dans le navigateur.
+- `vce serve <dossier>` ouvre un éditeur local dans le navigateur ;
+- `vce compare <référence> <modèle>` compare deux modèles (fichiers, tables, colonnes, listes) ;
+- `vce site <dossier> <sortie>` produit un site en lecture seule de la configuration, à publier
+  sur GitHub Pages (voir [utilisation](docs/utilisation.md#vce-site--site-en-lecture-seule)).
 
 ## Éditeur en ligne
 
