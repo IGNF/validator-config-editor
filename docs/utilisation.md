@@ -98,6 +98,10 @@ le port, `--open` ouvre le navigateur). Il permet de :
   clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant les liens
   entre eux ;
 - afficher le contenu exact de chaque fichier (onglet « Source ») ;
+- appliquer une modification de colonne aux colonnes équivalentes des autres modèles
+  (« Équivalents » sur la colonne) : même nom dans les tables équivalentes de la famille du
+  modèle (`A1_ASSIETTE_SUP_S` ↔ `A2_ASSIETTE_SUP_S`) ou de toute la configuration, aperçu des
+  valeurs actuelles, éléments à cocher, une seule étape d'annulation ;
 - comparer un modèle à un autre (« Comparer » dans la vue du modèle), par défaut à la version
   précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes
   ajoutés, retirés ou modifiés, avec l'ancienne et la nouvelle valeur, et codes ajoutés, retirés

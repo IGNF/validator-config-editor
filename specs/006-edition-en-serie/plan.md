@@ -80,8 +80,9 @@ Une seule fenêtre, « Équivalents », ouverte depuis une colonne, un fichier o
 
 - **R6 – Fenêtre « Équivalents »** (`EquivalentsDialog.vue`) :
   - **Ouverture** : depuis un bouton « Équivalents » sur chaque colonne (`TableView`), chaque
-    fichier attendu et chaque déclaration de liste (`ModelView`). Le bouton n'apparaît que s'il
-    existe au moins un équivalent dans toute la configuration.
+    fichier attendu et chaque déclaration de liste (`ModelView`). Le bouton est toujours
+    présent : sans équivalent, la fenêtre indique « Aucun élément équivalent » (cas limite de la
+    spec). Calculer les équivalents de chaque élément à l'affichage serait trop coûteux.
   - **Portée** : un interrupteur « Toute la configuration », la famille par défaut.
   - **Comparaison** (US3) : une ligne par modèle (source en premier) et une colonne par
     propriété. Une valeur différente de celle de la source est mise en évidence, par du texte et
