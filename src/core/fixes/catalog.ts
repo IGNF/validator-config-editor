@@ -4,10 +4,11 @@ import { allIds, applyInOneStep, dataOf, textOf, type FileChange, type Session }
 import { addCode, addTableFile, codeName } from '../edit/operations'
 import { getAt, removeAt, setAt } from '../edit/pointer'
 import { newId } from '../edit/ids'
-import { resolvePath } from '../model/paths'
+import { listNameOf, resolvePath } from '../model/paths'
+import { renameCodeList } from '../edit/codelists'
 import type { DocumentModel, TableModel } from '../model/types'
 import { parsePointer } from '../pointer'
-import { parseForeignKey } from '../validation/foreign-key'
+import { parseForeignKey, rewriteForeignKey } from '../validation/foreign-key'
 import type { Problem } from '../validation/problems'
 import { similar } from './similar'
 
@@ -34,17 +35,6 @@ function documentOf(session: Session, model: string): { path: string; doc: Docum
 
 const tablesOf = (session: Session, model: string) => [...(session.result.checked.get(model)?.tables ?? [])]
 
-// Remplace un nom de colonne dans la partie source ou cible d'une clé étrangère, ou la cible.
-function rewriteForeignKey(text: string, part: 'source' | 'target' | 'list', from: string, to: string): string {
-  const index = text.search(/REFERENCES/)
-  const [left, right] = [text.slice(0, index), text.slice(index)]
-  const word = new RegExp(`\\b${from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`)
-  if (part === 'source') return left.replace(word, to) + right
-  if (part === 'list') return left + right.replace(word, to)
-  const open = right.indexOf('(')
-  return left + right.slice(0, open) + right.slice(open).replace(word, to)
-}
-
 type Builder = (session: Session, p: Problem) => Fix[]
 
 const replacements = (candidates: string[], label: (c: string) => string, change: (c: string) => FileChange): Fix[] =>
@@ -54,6 +44,14 @@ const BUILDERS: Partial<Record<Problem['code'], Builder>> = {
   'WARN-MODEL-NAME': (_s, p) => [
     { label: `Renommer le modèle « ${p.model} », comme son dossier`, changes: [json(p.file, (d) => setAt(d, '/name', p.model))], safe: true },
   ],
+
+  'WARN-CODE-NAME-FILE': (s, p) => {
+    const index = Number(parsePointer(p.pointer!)[1])
+    const data = (documentOf(s, p.model!)?.doc.codes?.[index])?.data
+    if (data === undefined) return []
+    const { changes, refusal } = renameCodeList(s, p.model!, index, data)
+    return refusal || !changes.length ? [] : [{ label: `Renommer la liste en « ${listNameOf(data)} », comme son fichier`, changes, safe: true }]
+  },
 
   'ERR-ID-DUPLICATE': (s, p) => [
     { label: 'Attribuer un nouvel identifiant à cet objet', changes: [json(p.file, (d) => setAt(d, p.pointer!, newId(allIds(s))))], safe: true },

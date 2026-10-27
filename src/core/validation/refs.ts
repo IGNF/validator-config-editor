@@ -1,5 +1,5 @@
 import type { DocumentModel, GpuFile, LoadedModel, Project, TableModel } from '../model/types'
-import { isUrl, resolvePath, tableModelRef } from '../model/paths'
+import { isUrl, listNameOf, resolvePath, tableModelRef } from '../model/paths'
 import { pointer } from '../pointer'
 import { parseForeignKey } from './foreign-key'
 import { problem, type Problem } from './problems'
@@ -92,6 +92,8 @@ class Checker {
     })
     doc.codes?.forEach((code, i) => {
       if (isUrl(code.data)) return
+      // Nom de la liste égal au nom de son fichier (012, R5).
+      if (code.name !== listNameOf(code.data)) this.out.push(problem('WARN-CODE-NAME-FILE', name, file, pointer('codes', i, 'name'), { name: code.name, expected: listNameOf(code.data) }))
       const path = resolvePath(name, code.data)
       if (path && this.files.has(path)) referenced.add(path)
       else this.out.push(problem('ERR-CODE-DATA-MISSING', name, file, pointer('codes', i, 'data'), { ref: code.data }))

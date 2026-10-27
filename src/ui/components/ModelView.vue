@@ -3,6 +3,7 @@ import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDelete, mdiFolderDow
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
+import { renameCodeList } from '@core/edit/codelists'
 import { addCode, addFile, codeName, moveItem, removeItem, setOrRemove, type DocumentList } from '@core/edit/operations'
 import { setAt } from '@core/edit/pointer'
 import { resolvePath, tableModelRef } from '@core/model/paths'
@@ -55,6 +56,12 @@ function tableOf(f: FileModel): { text: string; path?: string } | undefined {
 const codePath = (data: string) => {
   const p = resolvePath(name.value, data)
   return store.has(p) ? p : undefined
+}
+// Fichier d'une déclaration : son nom devient celui de la liste, clés étrangères comprises (012, R5).
+function chooseFile(index: number, data: string) {
+  const { changes, refusal } = renameCodeList(store.session!, name.value, index, data)
+  if (refusal) store.notice = refusal
+  else store.applyChanges(changes)
 }
 // Nombre de valeurs d'une liste (lignes du CSV, hors en-tête).
 const rowsOf = (data: string) => {
@@ -205,10 +212,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         </div>
       </div>
       <div v-for="(c, i) in doc.codes ?? []" :key="c.id ?? i" class="d-flex flex-wrap align-center ga-2" :data-pointer="`/codes/${i}`" :data-testid="`code-${c.name}`">
-        <v-text-field :label="`Nom de la liste ${i + 1}`" :model-value="c.name" density="compact" variant="outlined" hide-details class="field"
-          @update:model-value="(v: string) => setProp(pointer('codes', i, 'name'), v, true)" />
-        <v-select :label="`Fichier de la liste ${i + 1}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details class="field"
-          @update:model-value="(v: string) => setProp(pointer('codes', i, 'data'), v, true)" />
+        <strong class="list-name" data-testid="code-name">{{ c.name }}</strong>
+        <v-select :label="`Fichier de la liste ${c.name}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details class="field"
+          data-testid="code-data" @update:model-value="(v: string) => chooseFile(i, v)" />
         <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir<template v-if="rowsOf(c.data) !== undefined"> ({{ rowsOf(c.data) }} valeur{{ rowsOf(c.data)! > 1 ? 's' : '' }})</template></a>
         <ProblemBadge :file="path!" :pointer="`/codes/${i}`" />
         <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
@@ -219,6 +225,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
 </template>
 
 <style scoped>
+.list-name {
+  min-width: 12rem;
+}
 .field {
   min-width: 16rem;
   flex: 1 1 16rem;

@@ -1,9 +1,13 @@
 // Création et copie de listes de codes (plan 005, R1) : modifications de fichiers à appliquer
 // en un seul pas (CSV créé et déclaration dans files.json).
-import { isUrl, resolvePath } from '../model/paths'
+import { isUrl, listNameOf, resolvePath } from '../model/paths'
+import { parseForeignKey, rewriteForeignKey } from '../validation/foreign-key'
 import type { RandomBytes } from './ids'
 import { addCode } from './operations'
-import { allFiles, allIds, textOf, type FileChange, type Session } from './session'
+import { setAt } from './pointer'
+import { allFiles, allIds, dataOf, textOf, type FileChange, type Session } from './session'
+
+export { listNameOf }
 
 /** Liste de codes CSV déclarée et lisible, proposée à la copie. */
 export interface CodeListRef {
@@ -80,4 +84,46 @@ export function createCodeList(session: Session, model: string, name: string, co
     { path: csvPath(model, name), kind: 'text', text: `${columns.join(',')}\n` },
     { path: doc.path, kind: 'json', update: (d) => addCode(d, allIds(session), `./codes/${name}.csv`, name, random) },
   ]
+}
+
+const isObject = (v: unknown): v is Record<string, unknown> => v !== null && typeof v === 'object' && !Array.isArray(v)
+
+/**
+ * Déclaration `index` de `model` pointée vers `data`, nommée comme son fichier (feature 012, R5) :
+ * `data`, `name`, `title` s'il suivait l'ancien nom, et clés étrangères des tables du modèle vers
+ * l'ancien nom, en un seul pas. Refusé si le nouveau nom est déjà déclaré dans le modèle.
+ */
+export function renameCodeList(session: Session, model: string, index: number, data: string): { changes: FileChange[]; refusal?: string } {
+  const path = `${model}/files.json`
+  const doc = dataOf(session, path)
+  const codes = isObject(doc) && Array.isArray(doc.codes) ? (doc.codes as Record<string, unknown>[]) : []
+  const code = codes[index]
+  if (!code) return { changes: [] }
+  const before = typeof code.name === 'string' ? code.name : ''
+  const name = listNameOf(data)
+  if (name !== before && codes.some((c, i) => i !== index && c.name === name)) return { changes: [], refusal: `La liste « ${name} » est déjà déclarée dans ce modèle.` }
+  const changes: FileChange[] = [{
+    path,
+    kind: 'json',
+    update: (d) => {
+      let out = setAt(setAt(d, `/codes/${index}/data`, data), `/codes/${index}/name`, name)
+      if (code.title === before && before !== name) out = setAt(out, `/codes/${index}/title`, name)
+      return out
+    },
+  }]
+  if (before && before !== name) {
+    for (const table of session.result.project.models.get(model)?.tables.keys() ?? []) {
+      const t = dataOf(session, table)
+      const fks = isObject(t) && isObject(t.constraints) && Array.isArray(t.constraints.foreignKeys) ? (t.constraints.foreignKeys as unknown[]) : []
+      const targets = fks.map((fk, i) => (typeof fk === 'string' && parseForeignKey(fk)?.target === before ? i : -1)).filter((i) => i >= 0)
+      if (targets.length) {
+        changes.push({
+          path: table,
+          kind: 'json',
+          update: (d) => targets.reduce((acc, i) => setAt(acc, `/constraints/foreignKeys/${i}`, rewriteForeignKey(fks[i] as string, 'list', before, name)), d),
+        })
+      }
+    }
+  }
+  return { changes }
 }

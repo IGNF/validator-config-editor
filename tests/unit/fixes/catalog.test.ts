@@ -49,6 +49,16 @@ describe('corrections', () => {
     expect(codes(undoEdit(after))).toEqual(['WARN-MODEL-NAME'])
   })
 
+  it('WARN-CODE-NAME-FILE : renomme la liste comme son fichier, clés étrangères comprises', async () => {
+    const s = await broken((f) => editJson(f, FILES, (d) => {
+      d.codes.find((c: { name: string }) => c.name === 'ListeEtatPLU').name = 'Etat'
+    }))
+    // Le nom modifié à la main casse aussi la clé étrangère de DOC_URBA : la correction rétablit les deux.
+    const { fixes, after } = fix(s, 'WARN-CODE-NAME-FILE')
+    expect(fixes[0]).toMatchObject({ label: 'Renommer la liste en « ListeEtatPLU », comme son fichier', safe: true })
+    expect(codes(after)).toEqual([])
+  })
+
   it('ERR-ID-DUPLICATE : attribue un nouvel identifiant', async () => {
     const s = await broken((f) => editJson(f, ZONE_URBA, (d) => { d.id = JSON.parse(f.get(`${PLU}/types/DOC_URBA.json`)!).id }))
     expect(codes(fix(s, 'ERR-ID-DUPLICATE').after)).not.toContain('ERR-ID-DUPLICATE')

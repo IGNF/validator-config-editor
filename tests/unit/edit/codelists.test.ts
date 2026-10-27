@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { checkColumns, checkNewName, codeLists, copyCodeList, createCodeList, defaultCopyName, type CodeListRef } from '@core/edit/codelists'
+import { checkColumns, checkNewName, codeLists, copyCodeList, createCodeList, defaultCopyName, listNameOf, renameCodeList, type CodeListRef } from '@core/edit/codelists'
 import { applyChanges, dataOf, isChanged, openSession, textOf, undoEdit, type Session } from '@core/edit/session'
 import { editJson, readConfig } from '../../support/fixtures'
 
@@ -138,5 +138,63 @@ describe('checkColumns', () => {
     expect(checkColumns(['CODE', 'CODE'])).toMatch(/en double/)
     expect(checkColumns(['A,B'])).toMatch(/virgule/)
     expect(checkColumns(['A"B'])).toMatch(/virgule/)
+  })
+})
+
+// Feature 012, US4 : nom de la liste égal au nom de son fichier.
+describe('listNameOf / renameCodeList', () => {
+  const config = (edit: (f: Map<string, string>) => void) => {
+    const f = readConfig()
+    edit(f)
+    return f
+  }
+  const indexOf = (s: Session, model: string, name: string) => codesOf(s, model).findIndex((c) => c.name === name)
+  const fkOf = (s: Session, table: string) => (dataOf(s, `${PLU}/types/${table}.json`) as { constraints: { foreignKeys: string[] } }).constraints.foreignKeys
+
+  it('nom du fichier sans .csv', () => {
+    expect(listNameOf('./codes/ListeEtatPLU.csv')).toBe('ListeEtatPLU')
+    expect(listNameOf('../cnig_PLU_2017/codes/Liste.Etat.CSV')).toBe('Liste.Etat')
+  })
+
+  it('nom, titre qui suivait l\'ancien nom et clés étrangères, en une étape', async () => {
+    const s = await openSession(config((f) => {
+      f.set(`${PLU}/codes/Etat.csv`, f.get(ETAT)!)
+      editJson(f, `${PLU}/files.json`, (d) => { d.codes.find((c: { name: string }) => c.name === 'ListeEtatPLU').title = 'ListeEtatPLU' })
+    }))
+    const i = indexOf(s, PLU, 'ListeEtatPLU')
+    const r = renameCodeList(s, PLU, i, './codes/Etat.csv')
+    expect(r.refusal).toBeUndefined()
+    const after = applyChanges(s, r.changes)
+    expect(codesOf(after, PLU)[i]).toMatchObject({ name: 'Etat', data: './codes/Etat.csv', title: 'Etat' })
+    expect(fkOf(after, 'DOC_URBA')).toContain('(ETAT) REFERENCES Etat(ETAT)')
+    expect(fkOf(after, 'DOC_URBA').join()).not.toContain('ListeEtatPLU')
+    expect(after.result.problems.filter((p) => p.severity === 'error')).toEqual([])
+    // Une seule étape.
+    expect(dataOf(undoEdit(after), `${PLU}/types/DOC_URBA.json`)).toEqual(dataOf(s, `${PLU}/types/DOC_URBA.json`))
+  })
+
+  it('titre distinct de l\'ancien nom : conservé', async () => {
+    const s = await openSession(config((f) => {
+      f.set(`${PLU}/codes/Etat.csv`, f.get(ETAT)!)
+      editJson(f, `${PLU}/files.json`, (d) => { d.codes.find((c: { name: string }) => c.name === 'ListeEtatPLU').title = 'États du document' })
+    }))
+    const i = indexOf(s, PLU, 'ListeEtatPLU')
+    expect(codesOf(applyChanges(s, renameCodeList(s, PLU, i, './codes/Etat.csv').changes), PLU)[i]!.title).toBe('États du document')
+  })
+
+  it('nom déjà déclaré dans le modèle : refusé', async () => {
+    const s = await openSession(readConfig())
+    const r = renameCodeList(s, PLU, indexOf(s, PLU, 'ListeEtatPLU'), './codes/ListeTypedocPLU.csv')
+    expect(r).toEqual({ changes: [], refusal: 'La liste « ListeTypedocPLU » est déjà déclarée dans ce modèle.' })
+  })
+})
+
+// SC-003 : aucun écart entre nom et fichier dans les configurations connues.
+describe('WARN-CODE-NAME-FILE sur les configurations connues', () => {
+  it.each(['dgpr', 'naviforest', 'ppr'])('%s', async (name) => {
+    const { join } = await import('node:path')
+    const { FIXTURES } = await import('../../support/fixtures')
+    const s = await openSession(readConfig(join(FIXTURES, '../known', name)))
+    expect(s.result.problems.filter((p) => p.code === 'WARN-CODE-NAME-FILE')).toEqual([])
   })
 })

@@ -52,6 +52,7 @@ code est un changement de version mineure.
 | `ERR-GPU-INHERITANCE` | erreur | configuration GpU : `parent` dans `files.json`, `parent_id` ou `abstract` dans `gpu.json` (feature 010) | `Héritage dans files.json : refusé par l'import dans le GpU` |
 | `ERR-GPU-ORPHAN-ID` | erreur | configuration GpU : remplace `WARN-GPU-ORPHAN-ID` (feature 010) | `gpu.json : identifiant 1773dd88… sans objet correspondant` |
 | `WARN-GPU-ORPHAN-ID` | avertissement | clé de section de `gpu.json` absente des `id` connus (plan R10) | `gpu.json : identifiant 1773dd88… sans objet correspondant` |
+| `WARN-CODE-NAME-FILE` | avertissement | déclaration de liste dont `name` diffère du nom de son fichier CSV sans `.csv` (feature 012) ; correction : renommer la liste, clés étrangères comprises | `La liste « Etat » ne porte pas le nom de son fichier (« ListeEtatPLU »)` |
 | `WARN-UNREFERENCED-FILE` | avertissement | fichier `types/**.json` ou `codes/**.csv` qui n'est le modèle de table d'aucun fichier ni le `data` d'aucun code | `Fichier non référencé par files.json` |
 
 ## Tri
