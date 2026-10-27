@@ -29,9 +29,12 @@ export function readVariables(file: JsonFile): { variables?: Variables; aliases?
   }
   if (problems.length) return { problems }
   const variables = new Map(entries as [string, string][])
-  // Suffixe _OPT <=> regex facultative (…)? : avertissement seulement, le dictionnaire reste utilisé.
+  // Nommage : suffixe _OPT <=> regex facultative (…)? ; préfixe « _ » <=> regex qui commence par « _ ».
+  // Avertissement seulement, le dictionnaire reste utilisé.
   for (const [name, regex] of variables) {
-    if (isOptional(name) !== isOptionalRegex(regex)) problems.push(problem('WARN-VARIABLES-OPT', null, file.path, pointer('variables', name), { name, kind: isOptional(name) ? 'suffix' : 'regex' }))
+    const kind = isOptional(name) !== isOptionalRegex(regex) ? (isOptional(name) ? 'suffix' : 'regex')
+      : name.startsWith('_') !== startsWithUnderscore(regex) ? (name.startsWith('_') ? 'noprefix' : 'prefix') : undefined
+    if (kind) problems.push(problem('WARN-VARIABLES-OPT', null, file.path, pointer('variables', name), { name, kind }))
   }
   // Alias facultatifs : objet famille -> (variable connue -> nom affiché).
   const raw = isObject(file.data) ? file.data.aliases : undefined
@@ -55,6 +58,9 @@ export function namesFor(aliases: Aliases | undefined, model: string | undefined
 
 /** Variable facultative : nom du dictionnaire (pas l'alias) de suffixe _OPT, convention partagée avec le GpU. */
 export const isOptional = (name: string) => name.endsWith('_OPT')
+
+/** Regex dont le texte reconnu commence par « _ » (groupes ouvrants ignorés), ex. (_[a-zA-Z])?. */
+const startsWithUnderscore = (regex: string) => regex.replace(/^\(+/, '').startsWith('_')
 
 /** Regex de la forme (…)? : un seul groupe, qui couvre toute la regex, suivi de « ? ». */
 export function isOptionalRegex(regex: string): boolean {

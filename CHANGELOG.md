@@ -9,7 +9,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Variables facultatives (suffixe `_OPT`, regex `(…)?`) surlignées en jaune comme dans GpU ; écart entre suffixe et regex signalé (`WARN-VARIABLES-OPT`).
+- Variables facultatives (suffixe `_OPT`, regex `(…)?`, ex. `<_PART_OPT>`) surlignées en jaune comme dans GpU ; préfixe `_` pour une regex qui commence par `_` ; écart à ces conventions signalé (`WARN-VARIABLES-OPT`).
 - Variables : alias par famille de modèles (`aliases` de `variables.json`, ex. `<IDGEST>` pour les SUP, `<SIREN>` pour les PLUi et SCoT), à l'affichage et à la saisie.
 - Configuration GpU (`variables.json` présent) : règles de l'import dans le GpU vérifiées — `id` présents et uniques par type d'objet dans toute la configuration, héritage refusé, surcharge `gpu.json` orpheline en erreur ; correction « Attribuer un identifiant » (#86).
 - Regex (nom du dossier, chemins des fichiers attendus, motifs de colonne) affichées avec les variables de `variables.json` à la racine de la configuration, regex complète au survol ; saisie de `<NOM>` convertie en regex (#85).

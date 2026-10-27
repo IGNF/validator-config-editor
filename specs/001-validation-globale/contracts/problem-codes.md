@@ -26,7 +26,7 @@ code est un changement de version mineure.
 | `ERR-CSV-ROW-LENGTH` | erreur | ligne dont le nombre de colonnes diffère de l'en-tête | `Ligne 14 : 3 valeurs pour 5 colonnes` |
 | `ERR-VARIABLES-FORMAT` | erreur | `variables.json` (racine) illisible, ou sans objet `variables` nom → regex non vide (feature 010) | `variables.json illisible ou mal formé : les regex sont affichées sans variable` |
 | `ERR-VARIABLES-DUPLICATE` | erreur | deux variables de `variables.json` ont la même regex (feature 010) | `La variable SIREN a la même regex que IDGEST` |
-| `WARN-VARIABLES-OPT` | avertissement | variable de `variables.json` dont le suffixe `_OPT` ne correspond pas à une regex `(…)?`, ou l'inverse (feature 010) | `La variable GEN a une regex facultative (…)? sans le suffixe _OPT` |
+| `WARN-VARIABLES-OPT` | avertissement | variable de `variables.json` dont le suffixe `_OPT` ne correspond pas à une regex `(…)?`, ou dont le préfixe `_` ne correspond pas à une regex qui commence par `_`, ou l'inverse (feature 010) | `La variable GEN a une regex facultative (…)? sans le suffixe _OPT` |
 | `WARN-MODEL-NO-DOCUMENT` | avertissement | dossier sans `files.json` | `Dossier sans files.json` |
 
 ## Schémas

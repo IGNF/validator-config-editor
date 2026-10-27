@@ -56,11 +56,14 @@
   `/aliases`).
 
   Variables facultatives (mise à jour du 2026-10-27, convention partagée avec GpU) : le suffixe
-  `_OPT` du nom du dictionnaire (pas de l'alias) marque une partie facultative.
+  `_OPT` du nom du dictionnaire (pas de l'alias) marque une partie facultative ; le préfixe `_`,
+  une regex qui commence par `_` (groupes ouvrants ignorés), pour que l'affichage montre le `_` :
+  `<DATE><_PART_OPT>`.
   `toSegments(regex, variables, names)` découpe la forme à variables en morceaux
   `{ text, variable?, optional? }` ; `toVariables` en est la concaténation. `WARN-VARIABLES-OPT`
   (avertissement, pointeur `/variables/<NOM>`) signale un nom en `_OPT` dont la regex n'est pas
-  un groupe unique suivi de `?`, ou l'inverse ; le dictionnaire reste utilisé.
+  un groupe unique suivi de `?`, ou l'inverse, et un préfixe `_` qui ne correspond pas au début de
+  la regex ; le dictionnaire reste utilisé.
 
 - **R3 – Configuration GpU** : `Project.variables` présent (même invalide). Le critère est
   recalculé à chaque validation.

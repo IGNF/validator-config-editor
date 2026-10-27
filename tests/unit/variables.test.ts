@@ -50,12 +50,20 @@ describe('variables facultatives (_OPT)', () => {
   })
 
   it('signale un écart entre le suffixe _OPT et la regex (…)?, sans refuser le dictionnaire', () => {
-    const r = readVariables(file('{"variables": {"GEN": "(_gen[0-9]+)?", "X_OPT": "[0-9]", "Y_OPT": "(a)|(b)?", "Z_OPT": "(a(b)?)?", "W": "(a)(b)?"}}'))
+    const r = readVariables(file('{"variables": {"_GEN": "(_gen[0-9]+)?", "X_OPT": "[0-9]", "Y_OPT": "(a)|(b)?", "Z_OPT": "(a(b)?)?", "W": "(a)(b)?"}}'))
     expect(r.variables?.size).toBe(5)
     expect(r.problems).toMatchObject([
-      { code: 'WARN-VARIABLES-OPT', severity: 'warning', pointer: '/variables/GEN', message: 'La variable GEN a une regex facultative (…)? sans le suffixe _OPT' },
+      { code: 'WARN-VARIABLES-OPT', severity: 'warning', pointer: '/variables/_GEN', message: 'La variable _GEN a une regex facultative (…)? sans le suffixe _OPT' },
       { code: 'WARN-VARIABLES-OPT', pointer: '/variables/X_OPT', message: 'La variable X_OPT a le suffixe _OPT sans regex facultative (…)?' },
       { code: 'WARN-VARIABLES-OPT', pointer: '/variables/Y_OPT' },
+    ])
+  })
+
+  it('signale un écart entre le préfixe « _ » et le début de la regex', () => {
+    const r = readVariables(file('{"variables": {"PART_OPT": "(_[a-z])?", "_X": "[0-9]", "_NUM_TERRIT_OPT": "((_97_00)?_[0-9]+)?", "ENTIER_OPT": "([0-9]+)?"}}'))
+    expect(r.problems).toMatchObject([
+      { pointer: '/variables/PART_OPT', message: 'La variable PART_OPT a une regex qui commence par « _ » sans le préfixe « _ »' },
+      { pointer: '/variables/_X', message: 'La variable _X a le préfixe « _ » sans regex qui commence par « _ »' },
     ])
   })
 
@@ -64,7 +72,7 @@ describe('variables facultatives (_OPT)', () => {
     expect(toSegments(`[0-9]{9}_A1(_[a-zA-Z])?\\.pdf`, variables, sup)).toEqual([
       { text: '<IDGEST>', variable: 'IDGEST', regex: '[0-9]{9}', optional: false },
       { text: '_A1' },
-      { text: '<PART_OPT>', variable: 'PART_OPT', regex: '(_[a-zA-Z])?', optional: true },
+      { text: '<_PART_OPT>', variable: '_PART_OPT', regex: '(_[a-zA-Z])?', optional: true },
       { text: '\\.pdf' },
     ])
     expect(toSegments('', variables)).toEqual([])
@@ -73,11 +81,11 @@ describe('variables facultatives (_OPT)', () => {
 
 describe('toVariables / fromVariables', () => {
   it('remplace la plus longue regex d\'abord', () => {
-    expect(toVariables(`Pieces_ecrites/[AB0-9]{5}_reglement_${DATE}(_[a-zA-Z])?\\.pdf`, variables)).toBe('Pieces_ecrites/<INSEE_COMMUNE>_reglement_<DATE><PART_OPT>\\.pdf')
+    expect(toVariables(`Pieces_ecrites/[AB0-9]{5}_reglement_${DATE}(_[a-zA-Z])?\\.pdf`, variables)).toBe('Pieces_ecrites/<INSEE_COMMUNE>_reglement_<DATE><_PART_OPT>\\.pdf')
     // DATE contient [0-9]{4} puis des groupes : reconnue entière, pas morceau par morceau.
     expect(toVariables(DATE, variables)).toBe('<DATE>')
-    // MAILLAGE_OPT contient MAILLAGE : la plus longue l'emporte.
-    expect(toVariables(variables.get('MAILLAGE_OPT')!, variables)).toBe('<MAILLAGE_OPT>')
+    // _MAILLAGE_OPT contient MAILLAGE : la plus longue l'emporte.
+    expect(toVariables(variables.get('_MAILLAGE_OPT')!, variables)).toBe('<_MAILLAGE_OPT>')
     expect(toVariables('sans variable', variables)).toBe('sans variable')
   })
 
@@ -87,7 +95,7 @@ describe('toVariables / fromVariables', () => {
   })
 
   it('aller-retour sur des formes réelles', () => {
-    for (const form of ['<MAILLAGE>_PLU_<DATE><PART_OPT>', '<CATEGORIE>-<DIGIT_9>-<ENTIER>-<ENTIER>', 'Actes/<CATEGORIE>_<DIGIT_9>_<DATE>_act']) {
+    for (const form of ['<MAILLAGE>_PLU_<DATE><_PART_OPT>', '<CATEGORIE>-<DIGIT_9>-<ENTIER>-<ENTIER>', 'Actes/<CATEGORIE>_<DIGIT_9>_<DATE>_act']) {
       expect(toVariables(fromVariables(form, variables), variables)).toBe(form)
     }
   })

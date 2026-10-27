@@ -44,11 +44,14 @@ export const CATALOG = {
   },
   'WARN-VARIABLES-OPT': {
     severity: 'warning',
-    title: 'Variable facultative mal nommée',
-    hint: 'Le suffixe _OPT marque une partie facultative, affichée en jaune : il est réservé aux regex de la forme (…)?. Renommer la variable ou corriger sa regex.',
-    message: (p) => p.kind === 'suffix'
-      ? `La variable ${s(p, 'name')} a le suffixe _OPT sans regex facultative (…)?`
-      : `La variable ${s(p, 'name')} a une regex facultative (…)? sans le suffixe _OPT`,
+    title: 'Variable mal nommée',
+    hint: 'Le suffixe _OPT marque une partie facultative, affichée en jaune : il est réservé aux regex de la forme (…)?. Le préfixe « _ » est réservé aux regex qui commencent par « _ ». Renommer la variable ou corriger sa regex.',
+    message: (p) => ({
+      suffix: `La variable ${s(p, 'name')} a le suffixe _OPT sans regex facultative (…)?`,
+      regex: `La variable ${s(p, 'name')} a une regex facultative (…)? sans le suffixe _OPT`,
+      prefix: `La variable ${s(p, 'name')} a une regex qui commence par « _ » sans le préfixe « _ »`,
+      noprefix: `La variable ${s(p, 'name')} a le préfixe « _ » sans regex qui commence par « _ »`,
+    })[s(p, 'kind')] ?? '',
   },
   'ERR-CSV-ROW-LENGTH': {
     severity: 'error',

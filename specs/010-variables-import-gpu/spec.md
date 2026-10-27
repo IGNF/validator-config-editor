@@ -75,10 +75,12 @@ dans `gpu.json`.
 5. **Given** un `variables.json` invalide (JSON illisible, format inattendu, deux variables de
    même regex), **When** la configuration est ouverte, **Then** un problème le signale et les
    regex s'affichent telles quelles.
-6. **Given** une variable dont le nom finit par `_OPT` (partie facultative, ex. `PART_OPT`),
+6. **Given** une variable dont le nom finit par `_OPT` (partie facultative, ex. `_PART_OPT`),
    **When** une regex qui la contient s'affiche, **Then** la variable est surlignée en jaune,
-   comme dans GpU. Un nom en `_OPT` dont la regex n'est pas de la forme `(…)?`, ou une regex
-   `(…)?` dont le nom ne finit pas par `_OPT`, est signalé par un avertissement.
+   comme dans GpU (`<INSEE_COMMUNE>_PSMV_<DATE><_PART_OPT>`). Un avertissement signale un nom
+   qui ne suit pas la convention : suffixe `_OPT` si et seulement si la regex est de la forme
+   `(…)?`, préfixe `_` si et seulement si la regex commence par `_` (`ENTIER_OPT` :
+   `([0-9]+)?`).
 
 ---
 
@@ -146,8 +148,9 @@ Les créations de l'éditeur respectent l'unicité globale des `id`.
   famille (`aliases` de `variables.json`, ex. `cnig_SUP` : `DIGIT_9` → `IDGEST`, `cnig_PLUi` et
   `cnig_SCoT` : `DIGIT_9` → `SIREN`) DOIT remplacer le nom de la variable pour les modèles dont le
   nom commence par `<famille>_`, à l'affichage comme à la saisie. Une variable de suffixe `_OPT`
-  (regex `(…)?`) DOIT être surlignée en jaune ; un écart entre le suffixe et la forme de la regex
-  DOIT être un avertissement (`WARN-VARIABLES-OPT`).
+  (regex `(…)?`) DOIT être surlignée en jaune ; le nom d'une variable dont la regex commence par
+  `_` DOIT commencer par `_` ; un écart à ces deux règles DOIT être un avertissement
+  (`WARN-VARIABLES-OPT`).
 - **FR-003** : une saisie contenant `<NOM>` d'une variable connue DOIT enregistrer la regex pure.
 - **FR-004** : sur une configuration GpU, les `id` DOIVENT être présents et uniques par type
   d'objet dans toute la configuration ; `parent`, `parent_id` et `abstract` DOIVENT être des
