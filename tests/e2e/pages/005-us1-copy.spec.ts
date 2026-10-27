@@ -65,14 +65,3 @@ test('duplication dans le même modèle : nom _COPIE proposé, nom existant refu
   await page.getByTestId('confirm-copy').click()
   await expect(page.getByRole('heading', { name: 'Liste de codes ListeEtatPLU_bis' })).toBeVisible()
 })
-
-test('Ctrl+Z retire la copie en un pas', async ({ page }) => {
-  await pick(page, MEC, 'ListeEtat', `source-${PLU}-ListeEtatPLU`)
-  await page.getByTestId('confirm-copy').click()
-  await expect(page.getByTestId('changed-count')).toHaveText('2 fichier(s) modifié(s)')
-  await page.getByTestId('undo').click()
-  await expect(page.getByTestId('changed-count')).toHaveCount(0)
-  await page.goto(`./#/${MEC}/files.json`)
-  await page.getByTestId('model-tab-codes').click()
-  await expect(page.getByTestId('code-ListeEtatPLU')).toHaveCount(0)
-})

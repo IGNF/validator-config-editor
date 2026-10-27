@@ -176,7 +176,7 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - appliquer une modification de colonne, de fichier attendu ou de déclaration de liste aux
   éléments équivalents des autres modèles (« Équivalents ») ; pour une colonne : même nom dans les tables équivalentes de la famille du
   modèle (`A1_ASSIETTE_SUP_S` ↔ `A2_ASSIETTE_SUP_S`) ou de toute la configuration, aperçu des
-  valeurs actuelles, éléments à cocher, une seule étape d'annulation ; l'onglet « Comparer »
+  valeurs actuelles, éléments à cocher ; l'onglet « Comparer »
   montre les propriétés principales de chaque équivalent et marque « ≠ » les écarts ;
 - comparer un modèle à un autre (« Comparer » dans la vue du modèle), par défaut à la version
   précédente du même standard : dossier, fichiers attendus, tables, colonnes et listes de codes
@@ -188,7 +188,7 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - corriger d'un clic les problèmes courants (« Corriger » dans le panneau des problèmes) :
   liste non déclarée ou à copier depuis un autre modèle, identifiant en
   double, nom mal saisi, valeur CSV contenant une virgule… ;
-- modifier tables et modèles de document (annuler/rétablir), puis enregistrer les fichiers
+- modifier tables et modèles de document, puis enregistrer les fichiers
   modifiés (« Enregistrer » ou Ctrl+S) : seuls ces fichiers sont réécrits, dans leur mise en forme
   d'origine, et un fichier modifié sur disque entre-temps n'est pas écrasé ;
 - relire la configuration après une modification faite dans un autre outil (« Recharger »).

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiGithub, mdiRedo, mdiRefresh, mdiUndo } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiContentSave, mdiDownload, mdiFileTreeOutline, mdiFolderOpen, mdiGithub, mdiRefresh } from '@mdi/js'
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
 import ChangesDialog from './components/ChangesDialog.vue'
 import CodeListView from './components/CodeListView.vue'
@@ -52,15 +52,10 @@ watch(
   },
 )
 
-// Raccourcis : Ctrl+Z annuler, Ctrl+Maj+Z ou Ctrl+Y rétablir.
+// Raccourci : Ctrl+S enregistrer.
 function onKey(e: KeyboardEvent) {
-  if (!(e.ctrlKey || e.metaKey)) return
-  const key = e.key.toLowerCase()
-  if (key === 's') {
-    if (store.canSave) save()
-  } else if (key === 'z' && !e.shiftKey) store.undo()
-  else if ((key === 'z' && e.shiftKey) || key === 'y') store.redo()
-  else return
+  if (!(e.ctrlKey || e.metaKey) || e.key.toLowerCase() !== 's') return
+  if (store.canSave) save()
   e.preventDefault()
 }
 
@@ -110,9 +105,6 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
       <span class="version text-body-2" :title="`Version ${pkg.version} de validator-config-editor`" data-testid="app-version">v{{ pkg.version }}</span>
       <v-btn :icon="mdiGithub" size="small" variant="text" href="https://github.com/IGNF/validator-config-editor" target="_blank" rel="noopener"
         aria-label="validator-config-editor sur GitHub (nouvel onglet)" title="validator-config-editor sur GitHub" data-testid="app-github" />
-      <span class="text-body-2 ml-4 mr-4 root" :title="store.root" data-testid="config-source">{{ store.root }}</span>
-      <v-btn v-if="store.result && !store.readOnly" :icon="mdiUndo" :disabled="!store.canUndo" aria-label="Annuler (Ctrl+Z)" title="Annuler (Ctrl+Z)" data-testid="undo" @click="store.undo()" />
-      <v-btn v-if="store.result && !store.readOnly" :icon="mdiRedo" :disabled="!store.canRedo" aria-label="Rétablir (Ctrl+Maj+Z)" title="Rétablir (Ctrl+Maj+Z)" data-testid="redo" @click="store.redo()" />
       <v-btn v-if="store.changed.size" variant="tonal" color="warning" class="mx-2 changed" title="Revoir les modifications" data-testid="changed-count"
         @click="changes?.show()">{{ store.changed.size }} fichier(s) modifié(s)</v-btn>
       <v-btn v-if="store.canSave" :prepend-icon="mdiContentSave" :disabled="!store.changed.size" data-testid="save" @click="save">Enregistrer</v-btn>
@@ -173,12 +165,6 @@ const view = computed(() => VIEWS[kindOf(route.value.file)])
   border: 1px solid rgb(var(--v-theme-divider));
   border-radius: 4px;
   color: rgb(var(--v-theme-secondary));
-  white-space: nowrap;
-}
-.root {
-  max-width: 40vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 </style>

@@ -28,14 +28,12 @@ test('diff ligne à ligne, ouverture du fichier', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
 })
 
-test('annuler les modifications d\'un fichier, puis Ctrl+Z', async ({ page }) => {
+test('annuler les modifications d\'un fichier', async ({ page }) => {
   await page.getByTestId('changed-count').click()
   await page.getByTestId(`change-${ZONE}`).getByTestId('change-revert').click()
   await expect(page.getByTestId('changes-dialog')).toContainText('Aucune modification.')
   await page.keyboard.press('Escape')
   await expect(page.getByTestId('changed-count')).toHaveCount(0)
-  await page.getByTestId('undo').click()
-  await expect(page.getByTestId('changed-count')).toHaveText('1 fichier(s) modifié(s)')
 })
 
 test('accessibilité de la revue', async ({ page }) => {

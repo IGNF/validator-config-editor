@@ -9,7 +9,7 @@ import { useProject } from '../stores/project'
 import RegexText from './RegexText.vue'
 
 // Modification en série (feature 006, plan R6) : éléments équivalents de `source` dans les autres
-// modèles, puis recopie d'une propriété vers ceux qui sont cochés, en une étape d'annulation.
+// modèles, puis recopie d'une propriété vers ceux qui sont cochés.
 const props = defineProps<{ source: Source; label: string }>()
 const store = useProject()
 const open = ref(false)
@@ -88,7 +88,7 @@ function apply() {
   if (!store.session || !property.value || !selected.value.length) return
   const n = selected.value.length
   store.applyChanges(applyToEquivalents(store.session, props.source, selected.value, property.value))
-  store.notice = `${LABELS[property.value]} appliqué à ${n} élément${n > 1 ? 's' : ''} (Annuler pour revenir en arrière).`
+  store.notice = `${LABELS[property.value]} appliqué à ${n} élément${n > 1 ? 's' : ''}.`
   open.value = false
 }
 </script>

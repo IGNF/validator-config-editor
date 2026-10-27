@@ -36,7 +36,7 @@ async function editNomgest(page: Page, value: string) {
   return page.getByTestId('equivalents-dialog')
 }
 
-test('maxLength appliqué en série, enregistré, puis annulé en une fois', async ({ page }) => {
+test('maxLength appliqué en série, puis enregistré', async ({ page }) => {
   const dialog = await editNomgest(page, '120')
   await expect(dialog.getByTestId('equivalents-property')).toContainText('Longueur maximale')
   await expect(dialog.getByTestId('equivalents-source-value')).toHaveText('120')
@@ -44,11 +44,6 @@ test('maxLength appliqué en série, enregistré, puis annulé en une fois', asy
   await dialog.getByTestId('equivalents-apply').click()
   await expect(page.getByTestId('notice')).toContainText('Longueur maximale appliqué à 2 éléments')
   await expect(page.getByTestId('changed-count')).toHaveText('3 fichier(s) modifié(s)')
-
-  // Une étape d'annulation pour la série : la source garde sa valeur.
-  await page.getByTestId('undo').click()
-  await expect(page.getByTestId('changed-count')).toHaveText('1 fichier(s) modifié(s)')
-  await page.getByTestId('redo').click()
   await page.getByTestId('save').click()
   await expect(page.getByTestId('notice')).toContainText('3 fichiers enregistrés')
   expect([maxLength(A1), maxLength('cnig_SUP_A2_2016'), maxLength('cnig_SUP_A3_2016')]).toEqual([120, 120, 120])
@@ -105,7 +100,7 @@ test('comparer : valeur divergente marquée, modèle absent, accessibilité', as
 })
 
 // US2 : fichiers attendus en série.
-test('REGLEMENT passé en « Obligatoire » et appliqué en série, puis annulé', async ({ page }) => {
+test('REGLEMENT passé en « Obligatoire » et appliqué en série', async ({ page }) => {
   const mandatory = (m: string) => JSON.parse(readFileSync(join(server.dir, `${m}/files.json`), 'utf8')).files.find((f: { name: string }) => f.name === 'REGLEMENT').mandatory
   await page.goto(`${server.url}#/${A1}/files.json`)
   await page.getByTestId('model-tab-files').click()
@@ -119,9 +114,7 @@ test('REGLEMENT passé en « Obligatoire » et appliqué en série, puis annulé
   await expect(dialog.getByTestId('equivalent-cnig_SUP_A2_2016')).toContainText(': OPTIONAL')
   await dialog.getByTestId('equivalents-apply').click()
   await expect(page.getByTestId('notice')).toContainText('Présence appliqué à 2 éléments')
-  await page.getByTestId('undo').click()
-  await expect(page.getByTestId('changed-count')).toHaveText('1 fichier(s) modifié(s)')
-  await page.getByTestId('redo').click()
+  await expect(page.getByTestId('changed-count')).toHaveText('3 fichier(s) modifié(s)')
   await page.getByTestId('save').click()
   await expect(page.getByTestId('notice')).toContainText('3 fichiers enregistrés')
   expect([A1, 'cnig_SUP_A2_2016', 'cnig_SUP_A3_2016'].map(mandatory)).toEqual(['ERROR', 'ERROR', 'ERROR'])

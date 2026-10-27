@@ -34,13 +34,11 @@ test('valeur modifiée et ligne ajoutée, enregistrées ; seule la ligne touché
   expect(saved.at(-2)).toBe('99')
 })
 
-test('ligne retirée, puis annulation', async ({ page }) => {
+test('ligne retirée', async ({ page }) => {
   const rows = page.locator('[data-testid="code-values"] tbody tr')
   const count = await rows.count()
   await page.getByTestId('remove-row-0').click()
   await expect(rows).toHaveCount(count - 1)
-  await page.getByTestId('undo').click()
-  await expect(rows).toHaveCount(count)
 })
 
 test('accessibilité de la liste modifiable', async ({ page }) => {

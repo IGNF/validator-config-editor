@@ -24,7 +24,7 @@ defineExpose({ choose })
 
 const FEATURES = [
   { icon: mdiAlertCircleOutline, title: 'Valider', text: 'Erreurs et avertissements de toute la configuration, avec des corrections en un clic.' },
-  { icon: mdiPencilOutline, title: 'Modifier', text: 'Modèles, tables, colonnes et listes de codes, avec annulation et modification en série.' },
+  { icon: mdiPencilOutline, title: 'Modifier', text: 'Modèles, tables, colonnes et listes de codes, avec modification en série.' },
   { icon: mdiCompareHorizontal, title: 'Comparer', text: 'Deux versions d\'un standard : fichiers, tables, colonnes et contenu des listes.' },
   { icon: mdiTrayArrowDown, title: 'Télécharger', text: 'Un fichier, un modèle ou toute la configuration en ZIP, dans sa mise en forme d\'origine.' },
 ]

@@ -33,7 +33,6 @@ const fixes = computed(() => store.fixes(props.problem))
         </v-list-item>
       </v-list>
       <v-divider />
-      <p class="note">Une seule étape, annulable (Ctrl+Z).</p>
     </v-card>
   </v-menu>
 </template>
@@ -62,11 +61,5 @@ const fixes = computed(() => store.fixes(props.problem))
   font-weight: 700;
   color: #1e5631;
   background: #e3f4e8;
-}
-.note {
-  margin: 0;
-  padding: 6px 16px 8px;
-  font-size: 0.8rem;
-  color: rgb(var(--v-theme-secondary));
 }
 </style>

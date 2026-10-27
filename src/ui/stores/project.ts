@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
-import { allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, redoEdit, textOf, undoEdit, type FileChange, type Session, revertFile } from '@core/edit/session'
+import { allIds, applyChanges, changedFiles, dataOf, isChanged, reformatted, edit as editSession, openSession, textOf, type FileChange, type Session, revertFile } from '@core/edit/session'
 import type { LoadedModel } from '@core/model/types'
 import { canFixAll as canFixAllIn, fixAll as fixAllIn, fixesFor, type Fix } from '@core/fixes/catalog'
 import { countByModel, countProblems, type Problem } from '@core/validation/problems'
@@ -68,12 +68,8 @@ export const useProject = defineStore('project', () => {
   function edit<T = unknown>(path: string, update: (data: T) => unknown, key?: string) {
     if (session.value && !readOnly.value) session.value = editSession(session.value, path, update, key)
   }
-  /** Rétablit un fichier modifié (revue des modifications), en un pas annulable. */
+  /** Rétablit un fichier modifié (revue des modifications). */
   const revert = (path: string) => session.value && !readOnly.value && (session.value = revertFile(session.value, path))
-  const undo = () => session.value && !readOnly.value && (session.value = undoEdit(session.value))
-  const redo = () => session.value && !readOnly.value && (session.value = redoEdit(session.value))
-  const canUndo = computed(() => (session.value?.history.past.length ?? 0) > 0)
-  const canRedo = computed(() => (session.value?.history.future.length ?? 0) > 0)
   const changed = computed(() => (session.value ? changedFiles(session.value) : new Map<string, string>()))
   const ids = () => (session.value ? allIds(session.value) : new Set<string>())
   const isEdited = (path: string) => !!session.value && isChanged(session.value, path)
@@ -193,6 +189,6 @@ export const useProject = defineStore('project', () => {
   return {
     pending, notice, download, variables, regexDisplay, regexSegments, regexTest, regexInput, regexHint, canSave, save, fixes, applyChanges: apply, applyFix, canFixAll, fixAll,
     readOnly, source, session, loading, problemModel, error, load, result, root, models, summary, countsByModel, countsByFile, problemsUnder,
-    has, text, data, edit, ids, revert, undo, redo, canUndo, canRedo, changed, isEdited, isModelEdited,
+    has, text, data, edit, ids, revert, changed, isEdited, isModelEdited,
   }
 })

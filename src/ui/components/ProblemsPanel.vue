@@ -62,7 +62,7 @@ const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`
       <v-btn v-if="!store.readOnly" :prepend-icon="mdiAutoFix" color="primary" block data-testid="fix-all" @click="store.fixAll(bulk)">
         Corriger les {{ bulk.length }} problèmes
       </v-btn>
-      <p class="text-caption mt-1">{{ plural(bulkFiles, 'fichier') }} modifié{{ bulkFiles > 1 ? 's' : '' }}, en une seule étape annulable.</p>
+      <p class="text-caption mt-1">{{ plural(bulkFiles, 'fichier') }} modifié{{ bulkFiles > 1 ? 's' : '' }}.</p>
     </div>
     <v-expansion-panels v-model="openedGroups" multiple variant="accordion" class="mt-2">
       <v-expansion-panel v-for="g in groups" :key="g.file" :value="g.file" :data-testid="`group-${g.file}`">

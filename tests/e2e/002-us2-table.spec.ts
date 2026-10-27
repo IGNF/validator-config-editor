@@ -57,19 +57,6 @@ test('un problème créé apparaît puis disparaît une fois corrigé', async ({
   await expect(page.getByTestId('problem-ERR-REFERENCE-TARGET')).toHaveCount(0, { timeout: 1000 })
 })
 
-test('annule et rétablit, aux boutons et au clavier', async ({ page }) => {
-  await page.getByTestId('table-name').getByRole('textbox').fill('ZONE')
-  await expect(page.getByRole('heading', { name: 'Table ZONE', exact: true })).toBeVisible()
-  await page.getByTestId('undo').click()
-  await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
-  await expect(page.getByTestId('changed-count')).toHaveCount(0)
-  await page.getByTestId('redo').click()
-  await expect(page.getByRole('heading', { name: 'Table ZONE', exact: true })).toBeVisible()
-  await page.locator('body').click()
-  await page.keyboard.press('Control+z')
-  await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()
-})
-
 test('modifie une clé étrangère et conserve les propriétés inconnues', async ({ page }) => {
   // Affichage SQL (REFERENCES en mot-clé), puis saisie par le crayon.
   await expect(page.getByTestId('foreignKeys-0-sql').locator('.keyword')).toHaveText('REFERENCES')

@@ -38,7 +38,7 @@ test.afterAll(() => {
   rmSync(dir, { recursive: true, force: true })
 })
 
-const EDIT_CONTROLS = ['undo', 'redo', 'save', 'add-file', 'remove-file', 'add-code', 'new-code-list', 'copy-code-list', 'add-column', 'remove-column', 'add-conditions', 'add-foreignKeys', 'fix-all', 'fix-menu']
+const EDIT_CONTROLS = ['save', 'add-file', 'remove-file', 'add-code', 'new-code-list', 'copy-code-list', 'add-column', 'remove-column', 'add-conditions', 'add-foreignKeys', 'fix-all', 'fix-menu']
 async function noEditing(page: Page) {
   for (const id of EDIT_CONTROLS) await expect(page.getByTestId(id), id).toHaveCount(0)
   // Champs du panneau principal : tous en lecture seule (les filtres des panneaux restent utilisables).
@@ -54,7 +54,7 @@ test('modèle, table, liste : lecture seule, bandeau, titre, aucune ressource di
   await page.goto(`${url}#/cnig_PLU_2017/files.json`)
   await expect(page.getByRole('heading', { name: 'Modèle cnig_PLU_2017' })).toBeVisible()
   await expect(page.getByTestId('read-only-banner')).toContainText('Lecture seule')
-  await expect(page.getByTestId('config-source')).toHaveText('Fixtures (test)')
+  await expect(page.getByTestId('config-source')).toHaveCount(0)
   await noEditing(page)
 
   await page.getByTestId('model-tab-files').click()

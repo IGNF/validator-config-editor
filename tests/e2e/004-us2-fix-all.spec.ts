@@ -29,15 +29,13 @@ const filterCode = async (page: import('@playwright/test').Page, code: string) =
   await page.getByRole('option', { name: code }).click()
 }
 
-test('corrige les 3 noms de modèles en une fois, une annulation défait tout', async ({ page }) => {
+test('corrige les 3 noms de modèles en une fois', async ({ page }) => {
   await expect(page.getByTestId('fix-all')).toHaveCount(0)
   await filterCode(page, 'WARN-MODEL-NAME')
   await expect(page.getByTestId('fix-all')).toHaveText('Corriger les 3 problèmes')
-  await expect(page.getByText('3 fichiers modifiés, en une seule étape annulable.')).toBeVisible()
+  await expect(page.getByText('3 fichiers modifiés.')).toBeVisible()
   await page.getByTestId('fix-all').click()
   await expect(page.getByTestId('problems-count')).toHaveText('0 problème sur 1')
-  await page.getByTestId('undo').click()
-  await expect(page.getByTestId('problems-count')).toHaveText('3 problèmes sur 4')
 })
 
 test('pas de correction groupée pour des corrections à choix', async ({ page }) => {
