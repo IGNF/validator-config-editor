@@ -18,6 +18,7 @@ test.beforeEach(async ({ page }) => {
   await page.getByTestId('folder-input').setInputFiles(config)
   await expect(page.getByTestId('summary')).toBeVisible()
   await page.goto(`./#/${MEC}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('new-code-list').click()
 })
 test.afterEach(() => rmSync(tmp, { recursive: true, force: true }))

@@ -15,6 +15,7 @@ test.afterEach(() => server.stop())
 
 test('copie puis enregistrement : fichier créé, identique, et déclaré', async ({ page }) => {
   await page.goto(`${server.url}#/${MEC}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('copy-code-list').click()
   await page.getByTestId('code-list-filter').getByRole('textbox').fill('ListeEtat')
   await page.getByTestId(`source-${PLU}-ListeEtatPLU`).click()

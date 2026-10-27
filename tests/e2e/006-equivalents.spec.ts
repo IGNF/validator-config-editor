@@ -108,6 +108,7 @@ test('comparer : valeur divergente marquée, modèle absent, accessibilité', as
 test('REGLEMENT passé en « Obligatoire » et appliqué en série, puis annulé', async ({ page }) => {
   const mandatory = (m: string) => JSON.parse(readFileSync(join(server.dir, `${m}/files.json`), 'utf8')).files.find((f: { name: string }) => f.name === 'REGLEMENT').mandatory
   await page.goto(`${server.url}#/${A1}/files.json`)
+  await page.getByTestId('model-tab-files').click()
   const reglement = page.getByTestId('file-REGLEMENT')
   await reglement.click()
   await reglement.getByTestId('file-mandatory').click()
@@ -128,6 +129,7 @@ test('REGLEMENT passé en « Obligatoire » et appliqué en série, puis annulé
 
 test('déclaration de liste : bouton « Équivalents » et liste des équivalents', async ({ page }) => {
   await page.goto(`${server.url}#/${A1}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('code-ListeValidegestSUP').getByTestId('equivalents').click()
   const dialog = page.getByTestId('equivalents-dialog')
   await expect(dialog.getByTestId('equivalent-cnig_SUP_A2_2016')).toBeVisible()

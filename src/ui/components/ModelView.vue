@@ -19,6 +19,7 @@ import FileFrame from './FileFrame.vue'
 import NewCodeListDialog from './NewCodeListDialog.vue'
 import ModelSummary from './ModelSummary.vue'
 import ProblemBadge from './ProblemBadge.vue'
+import ProblemCount from './ProblemCount.vue'
 import RegexText from './RegexText.vue'
 import NotConformant from './NotConformant.vue'
 
@@ -82,6 +83,35 @@ const rowsOf = (data: string) => {
 const unreferencedTables = computed(() =>
   (store.result?.problems ?? []).filter((p) => p.code === 'WARN-UNREFERENCED-FILE' && p.model === name.value && p.file.startsWith(`${name.value}/types/`)).map((p) => p.file))
 
+// Onglets de la vue (modèle, fichiers, tables, listes) : l'onglet suit le pointeur de l'URL
+// (fichier de l'arbre, problème cliqué), « Modèle » par défaut.
+type ModelTab = 'model' | 'files' | 'tables' | 'codes'
+const modelTab = ref<ModelTab>('model')
+watch(
+  () => route.value.pointer,
+  (p) => {
+    if (p === undefined) return
+    modelTab.value = p.startsWith('/files') ? 'files' : p.startsWith('/codes') ? 'codes' : 'model'
+  },
+  { immediate: true },
+)
+
+// Modèles de table du modèle : ceux des fichiers attendus de type table (et multi_table).
+const tables = computed(() => {
+  const out: { name: string; file: string; index: number; mandatory?: string; ref: string; path?: string; columns?: number }[] = []
+  const checked = store.result?.checked.get(name.value)
+  doc.value?.files.forEach((f, index) => {
+    const entries = f.type === 'table' ? [{ name: f.name, tableModel: f.tableModel }] : f.type === 'multi_table' ? (f.tables ?? []) : []
+    for (const t of entries) {
+      const ref = tableModelRef(t.tableModel, t.name)
+      const p = ref === undefined ? undefined : resolvePath(name.value, ref)
+      const found = p !== undefined && store.has(p) ? p : undefined
+      out.push({ name: checked?.tables.get(found ?? '')?.name ?? t.name, file: f.name, index, mandatory: f.mandatory, ref: ref ?? t.tableModel ?? '', ...(found && { path: found, columns: checked?.tables.get(found)?.columns.length }) })
+    }
+  })
+  return out
+})
+
 // Fichier ouvert : suit le pointeur de l'URL (problème cliqué) et l'ajout.
 const opened = ref<number[]>([])
 watch(
@@ -111,9 +141,6 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
       <v-btn :prepend-icon="mdiFolderDownload" size="small" variant="tonal" data-testid="download-model" @click="store.download({ kind: 'model', model: name })">
         Télécharger le modèle
       </v-btn>
-      <v-btn v-if="doc" :prepend-icon="mdiFormatListBulleted" size="small" variant="tonal" data-testid="code-lists-button" :href="href(path!, '/codes')">
-        Listes de codes ({{ doc.codes?.length ?? 0 }})
-      </v-btn>
       <v-btn :prepend-icon="mdiCompareHorizontal" size="small" variant="tonal" data-testid="compare-model-button"
         :href="compareHref(name, previousVersion(name, store.models.map((m) => m.name)))">
         Comparer
@@ -128,8 +155,15 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
     <NotConformant v-else-if="!doc" />
 
     <template v-else>
-      <ModelSummary :name="name" :doc="doc" />
-      <section data-pointer="">
+      <ModelSummary :name="name" :doc="doc" @select="(t: ModelTab) => (modelTab = t)" />
+      <v-tabs v-model="modelTab" color="primary" class="model-tabs mb-4" data-testid="model-tabs">
+        <v-tab value="model" data-testid="model-tab-model">Modèle</v-tab>
+        <v-tab value="files" data-testid="model-tab-files">Fichiers ({{ doc.files.length }})</v-tab>
+        <v-tab value="tables" data-testid="model-tab-tables">Tables ({{ tables.length }})</v-tab>
+        <v-tab value="codes" data-testid="model-tab-codes">Listes de codes ({{ doc.codes?.length ?? 0 }})</v-tab>
+      </v-tabs>
+
+      <section v-if="modelTab === 'model'" data-pointer="">
         <div class="d-flex flex-wrap ga-4">
           <v-text-field label="Nom" :model-value="doc.name" density="compact" variant="outlined" class="field" data-testid="model-name"
             @update:model-value="(v: string) => setProp('/name', v, true)" />
@@ -150,8 +184,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <p v-if="doc.id" class="text-body-2">Identifiant : <code>{{ doc.id }}</code></p>
       </section>
 
-      <div class="d-flex align-center mt-4">
-        <h2 class="text-h6">Fichiers ({{ doc.files.length }})</h2>
+      <template v-if="modelTab === 'files'">
+      <div class="d-flex align-center">
+        <h2 class="text-h6">Fichiers attendus ({{ doc.files.length }})</h2>
         <v-spacer />
         <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-file" @click="newFile">Ajouter un fichier</v-btn>
       </div>
@@ -206,16 +241,39 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
+      </template>
 
+      <template v-if="modelTab === 'tables'">
+        <h2 class="text-h6">Modèles de table ({{ tables.length }})</h2>
+        <v-table density="comfortable" class="tables mb-4" data-testid="model-tables">
+          <thead>
+            <tr><th scope="col">Table</th><th scope="col">Présence</th><th scope="col">Colonnes</th><th scope="col">Problèmes</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="t in tables" :key="t.file + t.ref" :data-testid="`model-table-${t.file}`">
+              <th scope="row">
+                <a v-if="t.path" :href="href(t.path)"><v-icon :icon="mdiTable" size="small" class="mr-1" aria-hidden="true" />{{ t.name }}</a>
+                <span v-else class="text-error">{{ t.name }} (modèle de table introuvable)</span>
+                <a v-if="t.file !== t.name" class="file-link" :href="href(path!, pointer('files', t.index))">fichier {{ t.file }}</a>
+              </th>
+              <td>{{ mandatoryLabel(t.mandatory) }}</td>
+              <td>{{ t.columns ?? '—' }}</td>
+              <td><ProblemCount :counts="t.path ? store.countsByFile.get(t.path) : undefined" /><span v-if="!t.path || !store.countsByFile.get(t.path)">aucun</span></td>
+            </tr>
+          </tbody>
+        </v-table>
       <template v-if="unreferencedTables.length">
-        <h2 class="text-h6 mt-4">Tables non référencées ({{ unreferencedTables.length }})</h2>
+        <h2 class="text-h6">Tables non référencées ({{ unreferencedTables.length }})</h2>
         <p class="text-body-2">Aucun fichier attendu ne désigne ces modèles de table : le validator les ignore.</p>
         <v-list density="compact" data-testid="unreferenced-tables">
           <v-list-item v-for="t in unreferencedTables" :key="t" :href="href(t)" :prepend-icon="mdiTable" :title="t.slice(name.length + 1)" />
         </v-list>
       </template>
 
-      <div class="d-flex flex-wrap align-center ga-2 mt-4" data-pointer="/codes" data-testid="code-lists">
+      </template>
+
+      <template v-if="modelTab === 'codes'">
+      <div class="d-flex flex-wrap align-center ga-2" data-pointer="/codes" data-testid="code-lists">
         <h2 class="text-h6 text-no-wrap mr-2">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
         <v-spacer />
         <div class="d-flex flex-wrap ga-2">
@@ -233,11 +291,23 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
         <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
       </div>
+      </template>
     </template>
   </FileFrame>
 </template>
 
 <style scoped>
+.tables a {
+  color: rgb(var(--v-theme-primary));
+}
+.tables th[scope='row'] {
+  font-weight: 600;
+}
+.file-link {
+  display: block;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
 .tree-row.folder > :deep(.v-expansion-panel-title) {
   background: rgba(var(--v-theme-primary), 0.07);
 }

@@ -21,9 +21,10 @@ test('affiche un modèle, suit le lien vers une table puis vers une liste de cod
   await page.getByRole('link', { name: 'Modèle (files.json)' }).click()
   await expect(page.getByRole('heading', { name: 'Modèle cnig_PLU_2017' })).toBeVisible()
   await expect(page.getByTestId('metadata-specification').getByRole('textbox')).toHaveValue('CNIG PLU v2017')
-  await expect(page.getByRole('heading', { name: /^Fichiers \(\d+\)$/ })).toBeVisible()
-  await expect(page.getByRole('heading', { name: /^Listes de codes \(\d+\)$/ })).toBeVisible()
+  await expect(page.getByRole('tab', { name: /^Fichiers \(\d+\)$/ })).toBeVisible()
+  await expect(page.getByRole('tab', { name: /^Listes de codes \(\d+\)$/ })).toBeVisible()
 
+  await page.getByTestId('model-tab-files').click()
   await page.getByTestId('file-ZONE_URBA').click()
   await page.getByRole('main').getByRole('link', { name: 'Ouvrir la table ./types/ZONE_URBA.json' }).click()
   await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()

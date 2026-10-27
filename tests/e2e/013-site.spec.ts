@@ -55,6 +55,7 @@ test('modèle, table, liste : lecture seule, bandeau, titre, aucune ressource di
   await expect(page.getByTestId('config-source')).toHaveText('Fixtures (test)')
   await noEditing(page)
 
+  await page.getByTestId('model-tab-files').click()
   await page.getByTestId('file-ZONE_URBA').click()
   await page.getByRole('main').getByRole('link', { name: /Ouvrir la table/ }).click()
   await expect(page.getByRole('heading', { name: 'Table ZONE_URBA' })).toBeVisible()

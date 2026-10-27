@@ -31,16 +31,21 @@ for (const scheme of ['light', 'dark'] as const) {
 
 test('fenêtre de copie d\'une liste de codes', async ({ page }) => {
   await page.goto('./#/GPU_MEC_2025/files.json')
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('copy-code-list').click()
   await page.getByTestId('code-list-filter').getByRole('textbox').fill('ListeEtat')
   await page.getByTestId('source-cnig_PLU_2017-ListeEtatPLU').click()
   await expect(page.getByTestId('copy-name')).toBeVisible()
+  await expect(page.locator('.v-overlay__content').filter({ has: page.getByTestId('copy-name') })).toHaveCSS('opacity', '1')
   expect(await audit(page)).toEqual([])
 })
 
 test('fenêtre de création d\'une liste de codes', async ({ page }) => {
   await page.goto('./#/GPU_MEC_2025/files.json')
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('new-code-list').click()
   await expect(page.getByTestId('new-list-name')).toBeVisible()
+  // Fin de l'animation d'ouverture : sinon les couleurs mesurées sont celles d'un fondu.
+  await expect(page.locator('.v-overlay__content').filter({ has: page.getByTestId('new-list-name') })).toHaveCSS('opacity', '1')
   expect(await audit(page)).toEqual([])
 })

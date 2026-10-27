@@ -23,6 +23,7 @@ test.afterEach(() => rmSync(tmp, { recursive: true, force: true }))
 
 async function pick(page: Page, model: string, filter: string, source: string) {
   await page.goto(`./#/${model}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('copy-code-list').click()
   await page.getByTestId('code-list-filter').getByRole('textbox').fill(filter)
   await page.getByTestId(source).click()
@@ -36,6 +37,7 @@ test('copie une liste d\'un autre modèle : CSV identique dans le ZIP, déclaré
   await expect(page.getByRole('heading', { name: 'Liste de codes ListeEtatPLU' })).toBeVisible()
   await expect(page.getByTestId('problems-count')).toHaveText('0 problème')
   await page.goto(`./#/${MEC}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await expect(page.getByTestId('code-ListeEtatPLU')).toBeVisible()
 
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByTestId('download-zip').click()])
@@ -67,5 +69,6 @@ test('Ctrl+Z retire la copie en un pas', async ({ page }) => {
   await page.getByTestId('undo').click()
   await expect(page.getByTestId('changed-count')).toHaveCount(0)
   await page.goto(`./#/${MEC}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await expect(page.getByTestId('code-ListeEtatPLU')).toHaveCount(0)
 })

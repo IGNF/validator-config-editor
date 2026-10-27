@@ -15,6 +15,7 @@ test.afterEach(() => server.stop())
 
 test('choisir le fichier renomme la liste et ses clés étrangères', async ({ page }) => {
   await page.goto(`${server.url}#/${PLU}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   const etat = page.getByTestId('code-ListeEtatPLU')
   await expect(etat.getByTestId('code-name')).toHaveText('ListeEtatPLU')
   await expect(etat.getByRole('textbox', { name: /Nom de la liste/ })).toHaveCount(0)
@@ -32,6 +33,7 @@ test('choisir le fichier renomme la liste et ses clés étrangères', async ({ p
 
 test('nom déjà déclaré : refusé, rien ne change', async ({ page }) => {
   await page.goto(`${server.url}#/${PLU}/files.json`)
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('code-ListeEtatPLU').getByTestId('code-data').click()
   await page.getByRole('option', { name: './codes/ListeTypedocPLU.csv', exact: true }).click()
   await expect(page.getByTestId('notice')).toContainText('La liste « ListeTypedocPLU » est déjà déclarée dans ce modèle.')

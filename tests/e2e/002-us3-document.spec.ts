@@ -22,6 +22,7 @@ const choose = async (page: Page, field: ReturnType<Page['getByTestId']>, option
 }
 
 test('passe un fichier de facultatif à obligatoire et ajoute un PDF sans erreur', async ({ page }) => {
+  await page.getByTestId('model-tab-files').click()
   const habillage = page.getByTestId('file-HABILLAGE_TXT')
   await habillage.click()
   await choose(page, habillage.getByTestId('file-mandatory'), 'Obligatoire (ERROR)')
@@ -38,6 +39,7 @@ test('passe un fichier de facultatif à obligatoire et ajoute un PDF sans erreur
 })
 
 test('un fichier table : choix du modèle de table, absence signalée', async ({ page }) => {
+  await page.getByTestId('model-tab-files').click()
   const zone = page.getByTestId('file-ZONE_URBA')
   await zone.click()
   const tableModel = zone.getByRole('combobox', { name: /Modèle de table/ })
@@ -51,6 +53,7 @@ test('un fichier table : choix du modèle de table, absence signalée', async ({
 })
 
 test('déclare une liste de codes en choisissant un CSV de codes/', async ({ page }) => {
+  await page.getByTestId('model-tab-codes').click()
   await page.getByTestId('code-ListeEtatPLU').getByRole('button', { name: 'Supprimer la liste ListeEtatPLU' }).click()
   await expect(page.getByTestId('problem-WARN-UNREFERENCED-FILE')).toBeVisible()
   await page.getByTestId('add-code').click()

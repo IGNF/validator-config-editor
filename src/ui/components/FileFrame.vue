@@ -42,13 +42,18 @@ watch(tab, highlight)
       <h1 class="text-h5" :title="file">{{ title }}</h1>
       <v-chip v-if="source && store.isEdited(source)" size="small" color="warning" data-testid="edited">● modifié</v-chip>
       <slot name="chips" />
-      <v-btn v-if="source" :icon="mdiDownload" size="small" variant="text" aria-label="Télécharger ce fichier" title="Télécharger ce fichier"
-        data-testid="download-file" @click="store.download({ kind: 'file', path: source })" />
     </div>
-    <v-tabs v-if="source" v-model="tab" density="compact" class="mb-4">
-      <v-tab value="view">Vue</v-tab>
-      <v-tab value="source">Source</v-tab>
-    </v-tabs>
+    <!-- Onglets Vue / Source, et téléchargement du fichier à côté. -->
+    <div v-if="source" class="d-flex align-center flex-wrap ga-2 mb-4">
+      <v-tabs v-model="tab" density="compact">
+        <v-tab value="view">Vue</v-tab>
+        <v-tab value="source">Source</v-tab>
+      </v-tabs>
+      <v-btn :prepend-icon="mdiDownload" size="small" variant="text" color="primary" data-testid="download-file"
+        :title="`Télécharger ${source.slice(source.lastIndexOf('/') + 1)}`" @click="store.download({ kind: 'file', path: source })">
+        Télécharger le {{ source.toLowerCase().endsWith('.csv') ? 'CSV' : 'JSON' }}
+      </v-btn>
+    </div>
     <slot v-if="tab === 'view' || !source" />
     <SourceView v-else :file="source" />
     <!-- Chemin du fichier : discret, en bas de la vue (et au survol du titre). -->
