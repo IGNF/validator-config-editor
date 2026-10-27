@@ -56,8 +56,6 @@ watch(tab, highlight)
     </div>
     <slot v-if="tab === 'view' || !source" />
     <SourceView v-else :file="source" />
-    <!-- Chemin du fichier : discret, en bas de la vue (et au survol du titre). -->
-    <p class="text-caption text-medium-emphasis mt-6" data-testid="frame-file-path">Fichier : <code>{{ file }}</code></p>
   </section>
 </template>
 

@@ -99,3 +99,60 @@ h3,
   color: #a5d6a7;
   background: rgba(165, 214, 167, 0.12);
 }
+
+/* Formulaires : champs en grille régulière, fond blanc, sections titrées ; contenu des panneaux
+   dépliés (fichier attendu, colonne) sur fond clair pour détacher les champs. */
+.form-grid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 14px 16px;
+  margin-bottom: 14px;
+}
+.form-grid > .v-input {
+  min-width: 0;
+}
+.form-section {
+  padding: 16px;
+  border: 1px solid rgb(var(--v-theme-divider));
+  border-radius: 8px;
+}
+.form-heading {
+  margin: 4px 0 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgb(var(--v-theme-secondary));
+}
+.form-heading:not(:first-child) {
+  margin-top: 20px;
+}
+.v-main .v-field--variant-outlined {
+  background: rgb(var(--v-theme-surface));
+}
+.v-main .v-expansion-panel-text__wrapper {
+  padding: 16px;
+  background: rgb(var(--v-theme-surface-light));
+  border-top: 1px solid rgb(var(--v-theme-divider));
+}
+.v-main .v-textarea {
+  margin-bottom: 14px;
+}
+
+/* Message sous un champ (« Affichage : » d'une regex) : hauteur libre, lignes aérées. */
+.v-main .v-input__details {
+  min-height: 0;
+  padding-top: 6px;
+}
+.v-main .v-messages {
+  overflow: visible;
+  opacity: 1;
+}
+.v-main .v-messages__message {
+  line-height: 1.6;
+  color: rgb(var(--v-theme-secondary));
+}
+.v-main .checks {
+  margin-bottom: 8px;
+}

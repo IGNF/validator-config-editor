@@ -42,11 +42,10 @@ test('ajoute une colonne avec un nouvel id, puis la supprime', async ({ page }) 
   await expect(page.getByTestId('changed-count')).toHaveCount(0)
 })
 
-test('déplace une colonne en conservant les autres', async ({ page }) => {
+test('colonne : ni « Monter » ni « Descendre »', async ({ page }) => {
   await column(page, 'WKT').click()
-  await column(page, 'WKT').getByRole('button', { name: 'Monter' }).click()
-  const names = JSON.parse(await source(page)).columns.map((c: { name: string }) => c.name)
-  expect(names.slice(0, 3)).toEqual(['WKT', 'LIB_IDZONE', 'URLFIC'])
+  await expect(column(page, 'WKT').getByRole('button', { name: 'Monter' })).toHaveCount(0)
+  await expect(column(page, 'WKT').getByRole('button', { name: 'Descendre' })).toHaveCount(0)
 })
 
 test('un problème créé apparaît puis disparaît une fois corrigé', async ({ page }) => {

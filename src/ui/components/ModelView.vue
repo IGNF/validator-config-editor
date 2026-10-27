@@ -134,7 +134,7 @@ function newCode() {
 </script>
 
 <template>
-  <FileFrame :title="`Modèle ${name}`" :file="path ?? `${name}/`" :source="path">
+  <FileFrame :title="`Modèle ${doc?.title || name}`" :file="path ?? `${name}/`" :source="path">
     <template #chips>
       <v-chip v-if="doc?.abstract" size="small" color="secondary">abstrait</v-chip>
       <v-btn :prepend-icon="mdiFolderDownload" size="small" variant="tonal" data-testid="download-model" @click="store.download({ kind: 'model', model: name })">
@@ -154,7 +154,7 @@ function newCode() {
     <NotConformant v-else-if="!doc" />
 
     <template v-else>
-      <ModelSummary :name="name" :doc="doc" @select="(t: ModelTab) => (modelTab = t)" />
+      <ModelSummary :name="name" />
       <v-tabs v-model="modelTab" color="primary" class="model-tabs mb-4" data-testid="model-tabs">
         <v-tab value="model" data-testid="model-tab-model">Modèle</v-tab>
         <v-tab value="files" data-testid="model-tab-files">Fichiers ({{ doc.files.length }})</v-tab>
@@ -162,8 +162,9 @@ function newCode() {
         <v-tab value="codes" data-testid="model-tab-codes">Listes de codes ({{ doc.codes?.length ?? 0 }})</v-tab>
       </v-tabs>
 
-      <section v-if="modelTab === 'model'" data-pointer="">
-        <div class="d-flex flex-wrap ga-4">
+      <section v-if="modelTab === 'model'" data-pointer="" class="form-section">
+        <h3 class="form-heading">Identification</h3>
+        <div class="form-grid">
           <v-text-field label="Nom" :model-value="doc.name" density="compact" variant="outlined" class="field" data-testid="model-name"
             @update:model-value="(v: string) => setProp('/name', v, true)" />
           <v-text-field label="Titre" :model-value="doc.title" density="compact" variant="outlined" class="field"
@@ -171,7 +172,8 @@ function newCode() {
         </div>
         <v-textarea label="Description" :model-value="doc.description" density="compact" variant="outlined" rows="1" auto-grow
           @update:model-value="(v: string) => setProp('/description', v)" />
-        <div class="d-flex flex-wrap ga-4">
+        <h3 class="form-heading">Dossier du document</h3>
+        <div class="form-grid">
           <v-text-field label="Nom du dossier (expression régulière)" :model-value="doc.constraints?.folderName" density="compact" variant="outlined" class="field mono"
             :hint="store.regexHint(doc.constraints?.folderName, name)" persistent-hint data-testid="model-folderName"
             @update:model-value="(v: string) => setProp('/constraints/folderName', store.regexInput(v, name))">
@@ -180,7 +182,6 @@ function newCode() {
           <v-text-field label="Spécification des métadonnées" :model-value="doc.constraints?.metadataSpecification" density="compact" variant="outlined" class="field"
             data-testid="metadata-specification" @update:model-value="(v: string) => setProp('/constraints/metadataSpecification', v)" />
         </div>
-        <p v-if="doc.id" class="text-body-2">Identifiant : <code>{{ doc.id }}</code></p>
       </section>
 
       <template v-if="modelTab === 'files'">
@@ -204,13 +205,13 @@ function newCode() {
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <div class="d-flex flex-wrap ga-4">
+            <div class="form-grid">
               <v-text-field label="Nom" :model-value="f.name" density="compact" variant="outlined" class="field"
                 @update:model-value="(v: string) => setProp(pointer('files', i, 'name'), v, true)" />
               <v-text-field label="Titre" :model-value="f.title" density="compact" variant="outlined" class="field"
                 @update:model-value="(v: string) => setProp(pointer('files', i, 'title'), v)" />
             </div>
-            <div class="d-flex flex-wrap ga-4">
+            <div class="form-grid">
               <v-select label="Type" :items="FILE_TYPES" :model-value="f.type" density="compact" variant="outlined" class="field" data-testid="file-type"
                 @update:model-value="(v: string) => setProp(pointer('files', i, 'type'), v, true)" />
               <v-select label="Présence" :items="MANDATORY" :model-value="f.mandatory ?? 'WARN'" density="compact" variant="outlined" class="field" data-testid="file-mandatory"
@@ -316,7 +317,7 @@ function newCode() {
   min-width: 12rem;
 }
 .field {
-  min-width: 16rem;
+  min-width: 0;
   flex: 1 1 16rem;
 }
 .mono :deep(input) {
