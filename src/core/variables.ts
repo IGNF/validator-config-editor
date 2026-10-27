@@ -29,6 +29,13 @@ export function readVariables(file: JsonFile): { variables?: Variables; aliases?
   }
   if (problems.length) return { problems }
   const variables = new Map(entries as [string, string][])
+  // Nommage : suffixe _OPT <=> regex facultative (…)? ; préfixe « _ » <=> regex qui commence par « _ ».
+  // Avertissement seulement, le dictionnaire reste utilisé.
+  for (const [name, regex] of variables) {
+    const kind = isOptional(name) !== isOptionalRegex(regex) ? (isOptional(name) ? 'suffix' : 'regex')
+      : name.startsWith('_') !== startsWithUnderscore(regex) ? (name.startsWith('_') ? 'noprefix' : 'prefix') : undefined
+    if (kind) problems.push(problem('WARN-VARIABLES-OPT', null, file.path, pointer('variables', name), { name, kind }))
+  }
   // Alias facultatifs : objet famille -> (variable connue -> nom affiché).
   const raw = isObject(file.data) ? file.data.aliases : undefined
   const aliases = new Map<string, Map<string, string>>()
@@ -49,18 +56,58 @@ export function namesFor(aliases: Aliases | undefined, model: string | undefined
   return aliases?.get(best) ?? new Map()
 }
 
-/** Forme à variables d'une regex : chaque regex de variable devient <NOM> (ou son alias), la plus longue d'abord. */
-export function toVariables(regex: string, variables: Variables, names: ReadonlyMap<string, string> = new Map()): string {
+/** Variable facultative : nom du dictionnaire (pas l'alias) de suffixe _OPT, convention partagée avec le GpU. */
+export const isOptional = (name: string) => name.endsWith('_OPT')
+
+/** Regex dont le texte reconnu commence par « _ » (groupes ouvrants ignorés), ex. (_[a-zA-Z])?. */
+const startsWithUnderscore = (regex: string) => regex.replace(/^\(+/, '').startsWith('_')
+
+/** Regex de la forme (…)? : un seul groupe, qui couvre toute la regex, suivi de « ? ». */
+export function isOptionalRegex(regex: string): boolean {
+  if (!regex.startsWith('(') || !regex.endsWith(')?')) return false
+  let depth = 0
+  let inClass = false
+  for (let i = 0; i < regex.length - 1; i++) {
+    const c = regex[i]
+    if (c === '\\') i++
+    else if (inClass) inClass = c !== ']'
+    else if (c === '[') inClass = true
+    else if (c === '(') depth++
+    else if (c === ')' && --depth === 0) return i === regex.length - 2
+  }
+  return false
+}
+
+/** Morceau de la forme à variables : texte de la regex, ou variable affichée <NOM> (alias compris). */
+export interface Segment {
+  text: string
+  variable?: string
+  regex?: string
+  optional?: boolean
+}
+
+/** Forme à variables découpée : chaque regex de variable devient <NOM> (ou son alias), la plus longue d'abord. */
+export function toSegments(regex: string, variables: Variables, names: ReadonlyMap<string, string> = new Map()): Segment[] {
   const sorted = [...variables].sort(([, a], [, b]) => b.length - a.length)
-  let out = ''
+  const out: Segment[] = []
   for (let i = 0; i < regex.length; ) {
     const found = sorted.find(([, value]) => regex.startsWith(value, i))
     if (found) {
-      out += `<${names.get(found[0]) ?? found[0]}>`
+      const variable = names.get(found[0]) ?? found[0]
+      out.push({ text: `<${variable}>`, variable, regex: found[1], optional: isOptional(found[0]) })
       i += found[1].length
-    } else out += regex[i++]
+    } else {
+      const last = out.at(-1)
+      if (last && last.variable === undefined) last.text += regex[i++]
+      else out.push({ text: regex[i++]! })
+    }
   }
   return out
+}
+
+/** Forme à variables d'une regex (texte de toSegments). */
+export function toVariables(regex: string, variables: Variables, names: ReadonlyMap<string, string> = new Map()): string {
+  return toSegments(regex, variables, names).map((s) => s.text).join('')
 }
 
 /** Regex d'une forme à variables : <NOM> connu (ou alias) remplacé par sa regex, inconnu conservé. */
