@@ -7,6 +7,10 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Arbre des modèles allégé : sous un modèle, seulement le modèle, ses fichiers attendus et ses surcharges GpU ; un fichier attendu de type table ouvre sa table ; modèle et élément affichés mis en évidence et visibles (#113). Listes de codes depuis la vue du modèle (« Listes de codes (N) », nombre de valeurs), tables non référencées listées dans la vue du modèle (#114).
+
 ### Added
 
 - Modification en série : « Équivalents » sur une colonne liste les colonnes de même nom des tables équivalentes (famille du modèle ou toute la configuration) et recopie une propriété vers celles qui sont cochées, après aperçu, en une étape d'annulation (#55) ; onglet « Comparer » : propriétés principales des équivalents par modèle, écarts à la source marqués « ≠ », modèles sans équivalent (#57) ; aussi sur les fichiers attendus et les déclarations de listes de codes (#56).

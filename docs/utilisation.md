@@ -93,7 +93,7 @@ vce serve <dossier> [--port <n>] [--open]
 Ouvre un éditeur local sur `http://127.0.0.1:5174/` (ou le port libre suivant ; `--port` impose
 le port, `--open` ouvre le navigateur). Il permet de :
 
-- filtrer et parcourir les modèles ;
+- filtrer et parcourir les modèles : sous chaque modèle, ses fichiers attendus (une table s'ouvre depuis son fichier) ; le modèle et l'élément affichés sont mis en évidence ; les listes de codes s'ouvrent depuis la vue du modèle (« Listes de codes (N) ») ;
 - consulter un modèle (propriétés, fichiers, listes de codes), une table (colonnes, contraintes,
   clés étrangères, conditions), une liste de codes et les surcharges GpU, en suivant les liens
   entre eux ;

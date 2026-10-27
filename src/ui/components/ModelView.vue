@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDelete, mdiFolderDownload, mdiPlus } from '@mdi/js'
+import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDelete, mdiFolderDownload, mdiFormatListBulleted, mdiPlus, mdiTable } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
@@ -56,6 +56,14 @@ const codePath = (data: string) => {
   const p = resolvePath(name.value, data)
   return store.has(p) ? p : undefined
 }
+// Nombre de valeurs d'une liste (lignes du CSV, hors en-tête).
+const rowsOf = (data: string) => {
+  const p = resolvePath(name.value, data)
+  return p === undefined ? undefined : loaded.value?.csvs.get(p)?.csv?.rows.length
+}
+// Tables qu'aucun fichier attendu ne désigne (012, R2) : celles de WARN-UNREFERENCED-FILE.
+const unreferencedTables = computed(() =>
+  (store.result?.problems ?? []).filter((p) => p.code === 'WARN-UNREFERENCED-FILE' && p.model === name.value && p.file.startsWith(`${name.value}/types/`)).map((p) => p.file))
 
 // Fichier ouvert : suit le pointeur de l'URL (problème cliqué) et l'ajout.
 const opened = ref<number[]>([])
@@ -85,6 +93,9 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
       <v-chip v-if="doc?.abstract" size="small" color="secondary">abstrait</v-chip>
       <v-btn :prepend-icon="mdiFolderDownload" size="small" variant="tonal" data-testid="download-model" @click="store.download({ kind: 'model', model: name })">
         Télécharger le modèle
+      </v-btn>
+      <v-btn v-if="doc" :prepend-icon="mdiFormatListBulleted" size="small" variant="tonal" data-testid="code-lists-button" :href="href(path!, '/codes')">
+        Listes de codes ({{ doc.codes?.length ?? 0 }})
       </v-btn>
       <v-btn :prepend-icon="mdiCompareHorizontal" size="small" variant="tonal" data-testid="compare-model-button"
         :href="compareHref(name, previousVersion(name, store.models.map((m) => m.name)))">
@@ -176,7 +187,15 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         </v-expansion-panel>
       </v-expansion-panels>
 
-      <div class="d-flex align-center mt-4">
+      <template v-if="unreferencedTables.length">
+        <h2 class="text-h6 mt-4">Tables non référencées ({{ unreferencedTables.length }})</h2>
+        <p class="text-body-2">Aucun fichier attendu ne désigne ces modèles de table : le validator les ignore.</p>
+        <v-list density="compact" data-testid="unreferenced-tables">
+          <v-list-item v-for="t in unreferencedTables" :key="t" :href="href(t)" :prepend-icon="mdiTable" :title="t.slice(name.length + 1)" />
+        </v-list>
+      </template>
+
+      <div class="d-flex align-center mt-4" data-pointer="/codes" data-testid="code-lists">
         <h2 class="text-h6">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
         <v-spacer />
         <div class="d-flex flex-wrap ga-2">
@@ -190,7 +209,7 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
           @update:model-value="(v: string) => setProp(pointer('codes', i, 'name'), v, true)" />
         <v-select :label="`Fichier de la liste ${i + 1}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details class="field"
           @update:model-value="(v: string) => setProp(pointer('codes', i, 'data'), v, true)" />
-        <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir</a>
+        <a v-if="codePath(c.data)" :href="href(codePath(c.data)!)">Ouvrir<template v-if="rowsOf(c.data) !== undefined"> ({{ rowsOf(c.data) }} valeur{{ rowsOf(c.data)! > 1 ? 's' : '' }})</template></a>
         <ProblemBadge :file="path!" :pointer="`/codes/${i}`" />
         <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
         <v-btn :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />

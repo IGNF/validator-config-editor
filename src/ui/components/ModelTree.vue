@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiFolderMultipleOutline, mdiMagnify } from '@mdi/js'
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, provide, ref, watch } from 'vue'
 import { groupByFamily, modelFamily } from '@core/labels'
 import type { LoadedModel } from '@core/model/types'
 import { countProblems } from '@core/validation/problems'
@@ -13,6 +13,10 @@ import ProblemCount from './ProblemCount.vue'
 const store = useProject()
 const filter = ref('')
 const opened = ref<string[]>([])
+// Ouverture d'un groupe par un descendant (dossier de fichiers attendus contenant l'élément affiché).
+provide('openTreeGroup', (key: string) => {
+  if (!opened.value.includes(key)) opened.value = [...opened.value, key]
+})
 
 const shown = computed(() => {
   const f = filter.value.trim().toLowerCase()
@@ -34,6 +38,8 @@ watch(
   (file) => {
     const model = file && modelOf(file)
     if (model) opened.value = [...new Set([...opened.value, familyKey(modelFamily(model)), model])]
+    // Élément affiché rendu visible dans l'arbre (012, R1), après ouverture des groupes.
+    nextTick(() => setTimeout(() => document.querySelector('[data-testid="models-panel"] .v-list-item--active')?.scrollIntoView({ block: 'nearest' }), 300))
   },
   { immediate: true },
 )
