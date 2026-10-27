@@ -86,6 +86,28 @@ function target(text: string): { label: string; path?: string } | undefined {
   return { label: fk.target, ...(tablePath && { path: tablePath }) }
 }
 
+// Valeurs autorisées d'une colonne par une clé étrangère vers une liste de codes : colonnes de la
+// liste (celle visée en premier), lignes limitées à VALUES_SHOWN.
+const VALUES_SHOWN = 50
+function allowedValues(column: string): { list: string; path: string; key: string; header: string[]; rows: string[][]; total: number } | undefined {
+  for (const text of table.value?.constraints?.foreignKeys ?? []) {
+    const fk = parseForeignKey(text)
+    const i = fk?.sourceColumns.indexOf(column) ?? -1
+    if (!fk || i < 0) continue
+    const code = checked.value?.document?.codes?.find((c) => c.name === fk.target)
+    const path = code && resolvePath(model.value, code.data)
+    const csv = path ? store.result?.project.models.get(model.value)?.csvs.get(path)?.csv : undefined
+    if (!path || !csv) continue
+    const key = fk.targetColumns[i]!
+    const header = [key, ...csv.header.filter((h) => h !== key)]
+    const rows = csv.rows.slice(0, VALUES_SHOWN).map((r) => header.map((h) => r[csv.header.indexOf(h)] ?? ''))
+    return { list: fk.target, path, key, header, rows, total: csv.rows.length }
+  }
+  return undefined
+}
+
+const values = computed(() => new Map((table.value?.columns ?? []).map((c) => [c.name, allowedValues(c.name)])))
+
 /** Clé étrangère ou condition en cours de saisie (`<liste>/<indice>`). */
 const editing = ref<string>()
 
@@ -154,6 +176,23 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
               <v-text-field label="Référence (TABLE.COLONNE)" :model-value="c.constraints?.reference" density="compact" variant="outlined" class="field"
                 data-testid="column-reference" @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'reference', v), pointer('columns', i, 'reference'))" />
             </div>
+            <section v-if="values.get(c.name)" class="values mb-3" :data-testid="`allowed-values-${c.name}`">
+              <h3 class="form-heading">
+                Valeurs autorisées par <a :href="href(values.get(c.name)!.path)">{{ values.get(c.name)!.list }}</a>
+                ({{ values.get(c.name)!.total }})
+              </h3>
+              <v-table density="compact" class="values-table">
+                <thead><tr><th v-for="h in values.get(c.name)!.header" :key="h" scope="col">{{ h }}</th></tr></thead>
+                <tbody>
+                  <tr v-for="(r, k) in values.get(c.name)!.rows" :key="k">
+                    <td v-for="(v, j) in r" :key="j" :class="{ key: j === 0 }">{{ v }}</td>
+                  </tr>
+                </tbody>
+              </v-table>
+              <p v-if="values.get(c.name)!.total > VALUES_SHOWN" class="text-body-2 mt-1">
+                … et {{ values.get(c.name)!.total - VALUES_SHOWN }} autres : <a :href="href(values.get(c.name)!.path)">voir la liste</a>
+              </p>
+            </section>
             <RegexTester v-if="c.constraints?.pattern" :regex="c.constraints.pattern" :model="model" label="Tester une valeur" />
             <v-textarea label="Valeurs autorisées (une par ligne)" :model-value="(c.constraints?.enum ?? []).join('\n')" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enum', parseEnum(v, c.constraints?.enum)), pointer('columns', i, 'enum'))" />
@@ -196,6 +235,20 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
 </template>
 
 <style scoped>
+.values-table {
+  max-height: 18rem;
+  overflow: auto;
+  border: 1px solid rgb(var(--v-theme-divider));
+  border-radius: 6px;
+}
+.values-table td.key {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary));
+}
+.values a {
+  color: rgb(var(--v-theme-primary));
+}
 .unique {
   padding: 0 8px;
   border-radius: 10px;
