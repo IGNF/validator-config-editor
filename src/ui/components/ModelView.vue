@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDelete, mdiFolderDownload, mdiFormatListBulleted, mdiPlus, mdiTable } from '@mdi/js'
+import { mdiArrowDown, mdiArrowUp, mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFileDocumentOutline, mdiFileOutline, mdiFilePdfBox, mdiFolderDownload, mdiFolderOutline, mdiFormatListBulleted, mdiPlus, mdiTable } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
 import { renameCodeList } from '@core/edit/codelists'
 import { addCode, addFile, codeName, moveItem, removeItem, setOrRemove, type DocumentList } from '@core/edit/operations'
 import { setAt } from '@core/edit/pointer'
+import { fileTree, type FileNode } from '@core/model/file-tree'
 import { resolvePath, tableModelRef } from '@core/model/paths'
 import type { DocumentModel, FileModel } from '@core/model/types'
 import { pointer } from '@core/pointer'
@@ -63,6 +64,15 @@ function chooseFile(index: number, data: string) {
   if (refusal) store.notice = refusal
   else store.applyChanges(changes)
 }
+// Fichiers attendus dans l'ordre de leur arborescence, avec leur profondeur (dossier › contenu).
+const FILE_ICONS: Record<string, string> = { directory: mdiFolderOutline, table: mdiTable, pdf: mdiFilePdfBox, metadata: mdiFileDocumentOutline, multi_table: mdiDatabaseOutline }
+const rows = computed(() => {
+  const files = doc.value?.files ?? []
+  const out: { f: FileModel; i: number; depth: number }[] = []
+  const walk = (nodes: FileNode[], depth: number) => nodes.forEach((n) => { out.push({ f: files[n.index]!, i: n.index, depth }); walk(n.children, depth + 1) })
+  walk(fileTree(files), 0)
+  return out
+})
 // Nombre de valeurs d'une liste (lignes du CSV, hors en-tête).
 const rowsOf = (data: string) => {
   const p = resolvePath(name.value, data)
@@ -146,9 +156,12 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" data-testid="add-file" @click="newFile">Ajouter un fichier</v-btn>
       </div>
       <v-expansion-panels v-model="opened" multiple variant="accordion" class="my-2">
-        <v-expansion-panel v-for="(f, i) in doc.files" :key="f.id ?? i" :value="i" :data-pointer="`/files/${i}`" :data-testid="`file-${f.name}`">
+        <!-- Fichiers rangés selon leur arborescence (dossiers puis leur contenu, en retrait). -->
+        <v-expansion-panel v-for="{ f, i, depth } in rows" :key="f.id ?? i" :value="i" :data-pointer="`/files/${i}`" :data-testid="`file-${f.name}`"
+          :class="['tree-row', { folder: f.type === 'directory', nested: depth > 0 }]" :style="{ marginLeft: `${depth * 28}px`, maxWidth: `calc(100% - ${depth * 28}px)` }" :data-depth="depth">
           <v-expansion-panel-title>
             <div class="d-flex flex-wrap align-center ga-2">
+              <v-icon :icon="FILE_ICONS[f.type] ?? mdiFileOutline" size="small" :color="f.type === 'directory' ? 'primary' : undefined" aria-hidden="true" />
               <strong>{{ f.name }}</strong>
               <ProblemBadge :file="path!" :pointer="`/files/${i}`" />
               <span class="text-medium-emphasis">{{ fileTypeLabel(f.type) }}</span>
@@ -202,8 +215,8 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
         </v-list>
       </template>
 
-      <div class="d-flex align-center mt-4" data-pointer="/codes" data-testid="code-lists">
-        <h2 class="text-h6">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
+      <div class="d-flex flex-wrap align-center ga-2 mt-4" data-pointer="/codes" data-testid="code-lists">
+        <h2 class="text-h6 text-no-wrap mr-2">Listes de codes ({{ doc.codes?.length ?? 0 }})</h2>
         <v-spacer />
         <div class="d-flex flex-wrap ga-2">
           <NewCodeListDialog v-if="!store.readOnly" :model="name" />
@@ -225,6 +238,13 @@ const move = (list: DocumentList, i: number, to: number) => edit((d) => moveItem
 </template>
 
 <style scoped>
+.tree-row.folder > :deep(.v-expansion-panel-title) {
+  background: rgba(var(--v-theme-primary), 0.07);
+}
+.tree-row.nested {
+  border-left: 3px solid rgba(var(--v-theme-primary), 0.45);
+  width: auto;
+}
 .list-name {
   min-width: 12rem;
 }

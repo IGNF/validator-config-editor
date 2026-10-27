@@ -78,3 +78,18 @@ test('accordéon : un seul modèle ouvert ; bloc du modèle affiché encadré ; 
   await expect(page.getByTestId('model-group-GPU_MEC_2025')).toHaveClass(/current-group/)
   await expect(page.getByTestId(`model-group-${SUP}`)).not.toHaveClass(/current-group/)
 })
+
+test('vue du modèle : fichiers attendus rangés selon l\'arborescence', async ({ page }) => {
+  await page.goto(`./#/${SUP}/files.json`)
+  const rows = page.locator('[data-testid^="file-"][data-depth]')
+  const order = await rows.evaluateAll((els) => els.map((e) => `${e.getAttribute('data-depth')}:${e.getAttribute('data-testid')!.slice(5)}`))
+  // Chaque dossier est suivi de son contenu, en retrait.
+  expect(order.slice(0, 3)).toEqual(['0:Actes', '1:ACTE', '1:REGLEMENT'])
+  expect(order).toContain('1:GESTIONNAIRE_SUP')
+  expect(order.indexOf('1:GESTIONNAIRE_SUP')).toBeGreaterThan(order.indexOf('0:Donnees_geographiques'))
+  await expect(page.getByTestId('file-Actes')).toHaveClass(/folder/)
+  await expect(page.getByTestId('file-ACTE')).toHaveClass(/nested/)
+  const [folder, child] = await Promise.all([page.getByTestId('file-Actes').boundingBox(), page.getByTestId('file-ACTE').boundingBox()])
+  expect(child!.x).toBeGreaterThan(folder!.x)
+  expect(Math.round(child!.x + child!.width)).toBeLessThanOrEqual(Math.round(folder!.x + folder!.width))
+})
