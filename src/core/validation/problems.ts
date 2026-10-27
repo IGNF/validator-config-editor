@@ -12,6 +12,8 @@ export interface Problem {
   file: string
   /** Pointeur JSON dans le fichier, ou '/<ligne>' pour un CSV. */
   pointer?: string
+  /** Ligne du texte du fichier, pour une erreur de syntaxe (JSON, CSV). */
+  line?: number
   message: string
 }
 
@@ -21,6 +23,7 @@ export function problem(code: ProblemCode, model: string | null, file: string, p
   const entry = CATALOG[code]
   const p: Problem = { code, severity: entry.severity, model, file, message: entry.message(params) }
   if (pointer !== undefined) p.pointer = pointer
+  if (/^ERR-(JSON|CSV)-/.test(code) && typeof params.line === 'number') p.line = params.line
   return p
 }
 

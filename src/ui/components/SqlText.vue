@@ -28,6 +28,6 @@ const tokens = computed(() => sqlTokens(props.value))
   font-weight: 700;
 }
 .string {
-  color: rgb(var(--v-theme-success));
+  color: var(--code-string);
 }
 </style>

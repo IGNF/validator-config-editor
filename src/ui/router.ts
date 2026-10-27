@@ -7,6 +7,8 @@ export interface Route {
   pointer?: string
   /** Référence de la comparaison du modèle (vide : à choisir). */
   compare?: string
+  /** Ligne du texte à montrer dans l'onglet « Source » (erreur de syntaxe). */
+  line?: number
 }
 
 function parse(hash: string): Route {
@@ -14,15 +16,17 @@ function parse(hash: string): Route {
   const params = new URLSearchParams(query)
   const pointer = params.get('p') ?? undefined
   const compare = params.get('compare') ?? undefined
-  return { file: path.split('/').map(decodeURIComponent).join('/'), ...(pointer !== undefined && { pointer }), ...(compare !== undefined && { compare }) }
+  const line = Number(params.get('l')) || undefined
+  return { file: path.split('/').map(decodeURIComponent).join('/'), ...(pointer !== undefined && { pointer }), ...(compare !== undefined && { compare }), ...(line !== undefined && { line }) }
 }
 
 export const route = ref<Route>(parse(location.hash))
 window.addEventListener('hashchange', () => (route.value = parse(location.hash)))
 
-export function href(file: string, pointer?: string): string {
+export function href(file: string, pointer?: string, line?: number): string {
   const path = file.split('/').map(encodeURIComponent).join('/')
-  return `#/${path}${pointer !== undefined ? `?p=${encodeURIComponent(pointer)}` : ''}`
+  const query = [...(pointer !== undefined ? [`p=${encodeURIComponent(pointer)}`] : []), ...(line !== undefined ? [`l=${line}`] : [])]
+  return `#/${path}${query.length ? `?${query.join('&')}` : ''}`
 }
 
 export function go(file: string, pointer?: string): void {

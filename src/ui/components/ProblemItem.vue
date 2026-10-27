@@ -21,7 +21,7 @@ const current = computed(() => route.value.file === props.problem.file && route.
 
 <template>
   <div class="problem" :class="[problem.severity, { current }]">
-    <a :href="href(problem.file, problem.pointer)" class="link" :data-testid="`problem-${problem.code}`">
+    <a :href="problem.line !== undefined ? href(problem.file, undefined, problem.line) : href(problem.file, problem.pointer)" class="link" :data-testid="`problem-${problem.code}`">
       <span class="head">
         <span class="severity">
           <v-icon :icon="isError ? mdiAlertCircle : mdiAlert" size="x-small" aria-hidden="true" />

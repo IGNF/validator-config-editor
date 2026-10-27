@@ -35,6 +35,8 @@ watch(() => route.value.pointer, () => {
   highlight()
 })
 watch(tab, highlight)
+// Ligne désignée (erreur de syntaxe) : onglet « Source ».
+watch(() => route.value.line, (line) => { if (line !== undefined) tab.value = 'source' }, { immediate: true })
 </script>
 
 <template>
@@ -57,7 +59,7 @@ watch(tab, highlight)
       </v-btn>
     </div>
     <slot v-if="tab === 'view' || !source" />
-    <SourceView v-else :file="source" />
+    <SourceView v-else :file="source" :line="route.line" />
   </section>
 </template>
 

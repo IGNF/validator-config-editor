@@ -156,3 +156,11 @@ h3,
 .v-main .checks {
   margin-bottom: 8px;
 }
+
+/* Code coloré (vue Source, SQL) : couleurs aux contrastes AA sur fond clair et sombre. */
+:root {
+  --code-string: #1d6b31;
+}
+.v-theme--dark {
+  --code-string: #8fd19e;
+}

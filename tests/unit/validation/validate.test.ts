@@ -56,10 +56,10 @@ describe('validation des fixtures réelles', () => {
 
 describe('codes de problème', () => {
   const cases: [string, (files: Map<string, string>) => void, Partial<Problem>][] = [
-    ['ERR-JSON-SYNTAX', (f) => f.set(ZONE_URBA, '{\n  "id": \n}'), { file: ZONE_URBA }],
+    ['ERR-JSON-SYNTAX', (f) => f.set(ZONE_URBA, '{\n  "id": \n}'), { file: ZONE_URBA, line: 3 }],
     ['ERR-CSV-SYNTAX', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT\n"01\n'), { file: `${PLU}/codes/ListeEtatPLU.csv`, pointer: '/2' }],
     ['ERR-CSV-HEADER', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT,ETAT\n01,02\n'), { pointer: '/1' }],
-    ['ERR-CSV-ROW-LENGTH', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT\n01\n02,03\n'), { pointer: '/3' }],
+    ['ERR-CSV-ROW-LENGTH', (f) => f.set(`${PLU}/codes/ListeEtatPLU.csv`, 'ETAT\n01\n02,03\n'), { pointer: '/3', line: 3 }],
     ['WARN-MODEL-NO-DOCUMENT', (f) => f.set('orphelin/notes.json', '{}'), { model: 'orphelin', file: 'orphelin/' }],
     ['ERR-VARIABLES-FORMAT', (f) => f.set('variables.json', '{"variables": []}'), { model: null, file: 'variables.json' }],
     ['ERR-VARIABLES-DUPLICATE', (f) => f.set('variables.json', '{"variables": {"A": "[0-9]", "B": "[0-9]"}}'), { model: null, file: 'variables.json', pointer: '/variables/B' }],
