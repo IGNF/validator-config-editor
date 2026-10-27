@@ -1,7 +1,9 @@
-// Comparaison de deux modèles d'une configuration (feature 011, plan R1–R4, contrat compare.md) :
-// éléments rapprochés par nom, comme StandardComparator (GpU). Ni les `id`, ni les titres, ni
-// l'ordre ne sont comparés.
-import type { Column, DocumentModel, FileModel, TableModel } from './model/types'
+// Comparaison de deux modèles d'une configuration (feature 011, plan R1–R5, contrat compare.md) :
+// éléments rapprochés par nom, comme StandardComparator (GpU) ; lignes des listes de codes par
+// clé. Ni les `id`, ni les titres, ni l'ordre ne sont comparés.
+import { resolvePath } from './model/paths'
+import type { Column, Csv, DocumentModel, FileModel, TableModel } from './model/types'
+import { parseForeignKey } from './validation/foreign-key'
 import type { CheckResult } from './validation/validate'
 
 export type Value = string | number | boolean | null
@@ -30,14 +32,27 @@ export interface TableChanged extends Changed {
   columns: Section
 }
 
+/** Ligne de liste de codes modifiée : clé, puis cellules changées (`field` : nom de la colonne). */
+export interface RowChange {
+  key: string
+  changes: Change[]
+}
+
+/** Contenu d'une liste de codes présente des deux côtés (US2) ; lignes en valeurs jointes par « , ». */
+export interface CodeListContent {
+  name: string
+  columns: { added: string[]; removed: string[] }
+  rows: { added: string[]; removed: string[]; changed: RowChange[] }
+}
+
 export interface Comparison {
   from: string
   to: string
   document: Change[]
   files: Section
   tables: { added: string[]; removed: string[]; changed: TableChanged[] }
-  codes: { added: string[]; removed: string[] }
-  /** Tables illisibles ou non conformes d'un des deux modèles, laissées de côté. */
+  codes: { added: string[]; removed: string[]; content: CodeListContent[] }
+  /** Tables et listes illisibles ou non conformes d'un des deux modèles, laissées de côté. */
   unreadable: string[]
   total: number
 }
@@ -126,6 +141,65 @@ export function previousVersion(name: string, names: Iterable<string>): string |
   return best?.[0]
 }
 
+/** Colonnes de rapprochement des lignes d'une liste : celles de la première clé étrangère qui la vise. */
+function keyColumns(list: string, tables: readonly TableModel[][]): string[] | undefined {
+  for (const side of tables) {
+    for (const table of side) {
+      for (const text of table.constraints?.foreignKeys ?? []) {
+        const fk = parseForeignKey(text)
+        if (fk?.target === list) return fk.targetColumns
+      }
+    }
+  }
+  return undefined
+}
+
+/**
+ * Contenu de deux versions d'une liste (plan R5) : lignes rapprochées par la clé (colonnes de la clé
+ * étrangère, sinon la première colonne), sur les colonnes communes. Clés en double : rapprochement
+ * par ligne entière. `undefined` si rien ne change.
+ */
+function compareCsv(name: string, from: Csv, to: Csv, fkColumns: string[] | undefined): CodeListContent | undefined {
+  const common = to.header.filter((c) => from.header.includes(c))
+  const columns = {
+    added: to.header.filter((c) => !from.header.includes(c)),
+    removed: from.header.filter((c) => !to.header.includes(c)),
+  }
+  const key = fkColumns?.every((c) => common.includes(c)) ? fkColumns : common.slice(0, 1)
+  const project = (csv: Csv) => csv.rows.map((row) => common.map((c) => row[csv.header.indexOf(c)] ?? ''))
+  const [ra, rb] = [project(from), project(to)]
+  const keyOf = (row: string[]) => key.map((c) => row[common.indexOf(c)]).join(',')
+  const unique = (rows: string[][]) => new Set(rows.map(keyOf)).size === rows.length
+  const rows: CodeListContent['rows'] = { added: [], removed: [], changed: [] }
+  if (key.length && unique(ra) && unique(rb)) {
+    const [ma, mb] = [new Map(ra.map((r) => [keyOf(r), r])), new Map(rb.map((r) => [keyOf(r), r]))]
+    for (const [k, r] of mb) if (!ma.has(k)) rows.added.push(r.join(','))
+    for (const [k, r] of ma) {
+      const other = mb.get(k)
+      if (!other) rows.removed.push(r.join(','))
+      else {
+        const changes = common.flatMap((c, i) => (r[i] !== other[i] ? [{ field: c, old: r[i]!, new: other[i]! }] : []))
+        if (changes.length) rows.changed.push({ key: k, changes })
+      }
+    }
+  } else {
+    // Multiensembles de lignes entières.
+    const remaining = new Map<string, number>()
+    for (const r of ra.map((x) => x.join(','))) remaining.set(r, (remaining.get(r) ?? 0) + 1)
+    for (const r of rb.map((x) => x.join(','))) {
+      const n = remaining.get(r) ?? 0
+      if (n > 0) remaining.set(r, n - 1)
+      else rows.added.push(r)
+    }
+    for (const [r, n] of remaining) for (let i = 0; i < n; i++) rows.removed.push(r)
+  }
+  rows.added = sorted(rows.added)
+  rows.removed = sorted(rows.removed)
+  rows.changed.sort((x, y) => x.key.localeCompare(y.key))
+  const size = columns.added.length + columns.removed.length + rows.added.length + rows.removed.length + rows.changed.length
+  return size ? { name, columns, rows } : undefined
+}
+
 /** Compare le modèle `to` à la référence `from`, dans l'état courant de la configuration. */
 export function compareModels(result: CheckResult, from: string, to: string): Comparison {
   const unreadable: string[] = []
@@ -165,14 +239,29 @@ export function compareModels(result: CheckResult, from: string, to: string): Co
   }
 
   const [ca, cb] = [byName(a.document?.codes ?? []), byName(b.document?.codes ?? [])]
+  // Contenu des listes présentes des deux côtés ; une liste illisible est laissée de côté.
+  const csv = (model: string, data: string) => {
+    const path = resolvePath(model, data)
+    const entry = path === undefined ? undefined : result.project.models.get(model)?.csvs.get(path)
+    if (entry && !entry.csv) unreadable.push(entry.path)
+    return entry?.csv
+  }
+  const content: CodeListContent[] = []
+  for (const name of sorted([...ca.keys()].filter((n) => cb.has(n)))) {
+    const [x, y] = [csv(from, ca.get(name)!.data), csv(to, cb.get(name)!.data)]
+    const diff = x && y && compareCsv(name, x, y, keyColumns(name, [b.tables.map((t) => t.table), a.tables.map((t) => t.table)]))
+    if (diff) content.push(diff)
+  }
   const codes = {
     added: sorted([...cb.keys()].filter((n) => !ca.has(n))),
     removed: sorted([...ca.keys()].filter((n) => !cb.has(n))),
+    content,
   }
 
   // Une table compte si ses propres champs changent ; ses colonnes comptent à part.
   const total = document.length + count(files) + tables.added.length + tables.removed.length
     + tables.changed.reduce((n, t) => n + (t.changes.length > 0 ? 1 : 0) + count(t.columns), 0)
     + codes.added.length + codes.removed.length
+    + content.reduce((n, c) => n + c.columns.added.length + c.columns.removed.length + c.rows.added.length + c.rows.removed.length + c.rows.changed.length, 0)
   return { from, to, document, files, tables, codes, unreadable: sorted(new Set(unreadable)), total }
 }

@@ -81,3 +81,15 @@ test('accessibilité de la comparaison', async ({ page }) => {
   const { violations } = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
   expect(violations.map((v) => `${v.id} (${v.impact}) — ${v.help}`)).toEqual([])
 })
+
+test('contenu des listes de codes : lignes ajoutées, retirées, modifiées (US2)', async ({ page }) => {
+  const path = join(server.dir, 'cnig_PLU_2022/codes/PrescriptionUrbaType.csv')
+  const lines = readFileSync(path, 'utf8').trimEnd().split('\n')
+  lines[2] = lines[2]!.replace('Espace boisé classé à protéger', 'EBC à protéger')
+  writeFileSync(path, [...lines, '98,98,Nouvelle,,'].join('\n') + '\n')
+  await page.goto(`${server.url}#/cnig_PLU_2022/?compare=cnig_PLU_2017`)
+  const list = page.getByTestId('compare-list-PrescriptionUrbaType')
+  await expect(list).toContainText('ligne ajoutée 98,98,Nouvelle,,')
+  await expect(list).toContainText('ligne modifiée 01,01 : LIBELLE')
+  await expect(list).toContainText('EBC à protéger ou conserver')
+})

@@ -157,22 +157,83 @@ describe('compareModels', () => {
   })
 })
 
+const CODES = `${TO}/codes`
+const csvEdit = (f: Map<string, string>, name: string, edit: (lines: string[]) => string[]) =>
+  f.set(`${CODES}/${name}.csv`, edit(f.get(`${CODES}/${name}.csv`)!.trimEnd().split('\n')).join('\n') + '\n')
+
+describe('contenu des listes de codes (US2)', () => {
+  it('lignes rapprochées par les colonnes de la clé étrangère : seul LIBELLE change → ligne modifiée', async () => {
+    const c = await compare((f) => csvEdit(f, 'PrescriptionUrbaType', (lines) => {
+      // Ligne 01,00 retirée, libellé de 01,01 modifié, ligne 98,98 ajoutée.
+      const [header, , second, ...rest] = lines
+      return [header!, second!.replace('Espace boisé classé à protéger', 'EBC à protéger'), ...rest, '98,98,Nouvelle,,']
+    }))
+    expect(c.codes.content).toHaveLength(1)
+    const [content] = c.codes.content
+    expect(content!.name).toBe('PrescriptionUrbaType')
+    expect(content!.columns).toEqual({ added: [], removed: [] })
+    expect(content!.rows.added).toEqual(['98,98,Nouvelle,,'])
+    expect(content!.rows.removed).toHaveLength(1)
+    expect(content!.rows.removed[0]).toMatch(/^01,00,/)
+    expect(content!.rows.changed).toEqual([
+      { key: '01,01', changes: [{ field: 'LIBELLE', old: 'Espace boisé classé à protéger ou conserver', new: 'EBC à protéger ou conserver' }] },
+    ])
+  })
+
+  it('sans clé étrangère : première colonne', async () => {
+    const c = await compare((f) => csvEdit(f, 'ListeStypeinf', (lines) => [lines[0]!, ...lines.slice(2), '99']))
+    expect(c.codes.content).toEqual([{ name: 'ListeStypeinf', columns: { added: [], removed: [] }, rows: { added: ['99'], removed: ['00'], changed: [] } }])
+  })
+
+  it('clés en double : rapprochement par ligne entière', async () => {
+    const c = await compare((f) => csvEdit(f, 'PrescriptionUrbaType', (lines) => [
+      ...lines.map((l) => l.replace('Espace boisé classé à protéger', 'EBC à protéger')), lines[1]!.replace('Espace', 'Doublon'),
+    ]))
+    const rows = c.codes.content[0]!.rows
+    expect(rows.changed).toEqual([])
+    expect(rows.added).toHaveLength(2)
+    expect(rows.removed).toHaveLength(1)
+  })
+
+  it('colonnes ajoutées et retirées ; lignes comparées sur les colonnes communes', async () => {
+    const c = await compare((f) => csvEdit(f, 'ListeEtatPLU', (lines) => lines.map((l, i) => `${l},${i === 0 ? 'LIBELLE' : 'x'}`)))
+    expect(c.codes.content).toEqual([{ name: 'ListeEtatPLU', columns: { added: ['LIBELLE'], removed: [] }, rows: { added: [], removed: [], changed: [] } }])
+    expect(c.total).toBe(1)
+  })
+
+  it('contenu identique sous un autre chemin data : rien', async () => {
+    const c = await compare((f) => {
+      f.set(`${CODES}/Etat.csv`, f.get(`${CODES}/ListeEtatPLU.csv`)!)
+      editJson(f, FILES, (d) => { d.codes.find((x: { name: string }) => x.name === 'ListeEtatPLU').data = './codes/Etat.csv' })
+    })
+    expect(c.codes.content).toEqual([])
+    expect(c.total).toBe(0)
+  })
+
+  it('liste illisible : signalée, laissée de côté', async () => {
+    const c = await compare((f) => f.set(`${CODES}/ListeEtatPLU.csv`, 'ETAT\n"01\n'))
+    expect(c.unreadable).toEqual([`${CODES}/ListeEtatPLU.csv`])
+    expect(c.codes.content).toEqual([])
+  })
+})
+
 // SC-001 : nombres du tableau du contexte de la spec (json-source, commit 976b9fce).
 describe.skipIf(!process.env.VCE_CONFIG_DIR)('configuration complète (VCE_CONFIG_DIR)', () => {
   const counts = (s: { added: unknown[]; removed: unknown[]; changed?: unknown[] }) => [s.added.length, s.removed.length, ...(s.changed ? [s.changed.length] : [])]
   it.each([
-    ['cnig_PLU_2017', 'cnig_PLU_2022', 1, [2, 0, 1], [0, 0, 1], [14, 0, 1], [1, 0]],
-    ['cnig_PLU_2022', 'cnig_PLU_2024', 1, [21, 2, 1], [0, 0, 7], [2, 0, 4], [6, 2]],
-    ['cnig_PLUi_2022', 'cnig_PLUi_2024', 1, [24, 5, 14], [0, 0, 7], [2, 0, 5], [7, 3]],
-    ['cnig_SUP_A1_2013', 'cnig_SUP_A1_2016', 1, [1, 0, 7], [0, 0, 3], [2, 1, 17], [0, 0]],
-  ])('%s → %s', async (from, to, document, files, tables, columns, codes) => {
+    ['cnig_PLU_2017', 'cnig_PLU_2022', 1, [2, 0, 1], [0, 0, 1], [14, 0, 1], [1, 0], 3],
+    ['cnig_PLU_2022', 'cnig_PLU_2024', 1, [21, 2, 1], [0, 0, 7], [2, 0, 4], [6, 2], 1],
+    ['cnig_PLUi_2022', 'cnig_PLUi_2024', 1, [24, 5, 14], [0, 0, 7], [2, 0, 5], [7, 3], 1],
+    ['cnig_SUP_A1_2013', 'cnig_SUP_A1_2016', 1, [1, 0, 7], [0, 0, 3], [2, 1, 17], [0, 0], 0],
+  ])('%s → %s', async (from, to, document, files, tables, columns, codes, content) => {
     const result = await checkConfig(memoryFs(readConfig(process.env.VCE_CONFIG_DIR)))
     const c = compareModels(result, from, to)
     expect(c.document.length).toBe(document)
     expect(counts(c.files)).toEqual(files)
     expect([c.tables.added.length, c.tables.removed.length, c.tables.changed.filter((t) => t.changes.length > 0).length]).toEqual(tables)
     expect(c.tables.changed.reduce((n, t) => n.map((x, i) => x + counts(t.columns)[i]!), [0, 0, 0])).toEqual(columns)
-    expect(counts(c.codes)).toEqual(codes)
+    expect([c.codes.added.length, c.codes.removed.length]).toEqual(codes)
+    expect(c.codes.content.length).toBe(content)
     expect(c.unreadable).toEqual([])
   })
 })
