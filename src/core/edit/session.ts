@@ -8,6 +8,7 @@ import { detectStyle, isReproducible, serialize } from '../serialize'
 import type { Problem } from '../validation/problems'
 import { checkLoaded, withData, type CheckResult } from '../validation/validate'
 import { emptyHistory, record, redo, undo, type Change, type History } from './history'
+import { getAt } from './pointer'
 
 export interface Session {
   /** Textes d'origine, par chemin. */
@@ -52,6 +53,12 @@ function originalData(session: Session, path: string): unknown {
 /** Donnée courante d'un fichier JSON (modifiée ou d'origine). */
 export function dataOf(session: Session, path: string): unknown {
   return session.edited.has(path) ? session.edited.get(path) : originalData(session, path)
+}
+
+/** Vrai si l'élément désigné (colonne, fichier attendu, liste déclarée) diffère de sa version d'origine. */
+export function isModifiedAt(session: Session, path: string, pointer: string): boolean {
+  if (!session.edited.has(path)) return false
+  return JSON.stringify(getAt(session.edited.get(path), pointer) ?? null) !== JSON.stringify(getAt(originalData(session, path), pointer) ?? null)
 }
 
 /** Texte courant d'un fichier : modifié, sérialisé dans son style, ou d'origine ; undefined si absent. */

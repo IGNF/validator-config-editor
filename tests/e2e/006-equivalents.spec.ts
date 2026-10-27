@@ -54,14 +54,18 @@ test('élément décoché non modifié ; « déjà à jour » ; aucun équivalen
   await dialog.getByTestId('equivalent-cnig_SUP_A3_2016').getByRole('checkbox').uncheck()
   await expect(dialog.getByTestId('equivalents-apply')).toHaveText('Appliquer à 1 élément')
   await dialog.getByTestId('equivalents-apply').click()
-  await page.getByTestId('save').click()
-  await expect(page.getByTestId('notice')).toContainText('2 fichiers enregistrés')
-  expect([maxLength('cnig_SUP_A2_2016'), maxLength('cnig_SUP_A3_2016')]).toEqual([120, 80])
 
   await page.getByTestId('column-NOMGEST').getByTestId('equivalents').click()
   await expect(dialog.getByTestId('equivalent-cnig_SUP_A2_2016')).toContainText('déjà à jour')
   await dialog.getByLabel('Toute la configuration').check()
   await expect(dialog.getByTestId('equivalents-absent')).toContainText('cnig_PLU_2017')
+  await page.keyboard.press('Escape')
+
+  await page.getByTestId('save').click()
+  await expect(page.getByTestId('notice')).toContainText('2 fichiers enregistrés')
+  expect([maxLength('cnig_SUP_A2_2016'), maxLength('cnig_SUP_A3_2016')]).toEqual([120, 80])
+  // Enregistré : plus rien à propager.
+  await expect(page.getByTestId('column-NOMGEST').getByTestId('equivalents')).toHaveCount(0)
 })
 
 test('accessibilité de la fenêtre', async ({ page }) => {
@@ -83,10 +87,7 @@ test('comparer : valeur divergente marquée, modèle absent, accessibilité', as
   other.columns = other.columns.filter((c: { name: string }) => c.name !== 'NOMGEST')
   writeFileSync(a3, JSON.stringify(other, null, 4))
 
-  await page.goto(`${server.url}#/${GEST(A1)}`)
-  await page.getByTestId('column-NOMGEST').click()
-  await page.getByTestId('column-NOMGEST').getByTestId('equivalents').click()
-  const dialog = page.getByTestId('equivalents-dialog')
+  const dialog = await editNomgest(page, '81')
   await dialog.getByTestId('equivalents-tab-compare').click()
   await expect(dialog.getByTestId('equivalents-divergent')).toHaveText('1 élément sur 1 diffère de GESTIONNAIRE_SUP.NOMGEST (valeurs marquées « ≠ »).')
   await expect(dialog.getByTestId(`compare-row-${A1}`)).toContainText('(source)')
@@ -120,11 +121,9 @@ test('REGLEMENT passé en « Obligatoire » et appliqué en série', async ({ pa
   expect([A1, 'cnig_SUP_A2_2016', 'cnig_SUP_A3_2016'].map(mandatory)).toEqual(['ERROR', 'ERROR', 'ERROR'])
 })
 
-test('déclaration de liste : bouton « Équivalents » et liste des équivalents', async ({ page }) => {
+test('déclaration de liste : rien à modifier, pas de bouton', async ({ page }) => {
   await page.goto(`${server.url}#/${A1}/files.json`)
   await page.getByTestId('model-tab-codes').click()
-  await page.getByTestId('code-ListeValidegestSUP').getByTestId('equivalents').click()
-  const dialog = page.getByTestId('equivalents-dialog')
-  await expect(dialog.getByTestId('equivalent-cnig_SUP_A2_2016')).toBeVisible()
-  await expect(dialog.getByTestId('equivalent-cnig_SUP_A3_2016')).toBeVisible()
+  await expect(page.getByTestId('code-ListeValidegestSUP')).toBeVisible()
+  await expect(page.getByTestId('code-ListeValidegestSUP').getByTestId('equivalents')).toHaveCount(0)
 })

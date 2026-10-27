@@ -3,7 +3,6 @@ import { mdiCodeTags, mdiCompareHorizontal, mdiDatabaseOutline, mdiDelete, mdiFi
 import { computed, ref, watch } from 'vue'
 import { FILE_TYPE_LABELS, MANDATORY_LABELS, fileTypeLabel, mandatoryLabel } from '@core/labels'
 import { previousVersion } from '@core/compare'
-import { renameCodeList } from '@core/edit/codelists'
 import { addCode, addFile, codeName, removeItem, setOrRemove } from '@core/edit/operations'
 import { setAt } from '@core/edit/pointer'
 import { fileTree, type FileNode } from '@core/model/file-tree'
@@ -59,12 +58,6 @@ function tableOf(f: FileModel): { text: string; path?: string } | undefined {
 const codePath = (data: string) => {
   const p = resolvePath(name.value, data)
   return store.has(p) ? p : undefined
-}
-// Fichier d'une déclaration : son nom devient celui de la liste, clés étrangères comprises (012, R5).
-function chooseFile(index: number, data: string) {
-  const { changes, refusal } = renameCodeList(store.session!, name.value, index, data)
-  if (refusal) store.notice = refusal
-  else store.applyChanges(changes)
 }
 // L'icône suffit à dire le type ; son libellé reste lisible au survol et par un lecteur d'écran.
 // Fichiers attendus dans l'ordre de leur arborescence, avec leur profondeur (dossier › contenu).
@@ -294,14 +287,11 @@ function newCode() {
               <span v-else class="text-error" data-testid="code-name">{{ c.name }}</span>
               <div v-if="c.title && c.title !== c.name" class="code-title">{{ c.title }}</div>
             </th>
-            <td class="code-file">
-              <v-select :label="`Fichier de la liste ${c.name}`" :items="csvChoices" :model-value="c.data" density="compact" variant="outlined" hide-details
-                data-testid="code-data" @update:model-value="(v: string) => chooseFile(i, v)" />
-            </td>
+            <!-- Fichier imposé par le nom de la liste : ./codes/<nom>.csv (écart signalé par WARN-CODE-NAME-FILE). -->
+            <td><code class="code-file" data-testid="code-data">{{ c.data }}</code></td>
             <td>{{ rowsOf(c.data) ?? '—' }}</td>
             <td><ProblemBadge :file="path!" :pointer="`/codes/${i}`" /><ProblemCount :counts="codePath(c.data) ? store.countsByFile.get(codePath(c.data)!) : undefined" /></td>
             <td class="actions">
-              <EquivalentsDialog :source="{ kind: 'code', file: path!, pointer: pointer('codes', i) }" :label="`${name} › ${c.name}`" />
               <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer la liste ${c.name}`" @click="edit((d) => removeItem(d, 'codes', i))" />
             </td>
           </tr>
@@ -338,7 +328,8 @@ function newCode() {
   color: rgb(var(--v-theme-secondary));
 }
 .code-file {
-  min-width: 16rem;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
 }
 .codes .actions {
   width: 1%;

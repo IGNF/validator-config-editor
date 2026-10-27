@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { setAt } from '@core/edit/pointer'
 import {
-  allFiles, allIds, applyChanges, changedFiles, createdFiles, dataOf, edit, isChanged, openSession, redoEdit, reformatted, textOf, undoEdit,
+  allFiles, allIds, applyChanges, changedFiles, createdFiles, dataOf, edit, isChanged, isModifiedAt, openSession, redoEdit, reformatted, textOf, undoEdit,
 } from '@core/edit/session'
 import { readConfig } from '../../support/fixtures'
 
@@ -64,6 +64,14 @@ describe('session d\'édition', () => {
     const all = allFiles(s)
     expect([...all.keys()].sort()).toEqual([...originals.keys()].filter((p) => /\.(json|csv)$/.test(p)).sort())
     for (const [p, t] of all) if (p !== ZONE_URBA) expect(t).toBe(originals.get(p))
+  })
+
+  it('repère l\'élément modifié, pas ses voisins', async () => {
+    const s = await openSession(readConfig())
+    expect(isModifiedAt(s, ZONE_URBA, '/columns/7')).toBe(false)
+    const t = edit(s, ZONE_URBA, setMaxLength(5))
+    expect(isModifiedAt(t, ZONE_URBA, '/columns/7')).toBe(true)
+    expect(isModifiedAt(t, ZONE_URBA, '/columns/6')).toBe(false)
   })
 
   it('signale les fichiers modifiés qui seront réindentés', async () => {

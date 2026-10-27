@@ -2,7 +2,7 @@
 import { mdiSourceBranchSync } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { getAt } from '@core/edit/pointer'
-import { dataOf } from '@core/edit/session'
+import { dataOf, isModifiedAt } from '@core/edit/session'
 import { applyToEquivalents, COMPARED, differingProperties, findEquivalents, PROPERTIES, type Equivalent, type Source } from '@core/equivalents'
 import { href } from '../router'
 import { useProject } from '../stores/project'
@@ -27,6 +27,8 @@ const LABELS: Record<string, string> = {
   '/constraints/maxLength': 'Longueur maximale', '/constraints/pattern': 'Motif', '/constraints/enum': 'Valeurs autorisées',
   '/constraints/reference': 'Référence', '/mandatory': 'Présence', '/path': 'Chemin', '/tableModel': 'Modèle de table', '/data': 'Fichier CSV',
 }
+// Bouton proposé seulement une fois l'élément modifié : il sert à propager une modification.
+const modified = computed(() => !!store.session && isModifiedAt(store.session, props.source.file, props.source.pointer))
 const properties = computed(() => PROPERTIES[props.source.kind].map((p) => ({ title: LABELS[p] ?? p, value: p })))
 
 const equivalents = computed(() => (open.value && store.session ? findEquivalents(store.session, props.source, all.value ? 'all' : 'family') : { items: [], absent: [] }))
@@ -94,7 +96,7 @@ function apply() {
 </script>
 
 <template>
-  <v-dialog v-model="open" max-width="900" scrollable>
+  <v-dialog v-if="modified || open" v-model="open" max-width="900" scrollable>
     <template #activator="{ props: activator }">
       <v-btn v-bind="activator" :prepend-icon="mdiSourceBranchSync" size="small" variant="text" data-testid="equivalents">{{ BUTTON[source.kind] }}</v-btn>
     </template>

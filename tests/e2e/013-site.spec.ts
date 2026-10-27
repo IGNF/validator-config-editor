@@ -75,17 +75,12 @@ test('modèle, table, liste : lecture seule, bandeau, titre, aucune ressource di
   expect(outside).toEqual([])
 })
 
-test('comparaison et équivalents en lecture ; téléchargement disponible', async ({ page }) => {
+test('comparaison en lecture, pas d\'« Appliquer aux semblables » ; téléchargement disponible', async ({ page }) => {
   await page.goto(`${url}#/cnig_PLU_2017/?compare=GPU_MEC_2025`)
   await expect(page.getByTestId('compare-total')).toBeVisible()
   await page.goto(`${url}#/cnig_SUP_A1_2016/types/GESTIONNAIRE_SUP.json`)
   await page.getByTestId('column-NOMGEST').click()
-  await page.getByTestId('column-NOMGEST').getByTestId('equivalents').click()
-  const dialog = page.getByTestId('equivalents-dialog')
-  await expect(dialog).toBeVisible()
-  await expect(dialog.getByTestId('equivalents-tab-apply')).toHaveCount(0)
-  await expect(dialog.getByTestId('equivalents-apply')).toHaveCount(0)
-  await page.keyboard.press('Escape')
+  await expect(page.getByTestId('column-NOMGEST').getByTestId('equivalents')).toHaveCount(0)
   await expect(page.getByTestId('download-zip')).toBeVisible()
 })
 
