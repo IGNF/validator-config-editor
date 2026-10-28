@@ -7,6 +7,7 @@ import type { Project } from '../model/types'
 import { detectStyle, isReproducible, serialize } from '../serialize'
 import type { Problem } from '../validation/problems'
 import { checkLoaded, withData, type CheckResult } from '../validation/validate'
+import { VARIABLES_FILE } from '../variables'
 import { emptyHistory, record, redo, undo, type Change, type History } from './history'
 import { getAt } from './pointer'
 
@@ -45,6 +46,7 @@ export async function openSession(files: ReadonlyMap<string, string>): Promise<S
 }
 
 function originalData(session: Session, path: string): unknown {
+  if (path === VARIABLES_FILE) return session.loaded.project.variables?.data
   const model = session.loaded.project.models.get(path.slice(0, path.indexOf('/')))
   const file = model?.document?.path === path ? model.document : model?.tables.get(path)
   return file?.data

@@ -12,6 +12,7 @@ import ProblemsPanel from './components/ProblemsPanel.vue'
 import SearchDialog from './components/SearchDialog.vue'
 import ResizeHandle from './components/ResizeHandle.vue'
 import SourceView from './components/SourceView.vue'
+import VariablesView from './components/VariablesView.vue'
 import TableView from './components/TableView.vue'
 import { kindOf, modelOf } from './files'
 import { panels } from './layout'
@@ -88,7 +89,7 @@ function reload() {
   store.load()
 }
 
-const VIEWS = { model: ModelView, table: TableView, codes: CodeListView, other: SourceView }
+const VIEWS = { model: ModelView, table: TableView, codes: CodeListView, variables: VariablesView, other: SourceView }
 const view = computed(() => VIEWS[kindOf(route.value.file)])
 </script>
 

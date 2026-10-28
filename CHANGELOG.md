@@ -27,6 +27,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Édition du dictionnaire des variables (`variables.json`), depuis l'accueil de la configuration : renommer une variable (ses alias suivent), modifier sa regex, ajouter ou retirer des variables, ajouter, modifier ou retirer des alias par famille, description. Noms contrôlés (majuscules, chiffres, `_`, unicité) ; regex en double et conventions `_OPT` signalées comme avant. Les regex des modèles ne changent pas, seul leur affichage suit le dictionnaire.
 - Édition du contenu des listes de codes : valeurs modifiables dans le tableau, lignes ajoutées ou supprimées, une étape annulable par modification ; seule la ligne touchée du CSV est réécrite (fins de ligne et guillemets du reste conservés). Une liste dont une valeur s'étend sur plusieurs lignes reste en lecture.
 - Revue des modifications : le compteur « N fichier(s) modifié(s) » ouvre la liste des fichiers modifiés ou créés, avec leur diff ligne à ligne, l'ouverture du fichier et l'annulation de ses modifications (un pas annulable). Le téléchargement complet (ZIP) passe par cette revue quand il y a des modifications.
 - Recherche dans toute la configuration (« Rechercher » dans l'en-tête, ou touche `/`) : modèles, fichiers attendus, tables, colonnes (nom, description, motif), listes de codes et leurs valeurs, identifiants ; chaque résultat ouvre l'élément trouvé.

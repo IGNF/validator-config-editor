@@ -18,6 +18,7 @@ const items = computed(() => {
   const model = modelOf(props.file)
   const doc = `${model}/files.json`
   const out: { title: string; href?: string }[] = [{ title: 'Configuration', href: '#/' }]
+  if (!model) return [...out, { title: 'Dictionnaire des variables' }]
   const kind = kindOf(props.file)
   const data = store.data(props.file)
   out.push({ title: model, ...(kind !== 'model' || route.value.pointer !== undefined || route.value.compare !== undefined ? { href: href(store.has(doc) ? doc : `${model}/`) } : {}) })

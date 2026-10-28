@@ -168,13 +168,13 @@ vce serve <dossier> [--port <n>] [--open]
 Ouvre un éditeur local sur `http://127.0.0.1:5174/` (ou le port libre suivant ; `--port` impose
 le port, `--open` ouvre le navigateur). Il permet de :
 
-- filtrer et parcourir les modèles : sous chaque modèle, ses fichiers attendus (une table s'ouvre depuis son fichier) ; le modèle et l'élément affichés sont mis en évidence ; les listes de codes s'ouvrent depuis la vue du modèle (« Listes de codes (N) ») ;
+- filtrer et parcourir les modèles, groupés par famille : un clic ouvre la vue du modèle, avec ses onglets « Modèle », « Fichiers », « Tables » et « Listes de codes » ;
 - consulter un modèle (propriétés, fichiers, listes de codes), une table (colonnes, contraintes,
   clés étrangères, conditions), une liste de codes, en suivant les liens
   entre eux ;
 - afficher le contenu exact de chaque fichier (onglet « Source ») ;
-- appliquer une modification de colonne, de fichier attendu ou de déclaration de liste aux
-  éléments équivalents des autres modèles (« Équivalents ») ; pour une colonne : même nom dans les tables équivalentes de la famille du
+- appliquer une modification de colonne ou de fichier attendu aux éléments équivalents des
+  autres modèles (« Appliquer aux … semblables », proposé une fois l'élément modifié) ; pour une colonne : même nom dans les tables équivalentes de la famille du
   modèle (`A1_ASSIETTE_SUP_S` ↔ `A2_ASSIETTE_SUP_S`) ou de toute la configuration, aperçu des
   valeurs actuelles, éléments à cocher ; l'onglet « Comparer »
   montre les propriétés principales de chaque équivalent et marque « ≠ » les écarts ;
@@ -188,6 +188,10 @@ le port, `--open` ouvre le navigateur). Il permet de :
 - corriger d'un clic les problèmes courants (« Corriger » dans le panneau des problèmes) :
   liste non déclarée ou à copier depuis un autre modèle, identifiant en
   double, nom mal saisi, valeur CSV contenant une virgule… ;
+- modifier le dictionnaire des variables (`variables.json`, « Dictionnaire des variables » sur
+  l'accueil de la configuration) : renommer une variable (ses alias suivent), changer sa regex,
+  en ajouter ou en retirer, gérer les alias par famille. Les modèles ne contiennent que des regex :
+  ils ne changent pas, seul leur affichage suit le dictionnaire ;
 - modifier tables et modèles de document, puis enregistrer les fichiers
   modifiés (« Enregistrer » ou Ctrl+S) : seuls ces fichiers sont réécrits, dans leur mise en forme
   d'origine, et un fichier modifié sur disque entre-temps n'est pas écrasé ;

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { mdiAlertCircleOutline, mdiCompareHorizontal, mdiFolderMultipleOutline } from '@mdi/js'
+import { mdiAlertCircleOutline, mdiCodeBraces, mdiCompareHorizontal, mdiFolderMultipleOutline } from '@mdi/js'
 import { computed } from 'vue'
 import { previousVersion } from '@core/compare'
 import { groupByFamily } from '@core/labels'
 import type { LoadedModel } from '@core/model/types'
 import { countProblems } from '@core/validation/problems'
+import { VARIABLES_FILE } from '@core/variables'
 import { panels } from '../layout'
 import { compareHref, href } from '../router'
 import { useProject } from '../stores/project'
@@ -61,6 +62,9 @@ const latestPair = (models: LoadedModel[]) => {
     <div class="d-flex flex-wrap ga-2 mb-6">
       <v-btn :prepend-icon="mdiAlertCircleOutline" variant="tonal" :color="store.summary?.errors ? 'error' : 'primary'" data-testid="home-show-problems"
         @click="panels.problems.open = true">Voir les problèmes</v-btn>
+      <v-btn v-if="store.has(VARIABLES_FILE)" :prepend-icon="mdiCodeBraces" variant="tonal" color="primary" :href="href(VARIABLES_FILE)" data-testid="home-variables">
+        Dictionnaire des variables
+      </v-btn>
     </div>
 
     <h2 class="text-h6 mb-2">Familles de modèles ({{ families.length }})</h2>

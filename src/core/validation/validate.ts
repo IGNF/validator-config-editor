@@ -5,7 +5,7 @@ import { validateDocument, validateTable, type SchemaValidator } from '../schema
 import { compareProblems, countProblems, type Problem } from './problems'
 import { crossReferences, type CheckedModel } from './refs'
 import { schemaProblems } from './schema'
-import { readVariables } from '../variables'
+import { readVariables, VARIABLES_FILE } from '../variables'
 import { gpuImportProblems } from './gpu-import'
 
 /** Valide une configuration chargée : schémas puis références croisées. */
@@ -61,6 +61,7 @@ export async function checkConfig(fs: ConfigFs): Promise<CheckResult> {
  * le modèle et le fichier concernés sont recopiés, rien n'est relu.
  */
 export function withData(project: Project, path: string, data: unknown): Project {
+  if (path === VARIABLES_FILE) return { ...project, variables: { path, data } }
   const name = path.slice(0, path.indexOf('/'))
   const model = project.models.get(name)
   if (!model) throw new Error(`Modèle inconnu : ${name}`)
