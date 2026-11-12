@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiDelete, mdiPencil, mdiPencilOffOutline, mdiPencilOutline, mdiPlus } from '@mdi/js'
+import { mdiCheck, mdiDelete, mdiPencil, mdiPencilOffOutline, mdiPencilOutline, mdiPlus } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
 import { setAt } from '@core/edit/pointer'
 import {
@@ -216,30 +216,51 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
           <v-btn v-if="!store.readOnly" :prepend-icon="mdiPlus" variant="tonal" :data-testid="`add-${list.key}`" @click="edit((t) => addListItem(t, list.key))">Ajouter</v-btn>
         </div>
         <div v-for="(item, i) in table.constraints?.[list.key] ?? []" :key="i" class="my-1" :data-pointer="`/constraints/${list.key}/${i}`">
-        <div class="d-flex align-center ga-2">
-          <!-- Affichage SQL (mots-clés en bleu gras) ; le crayon passe en saisie, un élément vide s'édite d'emblée. -->
+        <!-- Condition : le message d'erreur est affiché, le SQL au survol ; le crayon édite les deux. -->
+        <template v-if="list.key === 'conditions'">
+          <div v-if="!sqlOf(item) && !conditionMessage(item) || editing === `conditions/${i}`" class="d-flex align-center ga-2">
+            <div class="flex-grow-1">
+              <v-text-field label="Message affiché en cas d'erreur" :model-value="conditionMessage(item)" density="compact" variant="outlined" hide-details
+                :data-testid="`conditions-${i}-message`"
+                @update:model-value="(v: string) => edit((t) => setConditionMessage(t, i, v), `/constraints/conditions/${i}/message`)" />
+              <v-text-field :label="`Condition ${i + 1} (SQL)`" :model-value="sqlOf(item)" :placeholder="list.placeholder" density="compact" variant="outlined"
+                hide-details class="mono mt-1" :data-testid="`conditions-${i}`"
+                @update:model-value="(v: string) => edit((t) => setConditionSql(t, i, v), `/constraints/conditions/${i}`)" />
+            </div>
+            <v-btn :icon="mdiCheck" size="small" variant="text" aria-label="Terminer la modification" :data-testid="`conditions-${i}-done`" @click="editing = undefined" />
+            <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer condition ${i + 1}`" @click="edit((t) => removeListItem(t, list.key, i))" />
+          </div>
+          <div v-else class="d-flex align-center ga-2">
+            <v-tooltip v-if="conditionMessage(item)" location="bottom" max-width="40rem">
+              <template #activator="{ props: tip }">
+                <span v-bind="tip" class="condition-message" :data-testid="`conditions-${i}-message`">{{ conditionMessage(item) }}</span>
+              </template>
+              <SqlText :value="sqlOf(item)" :data-testid="`conditions-${i}-sql`" />
+            </v-tooltip>
+            <SqlText v-else :value="sqlOf(item)" :data-testid="`conditions-${i}-sql`" />
+            <v-spacer />
+            <v-btn v-if="!store.readOnly" :icon="mdiPencil" size="small" variant="text" :aria-label="`Modifier condition ${i + 1}`"
+              :data-testid="`conditions-${i}-edit`" @click="editing = `conditions/${i}`" />
+            <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer condition ${i + 1}`" @click="edit((t) => removeListItem(t, list.key, i))" />
+          </div>
+        </template>
+        <div v-else class="d-flex align-center ga-2">
           <v-text-field v-if="!sqlOf(item) || editing === `${list.key}/${i}`" :label="`${list.title} ${i + 1}`" :model-value="sqlOf(item)" :placeholder="list.placeholder"
             density="compact" variant="outlined" hide-details class="mono" autofocus :data-testid="`${list.key}-${i}`"
-            @update:model-value="(v: string) => edit((t) => (list.key === 'conditions' ? setConditionSql(t, i, v) : setListItem(t, list.key, i, v)), `/constraints/${list.key}/${i}`)"
+            @update:model-value="(v: string) => edit((t) => setListItem(t, list.key, i, v), `/constraints/${list.key}/${i}`)"
             @blur="editing = undefined" @keydown.enter="editing = undefined" />
           <template v-else>
             <SqlText :value="sqlOf(item)" :data-testid="`${list.key}-${i}-sql`" />
             <v-btn v-if="!store.readOnly" :icon="mdiPencil" size="small" variant="text" :aria-label="`Modifier ${list.title.toLowerCase()} ${i + 1}`"
               :data-testid="`${list.key}-${i}-edit`" @click="editing = `${list.key}/${i}`" />
           </template>
-          <template v-if="list.key === 'foreignKeys' && target(sqlOf(item))">
+          <template v-if="target(sqlOf(item))">
             →
             <a v-if="target(sqlOf(item))!.path" :href="href(target(sqlOf(item))!.path!)">{{ target(sqlOf(item))!.label }}</a>
             <span v-else class="text-error">{{ target(sqlOf(item))!.label }}</span>
           </template>
           <v-btn v-if="!store.readOnly" :icon="mdiDelete" size="small" variant="text" :aria-label="`Supprimer ${list.title.toLowerCase()} ${i + 1}`" @click="edit((t) => removeListItem(t, list.key, i))" />
         </div>
-        <template v-if="list.key === 'conditions'">
-          <v-text-field v-if="!store.readOnly" label="Message affiché en cas d'erreur" :model-value="conditionMessage(item)" density="compact" variant="outlined"
-            hide-details class="mt-1" :data-testid="`conditions-${i}-message`"
-            @update:model-value="(v: string) => edit((t) => setConditionMessage(t, i, v), `/constraints/conditions/${i}/message`)" />
-          <p v-else-if="conditionMessage(item)" class="text-body-2 mt-1" :data-testid="`conditions-${i}-message`">{{ conditionMessage(item) }}</p>
-        </template>
         </div>
       </template>
     </template>
@@ -275,6 +296,11 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
 }
 .number {
   min-width: 0;
+}
+.condition-message {
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: help;
 }
 .mono :deep(input) {
   font-family: monospace;
