@@ -13,7 +13,19 @@
     "constraints": {
       "type": "object",
       "properties": {
-        "conditions": { "type": "array", "items": { "type": "string" } },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["sql"],
+                "properties": { "sql": { "type": "string" }, "message": { "type": "string" } }
+              }
+            ]
+          }
+        },
         "foreignKeys": { "type": "array", "items": { "type": "string" } }
       }
     }

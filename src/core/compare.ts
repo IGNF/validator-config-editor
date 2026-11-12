@@ -3,6 +3,7 @@
 // clé. Ni les `id`, ni les titres, ni l'ordre ne sont comparés.
 import { resolvePath } from './model/paths'
 import type { Column, Csv, DocumentModel, FileModel, TableModel } from './model/types'
+import { conditionMessage, conditionSql } from './sql'
 import { parseForeignKey } from './validation/foreign-key'
 import type { CheckResult } from './validation/validate'
 
@@ -67,7 +68,7 @@ const FILE_FIELDS: Fields<FileModel> = [
   ['tableModel', (f) => f.tableModel],
 ]
 const TABLE_FIELDS: Fields<TableModel> = [
-  ['conditions', (t) => t.constraints?.conditions, true],
+  ['conditions', (t) => t.constraints?.conditions?.map((c) => (conditionMessage(c) ? `${conditionSql(c)} — ${conditionMessage(c)}` : conditionSql(c))), true],
   ['foreignKeys', (t) => t.constraints?.foreignKeys, true],
 ]
 const COLUMN_FIELDS: Fields<Column> = [

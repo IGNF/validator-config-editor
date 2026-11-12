@@ -65,7 +65,7 @@ export interface TableModel {
   title?: string
   description?: string
   columns: Column[]
-  constraints?: { conditions?: string[]; foreignKeys?: string[] }
+  constraints?: { conditions?: (string | { sql: string; message?: string })[]; foreignKeys?: string[] }
 }
 
 export interface Csv {

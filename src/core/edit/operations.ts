@@ -79,6 +79,20 @@ export function setListItem<T>(table: T, list: TableList, index: number, value: 
   return setAt(table, pointer('constraints', list, index), value)
 }
 
+/** Modifie le SQL d'une condition en conservant son message (ancien format : simple texte). */
+export function setConditionSql<T>(table: T, index: number, sql: string): T {
+  const ptr = pointer('constraints', 'conditions', index)
+  return typeof getAt(table, ptr) === 'object' ? setAt(table, `${ptr}/sql`, sql) : setAt(table, ptr, sql)
+}
+
+/** Modifie le message d'une condition ; un message vidé est retiré, et une condition sans message redevient un texte. */
+export function setConditionMessage<T>(table: T, index: number, message: string): T {
+  const ptr = pointer('constraints', 'conditions', index)
+  const current = getAt(table, ptr)
+  if (typeof current === 'string') return message === '' ? table : setAt(table, ptr, { sql: current, message })
+  return setOrRemove(table, `${ptr}/message`, message)
+}
+
 export function removeListItem<T>(table: T, list: TableList, index: number): T {
   return removeAt(table, pointer('constraints', list, index))
 }

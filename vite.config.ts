@@ -33,6 +33,8 @@ export default defineConfig(({ mode }) => ({
   base: './',
   plugins: [vue(), vuetify({ autoImport: true }), fontLicences(), ...(mode === 'pages' ? [cspMeta()] : [])],
   resolve: { alias },
+  // `npm run dev` : l'API (/api) est celle d'un `vce serve <dossier>` lancé à côté (port 5174 par défaut).
+  server: { proxy: { '/api': 'http://127.0.0.1:5174' } },
   build: { outDir: mode === 'pages' ? 'dist/pages' : 'dist/ui', emptyOutDir: true },
   test: {
     include: ['tests/unit/**/*.test.ts'],

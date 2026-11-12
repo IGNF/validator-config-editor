@@ -1,4 +1,4 @@
-import type { ConfigSource, SaveResult } from './source'
+import { readJson, type ConfigSource, type SaveResult } from './source'
 
 async function sha256(text: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
@@ -13,7 +13,7 @@ export class ServerSource implements ConfigSource {
   async load(): Promise<Map<string, string>> {
     const response = await fetch('api/snapshot', { cache: 'no-store' })
     if (!response.ok) throw new Error(`Lecture de la configuration impossible (HTTP ${response.status}).`)
-    const data = (await response.json()) as { root: string; files: Record<string, string> }
+    const data = (await readJson(response)) as { root: string; files: Record<string, string> }
     this.label = data.root
     return new Map(Object.entries(data.files))
   }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   addCode, addColumn, addFile, addListItem, codeName, moveColumn, moveItem, parseEnum, removeColumn, removeItem, removeListItem,
-  setConstraint, setListItem, setOrRemove,
+  setConditionMessage, setConditionSql, setConstraint, setListItem, setOrRemove,
 } from '@core/edit/operations'
 
 const table = {
@@ -60,6 +60,22 @@ describe('opérations sur une table', () => {
     expect(setListItem(table, 'foreignKeys', 0, '(B) REFERENCES L(B)').constraints.foreignKeys).toEqual(['(B) REFERENCES L(B)'])
     expect(removeListItem(table, 'foreignKeys', 0).constraints.foreignKeys).toEqual([])
     expect(addListItem({ name: 'T', columns: [] }, 'foreignKeys')).toEqual({ name: 'T', columns: [], constraints: { foreignKeys: [''] } })
+  })
+})
+
+describe('conditions avec message', () => {
+  const withCondition = (c: unknown) => ({ name: 'T', columns: [], constraints: { conditions: [c] } })
+
+  it('modifie le SQL en conservant le message', () => {
+    expect(setConditionSql(withCondition({ sql: 'A', message: 'm' }), 0, 'B').constraints.conditions).toEqual([{ sql: 'B', message: 'm' }])
+    expect(setConditionSql(withCondition('A'), 0, 'B').constraints.conditions).toEqual(['B'])
+  })
+
+  it('ajoute, modifie et retire le message', () => {
+    expect(setConditionMessage(withCondition('A'), 0, 'm').constraints.conditions).toEqual([{ sql: 'A', message: 'm' }])
+    expect(setConditionMessage(withCondition({ sql: 'A', message: 'm' }), 0, 'n').constraints.conditions).toEqual([{ sql: 'A', message: 'n' }])
+    expect(setConditionMessage(withCondition({ sql: 'A', message: 'm' }), 0, '').constraints.conditions).toEqual([{ sql: 'A' }])
+    expect(setConditionMessage(withCondition('A'), 0, '').constraints.conditions).toEqual(['A'])
   })
 })
 

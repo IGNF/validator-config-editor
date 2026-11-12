@@ -23,3 +23,9 @@ export function sqlTokens(text: string): SqlToken[] {
   }
   return out
 }
+
+/** Condition d'une table : texte SQL seul (ancien format) ou objet `{ sql, message }`. */
+export type Condition = string | { sql: string; message?: string }
+
+export const conditionSql = (c: Condition): string => (typeof c === 'string' ? c : c.sql)
+export const conditionMessage = (c: Condition): string => (typeof c === 'string' ? '' : (c.message ?? ''))
