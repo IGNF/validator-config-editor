@@ -25,6 +25,7 @@ const LABELS: Record<string, string> = {
   '/type': 'Type', '/title': 'Titre', '/description': 'Description', '/constraints/required': 'Valeur obligatoire',
   '/constraints/presenceRequired': 'Colonne obligatoire', '/constraints/unique': 'Unique', '/constraints/minLength': 'Longueur minimale',
   '/constraints/maxLength': 'Longueur maximale', '/constraints/pattern': 'Motif', '/constraints/enum': 'Valeurs autorisées',
+  '/constraints/enumSeparator': 'Séparateur des valeurs',
   '/constraints/reference': 'Référence', '/mandatory': 'Présence', '/path': 'Chemin', '/tableModel': 'Modèle de table', '/data': 'Fichier CSV',
 }
 // Bouton proposé seulement une fois l'élément modifié : il sert à propager une modification.

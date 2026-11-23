@@ -16,7 +16,7 @@ const PROPERTIES: Record<string, string> = {
   mandatory: 'présence', tableModel: 'modèle de table', data: 'fichier', tables: 'tables',
   folderName: 'nom de dossier', metadataSpecification: 'spécification des métadonnées', required: 'valeur obligatoire',
   presenceRequired: 'colonne obligatoire', unique: 'unicité', pattern: 'motif', minLength: 'longueur minimale',
-  maxLength: 'longueur maximale', enum: 'valeurs autorisées', reference: 'référence', columns: 'colonnes', files: 'fichiers',
+  maxLength: 'longueur maximale', enum: 'valeurs autorisées', enumSeparator: 'séparateur des valeurs', reference: 'référence', columns: 'colonnes', files: 'fichiers',
   codes: 'listes de codes', constraints: 'contraintes', foreignKeys: 'clés étrangères', conditions: 'conditions',
 }
 type Raw = Record<string, unknown>

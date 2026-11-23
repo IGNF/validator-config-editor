@@ -61,6 +61,10 @@ describe('JSON Schema', () => {
     expect(validateDocument({ name: 'D', files: [{ name: 'F', type: 'pdf', path: 'x' }], codes: [{ name: 'L', data: './codes/L.csv' }] })).toBe(true)
   })
 
+  it('acceptent enumSeparator (validator >= 4.7.2, ex. DESTOUI « 10-20 »)', () => {
+    expect(validateTable({ ...table, columns: [{ ...column, constraints: { enum: ['10', '20'], enumSeparator: '-' } }] })).toBe(true)
+  })
+
   it('acceptent les propriétés inconnues (principe II)', () => {
     expect(validateDocument({ ...document, extension: 1 })).toBe(true)
     expect(validateTable({ ...table, columns: [{ ...column, extension: true }] })).toBe(true)
@@ -71,6 +75,8 @@ describe('JSON Schema', () => {
     ['type URL du schéma historique', validateTable, { ...table, columns: [{ ...column, type: 'URL' }] }, '/columns/0/type'],
     ['columns absent', validateTable, { id, name: 'T' }, ''],
     ['enum objet', validateTable, { ...table, columns: [{ ...column, constraints: { enum: [{}] } }] }, '/columns/0/constraints/enum/0'],
+    ['enumSeparator vide', validateTable, { ...table, columns: [{ ...column, constraints: { enum: ['A'], enumSeparator: '' } }] }, '/columns/0/constraints/enumSeparator'],
+    ['enumSeparator non textuel', validateTable, { ...table, columns: [{ ...column, constraints: { enum: ['A'], enumSeparator: 1 } }] }, '/columns/0/constraints/enumSeparator'],
     ['maxLength inférieur à -1', validateTable, { ...table, columns: [{ ...column, constraints: { maxLength: -2 } }] }, '/columns/0/constraints/maxLength'],
     ['mandatory inconnu', validateDocument, { ...document, files: [{ ...file, mandatory: 'YES' }] }, '/files/0/mandatory'],
     ['type de fichier inconnu', validateDocument, { ...document, files: [{ ...file, type: 'zip' }] }, '/files/0/type'],

@@ -47,6 +47,8 @@ export interface ColumnConstraints {
   minLength?: number
   maxLength?: number
   enum?: (string | number | boolean)[] | null
+  /** Séparateur de plusieurs valeurs de `enum` dans un même attribut (validator >= 4.7.2). */
+  enumSeparator?: string
   reference?: string
 }
 

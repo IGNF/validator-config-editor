@@ -70,7 +70,7 @@ function constraints(c: ColumnConstraints | undefined): { text: string; title?: 
   if (c.minLength !== undefined) out.push({ text: `longueur ≥ ${c.minLength}` })
   if (c.maxLength !== undefined && c.maxLength >= 0) out.push({ text: `longueur ≤ ${c.maxLength}` })
   if (c.pattern) out.push({ text: `motif ${store.regexDisplay(c.pattern, model.value)}`, title: c.pattern, regex: c.pattern })
-  if (c.enum?.length) out.push({ text: `valeurs : ${c.enum.join(', ')}` })
+  if (c.enum?.length) out.push({ text: c.enumSeparator ? `valeurs séparées par « ${c.enumSeparator} » : ${c.enum.join(', ')}` : `valeurs : ${c.enum.join(', ')}` })
   if (c.reference) out.push({ text: `référence ${c.reference}` })
   return out
 }
@@ -200,6 +200,11 @@ const LISTS: { key: TableList; title: string; placeholder: string }[] = [
             <RegexTester v-if="c.constraints?.pattern" :regex="c.constraints.pattern" :model="model" label="Tester une valeur" />
             <v-textarea label="Valeurs autorisées (une par ligne)" :model-value="(c.constraints?.enum ?? []).join('\n')" density="compact" variant="outlined" rows="1" auto-grow
               @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enum', parseEnum(v, c.constraints?.enum)), pointer('columns', i, 'enum'))" />
+            <v-text-field v-if="c.constraints?.enum?.length || c.constraints?.enumSeparator" label="Séparateur de valeurs multiples (ex. « - » pour « 10-20 »)"
+              :model-value="c.constraints?.enumSeparator" density="compact" variant="outlined" class="field"
+              hint="Vide : une seule valeur par attribut. Aucun espace n'est toléré autour des valeurs (validator ≥ 4.7.2)." persistent-hint
+              data-testid="column-enumSeparator"
+              @update:model-value="(v: string) => edit((t) => setConstraint(t, i, 'enumSeparator', v), pointer('columns', i, 'enumSeparator'))" />
             <div class="d-flex flex-wrap ga-2">
               <EquivalentsDialog :source="{ kind: 'column', file, pointer: pointer('columns', i) }" :label="`${table.name}.${c.name}`" />
               <v-spacer />

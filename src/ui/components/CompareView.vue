@@ -28,7 +28,7 @@ const LABELS: Record<string, string> = {
   folderName: 'nom du dossier', metadataSpecification: 'spécification des métadonnées', type: 'type', mandatory: 'présence',
   path: 'chemin', tableModel: 'modèle de table', conditions: 'conditions', foreignKeys: 'clés étrangères', description: 'description',
   minLength: 'longueur minimale', maxLength: 'longueur maximale', required: 'valeur obligatoire', presenceRequired: 'colonne obligatoire',
-  unique: 'unique', enum: 'valeurs possibles', pattern: 'motif',
+  unique: 'unique', enum: 'valeurs possibles', enumSeparator: 'séparateur des valeurs', pattern: 'motif',
 }
 function format(field: string, v: Change['old']): string {
   if (v === null || v === undefined) return '(absent)'

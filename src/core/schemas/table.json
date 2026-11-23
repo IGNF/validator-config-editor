@@ -59,6 +59,7 @@
         "minLength": { "type": "integer", "minimum": 0 },
         "maxLength": { "type": "integer", "minimum": -1, "description": "-1 : pas de limite (ignoré par le validator)" },
         "enum": { "type": ["array", "null"], "items": { "type": ["string", "number", "boolean"] } },
+        "enumSeparator": { "type": "string", "minLength": 1, "description": "Séparateur de plusieurs valeurs de enum dans un même attribut, sans espace toléré (validator >= 4.7.2)" },
         "reference": { "type": "string" }
       }
     }

@@ -27,6 +27,7 @@ et le versionnement sur [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Contrainte de colonne `enumSeparator` (validator ≥ 4.7.2 : plusieurs valeurs de `enum` dans un même attribut, ex. `10-20` avec `-`, sans espace toléré) : validée par le schéma `table.json` (texte non vide), modifiable dans le formulaire d'une colonne à liste de valeurs, affichée dans le résumé des contraintes (« valeurs séparées par « - » : … »), comparée entre versions de standard et recopiable vers les colonnes semblables.
 - Messages des conditions SQL d'une table (`message` de chaque condition) : affichés avec la condition, modifiables, conservés à l'enregistrement et validés par le schéma `table.json`.
 - Édition du dictionnaire des variables (`variables.json`), depuis l'accueil de la configuration : renommer une variable (ses alias suivent), modifier sa regex, ajouter ou retirer des variables, ajouter, modifier ou retirer des alias par famille, description. Noms contrôlés (majuscules, chiffres, `_`, unicité) ; regex en double et conventions `_OPT` signalées comme avant. Les regex des modèles ne changent pas, seul leur affichage suit le dictionnaire.
 - Édition du contenu des listes de codes : valeurs modifiables dans le tableau, lignes ajoutées ou supprimées, une étape annulable par modification ; seule la ligne touchée du CSV est réécrite (fins de ligne et guillemets du reste conservés). Une liste dont une valeur s'étend sur plusieurs lignes reste en lecture.

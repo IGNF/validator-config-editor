@@ -34,7 +34,8 @@ export interface Equivalents {
 /** Propriétés recopiables, en pointeurs relatifs à l'élément (plan R4). */
 export const PROPERTIES: Record<Kind, readonly string[]> = {
   column: ['/type', '/title', '/description', '/constraints/required', '/constraints/presenceRequired', '/constraints/unique',
-    '/constraints/minLength', '/constraints/maxLength', '/constraints/pattern', '/constraints/enum', '/constraints/reference'],
+    '/constraints/minLength', '/constraints/maxLength', '/constraints/pattern', '/constraints/enum', '/constraints/enumSeparator',
+    '/constraints/reference'],
   file: ['/type', '/mandatory', '/path', '/title', '/description', '/tableModel'],
   code: ['/data', '/title'],
 }
@@ -42,7 +43,7 @@ export const PROPERTIES: Record<Kind, readonly string[]> = {
 /** Propriétés principales du tableau de comparaison (US3). */
 export const COMPARED: Record<Kind, readonly string[]> = {
   column: ['/type', '/constraints/required', '/constraints/presenceRequired', '/constraints/unique', '/constraints/minLength',
-    '/constraints/maxLength', '/constraints/pattern', '/constraints/enum'],
+    '/constraints/maxLength', '/constraints/pattern', '/constraints/enum', '/constraints/enumSeparator'],
   file: ['/type', '/mandatory', '/path', '/tableModel'],
   code: ['/data', '/title'],
 }

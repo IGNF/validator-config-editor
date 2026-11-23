@@ -80,6 +80,7 @@ const COLUMN_FIELDS: Fields<Column> = [
   ['presenceRequired', (c) => c.constraints?.presenceRequired],
   ['unique', (c) => c.constraints?.unique],
   ['enum', (c) => c.constraints?.enum, true],
+  ['enumSeparator', (c) => c.constraints?.enumSeparator],
   ['pattern', (c) => c.constraints?.pattern],
 ]
 const DOCUMENT_FIELDS: Fields<DocumentModel> = [

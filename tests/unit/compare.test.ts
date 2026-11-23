@@ -130,6 +130,14 @@ describe('compareModels', () => {
     expect(change).toEqual({ field: 'enum', removed: [], added: ['U', 'X'] })
   })
 
+  it('enumSeparator : ajouté', async () => {
+    const c = await compare((f) => editJson(f, ZONE_URBA, (d) => {
+      column(d, 'TYPEZONE').constraints = { ...column(d, 'TYPEZONE').constraints, enumSeparator: '-' }
+    }))
+    const change = c.tables.changed[0]!.columns.changed[0]!.changes[0]!
+    expect(change).toEqual({ field: 'enumSeparator', old: null, new: '-' })
+  })
+
   it('table ajoutée ou retirée avec son fichier ; listes de codes', async () => {
     const c = await compare((f) => {
       f.delete(`${TO}/types/HABILLAGE_TXT.json`)

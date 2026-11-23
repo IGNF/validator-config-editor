@@ -103,7 +103,8 @@
                     "SOUDE",
                     "TOLUENE",
                     "XYLENE"
-                ]
+                ],
+                "enumSeparator": ","
             }
         },
         {

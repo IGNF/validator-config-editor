@@ -13,7 +13,7 @@ const LABELS: Record<string, string> = {
   folderName: 'nom du dossier', metadataSpecification: 'spécification des métadonnées', type: 'type', mandatory: 'présence',
   path: 'chemin', tableModel: 'modèle de table', conditions: 'conditions', foreignKeys: 'clés étrangères', description: 'description',
   minLength: 'longueur minimale', maxLength: 'longueur maximale', required: 'valeur obligatoire', presenceRequired: 'colonne obligatoire',
-  unique: 'unique', enum: 'valeurs possibles', pattern: 'motif',
+  unique: 'unique', enum: 'valeurs possibles', enumSeparator: 'séparateur des valeurs', pattern: 'motif',
 }
 
 const value = (v: Change['old']) => (v === null || v === undefined ? '(absent)' : typeof v === 'boolean' ? (v ? 'Oui' : 'Non') : String(v))

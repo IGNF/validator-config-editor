@@ -46,6 +46,7 @@ describe('opérations sur une table', () => {
     expect(setConstraint(table, 0, 'required', false).columns[0]!.constraints).toEqual({ required: false, maxLength: 3 })
     expect(setConstraint(table, 0, 'maxLength', '').columns[0]!.constraints).toEqual({ required: true })
     expect(setConstraint(table, 0, 'pattern', '[0-9]+').columns[0]!.constraints).toEqual({ required: true, maxLength: 3, pattern: '[0-9]+' })
+    expect(setConstraint(table, 0, 'enumSeparator', '-').columns[0]!.constraints).toEqual({ required: true, maxLength: 3, enumSeparator: '-' })
   })
 
   it('lit des valeurs autorisées en gardant les nombres', () => {
